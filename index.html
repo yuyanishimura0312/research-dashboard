@@ -4271,26 +4271,22 @@ function openDetail(id) {
   let html = '';
   html += `<div class="field-label">ステータス</div><div class="field-value">${statusBadgeHTML(entry.status || 'investigating')}</div>`;
   if (entry.category) html += `<div class="field-label">カテゴリ</div><div class="field-value">${esc(entry.category)}</div>`;
-  if (entry.source) html += `<div class="field-label">ソース</div><div class="field-value"><a href="${esc(entry.source)}" target="_blank">${esc(entry.source)}</a></div>`;
-  if (entry.summary) html += `<div class="field-label">要約・メモ</div><div class="field-value">${esc(entry.summary)}</div>`;
+  // Full text content (directly displayed)
+  if (entry.content) {
+    html += `<div class="field-label">全文</div>`;
+    html += `<div class="field-value" style="white-space:pre-wrap;line-height:1.8;max-height:600px;overflow-y:auto;padding:12px 0;border-top:1px solid var(--border);">${esc(entry.content)}</div>`;
+  } else if (entry.summary) {
+    html += `<div class="field-label">要約・メモ</div><div class="field-value">${esc(entry.summary)}</div>`;
+  }
+
   if (entry.tags && entry.tags.length) html += `<div class="field-label">タグ</div><div class="card-tags" style="margin-top:4px">${entry.tags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>`;
   html += `<div class="field-label">登録日</div><div class="field-value">${formatDate(entry.createdAt)}</div>`;
-  if (entry.updatedAt !== entry.createdAt) html += `<div class="field-label">更新日</div><div class="field-value">${formatDate(entry.updatedAt)}</div>`;
 
-  // Google ドキュメント埋め込み & ボタン
+  // Source link
   if (entry.source) {
     const gdocsUrl = getGoogleDocsUrl(entry.source);
-    const previewUrl = getGoogleDocsPreviewUrl(entry.source);
-
-    if (previewUrl) {
-      html += `<div class="field-label">全文</div>`;
-      html += `<div class="gdoc-embed-wrap">`;
-      html += `<iframe src="${esc(previewUrl)}" class="gdoc-embed" frameborder="0" allowfullscreen></iframe>`;
-      html += `</div>`;
-    }
-
     html += `<div class="detail-actions">`;
-    html += `<a class="btn-action btn-open" href="${esc(gdocsUrl)}" target="_blank">&#9654; Google ドキュメントで開く</a>`;
+    html += `<a class="btn-action btn-open" href="${esc(gdocsUrl)}" target="_blank">&#9654; 元のドキュメントを開く</a>`;
     html += `</div>`;
   }
 
