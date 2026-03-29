@@ -114,7 +114,11 @@ function formatDate(iso) {
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
 }
-function readTime(text) { return Math.max(1, Math.round((text || '').length / 400)); }
+function readTime(d) {
+  if (typeof d === 'string') return Math.max(1, Math.round(d.length / 400)); // legacy
+  const text = d.content || d.summary || '';
+  return Math.max(1, Math.round(text.length / 400));
+}
 function getFiltered() {
   let d = [...DATA].sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
   if (activeCategory) d = d.filter(x => x.category === activeCategory);
@@ -150,7 +154,7 @@ function cardHTML(d, opts={}) {
       <div class="card-meta">
         <span class="status-dot" style="background:${STATUS_COLORS[s]}"></span>${STATUS_LABELS[s]}
         <span style="margin-left:12px">${formatDate(d.createdAt)}</span>
-        <span style="margin-left:12px">${readTime(d.summary)} min</span>
+        <span style="margin-left:12px">${readTime(d)} min</span>
       </div>
     </div>`;
 }
@@ -168,7 +172,7 @@ function renderHero() {
       <p class="hero-summary">${esc((d.summary||'').slice(0, 220))}${(d.summary||'').length > 220 ? '...' : ''}</p>
       <div class="hero-meta">
         <span>${formatDate(d.createdAt)}</span>
-        <span>${readTime(d.summary)} min read</span>
+        <span>${readTime(d)} min read</span>
         <span>${STATUS_LABELS[d.status||'investigating']}</span>
       </div>
     </div>`;
@@ -404,7 +408,7 @@ function openReader(id) {
     <h1 class="reader-title">${esc(d.title)}</h1>
     <div class="reader-meta">
       <span>${formatDate(d.createdAt)}</span>
-      <span>${readTime(d.summary)} min read</span>
+      <span>${readTime(d)} min read</span>
       <span><span class="status-dot" style="background:${STATUS_COLORS[s]}"></span>${STATUS_LABELS[s]}</span>
     </div>`;
 
@@ -414,29 +418,24 @@ function openReader(id) {
   body += `<div class="reader-info-strip">`;
   if (d.category) body += `<div class="reader-info-item"><strong>${esc(d.category)}</strong></div>`;
   body += `<div class="reader-info-item">${formatDate(d.createdAt)}</div>`;
-  body += `<div class="reader-info-item">${readTime(d.summary)} min read</div>`;
+  body += `<div class="reader-info-item">${readTime(d)} min read</div>`;
   if (tags.length > 0) body += `<div class="reader-info-item">${tags.length} tags</div>`;
   body += `</div>`;
 
-  // Main content (summary)
-  if (d.summary) {
+  // Main content: show full text if available, otherwise summary
+  if (d.content) {
+    body += renderSummaryContent(d.content.trim());
+  } else if (d.summary) {
     body += renderSummaryContent(d.summary.trim());
   }
 
-  // Google Docs: embed full document inline
-  if (isGDocs) {
-    const previewUrl = gdocsUrl.replace(/\/edit.*$/, '/preview');
-    body += `<div style="margin:32px 0 16px;border-top:2px solid var(--accent);padding-top:24px;">
-      <h2 style="font-size:1.1rem;margin-bottom:12px;">全文</h2>
-      <div style="border:1px solid var(--border);border-radius:8px;overflow:hidden;background:#fff;">
-        <iframe src="${esc(previewUrl)}" style="width:100%;height:600px;border:none;" allowfullscreen></iframe>
-      </div>
-      <div style="margin-top:12px;text-align:right;">
-        <a href="${esc(gdocsUrl)}" target="_blank" style="color:var(--accent);font-size:0.85rem;">Google ドキュメントで開く &#8594;</a>
-      </div>
+  // Source link
+  if (d.source) {
+    const label = isGDocs ? 'Google ドキュメントで開く' : 'ソースを開く';
+    const href = isGDocs ? gdocsUrl : d.source;
+    body += `<div style="margin-top:32px;padding-top:16px;border-top:1px solid var(--border);text-align:right;">
+      <a href="${esc(href)}" target="_blank" style="color:var(--accent);font-size:0.85rem;text-decoration:none;">${label} &#8594;</a>
     </div>`;
-  } else if (d.source) {
-    body += `<div style="margin-top:24px;"><a class="reader-source" href="${esc(d.source)}" target="_blank">ソースを開く &#8594;</a></div>`;
   }
 
   // Tags
