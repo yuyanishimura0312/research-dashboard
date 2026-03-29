@@ -3,7 +3,7 @@ window.RESEARCH_DATA = [
   {
     "id": "69c89ffek9zktd",
     "title": "Claude Code活用方法の調査",
-    "category": "AI",
+    "category": "テクノロジー",
     "source": "https://code.claude.com/docs/ja/best-practices",
     "summary": "Claude Codeの活用方法を網羅的に調査。主要な知見:\n1. CLAUDE.md / Hooks / Skills / MCP の4層構造で設定を管理\n2. Plan Modeで事前調査、サブエージェントで並列実行が効果的\n3. コンテキストウィンドウ管理が最重要（/clearの活用）\n4. 非エンジニアでも自然言語で業務自動化が可能\n5. Agent Teamsで複数インスタンスの協調動作が可能",
     "tags": [
@@ -37,7 +37,7 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8a688c9ll6h",
     "title": "リサーチダッシュボードのベストプラクティス",
-    "category": "UI/UX",
+    "category": "テクノロジー",
     "status": "organized",
     "source": "",
     "summary": "3チームによる並列調査の結果:\n- UI/UX: 逆ピラミッド構造、F字スキャン対応、5秒ルール、段階的開示が重要\n- ベンチマーク: Notion(複数ビュー)、Obsidian(グラフビュー)、Raindrop.io(フルテキストキャッシュ)が参考事例\n- 可視化: アクティビティヒートマップ、力指向グラフ、比例タグクラウド、バーティカルタイムラインが有効\n- ファセット検索は5-7軸が最適。フィルタ状態の常時可視化が必須",
@@ -54,7 +54,7 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8a692cft1j0",
     "title": "リサーチ管理ツール比較調査2026",
-    "category": "ツール",
+    "category": "テクノロジー",
     "status": "done",
     "source": "",
     "summary": "主要リサーチ管理ツールのベンチマーク比較:\n- Notion: データベース+複数ビュー切替+AIインライン提案。チーム向け\n- Obsidian: ローカルファースト+バックリンク+グラフビュー。深い思考向け\n- Zotero: 文献管理特化。PDF+引用管理\n- DEVONthink: AI類似度検索+多形式横断管理。macOS専用\n- Raindrop.io: ブックマーク特化+フルテキストキャッシュ+AI質問\n推奨構成: Zotero(収集) + Obsidian(統合) + Notion(管理)の三層",
@@ -298,7 +298,7 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8aa8by1yhwz",
     "title": "インパクト財団宣言と戦略策定",
-    "category": "組織",
+    "category": "組織・財団",
     "source": "https://docs.google.com/document/d/1BnLSC4ExYUGmE3CBBRWNl5xpI48wfHV0Jz9T5OVKsEk/edit",
     "summary": "インパクト志向の財団設立に向けた宣言文と戦略の策定。ミッション定義、活動領域、ガバナンス構造、資金調達戦略を検討。",
     "tags": [
@@ -335,7 +335,6 @@ window.RESEARCH_DATA = [
     "summary": "プロジェクトの社会的意義を学術的に裏付けるための補完的リサーチ。関連する学術理論、先行研究、エビデンスの整理。",
     "tags": [
       "学術",
-      "リサーチ",
       "エビデンス",
       "社会的意義",
       "Gemini"
@@ -362,7 +361,7 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8aa8ek9ckl6",
     "title": "阿部俊彦氏 研究調査レポート",
-    "category": "人物調査",
+    "category": "学術",
     "source": "https://docs.google.com/document/d/1QLTOYgShHNVW9PdXWH3GqVRiN1idAo4ZeAxDQ1n4Am8/edit",
     "summary": "阿部俊彦氏の研究業績と専門領域の調査レポート。研究テーマ、発表論文、社会的活動を整理。",
     "tags": [
@@ -393,7 +392,7 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8aa90yjtlll",
     "title": "久能裕子氏と緒方ミシェル氏の関係調査",
-    "category": "人物調査",
+    "category": "学術",
     "source": "https://docs.google.com/document/d/1UgPQIIXlD8QnI4mehZjjH7ly6zfXF-ZXNdOpICRbtIg/edit",
     "summary": "久能裕子氏と緒方ミシェル氏の経歴、活動、相互の関係性を調査。",
     "tags": [
@@ -407,7 +406,7 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8aa90z06i2z",
     "title": "財団連携による研究助成強化戦略",
-    "category": "組織",
+    "category": "組織・財団",
     "source": "https://docs.google.com/document/d/1lys4NI3Z3qoatHEmL91BdIQpS1HNTK58hdy4Tl6tj3g/edit",
     "summary": "他財団との連携を通じた研究助成の強化戦略。パートナーシップモデル、共同助成の仕組み、インパクト測定の方法を検討。",
     "tags": [
@@ -534,7 +533,7 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8aa96ed35c4",
     "title": "\"Finding Our Way\" 要約と考察",
-    "category": "書籍",
+    "category": "書籍・思想",
     "source": "https://docs.google.com/document/d/1ch3Kq0hNxpA_uS0KlYzw9NputzY4w2LecjJKcPHZqgY/edit",
     "summary": "書籍「Finding Our Way」の要約と考察。組織論・リーダーシップ論の観点からの分析と自身の活動への示唆を整理。",
     "tags": [
@@ -584,9 +583,9 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad940001wir",
     "title": "20240326京都大学社会的共通資本",
-    "category": "イベント",
+    "category": "学術",
     "source": "https://docs.google.com/document/d/1wIhaXQXAe4qsOMnrBYW9byZTOXiiJE1HVFBKAV1Po7I/edit",
-    "summary": "",
+    "summary": "京都大学社会的共通資本に関する調査・考察資料",
     "tags": [
       "イベント",
       "Gemini",
@@ -600,7 +599,7 @@ window.RESEARCH_DATA = [
     "title": "20250927財団",
     "category": "組織・財団",
     "source": "https://docs.google.com/document/d/1eGHvC6eruqp4-2VKccdmEk1o_LmikGIv6pnNak10Rm8/edit",
-    "summary": "",
+    "summary": "財団に関する調査・考察資料",
     "tags": [
       "組織・財団",
       "Gemini",
@@ -612,9 +611,9 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad940003qkp",
     "title": "20260126日経新聞_チーム課題",
-    "category": "メディア",
+    "category": "ビジネス",
     "source": "https://docs.google.com/document/d/1UiPHXiPlLmksK_5LBFltAelfQXfxbwbAm4bf81OJdyw/edit",
-    "summary": "",
+    "summary": "日経新聞_チーム課題に関する調査・考察資料",
     "tags": [
       "メディア",
       "Gemini",
@@ -628,7 +627,7 @@ window.RESEARCH_DATA = [
     "title": "2040年：バイオ・デジタル・コンパイラ戦略",
     "category": "未来学",
     "source": "https://docs.google.com/document/d/1-TxHBKDe4Ck1ADxIlvGwQJeSLMl0ofBfXCzUPkdgzbI/edit",
-    "summary": "",
+    "summary": "2040年：バイオ・デジタル・コンパイラ戦略に関する戦略・事業検討資料",
     "tags": [
       "未来学",
       "Gemini",
@@ -642,7 +641,7 @@ window.RESEARCH_DATA = [
     "title": "AIによる学術知と社会の接続",
     "category": "テクノロジー",
     "source": "https://docs.google.com/document/d/1W5UuXRkUIidHaxL9ckMIkhTrreP_0igo8FvZOAgpyrk/edit",
-    "summary": "",
+    "summary": "AIによる学術知と社会の接続に関する調査・考察資料",
     "tags": [
       "テクノロジー",
       "Gemini",
@@ -656,7 +655,7 @@ window.RESEARCH_DATA = [
     "title": "AIツール活用プログラム設計書",
     "category": "テクノロジー",
     "source": "https://docs.google.com/document/d/15fhe79GP5gqkwdLcHJ-11OiHSsVm5IBZ-5koRrxwLfA/edit",
-    "summary": "",
+    "summary": "AIツール活用プログラム設計書に関する設計・構想資料",
     "tags": [
       "テクノロジー",
       "Gemini",
@@ -670,7 +669,7 @@ window.RESEARCH_DATA = [
     "title": "AI活用型プログラム再編と人物像アウトカム",
     "category": "テクノロジー",
     "source": "https://docs.google.com/document/d/1-VLtLvXyuQ9uZM7kX4yOn1yxiw4cxfNmxQY9Z4fCswU/edit",
-    "summary": "",
+    "summary": "AI活用型プログラム再編と人物像アウトカムに関する調査・考察資料",
     "tags": [
       "テクノロジー",
       "Gemini",
@@ -684,7 +683,7 @@ window.RESEARCH_DATA = [
     "title": "Deep Science Venturesとアウトカムズグラフ調査",
     "category": "テクノロジー",
     "source": "https://docs.google.com/document/d/1erajlPQS6AwAJU2W-OINCj6k8FhwSj0bIR7TbSZSxwE/edit",
-    "summary": "",
+    "summary": "Deep Science Venturesとアウトカムズグラフ調査の知見をまとめた調査資料",
     "tags": [
       "テクノロジー",
       "Gemini",
@@ -696,9 +695,9 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad940009blh",
     "title": "Dubai Future Forum連携仮説構築",
-    "category": "国際連携",
+    "category": "ビジネス",
     "source": "https://docs.google.com/document/d/1NiwAk7z5jwC2pzIJj74ksh21lm1YxicyaIKJGCleTyQ/edit",
-    "summary": "",
+    "summary": "Dubai Future Forum連携仮説構築に関する連携・会議資料",
     "tags": [
       "国際連携",
       "Gemini",
@@ -712,7 +711,7 @@ window.RESEARCH_DATA = [
     "title": "ECサイト事業ベンチマーク調査レポート",
     "category": "ビジネス",
     "source": "https://docs.google.com/document/d/15xXynJZhsxfyWWN09fZEP22xdeQ1LURTJ496oY7C8Ik/edit",
-    "summary": "",
+    "summary": "ECサイト事業ベンチマーク調査レポートの知見をまとめた調査資料",
     "tags": [
       "ビジネス",
       "Gemini",
@@ -726,7 +725,7 @@ window.RESEARCH_DATA = [
     "title": "Foundations of Futures Studies: Volume 1",
     "category": "未来学",
     "source": "https://docs.google.com/document/d/18dtIXCMMkBUqVk_UtMru8FddW7Kg5Tc5pF-edV4sUgY/edit",
-    "summary": "",
+    "summary": "Foundations of Futures Studies: Volume 1に関する調査・考察資料",
     "tags": [
       "未来学",
       "Gemini",
@@ -740,7 +739,7 @@ window.RESEARCH_DATA = [
     "title": "Foundations of Futures Studies: Volume 2",
     "category": "未来学",
     "source": "https://docs.google.com/document/d/184qrFGffZlC8eNEysi6AsULETe1Cm_tVdYlGBW4M73Y/edit",
-    "summary": "",
+    "summary": "Foundations of Futures Studies: Volume 2に関する調査・考察資料",
     "tags": [
       "未来学",
       "Gemini",
@@ -754,7 +753,7 @@ window.RESEARCH_DATA = [
     "title": "Gartner社の戦略的変遷とベンチマーク",
     "category": "ビジネス",
     "source": "https://docs.google.com/document/d/1z5LSSx_Uh-smWuk7VyW-g5b-pkAm44rRPvoY1yxsmx8/edit",
-    "summary": "",
+    "summary": "Gartner社の戦略的変遷とベンチマークに関する戦略・事業検討資料",
     "tags": [
       "ビジネス",
       "Gemini",
@@ -768,7 +767,7 @@ window.RESEARCH_DATA = [
     "title": "Gartner社ベンチマーク戦略立案",
     "category": "ビジネス",
     "source": "https://docs.google.com/document/d/1XofIRbt9Bu4n-kGxFeiH4ltZ2NSbW_zwneYGN-dzkPM/edit",
-    "summary": "",
+    "summary": "Gartner社ベンチマーク戦略立案に関する戦略・事業検討資料",
     "tags": [
       "ビジネス",
       "Gemini",
@@ -780,11 +779,10 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad94000fecb",
     "title": "Lueg & Bidwellのウェイファインディング研究",
-    "category": "リサーチ",
+    "category": "学術",
     "source": "https://docs.google.com/document/d/1nPE2U61ZqBZKWmGOt5sLzC2SA99U8WkQn60cNezHbtg/edit",
-    "summary": "",
+    "summary": "Lueg & Bidwellのウェイファインディング研究に関する研究・分析資料",
     "tags": [
-      "リサーチ",
       "Gemini",
       "Google Drive"
     ],
@@ -796,7 +794,7 @@ window.RESEARCH_DATA = [
     "title": "SHAPE分野の経済的インパクト調査",
     "category": "学術",
     "source": "https://docs.google.com/document/d/1s02vI5Rd6PlOxC4lbK-VCNQRviuC0FRBT8nkY7hc7fw/edit",
-    "summary": "",
+    "summary": "SHAPE分野の経済的インパクト調査の知見をまとめた調査資料",
     "tags": [
       "学術",
       "Gemini",
@@ -810,7 +808,7 @@ window.RESEARCH_DATA = [
     "title": "SINIC活動総括：未来への責任ある応答",
     "category": "未来学",
     "source": "https://docs.google.com/document/d/1xz8_gkm6nM1sxSkFb8Xl6zQBmjkCv8ffZC4qBfT8I_U/edit",
-    "summary": "",
+    "summary": "SINIC活動総括：未来への責任ある応答に関する調査・考察資料",
     "tags": [
       "未来学",
       "Gemini",
@@ -824,7 +822,7 @@ window.RESEARCH_DATA = [
     "title": "SINIC理論と人間拡張の未来",
     "category": "未来学",
     "source": "https://docs.google.com/document/d/1fX39aYIKTBXQSAD6UENW-8icpy19t2sc4zfG6JXwD9I/edit",
-    "summary": "",
+    "summary": "SINIC理論と人間拡張の未来に関する調査・考察資料",
     "tags": [
       "未来学",
       "Gemini",
@@ -838,7 +836,7 @@ window.RESEARCH_DATA = [
     "title": "SINIC理論と経営フレームの学術的知見",
     "category": "未来学",
     "source": "https://docs.google.com/document/d/19W-M8q_9qeMROVCB4Qrvv_koxxu3PXZGUu2KqGMmdcg/edit",
-    "summary": "",
+    "summary": "SINIC理論と経営フレームの学術的知見に関する調査・考察資料",
     "tags": [
       "未来学",
       "Gemini",
@@ -852,7 +850,7 @@ window.RESEARCH_DATA = [
     "title": "UAE科学振興政策とesse-sense連携仮説",
     "category": "ビジネス",
     "source": "https://docs.google.com/document/d/1EmXWHHyvTKJNvHzMXaSlKpinMAlWilfMxWeVF-LnWos/edit",
-    "summary": "",
+    "summary": "UAE科学振興政策とesse-sense連携仮説に関する連携・会議資料",
     "tags": [
       "ビジネス",
       "Gemini",
@@ -866,7 +864,7 @@ window.RESEARCH_DATA = [
     "title": "VCデューデリジェンス：esse-sense社評価",
     "category": "ビジネス",
     "source": "https://docs.google.com/document/d/1KNW74td_l4DwOvRzB4WXuyxmpAm3xabrBQXjdmgdux8/edit",
-    "summary": "",
+    "summary": "VCデューデリジェンス：esse-sense社評価に関する調査・考察資料",
     "tags": [
       "ビジネス",
       "Gemini",
@@ -880,7 +878,7 @@ window.RESEARCH_DATA = [
     "title": "VR体験と移動意欲に関する学術レポート",
     "category": "学術",
     "source": "https://docs.google.com/document/d/1c33Sf-d4QQybyAOPdfwUwEG-7_CegYWFYM1Ue_wHwZ8/edit",
-    "summary": "",
+    "summary": "VR体験と移動意欲に関する学術レポートに関する調査・考察資料",
     "tags": [
       "学術",
       "Gemini",
@@ -894,7 +892,7 @@ window.RESEARCH_DATA = [
     "title": "X to Earnビジネスの持続可能性と外部価値創出",
     "category": "イノベーション",
     "source": "https://docs.google.com/document/d/1LP7YvRtcgayzKcUG57yWCyIFvO0UDvkuiXBi5MN8QcA/edit",
-    "summary": "",
+    "summary": "X to Earnビジネスの持続可能性と外部価値創出に関する調査・考察資料",
     "tags": [
       "イノベーション",
       "Gemini",
@@ -908,7 +906,7 @@ window.RESEARCH_DATA = [
     "title": "esse-senseのGartnerから学ぶ戦略",
     "category": "ビジネス",
     "source": "https://docs.google.com/document/d/1GlBvOizqDWm9ieIK8_fAPJFz9_124nyQEf3JGKZgRb4/edit",
-    "summary": "",
+    "summary": "esse-senseのGartnerから学ぶ戦略に関する戦略・事業検討資料",
     "tags": [
       "ビジネス",
       "Gemini",
@@ -922,7 +920,7 @@ window.RESEARCH_DATA = [
     "title": "esse-senseのインパクト企業としての位置づけ",
     "category": "ビジネス",
     "source": "https://docs.google.com/document/d/15F5061ZBmbzMz0nnCqMsw6AuW_f8MLtxgUiV_30Vlq0/edit",
-    "summary": "",
+    "summary": "esse-senseのインパクト企業としての位置づけに関する調査・考察資料",
     "tags": [
       "ビジネス",
       "Gemini",
@@ -936,7 +934,7 @@ window.RESEARCH_DATA = [
     "title": "freewill経営再建の決断",
     "category": "ビジネス",
     "source": "https://docs.google.com/document/d/1sB-bw8bmYYwnSWh_VwUIQaVHg9742wBu7n2rWkXJBqI/edit",
-    "summary": "",
+    "summary": "freewill経営再建の決断に関する調査・考察資料",
     "tags": [
       "ビジネス",
       "Gemini",
@@ -950,7 +948,7 @@ window.RESEARCH_DATA = [
     "title": "「森は考える」の学術的成果",
     "category": "人類学",
     "source": "https://docs.google.com/document/d/1j0dgajF-_3qakeWpjeytZbDANyVKt7ufEyoRHUBLaLg/edit",
-    "summary": "",
+    "summary": "「森は考える」の学術的成果に関する学術的知見の整理",
     "tags": [
       "人類学",
       "Gemini",
@@ -962,11 +960,10 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad94001cpkb",
     "title": "「比叡山未来会議」2024案内文",
-    "category": "リサーチ",
+    "category": "未来学",
     "source": "https://docs.google.com/document/d/1sXWH5IjI5-7aSKeirBFZld-f6FUO5O0nRDZY0b-GZOE/edit",
-    "summary": "",
+    "summary": "「比叡山未来会議」2024案内文の概要と詳細情報",
     "tags": [
-      "リサーチ",
       "Gemini",
       "Google Drive"
     ],
@@ -976,11 +973,10 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad95001dfzn",
     "title": "「比叡山未来会議」2024案内文_閲覧用",
-    "category": "リサーチ",
+    "category": "未来学",
     "source": "https://docs.google.com/document/d/1QFu2fNjrgng-gz0v2n6Zxu9l4Sl6_qVDf1Ps2VwFD2I/edit",
-    "summary": "",
+    "summary": "「比叡山未来会議」2024案内文_閲覧用の概要と詳細情報",
     "tags": [
-      "リサーチ",
       "Gemini",
       "Google Drive"
     ],
@@ -990,11 +986,10 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad95001etcy",
     "title": "「比叡山未来会議」【企業編】2024案内文",
-    "category": "リサーチ",
+    "category": "未来学",
     "source": "https://docs.google.com/document/d/1Gop9wNNCDcuglCKb9aBCSOJEgYpwGhpy6bIFy1nv9BE/edit",
-    "summary": "",
+    "summary": "「比叡山未来会議」【企業編】2024案内文の概要と詳細情報",
     "tags": [
-      "リサーチ",
       "Gemini",
       "Google Drive"
     ],
@@ -1004,11 +999,10 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad96001fuep",
     "title": "「比叡山未来会議」【企業編】2024案内文_閲覧用",
-    "category": "リサーチ",
+    "category": "未来学",
     "source": "https://docs.google.com/document/d/1t0mMTChvYRdX5S4knsnRHMHN_-aIixqNV21QyS_s4lI/edit",
-    "summary": "",
+    "summary": "「比叡山未来会議」【企業編】2024案内文_閲覧用の概要と詳細情報",
     "tags": [
-      "リサーチ",
       "Gemini",
       "Google Drive"
     ],
@@ -1018,11 +1012,10 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad960020uxn",
     "title": "まず全文をテキストに書き起こし、その後に概要を加えてください。",
-    "category": "リサーチ",
+    "category": "学術",
     "source": "https://docs.google.com/document/d/1Nfi7-yFqpMiBn-2go1pfB-2TWSQ8Jn7yFQjoARd26Ig/edit",
-    "summary": "",
+    "summary": "「まず全文をテキストに書き起こし、その後に概要を加えてくだ」に関する作業メモ",
     "tags": [
-      "リサーチ",
       "Gemini",
       "Google Drive"
     ],
@@ -1032,11 +1025,10 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad960021pjj",
     "title": "アカデミアの金融への期待と課題",
-    "category": "リサーチ",
+    "category": "ビジネス",
     "source": "https://docs.google.com/document/d/1EeEZwwsJ_sVntsKc6BurlO2kNcLvENJ4WTwq55GwOfw/edit",
-    "summary": "",
+    "summary": "アカデミアの金融への期待と課題に関する調査・考察資料",
     "tags": [
-      "リサーチ",
       "Gemini",
       "Google Drive"
     ],
@@ -1046,11 +1038,10 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad960022oxs",
     "title": "イノベーション地区座長候補者デューデリ",
-    "category": "リサーチ",
+    "category": "学術",
     "source": "https://docs.google.com/document/d/1s5-7KZ4e2-v9bVZ-UZX7ar9d1xtmRqs7mIMfpEipPRU/edit",
-    "summary": "",
+    "summary": "イノベーション地区座長候補者デューデリに関する調査・考察資料",
     "tags": [
-      "リサーチ",
       "Gemini",
       "Google Drive"
     ],
@@ -1062,7 +1053,7 @@ window.RESEARCH_DATA = [
     "title": "イロコイ連邦に関する学術レポート作成",
     "category": "学術",
     "source": "https://docs.google.com/document/d/10mUqpw5fPf7u74-DIY0KiDOsOWDQ5zfCoBTekg7-STA/edit",
-    "summary": "",
+    "summary": "イロコイ連邦に関する学術レポートに関する調査・考察資料",
     "tags": [
       "学術",
       "Gemini",
@@ -1076,7 +1067,7 @@ window.RESEARCH_DATA = [
     "title": "インパクト戦略と財団宣言の策定",
     "category": "組織・財団",
     "source": "https://docs.google.com/document/d/1ukblEVgPvwID3Ru7-ck0TuZvRs_GhErure04YIOyp_E/edit",
-    "summary": "",
+    "summary": "インパクト戦略と財団宣言の策定に関する戦略・事業検討資料",
     "tags": [
       "組織・財団",
       "Gemini",
@@ -1090,7 +1081,7 @@ window.RESEARCH_DATA = [
     "title": "インパクト財団宣言と戦略策定",
     "category": "組織・財団",
     "source": "https://docs.google.com/document/d/1BnLSC4ExYUGmE3CBBRWNl5xpI48wfHV0Jz9T5OVKsEk/edit",
-    "summary": "",
+    "summary": "インパクト財団宣言と戦略策定に関する戦略・事業検討資料",
     "tags": [
       "組織・財団",
       "Gemini",
@@ -1104,7 +1095,7 @@ window.RESEARCH_DATA = [
     "title": "ヴィクター・ターナーの学術的成果",
     "category": "人類学",
     "source": "https://docs.google.com/document/d/1UJtzuZX4ZyUWg-ba_K2p45eD-Uq1ytK6oyq8hiQZEYo/edit",
-    "summary": "",
+    "summary": "ヴィクター・ターナーの学術的成果に関する学術的知見の整理",
     "tags": [
       "人類学",
       "Gemini",
@@ -1118,7 +1109,7 @@ window.RESEARCH_DATA = [
     "title": "エルンスト・ブロッホの学術的成果",
     "category": "学術",
     "source": "https://docs.google.com/document/d/1afEQ0ini1uih8gpALiyiIQF0HJGriwEJF--FdDUopQI/edit",
-    "summary": "",
+    "summary": "エルンスト・ブロッホの学術的成果に関する学術的知見の整理",
     "tags": [
       "学術",
       "Gemini",
@@ -1132,7 +1123,7 @@ window.RESEARCH_DATA = [
     "title": "オークション理論のビジネス実践講座",
     "category": "イノベーション",
     "source": "https://docs.google.com/document/d/1XennqTFKkI8IzAlijYWY1n7sQl9szs1w1kUxyQKT4Vk/edit",
-    "summary": "",
+    "summary": "オークション理論のビジネス実践講座に関する調査・考察資料",
     "tags": [
       "イノベーション",
       "Gemini",
@@ -1146,7 +1137,7 @@ window.RESEARCH_DATA = [
     "title": "ガゼーレの身体化認知研究概要",
     "category": "人類学",
     "source": "https://docs.google.com/document/d/1iRPR4NkTYVvqwmSSp4ATBtTLDlZtb-Jh6wDVZUal3DQ/edit",
-    "summary": "",
+    "summary": "ガゼーレの身体化認知研究概要に関する研究・分析資料",
     "tags": [
       "人類学",
       "Gemini",
@@ -1160,7 +1151,7 @@ window.RESEARCH_DATA = [
     "title": "クラインの適応的熟達化研究概要",
     "category": "人類学",
     "source": "https://docs.google.com/document/d/1ob0B-veLoRJeiDXUfY3RFTUdHZ3xTYMyAOHRqdtANL0/edit",
-    "summary": "",
+    "summary": "クラインの適応的熟達化研究概要に関する研究・分析資料",
     "tags": [
       "人類学",
       "Gemini",
@@ -1174,7 +1165,7 @@ window.RESEARCH_DATA = [
     "title": "クリフォード・ギアツの学術的成果",
     "category": "学術",
     "source": "https://docs.google.com/document/d/1VOfs96Mtt-0XBcDOqzSUQ3TH6pQTs8Tjz55Ev1MW54g/edit",
-    "summary": "",
+    "summary": "クリフォード・ギアツの学術的成果に関する学術的知見の整理",
     "tags": [
       "学術",
       "Gemini",
@@ -1188,7 +1179,7 @@ window.RESEARCH_DATA = [
     "title": "コーポレートサイト構成案：esse-sense社",
     "category": "ビジネス",
     "source": "https://docs.google.com/document/d/1x_u5JzUX-hBhlDnrejrHCsLY3S2PAfRAY2wAHMvWl7k/edit",
-    "summary": "",
+    "summary": "コーポレートサイト構成案：esse-sense社に関する調査・考察資料",
     "tags": [
       "ビジネス",
       "Gemini",
@@ -1202,7 +1193,7 @@ window.RESEARCH_DATA = [
     "title": "シェクナーの儀礼と身体知研究",
     "category": "人類学",
     "source": "https://docs.google.com/document/d/1tdfPI1I7e_C6GtIAjobe9Q2caZDitJwSJG6RKL-hGVc/edit",
-    "summary": "",
+    "summary": "シェクナーの儀礼と身体知研究に関する研究・分析資料",
     "tags": [
       "人類学",
       "Gemini",
@@ -1214,11 +1205,10 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad96002eqzj",
     "title": "ステナーとアボリジニのソングライン",
-    "category": "リサーチ",
+    "category": "学術",
     "source": "https://docs.google.com/document/d/1IA7gDMe7XrnvwYXQzfhguRN2tNZt9BlYNZY8idjMjjA/edit",
-    "summary": "",
+    "summary": "ステナーとアボリジニのソングラインに関する調査・考察資料",
     "tags": [
-      "リサーチ",
       "Gemini",
       "Google Drive"
     ],
@@ -1230,7 +1220,7 @@ window.RESEARCH_DATA = [
     "title": "スバック事例から未来学を再考する",
     "category": "未来学",
     "source": "https://docs.google.com/document/d/1LzJpZP6nYXgVCSWthBNhrsENxkyGocL6HEaUp3bc5qk/edit",
-    "summary": "",
+    "summary": "スバック事例から未来学を再考するに関する調査・考察資料",
     "tags": [
       "未来学",
       "Gemini",
@@ -1244,7 +1234,7 @@ window.RESEARCH_DATA = [
     "title": "ダナ・ハラウェイの学術的成果の要約",
     "category": "人類学",
     "source": "https://docs.google.com/document/d/1mcwll0dTL2_Fuz71fj7p-wFvYtcj4abvOhTiVWsJ4As/edit",
-    "summary": "",
+    "summary": "ダナ・ハラウェイの学術的成果の要約に関する学術的知見の整理",
     "tags": [
       "人類学",
       "Gemini",
@@ -1256,11 +1246,10 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad960031crj",
     "title": "ダマシオのソマティックマーカー仮説",
-    "category": "リサーチ",
+    "category": "学術",
     "source": "https://docs.google.com/document/d/1AaCFV8bSKDnc0xaiGtj4qFmJ7GIKALqoM3TYz0Nyz-k/edit",
-    "summary": "",
+    "summary": "ダマシオのソマティックマーカー仮説に関する調査・考察資料",
     "tags": [
-      "リサーチ",
       "Gemini",
       "Google Drive"
     ],
@@ -1270,11 +1259,10 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad960032lgu",
     "title": "ディープテックスタートアップ基礎調査レポート作成",
-    "category": "リサーチ",
+    "category": "学術",
     "source": "https://docs.google.com/document/d/1WzBaizqZ-JNgyA7HnIHAyOtOHCGPpsrJfikjrjAErSY/edit",
-    "summary": "",
+    "summary": "ディープテックスタートアップ基礎調査レポートの知見をまとめた調査資料",
     "tags": [
-      "リサーチ",
       "Gemini",
       "Google Drive"
     ],
@@ -1284,11 +1272,10 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad960033zxl",
     "title": "ディープテックスタートアップ基礎資料作成",
-    "category": "リサーチ",
+    "category": "学術",
     "source": "https://docs.google.com/document/d/1qZE38MIfnRmHYZ8PBJIYNLVyDRFQ9mtCPMd2MVVrj5g/edit",
-    "summary": "",
+    "summary": "ディープテックスタートアップ基礎資料に関する調査・考察資料",
     "tags": [
-      "リサーチ",
       "Gemini",
       "Google Drive"
     ],
@@ -1298,11 +1285,10 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad960034lwk",
     "title": "ディープテック投資判断基礎資料作成",
-    "category": "リサーチ",
+    "category": "ビジネス",
     "source": "https://docs.google.com/document/d/16rq5xapi6ute7qWOydGep56ZWDVlQx13I0eb0-TLlZo/edit",
-    "summary": "",
+    "summary": "ディープテック投資判断基礎資料に関する調査・考察資料",
     "tags": [
-      "リサーチ",
       "Gemini",
       "Google Drive"
     ],
@@ -1312,11 +1298,10 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad960035cet",
     "title": "ディープテック投資判断資料作成",
-    "category": "リサーチ",
+    "category": "ビジネス",
     "source": "https://docs.google.com/document/d/1muW8rpiAhToj_lUceRtL-mj3EPO9fYIXhuU06hluYTo/edit",
-    "summary": "",
+    "summary": "ディープテック投資判断資料に関する調査・考察資料",
     "tags": [
-      "リサーチ",
       "Gemini",
       "Google Drive"
     ],
@@ -1328,7 +1313,7 @@ window.RESEARCH_DATA = [
     "title": "デスコラの学術的成果のまとめ",
     "category": "学術",
     "source": "https://docs.google.com/document/d/116wbgXzDlAZGL479kFwBP4zkieBDmZ9YHE2pooW2PMk/edit",
-    "summary": "",
+    "summary": "デスコラの学術的成果のまとめに関する学術的知見の整理",
     "tags": [
       "学術",
       "Gemini",
@@ -1340,11 +1325,10 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad960037jtr",
     "title": "ナイノア・トンプソンの「Naau」研究",
-    "category": "リサーチ",
+    "category": "学術",
     "source": "https://docs.google.com/document/d/1szsqKeoUYxP0jWtnSxxtwhXBGHmaOK04lXGUedUNmo8/edit",
-    "summary": "",
+    "summary": "ナイノア・トンプソンの「Naau」研究に関する研究・分析資料",
     "tags": [
-      "リサーチ",
       "Gemini",
       "Google Drive"
     ],
@@ -1356,7 +1340,7 @@ window.RESEARCH_DATA = [
     "title": "ノースロップ・フライの学術的成果",
     "category": "人類学",
     "source": "https://docs.google.com/document/d/1UDkbZMDKwA8_ua4M8fqPkbxUHAF15muQQKCUXDqoBiA/edit",
-    "summary": "",
+    "summary": "ノースロップ・フライの学術的成果に関する学術的知見の整理",
     "tags": [
       "人類学",
       "Gemini",
@@ -1368,11 +1352,10 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad960039dtt",
     "title": "バイオ・デジタル・コンパイラ戦略レポート",
-    "category": "リサーチ",
+    "category": "学術",
     "source": "https://docs.google.com/document/d/1h2YoF7oSqeNizRdpOfkKBM23EdU35FzpkFMwG7nW2uQ/edit",
-    "summary": "",
+    "summary": "バイオ・デジタル・コンパイラ戦略レポートに関する戦略・事業検討資料",
     "tags": [
-      "リサーチ",
       "Gemini",
       "Google Drive"
     ],
@@ -1384,7 +1367,7 @@ window.RESEARCH_DATA = [
     "title": "ハッチンスの身体化された認知研究",
     "category": "人類学",
     "source": "https://docs.google.com/document/d/1iYyJG_dwkIC0zPvp8VH7tK0wuMQNxQKrmFuHitK0dMo/edit",
-    "summary": "",
+    "summary": "ハッチンスの身体化された認知研究に関する研究・分析資料",
     "tags": [
       "人類学",
       "Gemini",
@@ -1398,7 +1381,7 @@ window.RESEARCH_DATA = [
     "title": "プラトン『国家』の学術的意義",
     "category": "学術",
     "source": "https://docs.google.com/document/d/1xP2uGsZM7UImhZ3gkhfTAMqW67JiX6AO1KwjeqPop94/edit",
-    "summary": "",
+    "summary": "プラトン『国家』の学術的意義に関する学術的知見の整理",
     "tags": [
       "学術",
       "Gemini",
@@ -1412,7 +1395,7 @@ window.RESEARCH_DATA = [
     "title": "プロジェクト意義の学術的補完リサーチ",
     "category": "学術",
     "source": "https://docs.google.com/document/d/1Hyf10lOtzKrK8Z1QiUpcnG2cBeJhJEkPewP9hDXC74Y/edit",
-    "summary": "",
+    "summary": "プロジェクト意義の学術的補完リサーチに関する調査・考察資料",
     "tags": [
       "学術",
       "Gemini",
@@ -1424,11 +1407,10 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad96003dlhk",
     "title": "プロジェクト意義の構造化と言語化",
-    "category": "リサーチ",
+    "category": "学術",
     "source": "https://docs.google.com/document/d/1G3Ast8TP2I1oJo3nqBCZxjyCjRHRhYVuvYTosTcXHgk/edit",
-    "summary": "",
+    "summary": "プロジェクト意義の構造化と言語化に関する調査・考察資料",
     "tags": [
-      "リサーチ",
       "Gemini",
       "Google Drive"
     ],
@@ -1438,11 +1420,10 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad96003ectt",
     "title": "フィールドワーク先情報最終確定版",
-    "category": "リサーチ",
+    "category": "学術",
     "source": "https://docs.google.com/document/d/1fm3xy4UfwcwnYAzTx4ID2-0rA10kNFoEee0XlmoY2ms/edit",
-    "summary": "",
+    "summary": "フィールドワーク先情報最終確定版に関する調査・考察資料",
     "tags": [
-      "リサーチ",
       "Gemini",
       "Google Drive"
     ],
@@ -1454,7 +1435,7 @@ window.RESEARCH_DATA = [
     "title": "ポール・リクールの学術的成果のまとめ",
     "category": "人類学",
     "source": "https://docs.google.com/document/d/1J21S70NUBS6C05S5lVGTIU1F8__lW7jkHaiVMZ4IXBY/edit",
-    "summary": "",
+    "summary": "ポール・リクールの学術的成果のまとめに関する学術的知見の整理",
     "tags": [
       "人類学",
       "Gemini",
@@ -1468,7 +1449,7 @@ window.RESEARCH_DATA = [
     "title": "ホクレア号：神話と聖地の探求",
     "category": "人類学",
     "source": "https://docs.google.com/document/d/1XlYvSv_N_3E_kFqD1CLnTBkNfW04QfNzkihIdiTJAtw/edit",
-    "summary": "",
+    "summary": "ホクレア号：神話と聖地の探求に関する調査・考察資料",
     "tags": [
       "人類学",
       "Gemini",
@@ -1482,7 +1463,7 @@ window.RESEARCH_DATA = [
     "title": "マラマ・ホヌア プロジェクトの学術的成果",
     "category": "学術",
     "source": "https://docs.google.com/document/d/1e-0k8YIwh321Li35BNnC5VsTofnQk1EnDvJQpVQ0ELo/edit",
-    "summary": "",
+    "summary": "マラマ・ホヌア プロジェクトの学術的成果に関する学術的知見の整理",
     "tags": [
       "学術",
       "Gemini",
@@ -1496,7 +1477,7 @@ window.RESEARCH_DATA = [
     "title": "マリリン・ストラザーンの学術的成果",
     "category": "学術",
     "source": "https://docs.google.com/document/d/1E03o0cI2iUZhMEEEsZwZb753sHrro14L-lFlZhNMvBw/edit",
-    "summary": "",
+    "summary": "マリリン・ストラザーンの学術的成果に関する学術的知見の整理",
     "tags": [
       "学術",
       "Gemini",
@@ -1510,7 +1491,7 @@ window.RESEARCH_DATA = [
     "title": "ミシェル・セールの学術的成果のまとめ",
     "category": "人類学",
     "source": "https://docs.google.com/document/d/1zpCYCCuikMdqkLkPFinSYXBoGTM-JhJtA4BagDtE95g/edit",
-    "summary": "",
+    "summary": "ミシェル・セールの学術的成果のまとめに関する学術的知見の整理",
     "tags": [
       "人類学",
       "Gemini",
@@ -1522,11 +1503,10 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad960044lcn",
     "title": "モルトブックの宗教的変遷の分析",
-    "category": "リサーチ",
+    "category": "学術",
     "source": "https://docs.google.com/document/d/1GzmC97xfj7dHXELPFaHSGLNKkTZz1hd8puEgkPp7Dy0/edit",
-    "summary": "",
+    "summary": "モルトブックの宗教的変遷の分析に関する研究・分析資料",
     "tags": [
-      "リサーチ",
       "Gemini",
       "Google Drive"
     ],
@@ -1536,11 +1516,10 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad960045nko",
     "title": "ライパス株式会社_九州 SEED NEXT FORCE",
-    "category": "リサーチ",
+    "category": "学術",
     "source": "https://docs.google.com/document/d/12di-XDustL8Wn-qBnbxMBY_1wfwrtSv5Mtsj1nHQvNM/edit",
-    "summary": "",
+    "summary": "ライパス株式会社_九州 SEED NEXT FORCEに関する調査・考察資料",
     "tags": [
-      "リサーチ",
       "Gemini",
       "Google Drive"
     ],
@@ -1552,7 +1531,7 @@ window.RESEARCH_DATA = [
     "title": "リビングラボに関する学術レポート作成",
     "category": "学術",
     "source": "https://docs.google.com/document/d/1oCYx8yXFRqDa1uEP9sTJco_hr5Mxm1PS8g8_4fg4UIQ/edit",
-    "summary": "",
+    "summary": "リビングラボに関する学術レポートに関する調査・考察資料",
     "tags": [
       "学術",
       "Gemini",
@@ -1566,7 +1545,7 @@ window.RESEARCH_DATA = [
     "title": "久高島と沖縄本島の聖地・天文考古学",
     "category": "人類学",
     "source": "https://docs.google.com/document/d/1Ty5MAi8FHYNtUc2SNm8ts9PsaPZMA38icZnctx2MMF0/edit",
-    "summary": "",
+    "summary": "久高島と沖縄本島の聖地・天文考古学に関する調査・考察資料",
     "tags": [
       "人類学",
       "Gemini",
@@ -1580,7 +1559,7 @@ window.RESEARCH_DATA = [
     "title": "事業デューデリジェンス：LongevityAtlas",
     "category": "ビジネス",
     "source": "https://docs.google.com/document/d/1FQDSoIpztPGWR6TagR_NYMdLhIgML2BBgy9QSZedA-I/edit",
-    "summary": "",
+    "summary": "事業デューデリジェンス：LongevityAtlasに関する戦略・事業検討資料",
     "tags": [
       "ビジネス",
       "Gemini",
@@ -1594,7 +1573,7 @@ window.RESEARCH_DATA = [
     "title": "事業プラン：LongevityAtlas",
     "category": "ビジネス",
     "source": "https://docs.google.com/document/d/1h476vETfU9eFJ_PS-xajzvtwzB8n7UEvhNUy1tvnvcM/edit",
-    "summary": "",
+    "summary": "事業プラン：LongevityAtlasに関する戦略・事業検討資料",
     "tags": [
       "ビジネス",
       "Gemini",
@@ -1608,7 +1587,7 @@ window.RESEARCH_DATA = [
     "title": "事業計画書後半部分の作成",
     "category": "ビジネス",
     "source": "https://docs.google.com/document/d/1WlaG1zLv1cGus9Wo19udiTJDVHUZqO0YKrWUCNWdaWg/edit",
-    "summary": "",
+    "summary": "事業計画書後半部分のに関する戦略・事業検討資料",
     "tags": [
       "ビジネス",
       "Gemini",
@@ -1622,7 +1601,7 @@ window.RESEARCH_DATA = [
     "title": "事業計画書後半部分の修正・統合",
     "category": "ビジネス",
     "source": "https://docs.google.com/document/d/1UqE88MlbFR8ZQiW16Ua-OqGZtF-6-_CW5aaFHXCvY7A/edit",
-    "summary": "",
+    "summary": "事業計画書後半部分の修正・統合に関する戦略・事業検討資料",
     "tags": [
       "ビジネス",
       "Gemini",
@@ -1636,7 +1615,7 @@ window.RESEARCH_DATA = [
     "title": "二つの眼で見る：学術的探求",
     "category": "人類学",
     "source": "https://docs.google.com/document/d/1idJgt-FmJBYvjwhQ_6Au1L5UwCKP6SctX-F4eWmVv2c/edit",
-    "summary": "",
+    "summary": "二つの眼で見る：学術的探求に関する調査・考察資料",
     "tags": [
       "人類学",
       "Gemini",
@@ -1648,11 +1627,10 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad96004dwsq",
     "title": "京都フュージョニアリング株式会社_九州 SEED NEXT FORCE",
-    "category": "リサーチ",
+    "category": "学術",
     "source": "https://docs.google.com/document/d/18_M6JHCypyf2O1zal2_CIdSgwfhTQnx1ayzYb7dR91w/edit",
-    "summary": "",
+    "summary": "京都フュージョニアリング株式会社_九州 SEED NEXT FORCEに関する調査・考察資料",
     "tags": [
-      "リサーチ",
       "Gemini",
       "Google Drive"
     ],
@@ -1664,7 +1642,7 @@ window.RESEARCH_DATA = [
     "title": "人工光合成・光化学系触媒市場レポート",
     "category": "テクノロジー",
     "source": "https://docs.google.com/document/d/15Oe8KobnX9zVlm0l2JAnkYOr-G7ehWzFBIh-VXFvy5A/edit",
-    "summary": "",
+    "summary": "人工光合成・光化学系触媒市場レポートに関する調査・考察資料",
     "tags": [
       "テクノロジー",
       "Gemini",
@@ -1678,7 +1656,7 @@ window.RESEARCH_DATA = [
     "title": "人工的自然事例リスト",
     "category": "社会・環境",
     "source": "https://docs.google.com/document/d/1I83pvCrJU8GLXFXvh4ywSaKstFv4Lg5JzsbBtQ32_R0/edit",
-    "summary": "",
+    "summary": "人工的自然事例リストに関する調査・考察資料",
     "tags": [
       "社会・環境",
       "Gemini",
@@ -1692,7 +1670,7 @@ window.RESEARCH_DATA = [
     "title": "人類学「マツタケ」の学術的成果",
     "category": "人類学",
     "source": "https://docs.google.com/document/d/1YQsbpIhhAzTScX3z7eaolNQCKqp4YjZx_XTceFO9fV4/edit",
-    "summary": "",
+    "summary": "人類学「マツタケ」の学術的成果に関する学術的知見の整理",
     "tags": [
       "人類学",
       "Gemini",
@@ -1706,7 +1684,7 @@ window.RESEARCH_DATA = [
     "title": "仮設建築とインフォーマルコミュニケーション",
     "category": "社会・環境",
     "source": "https://docs.google.com/document/d/1O8LlaflL5xBlAcy2IPXOUCrRbNgCh6NbB7_-VwBPZvw/edit",
-    "summary": "",
+    "summary": "仮設建築とインフォーマルコミュニケーションに関する調査・考察資料",
     "tags": [
       "社会・環境",
       "Gemini",
@@ -1720,7 +1698,7 @@ window.RESEARCH_DATA = [
     "title": "仮設建築の恒久化と意味生成研究",
     "category": "社会・環境",
     "source": "https://docs.google.com/document/d/1OCmfZUGuqrILl9mdTqL7aN9Jj-zHoAx4TRtZlHd7XJY/edit",
-    "summary": "",
+    "summary": "仮設建築の恒久化と意味生成研究に関する研究・分析資料",
     "tags": [
       "社会・環境",
       "Gemini",
@@ -1734,7 +1712,7 @@ window.RESEARCH_DATA = [
     "title": "企業サイト構成案の提案",
     "category": "ビジネス",
     "source": "https://docs.google.com/document/d/126-WqxtFEf7GkhC1A2PN7tD0eihTBnh5FY5L6ZDy9GI/edit",
-    "summary": "",
+    "summary": "企業サイト構成案の提案に関する企画・構想の検討資料",
     "tags": [
       "ビジネス",
       "Gemini",
@@ -1748,7 +1726,7 @@ window.RESEARCH_DATA = [
     "title": "企画提案書：esse-sense Future Forum",
     "category": "ビジネス",
     "source": "https://docs.google.com/document/d/1zHwIgBTNIAwoRqR6qazXF44ji8fBvUiaYrHkVo4SV_g/edit",
-    "summary": "",
+    "summary": "企画提案書：esse-sense Future Forumに関する企画・構想の検討資料",
     "tags": [
       "ビジネス",
       "Gemini",
@@ -1762,7 +1740,7 @@ window.RESEARCH_DATA = [
     "title": "伝統知・科学知・倫理の融合から見出す視座",
     "category": "学術",
     "source": "https://docs.google.com/document/d/1-MP_MXS_t2UzRwEgsch7uij4MkK5_WMTS3wQ0ZenoRA/edit",
-    "summary": "",
+    "summary": "伝統知・科学知・倫理の融合から見出す視座に関する調査・考察資料",
     "tags": [
       "学術",
       "Gemini",
@@ -1776,7 +1754,7 @@ window.RESEARCH_DATA = [
     "title": "先端学術知見と仮説の統合レポート",
     "category": "学術",
     "source": "https://docs.google.com/document/d/1GLebH9DYRAFjf0Dl-gE_kiyldoSFppR9G1YMlkWf4vw/edit",
-    "summary": "",
+    "summary": "先端学術知見と仮説の統合レポートに関する調査・考察資料",
     "tags": [
       "学術",
       "Gemini",
@@ -1788,9 +1766,9 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad960057gve",
     "title": "共創人材育成プログラム構想文書",
-    "category": "教育",
+    "category": "学術",
     "source": "https://docs.google.com/document/d/1h47MNddglqJ53LYfGFm13R6wwF6u2KiO_RZSwNn37Tw/edit",
-    "summary": "",
+    "summary": "共創人材育成プログラム構想文書に関する企画・構想の検討資料",
     "tags": [
       "教育",
       "Gemini",
@@ -1804,7 +1782,7 @@ window.RESEARCH_DATA = [
     "title": "内発的動機づけに関する学術レポート",
     "category": "学術",
     "source": "https://docs.google.com/document/d/1yRQa6O3yf31_3pPH6OEzGaprph7ZvRa2650vf2NnhTE/edit",
-    "summary": "",
+    "summary": "内発的動機づけに関する学術レポートに関する調査・考察資料",
     "tags": [
       "学術",
       "Gemini",
@@ -1816,11 +1794,10 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad960059eqm",
     "title": "同様に、まず全文をテキストに書き起こし、その後に概要を加えてください。",
-    "category": "リサーチ",
+    "category": "学術",
     "source": "https://docs.google.com/document/d/1cRmSyDz85x5aoo2olGoDhtZ-FVvfRuC3LSwzn60NUs8/edit",
-    "summary": "",
+    "summary": "「同様に、まず全文をテキストに書き起こし、その後に概要を加え」に関する作業メモ",
     "tags": [
-      "リサーチ",
       "Gemini",
       "Google Drive"
     ],
@@ -1832,7 +1809,7 @@ window.RESEARCH_DATA = [
     "title": "善き社会の考察：歴史と文化の比較",
     "category": "人類学",
     "source": "https://docs.google.com/document/d/1l5_wiYMl3M4kBpqBLJv9Ezkq-2Z4MDuJmuVMEYzHV-o/edit",
-    "summary": "",
+    "summary": "善き社会の考察：歴史と文化の比較の比較分析をまとめた資料",
     "tags": [
       "人類学",
       "Gemini",
@@ -1846,7 +1823,7 @@ window.RESEARCH_DATA = [
     "title": "地球未来学研究センター設立の意義",
     "category": "未来学",
     "source": "https://docs.google.com/document/d/1Js3DA0qOmdG_4EW4FF4wfEsOCQrlreVmw_7ulmz6Jqo/edit",
-    "summary": "",
+    "summary": "地球未来学研究センター設立の意義に関する研究・分析資料",
     "tags": [
       "未来学",
       "Gemini",
@@ -1860,7 +1837,7 @@ window.RESEARCH_DATA = [
     "title": "地球未来学研究センター設立企画案",
     "category": "未来学",
     "source": "https://docs.google.com/document/d/176z1I4H1rHdKkJEV6YDudT3OwXtPjputAPcv2NNc_dU/edit",
-    "summary": "",
+    "summary": "地球未来学研究センター設立企画案に関する企画・構想の検討資料",
     "tags": [
       "未来学",
       "Gemini",
@@ -1874,7 +1851,7 @@ window.RESEARCH_DATA = [
     "title": "基礎科学支援の未来と財団連携",
     "category": "組織・財団",
     "source": "https://docs.google.com/document/d/1Vnc2dUrs21PaMYdN-PdgwZ5r06Ad-VSTtAoG3Dld76I/edit",
-    "summary": "",
+    "summary": "基礎科学支援の未来と財団連携に関する連携・会議資料",
     "tags": [
       "組織・財団",
       "Gemini",
@@ -1886,11 +1863,10 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad96005eewh",
     "title": "報告書とFuture Forum提言",
-    "category": "リサーチ",
+    "category": "学術",
     "source": "https://docs.google.com/document/d/1QhqWfwagmkogI9_5YT_SV8SlON_H1RimwltnHY3taHI/edit",
-    "summary": "",
+    "summary": "報告書とFuture Forum提言の知見をまとめた調査資料",
     "tags": [
-      "リサーチ",
       "Gemini",
       "Google Drive"
     ],
@@ -1902,7 +1878,7 @@ window.RESEARCH_DATA = [
     "title": "太陽光発電市場動向レポート2026",
     "category": "テクノロジー",
     "source": "https://docs.google.com/document/d/1W45XjOjyNjMtg20quRWUk27ZaybXGGGWrrS6yhOGCOA/edit",
-    "summary": "",
+    "summary": "太陽光発電市場動向レポート2026に関する調査・考察資料",
     "tags": [
       "テクノロジー",
       "Gemini",
@@ -1916,7 +1892,7 @@ window.RESEARCH_DATA = [
     "title": "岡山EO向けAI活用経営者育成コース設計",
     "category": "テクノロジー",
     "source": "https://docs.google.com/document/d/1neK8CNl9_PeTlVBHSqk2APF9CRcFsnZ81XMZYZEMSYc/edit",
-    "summary": "",
+    "summary": "岡山EO向けAI活用経営者育成コース設計に関する設計・構想資料",
     "tags": [
       "テクノロジー",
       "Gemini",
@@ -1928,11 +1904,10 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad960061csy",
     "title": "最後のフィードバック部分に集中して詳細にまとめてください",
-    "category": "リサーチ",
+    "category": "学術",
     "source": "https://docs.google.com/document/d/1nTWEzeO75o7_ty_hleJ2lrtdsJTSWEE3ykM9Wp5ub7I/edit",
-    "summary": "",
+    "summary": "最後のフィードバック部分に集中して詳細にまとめてくださいの要点を整理した資料",
     "tags": [
-      "リサーチ",
       "Gemini",
       "Google Drive"
     ],
@@ -1942,11 +1917,10 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad960062lax",
     "title": "最後まですべ書いてください",
-    "category": "リサーチ",
+    "category": "学術",
     "source": "https://docs.google.com/document/d/1n824cPsis_albFxiDuAfEOFhMGJHAEZccGqeT38keu0/edit",
-    "summary": "",
+    "summary": "最後まですべ書いてくださいに関する調査・考察資料",
     "tags": [
-      "リサーチ",
       "Gemini",
       "Google Drive"
     ],
@@ -1958,7 +1932,7 @@ window.RESEARCH_DATA = [
     "title": "月面基地の各ユニット解説",
     "category": "テクノロジー",
     "source": "https://docs.google.com/document/d/1wpjLcCq1q1Y9Jt9GDYEFhq0vum_dRfgaZgwBHr2Sr6c/edit",
-    "summary": "",
+    "summary": "月面基地の各ユニット解説に関する調査・考察資料",
     "tags": [
       "テクノロジー",
       "Gemini",
@@ -1972,7 +1946,7 @@ window.RESEARCH_DATA = [
     "title": "未来学とソーシャルイノベーションの融合",
     "category": "未来学",
     "source": "https://docs.google.com/document/d/137E2mhr3bCv2lVy7m-ve_5lBfGzj0bNzO7qr8EYMtfs/edit",
-    "summary": "",
+    "summary": "未来学とソーシャルイノベーションの融合に関する調査・考察資料",
     "tags": [
       "未来学",
       "Gemini",
@@ -1986,7 +1960,7 @@ window.RESEARCH_DATA = [
     "title": "未来学の再興と日本の未来像",
     "category": "未来学",
     "source": "https://docs.google.com/document/d/14323_dwulbh5CzfutbWhwt9wVv1WOZsCqH4YoJfLMt8/edit",
-    "summary": "",
+    "summary": "未来学の再興と日本の未来像に関する調査・考察資料",
     "tags": [
       "未来学",
       "Gemini",
@@ -2000,7 +1974,7 @@ window.RESEARCH_DATA = [
     "title": "未来学の基礎 第1巻要約",
     "category": "未来学",
     "source": "https://docs.google.com/document/d/1q-Oruuy1LX9aNyanU401wJ-TCyxYU0Mb1kZKpH264ss/edit",
-    "summary": "",
+    "summary": "未来学の基礎 第1巻要約の要点を整理した資料",
     "tags": [
       "未来学",
       "Gemini",
@@ -2014,7 +1988,7 @@ window.RESEARCH_DATA = [
     "title": "未来学の基礎 第2巻要約",
     "category": "未来学",
     "source": "https://docs.google.com/document/d/1gpEZOq5jGIzVXohWzjH2Kv8JfOwMmEW0383pdmMeFU8/edit",
-    "summary": "",
+    "summary": "未来学の基礎 第2巻要約の要点を整理した資料",
     "tags": [
       "未来学",
       "Gemini",
@@ -2028,7 +2002,7 @@ window.RESEARCH_DATA = [
     "title": "未来学カンファレンス企画書「Emerging our Futures 2026」",
     "category": "未来学",
     "source": "https://docs.google.com/document/d/1djrpyRtND-r5tltM7wzFOgGLXIxw7DQqJ8t6p43jDYM/edit",
-    "summary": "",
+    "summary": "未来学カンファレンス企画書「Emerging our Futures 2026」に関する企画・構想の検討資料",
     "tags": [
       "未来学",
       "Gemini",
@@ -2042,7 +2016,7 @@ window.RESEARCH_DATA = [
     "title": "未来学カンファレンス企画書：Emerging our Futures 2026",
     "category": "未来学",
     "source": "https://docs.google.com/document/d/1Nf95lfPpVDTiQiiReG6AIpIi_bE3_Vy7i2A_qPK6YUY/edit",
-    "summary": "",
+    "summary": "未来学カンファレンス企画書：Emerging our Futures 2026に関する企画・構想の検討資料",
     "tags": [
       "未来学",
       "Gemini",
@@ -2056,7 +2030,7 @@ window.RESEARCH_DATA = [
     "title": "未来学再興：身体性・自然・制作への転換",
     "category": "人類学",
     "source": "https://docs.google.com/document/d/1dmxBCBKxwy2s8nUeVOIX3nydrxS-rTU-cPhxBTC2N6E/edit",
-    "summary": "",
+    "summary": "未来学再興：身体性・自然・制作への転換に関する調査・考察資料",
     "tags": [
       "人類学",
       "Gemini",
@@ -2070,7 +2044,7 @@ window.RESEARCH_DATA = [
     "title": "未来学大学院プログラム調査サンプリング",
     "category": "未来学",
     "source": "https://docs.google.com/document/d/1Jg0oZ1jVEwSpIUDrGR-qxbyHP4YySkHXw5TEEWi6ObU/edit",
-    "summary": "",
+    "summary": "未来学大学院プログラム調査サンプリングの知見をまとめた調査資料",
     "tags": [
       "未来学",
       "Gemini",
@@ -2084,7 +2058,7 @@ window.RESEARCH_DATA = [
     "title": "未来学用語集：淡江大学ミーティング",
     "category": "未来学",
     "source": "https://docs.google.com/document/d/1SUY6nqPV6lIYJq9bPvIr5hx4WTTWNw5phfxdxbf20KQ/edit",
-    "summary": "",
+    "summary": "未来学用語集：淡江大学ミーティングに関する調査・考察資料",
     "tags": [
       "未来学",
       "Gemini",
@@ -2098,7 +2072,7 @@ window.RESEARCH_DATA = [
     "title": "未来学研究センター設立企画書",
     "category": "未来学",
     "source": "https://docs.google.com/document/d/18bd6M9yUf1UcMT0pso4hBs8C0r6qeDhSvgrKlE0E_m0/edit",
-    "summary": "",
+    "summary": "未来学研究センター設立企画書に関する企画・構想の検討資料",
     "tags": [
       "未来学",
       "Gemini",
@@ -2112,7 +2086,7 @@ window.RESEARCH_DATA = [
     "title": "未来学連携に向けたブリーフィング資料",
     "category": "未来学",
     "source": "https://docs.google.com/document/d/134LLriZp8OIZ0cjkSkeK1pFiRSJ1GKZV74wq3aWpHz8/edit",
-    "summary": "",
+    "summary": "未来学連携に向けたブリーフィング資料に関する連携・会議資料",
     "tags": [
       "未来学",
       "Gemini",
@@ -2126,7 +2100,7 @@ window.RESEARCH_DATA = [
     "title": "未来学連携に向けた内部資料改訂",
     "category": "未来学",
     "source": "https://docs.google.com/document/d/1ir30ge7Een86bdEkV6zYi_7PokKeaJ7XCAflDBAXScg/edit",
-    "summary": "",
+    "summary": "未来学連携に向けた内部資料改訂に関する連携・会議資料",
     "tags": [
       "未来学",
       "Gemini",
@@ -2140,7 +2114,7 @@ window.RESEARCH_DATA = [
     "title": "未来学：伝統知と科学知の融合",
     "category": "未来学",
     "source": "https://docs.google.com/document/d/1Vi87BNfio-2Ct1xz7ikN5p8GDcoYwmHDCcgiCRCewOU/edit",
-    "summary": "",
+    "summary": "未来学：伝統知と科学知の融合に関する調査・考察資料",
     "tags": [
       "未来学",
       "Gemini",
@@ -2154,7 +2128,7 @@ window.RESEARCH_DATA = [
     "title": "未来技術トレンド調査と分析",
     "category": "未来学",
     "source": "https://docs.google.com/document/d/1aFH9Ohs22aV27kT_Ln4Md36zf9o8Z1YxJia3ohw3vo4/edit",
-    "summary": "",
+    "summary": "未来技術トレンド調査と分析の知見をまとめた調査資料",
     "tags": [
       "未来学",
       "Gemini",
@@ -2168,7 +2142,7 @@ window.RESEARCH_DATA = [
     "title": "未来投資領域の最先端研究動向",
     "category": "未来学",
     "source": "https://docs.google.com/document/d/12Bg9Vmp_Ww-r6cGptxDuW7diNFEjtvmtiohfgsbNi3Q/edit",
-    "summary": "",
+    "summary": "未来投資領域の最先端研究動向に関する研究・分析資料",
     "tags": [
       "未来学",
       "Gemini",
@@ -2182,7 +2156,7 @@ window.RESEARCH_DATA = [
     "title": "森の知性と心の豊かさの探求",
     "category": "人類学",
     "source": "https://docs.google.com/document/d/1O9tc5Q_ezl6mB7D6Gqna7Z2UgbCnbZnN5F3Ut0k2fOA/edit",
-    "summary": "",
+    "summary": "森の知性と心の豊かさの探求に関する調査・考察資料",
     "tags": [
       "人類学",
       "Gemini",
@@ -2196,7 +2170,7 @@ window.RESEARCH_DATA = [
     "title": "植物と昆虫の共生関係の秘密",
     "category": "社会・環境",
     "source": "https://docs.google.com/document/d/1NPu_sAvF5EkPRuMRII6FRzRZMJbCrzJsvqx14I18IZs/edit",
-    "summary": "",
+    "summary": "植物と昆虫の共生関係の秘密に関する調査・考察資料",
     "tags": [
       "社会・環境",
       "Gemini",
@@ -2210,7 +2184,7 @@ window.RESEARCH_DATA = [
     "title": "植物と昆虫の知られざる契約",
     "category": "社会・環境",
     "source": "https://docs.google.com/document/d/1IOoJOwECRvjZZLaE7S7ovbtacXdMkVK9FlRCIuh6I2Q/edit",
-    "summary": "",
+    "summary": "植物と昆虫の知られざる契約に関する調査・考察資料",
     "tags": [
       "社会・環境",
       "Gemini",
@@ -2224,7 +2198,7 @@ window.RESEARCH_DATA = [
     "title": "民間財団連携による研究支援エコシステム構築",
     "category": "組織・財団",
     "source": "https://docs.google.com/document/d/1DgooJFmse3CATdlx8qeB00tQ1ROAJwAWZ487z2aSThY/edit",
-    "summary": "",
+    "summary": "民間財団連携による研究支援エコシステム構築に関する研究・分析資料",
     "tags": [
       "組織・財団",
       "Gemini",
@@ -2236,11 +2210,10 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad960077upy",
     "title": "沖縄とバリの精神文化比較レポート",
-    "category": "リサーチ",
+    "category": "人類学",
     "source": "https://docs.google.com/document/d/1C0XcWfQdHMfFuBD5qgUhlv1J7dRoRKnZMq4AUJSksDk/edit",
-    "summary": "",
+    "summary": "沖縄とバリの精神文化比較レポートの比較分析をまとめた資料",
     "tags": [
-      "リサーチ",
       "Gemini",
       "Google Drive"
     ],
@@ -2252,7 +2225,7 @@ window.RESEARCH_DATA = [
     "title": "海外造船人材育成のベンチマーク",
     "category": "テクノロジー",
     "source": "https://docs.google.com/document/d/13OpB4spdqQYcDAzEnHtXMBPphzRY91CC40QwXF5p1xw/edit",
-    "summary": "",
+    "summary": "海外造船人材育成のベンチマークに関する調査・考察資料",
     "tags": [
       "テクノロジー",
       "Gemini",
@@ -2266,7 +2239,7 @@ window.RESEARCH_DATA = [
     "title": "淡江大学・陳教授とのミーティング資料",
     "category": "学術",
     "source": "https://docs.google.com/document/d/1u_YENuA9p-iw5WoKCyNDTN9XDsKcojcQwGvFaB-HdcU/edit",
-    "summary": "",
+    "summary": "淡江大学・陳教授とのミーティング資料に関する調査・考察資料",
     "tags": [
       "学術",
       "Gemini",
@@ -2280,7 +2253,7 @@ window.RESEARCH_DATA = [
     "title": "環境問題の「数字」で解決する",
     "category": "社会・環境",
     "source": "https://docs.google.com/document/d/11i5jSz-KGC4D45UhRg4iItHa_M6PPQx_gj5jwvDMIXk/edit",
-    "summary": "",
+    "summary": "環境問題の「数字」で解決するに関する調査・考察資料",
     "tags": [
       "社会・環境",
       "Gemini",
@@ -2294,7 +2267,7 @@ window.RESEARCH_DATA = [
     "title": "知的資本市場化のポテンシャルレポート",
     "category": "ビジネス",
     "source": "https://docs.google.com/document/d/1iTQaor84OPEJtWq62K2NP0lR1vhSCsYUX6Mn-_MRfaw/edit",
-    "summary": "",
+    "summary": "知的資本市場化のポテンシャルレポートに関する調査・考察資料",
     "tags": [
       "ビジネス",
       "Gemini",
@@ -2308,7 +2281,7 @@ window.RESEARCH_DATA = [
     "title": "知的資本市場構築へ向けた事業計画",
     "category": "ビジネス",
     "source": "https://docs.google.com/document/d/1QDqIOiBLpPkvD8u6OetXAEwbn7bDY0huQAXhZriV21U/edit",
-    "summary": "",
+    "summary": "知的資本市場構築へ向けた事業計画に関する戦略・事業検討資料",
     "tags": [
       "ビジネス",
       "Gemini",
@@ -2320,11 +2293,10 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad96007dait",
     "title": "研修フィールドワーク実施概要まとめ",
-    "category": "リサーチ",
+    "category": "学術",
     "source": "https://docs.google.com/document/d/1tA-DGm4xwAKMPCX7M0Njs90Ziq7Q9lhqy85GAzUNiiI/edit",
-    "summary": "",
+    "summary": "研修フィールドワーク実施概要まとめの要点を整理した資料",
     "tags": [
-      "リサーチ",
       "Gemini",
       "Google Drive"
     ],
@@ -2336,7 +2308,7 @@ window.RESEARCH_DATA = [
     "title": "研究助成財団連携レポート作成依頼",
     "category": "組織・財団",
     "source": "https://docs.google.com/document/d/1GaToEXM0uMsuORmp7jErkL0GlJuCBFkeVoft5P9Q7ug/edit",
-    "summary": "",
+    "summary": "研究助成財団連携レポートに関する研究・分析資料",
     "tags": [
       "組織・財団",
       "Gemini",
@@ -2350,7 +2322,7 @@ window.RESEARCH_DATA = [
     "title": "研究支援エコシステム再構築の提言",
     "category": "組織・財団",
     "source": "https://docs.google.com/document/d/1wsa2I5eZ0-TIDBC6UkUp2ZYXeUwXCKHhdWU1VH92lh8/edit",
-    "summary": "",
+    "summary": "研究支援エコシステム再構築の提言に関する研究・分析資料",
     "tags": [
       "組織・財団",
       "Gemini",
@@ -2362,11 +2334,10 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad960080qpt",
     "title": "研究者支援企画案の具体化",
-    "category": "リサーチ",
+    "category": "学術",
     "source": "https://docs.google.com/document/d/1TcdnXt9HoYDoKUHlhu03BgRISFzus1Rw6k74Z8aZSZA/edit",
-    "summary": "",
+    "summary": "研究者支援企画案の具体化に関する企画・構想の検討資料",
     "tags": [
-      "リサーチ",
       "Gemini",
       "Google Drive"
     ],
@@ -2378,7 +2349,7 @@ window.RESEARCH_DATA = [
     "title": "神話と未来創造の学際的研究",
     "category": "人類学",
     "source": "https://docs.google.com/document/d/174cC9aSx6VfGoDPkkjMoEeGP7UEs4dcDZvvN55_Blnw/edit",
-    "summary": "",
+    "summary": "神話と未来創造の学際的研究に関する研究・分析資料",
     "tags": [
       "人類学",
       "Gemini",
@@ -2392,7 +2363,7 @@ window.RESEARCH_DATA = [
     "title": "神話の「生きる」を未来へ応用",
     "category": "人類学",
     "source": "https://docs.google.com/document/d/1JLlJf44B3jhbhiY1DScblJ4ZJKsu7qcemzzQxpH-3j0/edit",
-    "summary": "",
+    "summary": "神話の「生きる」を未来へ応用に関する調査・考察資料",
     "tags": [
       "人類学",
       "Gemini",
@@ -2406,7 +2377,7 @@ window.RESEARCH_DATA = [
     "title": "科学と金融の接続性レポート",
     "category": "学術",
     "source": "https://docs.google.com/document/d/1lFW_rDFDvQ86e2f4xfqnhfjHB2qMEjqIDBCEPFdbAsY/edit",
-    "summary": "",
+    "summary": "科学と金融の接続性レポートに関する調査・考察資料",
     "tags": [
       "学術",
       "Gemini",
@@ -2420,7 +2391,7 @@ window.RESEARCH_DATA = [
     "title": "科学と金融の相互理解促進レポート",
     "category": "学術",
     "source": "https://docs.google.com/document/d/1DbJi_UFrK_MkkbEi9kjHGAoBz4705eDX6uf8ajDvsN8/edit",
-    "summary": "",
+    "summary": "科学と金融の相互理解促進レポートに関する調査・考察資料",
     "tags": [
       "学術",
       "Gemini",
@@ -2434,7 +2405,7 @@ window.RESEARCH_DATA = [
     "title": "移動が心身に与える影響に関する学術レポート",
     "category": "学術",
     "source": "https://docs.google.com/document/d/1S9DhjQzSmlC0vIUQzGmy575RABmz_QnCL-KkKuZg2ZE/edit",
-    "summary": "",
+    "summary": "移動が心身に与える影響に関する学術レポートに関する調査・考察資料",
     "tags": [
       "学術",
       "Gemini",
@@ -2448,7 +2419,7 @@ window.RESEARCH_DATA = [
     "title": "移動と自己複雑性レポート",
     "category": "イノベーション",
     "source": "https://docs.google.com/document/d/1osvgx3sP5LrSbRsj2O8GQ9tnlDO34Lh5zLk0581o0FU/edit",
-    "summary": "",
+    "summary": "移動と自己複雑性レポートに関する調査・考察資料",
     "tags": [
       "イノベーション",
       "Gemini",
@@ -2462,7 +2433,7 @@ window.RESEARCH_DATA = [
     "title": "移動の価値再定義とX to Earn",
     "category": "イノベーション",
     "source": "https://docs.google.com/document/d/1L9FuK29u53TFD10TqHjHwkpgXIt6a-SzQAaa7bSHoLU/edit",
-    "summary": "",
+    "summary": "移動の価値再定義とX to Earnに関する調査・考察資料",
     "tags": [
       "イノベーション",
       "Gemini",
@@ -2476,7 +2447,7 @@ window.RESEARCH_DATA = [
     "title": "移動の価値転換と未来ライフスタイル",
     "category": "イノベーション",
     "source": "https://docs.google.com/document/d/1hLMwp-DFP1HOkpD56HxdmEBdt3pbIFU5-_AnSFNxD2U/edit",
-    "summary": "",
+    "summary": "移動の価値転換と未来ライフスタイルに関する調査・考察資料",
     "tags": [
       "イノベーション",
       "Gemini",
@@ -2488,11 +2459,10 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad960089gos",
     "title": "経済学で格差解決の糸口を探る",
-    "category": "リサーチ",
+    "category": "ビジネス",
     "source": "https://docs.google.com/document/d/1sX3dXzrSTDbbn35T-cVfl1qORKS2CCSSm4aZnMoUYg0/edit",
-    "summary": "",
+    "summary": "経済学で格差解決の糸口を探るに関する調査・考察資料",
     "tags": [
-      "リサーチ",
       "Gemini",
       "Google Drive"
     ],
@@ -2504,7 +2474,7 @@ window.RESEARCH_DATA = [
     "title": "経済安全保障指標作成パートナー研究者選定",
     "category": "ビジネス",
     "source": "https://docs.google.com/document/d/15_fW__JwgeM-s68LJe2FRaAR0i2vQWhboom_5Qk5qKc/edit",
-    "summary": "",
+    "summary": "経済安全保障指標作成パートナー研究者選定に関する研究・分析資料",
     "tags": [
       "ビジネス",
       "Gemini",
@@ -2518,7 +2488,7 @@ window.RESEARCH_DATA = [
     "title": "経験の人類学：ターナーとブルーナー",
     "category": "人類学",
     "source": "https://docs.google.com/document/d/19gAM67sDkaVYoFKZsL9VijuFBsJ8MAx59tQbzs3dg3U/edit",
-    "summary": "",
+    "summary": "経験の人類学：ターナーとブルーナーに関する調査・考察資料",
     "tags": [
       "人類学",
       "Gemini",
@@ -2532,7 +2502,7 @@ window.RESEARCH_DATA = [
     "title": "芸術体験における身体的共鳴の神経科学",
     "category": "人類学",
     "source": "https://docs.google.com/document/d/1EthVZpRd_h450zT2tM7GqCK4Fmt5HZyiMZyghyyWorQ/edit",
-    "summary": "",
+    "summary": "芸術体験における身体的共鳴の神経科学に関する調査・考察資料",
     "tags": [
       "人類学",
       "Gemini",
@@ -2546,7 +2516,7 @@ window.RESEARCH_DATA = [
     "title": "虚数で拓く未来学の新地平",
     "category": "未来学",
     "source": "https://docs.google.com/document/d/1rlkPhXTrGBrUCS6EkPXgvGnnk1Jf-Gb6HpECdP1_CXs/edit",
-    "summary": "",
+    "summary": "虚数で拓く未来学の新地平に関する調査・考察資料",
     "tags": [
       "未来学",
       "Gemini",
@@ -2560,7 +2530,7 @@ window.RESEARCH_DATA = [
     "title": "触覚と情報獲得の学術的考察",
     "category": "人類学",
     "source": "https://docs.google.com/document/d/1_nAVwg7_F0c1Grexq8PCAt6j2A_ZhDyURRC2t8zYX4A/edit",
-    "summary": "",
+    "summary": "触覚と情報獲得の学術的考察に関する調査・考察資料",
     "tags": [
       "人類学",
       "Gemini",
@@ -2574,7 +2544,7 @@ window.RESEARCH_DATA = [
     "title": "財団コンソーシアム 第2期総括レポート",
     "category": "組織・財団",
     "source": "https://docs.google.com/document/d/12pNmx4UXdua0GWaUm_Ww0RZUl4U5bdHf3yTR0KpP6lM/edit",
-    "summary": "",
+    "summary": "財団コンソーシアム 第2期総括レポートに関する調査・考察資料",
     "tags": [
       "組織・財団",
       "Gemini",
@@ -2588,7 +2558,7 @@ window.RESEARCH_DATA = [
     "title": "財団連携による研究支援の未来",
     "category": "組織・財団",
     "source": "https://docs.google.com/document/d/1qdMHi_EwBnrff00bPvJVPbqvSesgIZrwYIh9OyurFEg/edit",
-    "summary": "",
+    "summary": "財団連携による研究支援の未来に関する研究・分析資料",
     "tags": [
       "組織・財団",
       "Gemini",
@@ -2602,7 +2572,7 @@ window.RESEARCH_DATA = [
     "title": "造船業再興へロボティクス活用戦略",
     "category": "テクノロジー",
     "source": "https://docs.google.com/document/d/1Nt8xN15T-bJBjkwy1XOam0_DUVFNZUUaTRqi8nT9zXM/edit",
-    "summary": "",
+    "summary": "造船業再興へロボティクス活用戦略に関する戦略・事業検討資料",
     "tags": [
       "テクノロジー",
       "Gemini",
@@ -2616,7 +2586,7 @@ window.RESEARCH_DATA = [
     "title": "野中の野生の思考をまとめる",
     "category": "人類学",
     "source": "https://docs.google.com/document/d/1lDeLS-I9SOqLMxAmeNNoqPf2jBS2SGooTUuAzpYBShc/edit",
-    "summary": "",
+    "summary": "野中の野生の思考をまとめるの要点を整理した資料",
     "tags": [
       "人類学",
       "Gemini",
@@ -2630,7 +2600,7 @@ window.RESEARCH_DATA = [
     "title": "量子コンピューターの未来とビジネス",
     "category": "テクノロジー",
     "source": "https://docs.google.com/document/d/1r24zSA8LQfhrP7U6V65B7vdbMleGQsWxy-C3oiXIYv8/edit",
-    "summary": "",
+    "summary": "量子コンピューターの未来とビジネスに関する調査・考察資料",
     "tags": [
       "テクノロジー",
       "Gemini",
@@ -2642,11 +2612,10 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad960094pvn",
     "title": "金融とアカデミアの未来創造イニシアティブ",
-    "category": "リサーチ",
+    "category": "未来学",
     "source": "https://docs.google.com/document/d/1u-XXOCd14YXxrWMts0qa5j1yDYQOqulSYpGVokXtlDA/edit",
-    "summary": "",
+    "summary": "金融とアカデミアの未来創造イニシアティブに関する調査・考察資料",
     "tags": [
-      "リサーチ",
       "Gemini",
       "Google Drive"
     ],
@@ -2656,11 +2625,10 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8ad960095wzw",
     "title": "阿部俊彦氏 研究調査レポート作成",
-    "category": "リサーチ",
+    "category": "学術",
     "source": "https://docs.google.com/document/d/1QLTOYgShHNVW9PdXWH3GqVRiN1idAo4ZeAxDQ1n4Am8/edit",
-    "summary": "",
+    "summary": "阿部俊彦氏 研究調査レポートの知見をまとめた調査資料",
     "tags": [
-      "リサーチ",
       "Gemini",
       "Google Drive"
     ],
@@ -2672,7 +2640,7 @@ window.RESEARCH_DATA = [
     "title": "風力発電レポート：現状と展望",
     "category": "テクノロジー",
     "source": "https://docs.google.com/document/d/1as4Q2cwMJRN6l66bHWs8GWOm3THzQ-kSEsMrvfCbDjU/edit",
-    "summary": "",
+    "summary": "風力発電レポート：現状と展望に関する調査・考察資料",
     "tags": [
       "テクノロジー",
       "Gemini",
@@ -2686,7 +2654,7 @@ window.RESEARCH_DATA = [
     "title": "高専と造船業再興の人材育成",
     "category": "テクノロジー",
     "source": "https://docs.google.com/document/d/1zFfMXgKnyjoNw0UxOeJoVEbhdlkFAJa9i9lrR5_CoYA/edit",
-    "summary": "",
+    "summary": "高専と造船業再興の人材育成に関する調査・考察資料",
     "tags": [
       "テクノロジー",
       "Gemini",
