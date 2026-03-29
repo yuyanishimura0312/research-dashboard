@@ -1928,10 +1928,10 @@ function renderResearchTab() {
                 <div class="card-tags">${(d.tags || []).filter(t => !NOISE_TAGS.has(t)).slice(0, 4).map(t => `<span class="tag">${esc(t)}</span>`).join('')}${(d.tags || []).filter(t => !NOISE_TAGS.has(t)).length > 4 ? `<span class="tag" style="opacity:0.5">+${(d.tags || []).filter(t => !NOISE_TAGS.has(t)).length - 4}</span>` : ''}</div>
                 <div class="card-date">${formatDate(d.createdAt)}</div>
               </div>
-              ${d.source ? `<div class="card-actions" onclick="event.stopPropagation()">
-                <a class="btn-action" href="${esc(d.source)}" download title="ダウンロード">&#11015; DL</a>
-                <a class="btn-action btn-open" href="${esc(getGoogleDocsUrl(d.source))}" target="_blank" title="Google ドキュメントで開く">&#9654; 開く</a>
-              </div>` : ''}
+              <div class="card-actions" onclick="event.stopPropagation()">
+                <button class="btn-action" onclick="downloadReportMd('${d.id}')" title="Markdownでダウンロード">&#11015; DL</button>
+                ${d.source ? `<a class="btn-action btn-open" href="${esc(getGoogleDocsUrl(d.source))}" target="_blank" title="開く">&#9654; 開く</a>` : `<button class="btn-action btn-open" onclick="openNewGoogleDoc('${d.id}')" title="Google Docsで開く">&#9654; 開く</button>`}
+              </div>
             </div>
           `).join('')}
         </div>
@@ -4423,6 +4423,31 @@ function drawMiniGraph(center, related) {
 }
 
 // Export / Import
+// Download report as Markdown
+function downloadReportMd(id) {
+  const d = loadData().find(x => x.id === id);
+  if (!d) return;
+  const tags = (d.tags||[]).filter(t => !NOISE_TAGS.has(t));
+  const text = d.summary || '';
+  const md = `# ${d.title}\n\n**Category:** ${d.category||''}\n**Date:** ${formatDate(d.createdAt)}\n**Status:** ${(STATUS_MAP[d.status||'investigating']||{}).label||d.status}\n**Tags:** ${tags.join(', ')}\n\n---\n\n${text}\n`;
+  const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${d.title.replace(/[\/\\:*?"<>|]/g, '_')}.md`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// Open content as new Google Doc
+function openNewGoogleDoc(id) {
+  const d = loadData().find(x => x.id === id);
+  if (!d) return;
+  const title = encodeURIComponent(d.title);
+  const body = encodeURIComponent(d.summary || '');
+  window.open(`https://docs.google.com/document/create?title=${title}&body=${body}`, '_blank');
+}
+
 function exportData() {
   const blob = new Blob([JSON.stringify(loadData(), null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
