@@ -10512,5 +10512,44 @@
     ],
     "createdAt": "2025-02-19T22:54:21.750211+00:00",
     "updatedAt": "2025-02-19T22:54:21.750211+00:00"
+  },
+  {
+    "id": "69c8b563fxr7hu",
+    "title": "リサーチダッシュボード世界ベンチマーク調査（40+ツール）",
+    "category": "テクノロジー",
+    "status": "done",
+    "source": "",
+    "summary": "4チーム並列調査で40以上のツールを分析。\n■ PKMツール(12種): Notion AI Agent/Obsidian Bases/Heptabase PDF/Capacitiesオブジェクト型/Tana Supertags/Mem.ai自動整理/Reflectグラフ全体AI/Anytype P2P暗号化\n■ 可視化(10種): Connected Papers共引用グラフ/Litmaps SPECTER+UMAP/Elicit文レベル引用/TheBrain流体ナビ/Kumu媒介中心性+コミュニティ検出\n■ AI機能(10種): NotebookLMソース横断分析+ポッドキャスト/Perplexity Model Council/ChatGPT Deep Research MCP/Readwise Ghostreader/Glasp AIクローン/Napkin AIテキスト→ビジュアル\n■ 分析(7種): Exist.io相関エンジン/Gyroscope統合スコア/Daylio 2タップ+Year in Pixels/GitHubヒートマップ教訓/Obsidian Dataview熟成ノート検出/ナラティブダッシュボード\n■ トレンド: エージェント型AI/ローカルファースト復権/MCP標準化/RAG高度化(GraphRAG)",
+    "tags": [
+      "ベンチマーク",
+      "PKM",
+      "AI",
+      "可視化",
+      "ナレッジグラフ",
+      "ダッシュボード設計"
+    ],
+    "createdAt": "2026-03-29T05:15:15.500271+00:00",
+    "updatedAt": "2026-03-29T05:15:15.500271+00:00"
+  },
+  {
+    "id": "69c8b5c64wbt40",
+    "title": "ナレッジグラフ高度化のための世界先進事例調査2026",
+    "category": "テクノロジー",
+    "status": "investigating",
+    "source": "",
+    "summary": "762件規模の個人リサーチダッシュボード向けに、世界最先端のナレッジグラフ可視化・アルゴリズム技術を網羅的に調査。主要な知見：(1) Sigma.js v3 + Graphology がWebGLベースで最も実用的な選択肢、(2) UMAP + HDBSCANによるセマンティック自動配置がforce-directedを補完、(3) セマンティックズーム（3段階の抽象度切替）が700+エントリの認知負荷を劇的に削減、(4) Cosmograph（GPU加速）で100万ノード対応が可能、(5) Leiden Algorithm がLouvainの改良版として連結性を保証、(6) 重い計算はPython前処理→JSON→ブラウザ描画のハイブリッド設計が最適。参考ツール：Obsidian 3D Graph、TheBrain、Kumu、Connected Papers、Gephi Lite、Atlas(Nomic AI)。",
+    "tags": [
+      "ナレッジグラフ",
+      "可視化",
+      "Sigma.js",
+      "UMAP",
+      "WebGL",
+      "セマンティックズーム",
+      "Graphology",
+      "ベンチマーク",
+      "auto-research"
+    ],
+    "createdAt": "2026-03-29T05:16:54.301227+00:00",
+    "updatedAt": "2026-03-29T05:16:54.301227+00:00"
   }
 ]
