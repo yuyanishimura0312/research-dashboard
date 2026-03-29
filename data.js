@@ -930,20 +930,6 @@ window.RESEARCH_DATA = [
     "updatedAt": "2026-02-23T22:19:34+00:00"
   },
   {
-    "id": "69c8ad94001axrk",
-    "title": "freewill経営再建の決断",
-    "category": "ビジネス",
-    "source": "https://docs.google.com/document/d/1sB-bw8bmYYwnSWh_VwUIQaVHg9742wBu7n2rWkXJBqI/edit",
-    "summary": "freewill経営再建の決断に関する調査・考察資料",
-    "tags": [
-      "ビジネス",
-      "Gemini",
-      "Google Drive"
-    ],
-    "createdAt": "2026-01-30T02:41:22+00:00",
-    "updatedAt": "2026-01-30T02:41:22+00:00"
-  },
-  {
     "id": "69c8ad94001biia",
     "title": "「森は考える」の学術的成果",
     "category": "人類学",
