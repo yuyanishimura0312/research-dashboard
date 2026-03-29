@@ -1205,20 +1205,30 @@ const STATUS_MAP = {
   done:          { label: '完了',   color: 'var(--status-done)' },
 };
 
-// ===== Data layer =====
+// ===== Data layer (cached to avoid repeated JSON parsing) =====
+let _dataCache = null;
+let _dataCacheDirty = true;
+
 function loadData() {
+  if (!_dataCacheDirty && _dataCache) return _dataCache;
   const fileData = Array.isArray(window.RESEARCH_DATA) ? window.RESEARCH_DATA : [];
   let localData;
   try { localData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { localData = []; }
 
   const merged = new Map();
-  // localStorage first, then data.js overwrites — file is always authoritative
   localData.forEach(e => merged.set(e.id, e));
   fileData.forEach(e => merged.set(e.id, e));
-  return Array.from(merged.values());
+  _dataCache = Array.from(merged.values());
+  _dataCacheDirty = false;
+  return _dataCache;
 }
 
-function saveData(data) { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
+function saveData(data) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  _dataCache = data;
+  _dataCacheDirty = false;
+  cachedDataHash = ''; // invalidate similarity cache
+}
 function generateId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
 
 function formatDate(iso) {
@@ -1236,9 +1246,13 @@ function getAllCategories() {
   return [...new Set(loadData().map(d => d.category).filter(Boolean))].sort();
 }
 
+const NOISE_TAGS = new Set(['Gemini', 'Google Drive', 'auto-research']);
+
 function getAllTags() {
   const tc = {};
-  loadData().forEach(d => (d.tags || []).forEach(t => { tc[t] = (tc[t] || 0) + 1; }));
+  loadData().forEach(d => (d.tags || []).forEach(t => {
+    if (!NOISE_TAGS.has(t)) tc[t] = (tc[t] || 0) + 1;
+  }));
   return Object.entries(tc).sort((a, b) => b[1] - a[1]);
 }
 
@@ -1478,7 +1492,7 @@ function renderResearchTab() {
               ${d.source ? `<div class="card-source"><a href="${esc(d.source)}" target="_blank" onclick="event.stopPropagation()">${esc(safeHostname(d.source))}</a></div>` : ''}
               ${d.summary ? `<div class="card-summary">${esc(d.summary)}</div>` : ''}
               <div class="card-meta">
-                <div class="card-tags">${(d.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>
+                <div class="card-tags">${(d.tags || []).filter(t => !NOISE_TAGS.has(t)).slice(0, 4).map(t => `<span class="tag">${esc(t)}</span>`).join('')}${(d.tags || []).filter(t => !NOISE_TAGS.has(t)).length > 4 ? `<span class="tag" style="opacity:0.5">+${(d.tags || []).filter(t => !NOISE_TAGS.has(t)).length - 4}</span>` : ''}</div>
                 <div class="card-date">${formatDate(d.createdAt)}</div>
               </div>
               ${d.source ? `<div class="card-actions" onclick="event.stopPropagation()">
@@ -1751,7 +1765,15 @@ function onSimThresholdChange() {
 
 function rebuildAndRender() {
   buildGraph();
-  for (let i = 0; i < 120; i++) simulateGraph();
+  let left = 120;
+  function batch() {
+    const n = Math.min(20, left);
+    for (let i = 0; i < n; i++) simulateGraph();
+    left -= n;
+    drawGraph();
+    if (left > 0) requestAnimationFrame(batch);
+  }
+  batch();
 }
 
 const COMMUNITY_PALETTE = [
@@ -2297,9 +2319,17 @@ function renderGraph() {
 
   if (GRAPH.animFrame) cancelAnimationFrame(GRAPH.animFrame);
 
-  // Warm up simulation
-  for (let i = 0; i < 120; i++) simulateGraph();
-  graphAnimLoop();
+  // Warm up in batches to avoid blocking UI
+  let warmupLeft = 120;
+  function warmupBatch() {
+    const batchSize = Math.min(20, warmupLeft);
+    for (let i = 0; i < batchSize; i++) simulateGraph();
+    warmupLeft -= batchSize;
+    drawGraph();
+    if (warmupLeft > 0) requestAnimationFrame(warmupBatch);
+    else graphAnimLoop();
+  }
+  warmupBatch();
 }
 
 function graphZoom(factor) {
@@ -2311,8 +2341,7 @@ function graphReset() {
   GRAPH.scale = 1;
   GRAPH.offsetX = 0;
   GRAPH.offsetY = 0;
-  buildGraph();
-  for (let i = 0; i < 120; i++) simulateGraph();
+  rebuildAndRender();
 }
 
 // Graph mouse interactions
@@ -2758,19 +2787,37 @@ function renderClusterSummary(data) {
 
 // ===== Similarity Matrix Tab =====
 function renderSimMatrix() {
-  const data = loadData();
+  const allData = loadData();
   const container = document.getElementById('simMatrixContainer');
-  if (!container || data.length < 2) {
+  if (!container || allData.length < 2) {
     if (container) container.innerHTML = '<p style="color:var(--text-muted);padding:20px;">Need at least 2 entries.</p>';
     return;
   }
 
-  const matrix = getSimMatrix(data);
-  // Build NxN grid
+  // Limit to top 40 entries with highest connectivity to keep rendering fast
+  const matrix = getSimMatrix(allData);
+  const connScore = new Float64Array(allData.length);
+  matrix.forEach(({ i, j, sim }) => { connScore[i] += sim; connScore[j] += sim; });
+  const indices = Array.from({ length: allData.length }, (_, i) => i)
+    .sort((a, b) => connScore[b] - connScore[a])
+    .slice(0, 40);
+  const indexSet = new Set(indices);
+  const data = indices.map(i => allData[i]);
+  const idxMap = new Map(indices.map((orig, i) => [orig, i]));
+
+  if (allData.length > 40) {
+    container.innerHTML = `<p style="color:var(--text-muted);font-size:0.8rem;margin-bottom:12px;">Showing top 40 most connected entries out of ${allData.length}. Full matrix would be ${allData.length}×${allData.length} = ${(allData.length*allData.length).toLocaleString()} cells.</p>`;
+  } else {
+    container.innerHTML = '';
+  }
+
   const n = data.length;
   const grid = Array.from({ length: n }, () => new Float64Array(n));
   for (let i = 0; i < n; i++) grid[i][i] = 1;
-  matrix.forEach(({ i, j, sim }) => { grid[i][j] = sim; grid[j][i] = sim; });
+  matrix.forEach(({ i, j, sim }) => {
+    const mi = idxMap.get(i), mj = idxMap.get(j);
+    if (mi !== undefined && mj !== undefined) { grid[mi][mj] = sim; grid[mj][mi] = sim; }
+  });
 
   // Color scale: white (0) -> yellow (0.3) -> orange (0.6) -> red (1)
   function simColor(v) {
@@ -2805,7 +2852,7 @@ function renderSimMatrix() {
     html += '</tr>';
   });
   html += '</table>';
-  container.innerHTML = html;
+  container.insertAdjacentHTML('beforeend', html);
 }
 
 function renderAll() {
@@ -3123,9 +3170,9 @@ document.addEventListener('keydown', e => {
   if (e.key === 'n' && !e.ctrlKey && !e.metaKey && document.activeElement === document.body) openAddModal();
 });
 
-// Init
+// Init — only render the active tab on startup, defer heavy tabs
 setupGraphEvents();
-renderAll();
+renderOverview();
 </script>
 </body>
 </html>
