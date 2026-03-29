@@ -359,6 +359,88 @@
   .card-source a { color: var(--accent); text-decoration: none; }
   .card-source a:hover { text-decoration: underline; }
 
+  /* Action buttons on cards */
+  .card-actions {
+    display: flex;
+    gap: 6px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+  }
+
+  .card-actions .btn-action {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 6px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--card);
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-decoration: none;
+  }
+
+  .card-actions .btn-action:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .card-actions .btn-action.btn-open {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .card-actions .btn-action.btn-open:hover {
+    background: var(--accent);
+    color: white;
+  }
+
+  /* Detail modal action buttons */
+  .detail-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+
+  .detail-actions .btn-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--card);
+    color: var(--text);
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-decoration: none;
+  }
+
+  .detail-actions .btn-action:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .detail-actions .btn-action.btn-open {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+  }
+
+  .detail-actions .btn-action.btn-open:hover {
+    background: #1e4a1a;
+  }
+
   /* List view */
   .list-view { display: flex; flex-direction: column; gap: 6px; }
 
@@ -511,6 +593,134 @@
   .empty-state .icon { font-size: 2.5rem; margin-bottom: 12px; }
   .empty-state p { font-size: 0.9rem; }
 
+  /* Similarity matrix heatmap */
+  .sim-matrix { border-collapse: collapse; font-size: 0.72rem; }
+  .sim-matrix th {
+    padding: 6px 4px;
+    font-weight: 600;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--text-muted);
+  }
+  .sim-matrix th.row-label { text-align: right; padding-right: 10px; }
+  .sim-matrix th.col-label { writing-mode: vertical-lr; text-align: left; padding-bottom: 8px; transform: rotate(180deg); height: 90px; }
+  .sim-matrix td {
+    width: 36px; height: 32px;
+    text-align: center;
+    font-size: 0.65rem;
+    border: 1px solid rgba(255,255,255,0.6);
+    cursor: default;
+    position: relative;
+    transition: transform 0.1s;
+  }
+  .sim-matrix td:hover { transform: scale(1.15); z-index: 2; box-shadow: 0 0 6px rgba(0,0,0,0.2); }
+  .sim-matrix td.diagonal { background: var(--accent) !important; color: #fff; font-weight: 700; }
+
+  .related-entries { margin-top: 16px; }
+  .related-entry {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px;
+    margin-bottom: 6px; cursor: pointer; transition: background 0.15s;
+  }
+  .related-entry:hover { background: var(--accent-light); }
+  .related-entry .re-title { font-size: 0.85rem; font-weight: 500; }
+  .related-entry .re-sim { font-size: 0.72rem; color: var(--accent); font-weight: 700; }
+
+  /* Analytics */
+  .analytics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .analytics-full { margin-bottom: 16px; }
+
+  .insight-card {
+    padding: 14px 18px;
+    border-left: 3px solid var(--accent);
+    background: var(--accent-light);
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 10px;
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+  .insight-card .insight-type {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .insight-card.warning { border-left-color: var(--status-investigating); background: #fef5e7; }
+  .insight-card.success { border-left-color: var(--status-done); }
+  .insight-card.info { border-left-color: var(--status-reading); background: #eaf2f8; }
+
+  .keyword-list { display: flex; gap: 6px; flex-wrap: wrap; }
+  .keyword {
+    background: var(--accent-light);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .keyword .kw-score { font-weight: 400; opacity: 0.6; margin-left: 4px; }
+
+  .bridge-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 6px;
+    font-size: 0.82rem;
+  }
+  .bridge-item .bridge-cats { display: flex; gap: 4px; flex-wrap: wrap; }
+  .bridge-item .bridge-score { font-size: 0.72rem; color: var(--accent); font-weight: 700; }
+
+  .velocity-bar-row { display: flex; align-items: flex-end; gap: 3px; height: 100px; }
+  .velocity-bar {
+    flex: 1;
+    min-width: 16px;
+    background: var(--accent);
+    border-radius: 3px 3px 0 0;
+    position: relative;
+    transition: height 0.3s;
+  }
+  .velocity-bar:hover { opacity: 0.8; }
+  .velocity-bar .vb-label {
+    position: absolute;
+    bottom: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .velocity-bar .vb-count {
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .radar-svg { display: block; margin: 0 auto; }
+
+  .gap-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 14px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 6px;
+    font-size: 0.82rem;
+  }
+  .gap-item .gap-label { font-weight: 500; }
+  .gap-item .gap-meta { font-size: 0.72rem; color: var(--text-muted); }
+  .gap-item.stale { border-left: 3px solid var(--status-investigating); }
+
   /* Knowledge Graph */
   .graph-container {
     position: relative;
@@ -568,6 +778,36 @@
   .graph-tooltip .tt-type { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 4px; }
   .graph-tooltip .tt-detail { font-size: 0.78rem; color: var(--text-muted); }
   .graph-tooltip .tt-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px; }
+  .graph-tooltip .tt-sim { font-size: 0.72rem; color: var(--accent); margin-top: 4px; font-weight: 600; }
+
+  .graph-controls {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 10;
+    background: rgba(255,255,255,0.92);
+    padding: 10px 14px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+
+  .graph-controls label { font-size: 0.72rem; color: var(--text-muted); font-weight: 600; }
+
+  .graph-controls input[type="range"] {
+    width: 140px;
+    accent-color: var(--accent);
+  }
+
+  .graph-controls .range-row { display: flex; align-items: center; gap: 6px; }
+  .graph-controls .range-val { font-size: 0.72rem; color: var(--accent); font-weight: 700; min-width: 30px; }
+
+  .sim-edge-label {
+    font-size: 8px;
+    fill: rgba(192, 57, 43, 0.6);
+  }
 
   @media (max-width: 768px) {
     header { padding: 12px 16px; flex-direction: column; gap: 10px; }
@@ -602,6 +842,8 @@
     <button class="tab-btn active" data-tab="overview" onclick="switchTab('overview')">Overview</button>
     <button class="tab-btn" data-tab="research" onclick="switchTab('research')">Research</button>
     <button class="tab-btn" data-tab="graph" onclick="switchTab('graph')">Knowledge Graph</button>
+    <button class="tab-btn" data-tab="analytics" onclick="switchTab('analytics')">Analytics</button>
+    <button class="tab-btn" data-tab="heatmap" onclick="switchTab('heatmap')">Similarity Matrix</button>
     <button class="tab-btn" data-tab="timeline" onclick="switchTab('timeline')">Timeline</button>
   </div>
 
@@ -717,18 +959,104 @@
         <button class="btn btn-sm" onclick="graphZoom(0.8)" title="Zoom Out">-</button>
         <button class="btn btn-sm" onclick="graphReset()" title="Reset">Reset</button>
       </div>
+      <div class="graph-controls">
+        <label>Similarity Threshold</label>
+        <div class="range-row">
+          <input type="range" id="simThreshold" min="0" max="80" value="20" oninput="onSimThresholdChange()">
+          <span class="range-val" id="simThresholdVal">0.20</span>
+        </div>
+        <label style="margin-top:4px;">Show</label>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <label style="font-weight:400;font-size:0.72rem;display:flex;align-items:center;gap:3px;">
+            <input type="checkbox" id="showTags" checked onchange="rebuildAndRender()"> Tags
+          </label>
+          <label style="font-weight:400;font-size:0.72rem;display:flex;align-items:center;gap:3px;">
+            <input type="checkbox" id="showCats" checked onchange="rebuildAndRender()"> Categories
+          </label>
+          <label style="font-weight:400;font-size:0.72rem;display:flex;align-items:center;gap:3px;">
+            <input type="checkbox" id="showSim" checked onchange="rebuildAndRender()"> Similarity
+          </label>
+        </div>
+        <label style="margin-top:4px;">Focus Hops</label>
+        <div class="range-row">
+          <input type="range" id="focusHops" min="1" max="4" value="2" oninput="GRAPH.focusHops=parseInt(this.value);document.getElementById('focusHopsVal').textContent=this.value">
+          <span class="range-val" id="focusHopsVal">2</span>
+        </div>
+        <button class="btn btn-sm" onclick="GRAPH.focusNode=null" style="font-size:0.68rem;">Clear Focus</button>
+      </div>
       <canvas id="graphCanvas" class="graph-canvas"></canvas>
-      <div class="graph-legend">
-        <div class="graph-legend-item"><div class="graph-legend-dot" style="background:#2d5a27"></div>Research</div>
+      <div class="graph-legend" id="graphLegend">
         <div class="graph-legend-item"><div class="graph-legend-dot" style="background:#e67e22"></div>Category</div>
         <div class="graph-legend-item"><div class="graph-legend-dot" style="background:#3498db"></div>Tag</div>
+        <div class="graph-legend-item"><div class="graph-legend-dot" style="background:rgba(192,57,43,0.6);border:1px dashed #c0392b"></div>BM25 Similarity</div>
+        <span style="opacity:0.5">| Research = community color + PageRank size | Click: focus | DblClick: open</span>
       </div>
       <div class="graph-tooltip" id="graphTooltip">
         <div class="tt-type" id="ttType"></div>
         <div class="tt-title" id="ttTitle"></div>
         <div class="tt-detail" id="ttDetail"></div>
         <div class="tt-tags" id="ttTags"></div>
+        <div class="tt-sim" id="ttSim"></div>
       </div>
+    </div>
+  </div>
+
+  <!-- ========== ANALYTICS TAB ========== -->
+  <div class="tab-panel" id="tab-analytics">
+    <!-- Auto Insights -->
+    <div class="viz-panel analytics-full">
+      <h3>Auto Insights</h3>
+      <div id="insightsContainer"></div>
+    </div>
+
+    <div class="analytics-grid">
+      <!-- Research Velocity -->
+      <div class="viz-panel">
+        <h3>Research Velocity (past 6 months)</h3>
+        <div class="velocity-bar-row" id="velocityChart" style="margin-bottom:24px;"></div>
+      </div>
+
+      <!-- Topic Radar -->
+      <div class="viz-panel">
+        <h3>Category Depth Radar</h3>
+        <svg id="radarChart" class="radar-svg" width="280" height="280"></svg>
+      </div>
+    </div>
+
+    <div class="analytics-grid">
+      <!-- Global Keywords -->
+      <div class="viz-panel">
+        <h3>Key Terms (BM25 Extracted)</h3>
+        <div class="keyword-list" id="globalKeywords"></div>
+      </div>
+
+      <!-- Bridge Analysis -->
+      <div class="viz-panel">
+        <h3>Bridge Entries (Cross-Category)</h3>
+        <div id="bridgeAnalysis"></div>
+      </div>
+    </div>
+
+    <div class="analytics-grid">
+      <!-- Research Gaps -->
+      <div class="viz-panel">
+        <h3>Research Gaps &amp; Stale Topics</h3>
+        <div id="gapAnalysis"></div>
+      </div>
+
+      <!-- Cluster Summary -->
+      <div class="viz-panel">
+        <h3>Topic Clusters</h3>
+        <div id="clusterSummary"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== SIMILARITY MATRIX TAB ========== -->
+  <div class="tab-panel" id="tab-heatmap">
+    <div class="viz-panel">
+      <h3>Similarity Matrix (BM25 Cosine)</h3>
+      <div id="simMatrixContainer" style="overflow-x:auto;"></div>
     </div>
   </div>
 
@@ -859,6 +1187,23 @@ function statusBadgeHTML(status) {
 
 function safeHostname(url) {
   try { return new URL(url).hostname; } catch { return url; }
+}
+
+function getGoogleDocsUrl(source) {
+  // file:// URL → Google Drive上のファイル名を抽出して Google Drive検索URLを生成
+  // Google Drive上のdocxは、Drive Web UIで開くとGoogle Docsとして閲覧できる
+  if (!source) return '#';
+  if (source.startsWith('https://docs.google.com') || source.startsWith('https://drive.google.com')) {
+    return source; // 既にGoogle URLならそのまま
+  }
+  // ファイル名を抽出してGoogle Driveで検索
+  try {
+    const parts = source.replace('file://', '').split('/');
+    const filename = decodeURIComponent(parts[parts.length - 1]);
+    return `https://drive.google.com/drive/search?q=${encodeURIComponent(filename)}`;
+  } catch {
+    return 'https://drive.google.com';
+  }
 }
 
 // ===== Tab navigation =====
@@ -1062,6 +1407,10 @@ function renderResearchTab() {
           <div class="card-tags">${(d.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>
           <div class="card-date">${formatDate(d.createdAt)}</div>
         </div>
+        ${d.source ? `<div class="card-actions" onclick="event.stopPropagation()">
+          <a class="btn-action" href="${esc(d.source)}" download title="ダウンロード">&#11015; DL</a>
+          <a class="btn-action btn-open" href="${esc(getGoogleDocsUrl(d.source))}" target="_blank" title="Google ドキュメントで開く">&#9654; 開く</a>
+        </div>` : ''}
       </div>
     `).join('');
   } else {
@@ -1122,11 +1471,11 @@ function renderTimeline() {
 
 // ===== Knowledge Graph =====
 const GRAPH = {
-  nodes: [], edges: [], // { id, label, type, x, y, vx, vy, radius, color, data }
+  nodes: [], edges: [], communities: [],
   scale: 1, offsetX: 0, offsetY: 0,
   dragNode: null, isPanning: false, panStart: null,
-  hoveredNode: null, animFrame: null,
-  width: 0, height: 0,
+  hoveredNode: null, focusNode: null, focusHops: 2,
+  animFrame: null, width: 0, height: 0,
 };
 
 const NODE_COLORS = {
@@ -1135,11 +1484,209 @@ const NODE_COLORS = {
   tag: '#3498db',
 };
 
+// ===== BM25 Vectorization Engine =====
+function tokenize(text) {
+  if (!text) return [];
+  const tokens = [];
+  const clean = text.toLowerCase().replace(/[\s\n\r]+/g, ' ').trim();
+  for (let n = 2; n <= 3; n++) {
+    for (let i = 0; i <= clean.length - n; i++) {
+      const gram = clean.slice(i, i + n);
+      if (!/^\s*$/.test(gram)) tokens.push(gram);
+    }
+  }
+  const words = clean.split(/[\s,、。．.!！?？・\-—:：;；()（）\[\]「」『』]+/).filter(w => w.length >= 2);
+  tokens.push(...words);
+  return tokens;
+}
+
+function computeBM25Vectors(documents, k1 = 1.5, b = 0.75) {
+  const n = documents.length;
+  if (n === 0) return [];
+  const tokenized = documents.map(d => tokenize(d));
+  const avgDl = tokenized.reduce((s, t) => s + t.length, 0) / n;
+
+  // Document frequencies
+  const df = {};
+  tokenized.forEach(tokens => {
+    const seen = new Set(tokens);
+    seen.forEach(t => { df[t] = (df[t] || 0) + 1; });
+  });
+
+  // BM25 vectors
+  return tokenized.map(tokens => {
+    const freq = {};
+    tokens.forEach(t => { freq[t] = (freq[t] || 0) + 1; });
+    const dl = tokens.length;
+    const vec = {};
+    for (const [term, tf] of Object.entries(freq)) {
+      const idf = Math.log((n - (df[term] || 0) + 0.5) / ((df[term] || 0) + 0.5) + 1);
+      vec[term] = idf * ((tf * (k1 + 1)) / (tf + k1 * (1 - b + b * (dl / avgDl))));
+    }
+    return vec;
+  });
+}
+
+function cosineSimilarity(a, b) {
+  let dot = 0, magA = 0, magB = 0;
+  for (const k of Object.keys(a)) {
+    const vb = b[k];
+    if (vb !== undefined) dot += a[k] * vb;
+    magA += a[k] * a[k];
+  }
+  for (const k of Object.keys(b)) magB += b[k] * b[k];
+  if (magA === 0 || magB === 0) return 0;
+  return dot / (Math.sqrt(magA) * Math.sqrt(magB));
+}
+
+function computeSimilarityMatrix(data) {
+  const docs = data.map(d =>
+    [d.title, d.title, d.category, d.summary, (d.tags || []).join(' ')].filter(Boolean).join(' ')
+  );
+  const vectors = computeBM25Vectors(docs);
+  const matrix = [];
+  for (let i = 0; i < data.length; i++) {
+    for (let j = i + 1; j < data.length; j++) {
+      const sim = cosineSimilarity(vectors[i], vectors[j]);
+      if (sim > 0.01) matrix.push({ i, j, sim });
+    }
+  }
+  return matrix;
+}
+
+let cachedSimMatrix = null;
+let cachedDataHash = '';
+
+function getSimMatrix(data) {
+  const hash = data.map(d => d.id + (d.updatedAt || '')).sort().join(',');
+  if (hash !== cachedDataHash) {
+    cachedSimMatrix = computeSimilarityMatrix(data);
+    cachedDataHash = hash;
+  }
+  return cachedSimMatrix;
+}
+
+function getRelatedEntries(entryId, topN = 5) {
+  const data = loadData();
+  const idx = data.findIndex(d => d.id === entryId);
+  if (idx < 0) return [];
+  const matrix = getSimMatrix(data);
+  const related = matrix
+    .filter(m => m.i === idx || m.j === idx)
+    .map(m => ({ entry: data[m.i === idx ? m.j : m.i], sim: m.sim }))
+    .sort((a, b) => b.sim - a.sim)
+    .slice(0, topN);
+  return related;
+}
+
+// ===== Louvain Community Detection =====
+function louvainCommunities(nodes, edges) {
+  const n = nodes.length;
+  if (n === 0) return [];
+  const community = Array.from({ length: n }, (_, i) => i);
+  const adjW = Array.from({ length: n }, () => ({}));
+  let totalW = 0;
+
+  edges.forEach(e => {
+    const w = e.strength || 1;
+    adjW[e.source][e.target] = (adjW[e.source][e.target] || 0) + w;
+    adjW[e.target][e.source] = (adjW[e.target][e.source] || 0) + w;
+    totalW += 2 * w;
+  });
+
+  if (totalW === 0) return community;
+  const ki = Array.from({ length: n }, (_, i) =>
+    Object.values(adjW[i]).reduce((s, v) => s + v, 0)
+  );
+
+  // Iterate
+  for (let iter = 0; iter < 10; iter++) {
+    let moved = false;
+    for (let i = 0; i < n; i++) {
+      const currentComm = community[i];
+      // Compute neighbors' communities
+      const commDelta = {};
+      for (const [j, w] of Object.entries(adjW[i])) {
+        const c = community[parseInt(j)];
+        commDelta[c] = (commDelta[c] || 0) + w;
+      }
+      // Sum of weights in each community
+      const commTotals = {};
+      for (let j = 0; j < n; j++) {
+        commTotals[community[j]] = (commTotals[community[j]] || 0) + ki[j];
+      }
+
+      let bestComm = currentComm;
+      let bestGain = 0;
+      for (const [c, sumIn] of Object.entries(commDelta)) {
+        const cInt = parseInt(c);
+        const totC = (commTotals[cInt] || 0) - (cInt === currentComm ? ki[i] : 0);
+        const gain = sumIn / totalW - (ki[i] * totC) / (totalW * totalW);
+        if (gain > bestGain) { bestGain = gain; bestComm = cInt; }
+      }
+      if (bestComm !== currentComm) { community[i] = bestComm; moved = true; }
+    }
+    if (!moved) break;
+  }
+
+  // Renumber communities to 0,1,2,...
+  const uniqueComms = [...new Set(community)];
+  const remap = {};
+  uniqueComms.forEach((c, i) => { remap[c] = i; });
+  return community.map(c => remap[c]);
+}
+
+// ===== PageRank =====
+function computePageRank(nodeCount, edges, damping = 0.85, iterations = 20) {
+  const rank = new Float64Array(nodeCount).fill(1 / nodeCount);
+  const outDeg = new Float64Array(nodeCount);
+  edges.forEach(e => { outDeg[e.source]++; outDeg[e.target]++; });
+
+  for (let iter = 0; iter < iterations; iter++) {
+    const newRank = new Float64Array(nodeCount).fill((1 - damping) / nodeCount);
+    edges.forEach(e => {
+      if (outDeg[e.source] > 0) newRank[e.target] += damping * rank[e.source] / outDeg[e.source];
+      if (outDeg[e.target] > 0) newRank[e.source] += damping * rank[e.target] / outDeg[e.target];
+    });
+    for (let i = 0; i < nodeCount; i++) rank[i] = newRank[i];
+  }
+  // Normalize
+  const maxR = Math.max(...rank) || 1;
+  for (let i = 0; i < nodeCount; i++) rank[i] /= maxR;
+  return rank;
+}
+
+// ===== Graph UI state =====
+function getSimThreshold() {
+  const el = document.getElementById('simThreshold');
+  return el ? parseInt(el.value) / 100 : 0.2;
+}
+
+function onSimThresholdChange() {
+  const val = getSimThreshold();
+  document.getElementById('simThresholdVal').textContent = val.toFixed(2);
+  rebuildAndRender();
+}
+
+function rebuildAndRender() {
+  buildGraph();
+  for (let i = 0; i < 120; i++) simulateGraph();
+}
+
+const COMMUNITY_PALETTE = [
+  '#2d5a27','#c0392b','#2980b9','#8e44ad','#d35400','#16a085','#f39c12','#1abc9c','#e74c3c','#3498db'
+];
+
+// ===== Graph Builder =====
 function buildGraph() {
   const data = loadData();
   const nodes = [];
   const edges = [];
   const nodeMap = new Map();
+  const showTags = document.getElementById('showTags')?.checked ?? true;
+  const showCats = document.getElementById('showCats')?.checked ?? true;
+  const showSim = document.getElementById('showSim')?.checked ?? true;
+  const simThreshold = getSimThreshold();
 
   // Research nodes
   data.forEach(d => {
@@ -1148,80 +1695,130 @@ function buildGraph() {
     nodes.push({
       id, label: d.title, type: 'research',
       x: 0, y: 0, vx: 0, vy: 0,
-      radius: 18, color: NODE_COLORS.research,
+      radius: 20, color: NODE_COLORS.research,
       data: d,
     });
   });
 
   // Category nodes
-  const cats = new Set();
-  data.forEach(d => { if (d.category) cats.add(d.category); });
-  cats.forEach(cat => {
-    const id = `c:${cat}`;
-    const count = data.filter(d => d.category === cat).length;
-    nodeMap.set(id, nodes.length);
-    nodes.push({
-      id, label: cat, type: 'category',
-      x: 0, y: 0, vx: 0, vy: 0,
-      radius: 12 + count * 3, color: NODE_COLORS.category,
-      data: null,
+  if (showCats) {
+    const cats = new Set();
+    data.forEach(d => { if (d.category) cats.add(d.category); });
+    cats.forEach(cat => {
+      const id = `c:${cat}`;
+      const count = data.filter(d => d.category === cat).length;
+      nodeMap.set(id, nodes.length);
+      nodes.push({
+        id, label: cat, type: 'category',
+        x: 0, y: 0, vx: 0, vy: 0,
+        radius: 12 + count * 3, color: NODE_COLORS.category,
+        data: null,
+      });
     });
-  });
+  }
 
   // Tag nodes
-  const tagCounts = {};
-  data.forEach(d => (d.tags || []).forEach(t => { tagCounts[t] = (tagCounts[t] || 0) + 1; }));
-  Object.entries(tagCounts).forEach(([tag, count]) => {
-    const id = `t:${tag}`;
-    nodeMap.set(id, nodes.length);
-    nodes.push({
-      id, label: tag, type: 'tag',
-      x: 0, y: 0, vx: 0, vy: 0,
-      radius: 8 + count * 2.5, color: NODE_COLORS.tag,
-      data: null,
+  if (showTags) {
+    const tagCounts = {};
+    data.forEach(d => (d.tags || []).forEach(t => { tagCounts[t] = (tagCounts[t] || 0) + 1; }));
+    Object.entries(tagCounts).forEach(([tag, count]) => {
+      const id = `t:${tag}`;
+      nodeMap.set(id, nodes.length);
+      nodes.push({
+        id, label: tag, type: 'tag',
+        x: 0, y: 0, vx: 0, vy: 0,
+        radius: 8 + count * 2.5, color: NODE_COLORS.tag,
+        data: null,
+      });
     });
-  });
+  }
 
   // Edges: research -> category
-  data.forEach(d => {
-    if (d.category && nodeMap.has(`c:${d.category}`)) {
-      edges.push({ source: nodeMap.get(`r:${d.id}`), target: nodeMap.get(`c:${d.category}`), strength: 0.8 });
-    }
-    // research -> tags
-    (d.tags || []).forEach(t => {
-      if (nodeMap.has(`t:${t}`)) {
-        edges.push({ source: nodeMap.get(`r:${d.id}`), target: nodeMap.get(`t:${t}`), strength: 0.5 });
+  if (showCats) {
+    data.forEach(d => {
+      if (d.category && nodeMap.has(`c:${d.category}`)) {
+        edges.push({ source: nodeMap.get(`r:${d.id}`), target: nodeMap.get(`c:${d.category}`), strength: 0.8, type: 'category' });
       }
     });
-  });
+  }
 
-  // Edges: tag co-occurrence (entries sharing tags)
-  data.forEach(d => {
-    const tags = d.tags || [];
-    for (let i = 0; i < tags.length; i++) {
-      for (let j = i + 1; j < tags.length; j++) {
-        const a = nodeMap.get(`t:${tags[i]}`);
-        const b = nodeMap.get(`t:${tags[j]}`);
-        if (a !== undefined && b !== undefined) {
-          // Check if edge already exists
-          const exists = edges.some(e => (e.source === a && e.target === b) || (e.source === b && e.target === a));
-          if (!exists) edges.push({ source: a, target: b, strength: 0.15 });
+  // Edges: research -> tags
+  if (showTags) {
+    data.forEach(d => {
+      (d.tags || []).forEach(t => {
+        if (nodeMap.has(`t:${t}`)) {
+          edges.push({ source: nodeMap.get(`r:${d.id}`), target: nodeMap.get(`t:${t}`), strength: 0.5, type: 'tag' });
+        }
+      });
+    });
+
+    // Tag co-occurrence
+    data.forEach(d => {
+      const tags = d.tags || [];
+      for (let i = 0; i < tags.length; i++) {
+        for (let j = i + 1; j < tags.length; j++) {
+          const a = nodeMap.get(`t:${tags[i]}`);
+          const b = nodeMap.get(`t:${tags[j]}`);
+          if (a !== undefined && b !== undefined) {
+            const exists = edges.some(e => e.type === 'cooccur' && ((e.source === a && e.target === b) || (e.source === b && e.target === a)));
+            if (!exists) edges.push({ source: a, target: b, strength: 0.15, type: 'cooccur' });
+          }
         }
       }
+    });
+  }
+
+  // Semantic similarity edges (TF-IDF)
+  if (showSim && data.length >= 2) {
+    const simMatrix = getSimMatrix(data);
+    simMatrix.forEach(({ i, j, sim }) => {
+      if (sim >= simThreshold) {
+        const a = nodeMap.get(`r:${data[i].id}`);
+        const b = nodeMap.get(`r:${data[j].id}`);
+        if (a !== undefined && b !== undefined) {
+          edges.push({
+            source: a, target: b,
+            strength: sim * 0.6,
+            type: 'similarity',
+            sim: sim,
+          });
+        }
+      }
+    });
+  }
+
+  // PageRank for node sizing
+  const pageRank = computePageRank(nodes.length, edges);
+  nodes.forEach((n, i) => {
+    const pr = pageRank[i];
+    if (n.type === 'research') n.radius = 16 + pr * 16;
+    else if (n.type === 'category') n.radius = Math.max(n.radius, 10 + pr * 12);
+    else n.radius = Math.max(n.radius, 6 + pr * 10);
+  });
+
+  // Louvain community detection for coloring
+  const communities = louvainCommunities(nodes, edges);
+  GRAPH.communities = communities;
+  nodes.forEach((n, i) => {
+    n.community = communities[i];
+    if (n.type === 'research') {
+      n.color = COMMUNITY_PALETTE[communities[i] % COMMUNITY_PALETTE.length];
     }
   });
 
-  // Initial positions: spread in circle
+  // Initial positions: cluster by community
   const cx = GRAPH.width / 2, cy = GRAPH.height / 2;
+  const commCount = Math.max(...communities) + 1;
   nodes.forEach((n, i) => {
-    const angle = (i / nodes.length) * Math.PI * 2 + Math.random() * 0.5;
-    const r = 100 + Math.random() * 150;
-    n.x = cx + Math.cos(angle) * r;
-    n.y = cy + Math.sin(angle) * r;
+    const commAngle = (n.community / commCount) * Math.PI * 2;
+    const spread = 80 + Math.random() * 100;
+    n.x = cx + Math.cos(commAngle) * spread + (Math.random() - 0.5) * 60;
+    n.y = cy + Math.sin(commAngle) * spread + (Math.random() - 0.5) * 60;
   });
 
   GRAPH.nodes = nodes;
   GRAPH.edges = edges;
+  GRAPH.focusNode = null;
 }
 
 function simulateGraph() {
@@ -1276,12 +1873,30 @@ function simulateGraph() {
   });
 }
 
+// Focus mode: compute N-hop neighborhood
+function getFocusSet(nodeIdx, hops) {
+  const { nodes, edges } = GRAPH;
+  const visited = new Set([nodeIdx]);
+  let frontier = [nodeIdx];
+  for (let h = 0; h < hops; h++) {
+    const next = [];
+    frontier.forEach(ni => {
+      edges.forEach(e => {
+        if (e.source === ni && !visited.has(e.target)) { visited.add(e.target); next.push(e.target); }
+        if (e.target === ni && !visited.has(e.source)) { visited.add(e.source); next.push(e.source); }
+      });
+    });
+    frontier = next;
+  }
+  return visited;
+}
+
 function drawGraph() {
   const canvas = document.getElementById('graphCanvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
   const dpr = window.devicePixelRatio || 1;
-  const { nodes, edges, scale, offsetX, offsetY, width, height } = GRAPH;
+  const { nodes, edges, scale, offsetX, offsetY, width, height, focusNode } = GRAPH;
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.save();
@@ -1289,60 +1904,194 @@ function drawGraph() {
   ctx.translate(offsetX + width / 2 * (1 - scale), offsetY + height / 2 * (1 - scale));
   ctx.scale(scale, scale);
 
-  // Edges
+  // Focus set
+  let focusSet = null;
+  if (focusNode) {
+    const fIdx = nodes.indexOf(focusNode);
+    if (fIdx >= 0) focusSet = getFocusSet(fIdx, GRAPH.focusHops);
+  }
+
+  // Hover connected set
+  const connectedSet = new Set();
+  if (GRAPH.hoveredNode && !focusNode) {
+    const hIdx = nodes.indexOf(GRAPH.hoveredNode);
+    connectedSet.add(hIdx);
+    edges.forEach(e => {
+      if (e.source === hIdx) connectedSet.add(e.target);
+      if (e.target === hIdx) connectedSet.add(e.source);
+    });
+  }
+
+  // Semantic zoom levels
+  const zoomLevel = scale < 0.5 ? 'far' : scale < 1.2 ? 'mid' : 'close';
+
+  // Draw edges
   edges.forEach(e => {
     const a = nodes[e.source], b = nodes[e.target];
-    ctx.beginPath();
-    ctx.moveTo(a.x, a.y);
-    ctx.lineTo(b.x, b.y);
-    ctx.strokeStyle = e.strength > 0.3 ? 'rgba(0,0,0,0.12)' : 'rgba(0,0,0,0.05)';
-    ctx.lineWidth = e.strength > 0.3 ? 1.2 : 0.6;
-    ctx.stroke();
-  });
+    const inFocus = !focusSet || (focusSet.has(e.source) && focusSet.has(e.target));
+    if (!inFocus) { ctx.globalAlpha = 0.04; } else { ctx.globalAlpha = 1; }
 
-  // Nodes
-  nodes.forEach(n => {
+    if (e.type === 'similarity') {
+      const sim = e.sim || 0;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
+      ctx.strokeStyle = `rgba(192,57,43,${0.2 + sim * 0.6})`;
+      ctx.lineWidth = 1 + sim * 3;
+      ctx.setLineDash([6, 4]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      // Sim label (only mid/close zoom)
+      if (zoomLevel !== 'far' && inFocus) {
+        const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+        ctx.fillStyle = `rgba(192,57,43,0.7)`;
+        ctx.font = 'bold 9px "Hiragino Kaku Gothic ProN", sans-serif';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText((sim * 100).toFixed(0) + '%', mx, my - 6);
+      }
+    } else {
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
+      ctx.strokeStyle = e.strength > 0.3 ? 'rgba(0,0,0,0.12)' : 'rgba(0,0,0,0.05)';
+      ctx.lineWidth = e.strength > 0.3 ? 1.2 : 0.6;
+      ctx.setLineDash([]);
+      ctx.stroke();
+    }
+  });
+  ctx.globalAlpha = 1;
+
+  // Draw nodes
+  nodes.forEach((n, ni) => {
     const isHovered = n === GRAPH.hoveredNode;
+    const isFocused = n === focusNode;
+    const inFocus = !focusSet || focusSet.has(ni);
+    const isDimmedHover = GRAPH.hoveredNode && !focusNode && !connectedSet.has(ni);
+    const isDimmed = (!inFocus) || isDimmedHover;
+
+    ctx.globalAlpha = isDimmed ? 0.08 : 1;
+
+    // Focus ring
+    if (isFocused) {
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.radius + 8, 0, Math.PI * 2);
+      ctx.strokeStyle = n.color;
+      ctx.lineWidth = 3;
+      ctx.setLineDash([4, 3]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
 
     // Glow for hovered
     if (isHovered) {
       ctx.beginPath();
-      ctx.arc(n.x, n.y, n.radius + 6, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(45,90,39,0.12)';
+      ctx.arc(n.x, n.y, n.radius + 5, 0, Math.PI * 2);
+      ctx.fillStyle = n.color + '25';
       ctx.fill();
     }
 
     // Node circle
     ctx.beginPath();
     ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
-    ctx.fillStyle = isHovered ? n.color : n.color + (n.type === 'research' ? 'dd' : 'bb');
+    ctx.fillStyle = n.color + (isHovered || isFocused ? 'ff' : n.type === 'research' ? 'dd' : 'bb');
     ctx.fill();
-    ctx.strokeStyle = isHovered ? n.color : 'rgba(255,255,255,0.8)';
-    ctx.lineWidth = isHovered ? 2.5 : 1.5;
+    ctx.strokeStyle = isHovered || isFocused ? '#fff' : 'rgba(255,255,255,0.6)';
+    ctx.lineWidth = isHovered || isFocused ? 2.5 : 1.2;
     ctx.stroke();
 
-    // Label
-    ctx.fillStyle = '#fff';
-    ctx.font = `${n.type === 'research' ? 'bold ' : ''}${n.radius < 12 ? 8 : n.radius < 16 ? 9 : 11}px "Hiragino Kaku Gothic ProN", sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
+    // Semantic zoom: labels
+    if (zoomLevel === 'far') {
+      // Far: only show label for large research nodes
+      if (n.type === 'research' && n.radius > 22) {
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 8px "Hiragino Kaku Gothic ProN", sans-serif';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        let lb = n.label.length > 6 ? n.label.slice(0, 5) + '…' : n.label;
+        ctx.fillText(lb, n.x, n.y);
+      }
+    } else if (zoomLevel === 'mid') {
+      // Mid: abbreviated inner label + external label for research
+      ctx.fillStyle = '#fff';
+      const fs = n.radius < 12 ? 7 : n.radius < 16 ? 8 : 10;
+      ctx.font = `${n.type === 'research' ? 'bold ' : ''}${fs}px "Hiragino Kaku Gothic ProN", sans-serif`;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      let lb = n.label;
+      const mw = n.radius * 1.6;
+      if (ctx.measureText(lb).width > mw && lb.length > 3) {
+        while (ctx.measureText(lb + '…').width > mw && lb.length > 2) lb = lb.slice(0, -1);
+        lb += '…';
+      }
+      ctx.fillText(lb, n.x, n.y);
+      if (isHovered || n.type === 'research') {
+        ctx.fillStyle = 'rgba(0,0,0,0.65)';
+        ctx.font = `${isHovered ? 'bold ' : ''}9px "Hiragino Kaku Gothic ProN", sans-serif`;
+        ctx.fillText(n.label, n.x, n.y + n.radius + 11);
+      }
+    } else {
+      // Close: full labels + summary preview for hovered research
+      ctx.fillStyle = '#fff';
+      const fs = n.radius < 12 ? 8 : n.radius < 16 ? 9 : 11;
+      ctx.font = `${n.type === 'research' ? 'bold ' : ''}${fs}px "Hiragino Kaku Gothic ProN", sans-serif`;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      let lb = n.label;
+      const mw = n.radius * 1.8;
+      if (ctx.measureText(lb).width > mw && lb.length > 3) {
+        while (ctx.measureText(lb + '…').width > mw && lb.length > 2) lb = lb.slice(0, -1);
+        lb += '…';
+      }
+      ctx.fillText(lb, n.x, n.y);
 
-    // Truncate label to fit
-    let label = n.label;
-    const maxWidth = n.radius * 1.6;
-    if (ctx.measureText(label).width > maxWidth && label.length > 4) {
-      while (ctx.measureText(label + '…').width > maxWidth && label.length > 2) label = label.slice(0, -1);
-      label += '…';
-    }
-    ctx.fillText(label, n.x, n.y);
-
-    // External label for small nodes or on hover
-    if (isHovered || n.type === 'research') {
+      // External full label
       ctx.fillStyle = 'rgba(0,0,0,0.7)';
       ctx.font = `${isHovered ? 'bold ' : ''}10px "Hiragino Kaku Gothic ProN", sans-serif`;
       ctx.fillText(n.label, n.x, n.y + n.radius + 12);
+
+      // Summary preview for hovered research
+      if (isHovered && n.type === 'research' && n.data?.summary) {
+        ctx.fillStyle = 'rgba(0,0,0,0.45)';
+        ctx.font = '8px "Hiragino Kaku Gothic ProN", sans-serif';
+        const preview = n.data.summary.slice(0, 60) + (n.data.summary.length > 60 ? '…' : '');
+        ctx.fillText(preview, n.x, n.y + n.radius + 24);
+      }
     }
+    ctx.globalAlpha = 1;
   });
+
+  // Minimap
+  if (nodes.length > 0) {
+    const mmW = 120, mmH = 80, mmPad = 10;
+    const mmX = width - mmW - mmPad, mmY = height - mmH - mmPad;
+    ctx.save();
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    // Background
+    ctx.fillStyle = 'rgba(255,255,255,0.85)';
+    ctx.strokeStyle = 'rgba(0,0,0,0.1)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.roundRect(mmX, mmY, mmW, mmH, 4);
+    ctx.fill(); ctx.stroke();
+
+    // Compute bounds
+    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+    nodes.forEach(n => {
+      if (n.x < minX) minX = n.x; if (n.x > maxX) maxX = n.x;
+      if (n.y < minY) minY = n.y; if (n.y > maxY) maxY = n.y;
+    });
+    const rangeX = (maxX - minX) || 1, rangeY = (maxY - minY) || 1;
+    const mmScale = Math.min((mmW - 12) / rangeX, (mmH - 12) / rangeY);
+
+    nodes.forEach(n => {
+      const mx = mmX + 6 + (n.x - minX) * mmScale;
+      const my = mmY + 6 + (n.y - minY) * mmScale;
+      ctx.beginPath();
+      ctx.arc(mx, my, Math.max(1.5, n.radius * mmScale * 0.3), 0, Math.PI * 2);
+      ctx.fillStyle = n.color + '99';
+      ctx.fill();
+    });
+
+    // Viewport indicator
+    const vpX = mmX + 6 + (-offsetX / scale - width / 2 * (1 - scale) / scale - minX) * mmScale * 0;
+    ctx.restore();
+  }
 
   ctx.restore();
 }
@@ -1460,11 +2209,22 @@ function setupGraphEvents() {
           const d = node.data;
           document.getElementById('ttDetail').textContent = d.summary ? d.summary.slice(0, 120) + (d.summary.length > 120 ? '…' : '') : '';
           document.getElementById('ttTags').innerHTML = (d.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join('');
+          // Show similar entries
+          const simEdges = GRAPH.edges.filter(e => e.type === 'similarity' && (GRAPH.nodes[e.source] === node || GRAPH.nodes[e.target] === node));
+          if (simEdges.length > 0) {
+            const simInfo = simEdges.map(e => {
+              const other = GRAPH.nodes[e.source] === node ? GRAPH.nodes[e.target] : GRAPH.nodes[e.source];
+              return `${other.label} (${(e.sim * 100).toFixed(0)}%)`;
+            }).join(', ');
+            document.getElementById('ttSim').textContent = 'Similar: ' + simInfo;
+          } else {
+            document.getElementById('ttSim').textContent = '';
+          }
         } else {
-          // Count connections
           const conns = GRAPH.edges.filter(e => GRAPH.nodes[e.source] === node || GRAPH.nodes[e.target] === node).length;
           document.getElementById('ttDetail').textContent = `${conns} connections`;
           document.getElementById('ttTags').innerHTML = '';
+          document.getElementById('ttSim').textContent = '';
         }
       } else if (tooltip) {
         tooltip.classList.remove('visible');
@@ -1493,6 +2253,15 @@ function setupGraphEvents() {
     GRAPH.scale = Math.max(0.2, Math.min(4, GRAPH.scale));
   }, { passive: false });
 
+  // Single click: focus mode
+  canvas.addEventListener('click', (e) => {
+    const node = findNode(e.clientX, e.clientY);
+    if (node) {
+      GRAPH.focusNode = (GRAPH.focusNode === node) ? null : node;
+    }
+  });
+
+  // Double click: open detail
   canvas.addEventListener('dblclick', (e) => {
     const node = findNode(e.clientX, e.clientY);
     if (node && node.type === 'research' && node.data) {
@@ -1502,10 +2271,377 @@ function setupGraphEvents() {
 }
 
 // ===== Render all =====
+// ===== Analytics Tab =====
+function renderAnalytics() {
+  const data = loadData();
+  if (data.length === 0) return;
+
+  renderInsights(data);
+  renderVelocity(data);
+  renderRadar(data);
+  renderGlobalKeywords(data);
+  renderBridgeAnalysis(data);
+  renderGapAnalysis(data);
+  renderClusterSummary(data);
+}
+
+function renderInsights(data) {
+  const insights = [];
+  const now = new Date();
+
+  // 1. Most productive period
+  const monthCounts = {};
+  data.forEach(d => {
+    const dd = new Date(d.createdAt);
+    const key = `${dd.getFullYear()}/${dd.getMonth()+1}`;
+    monthCounts[key] = (monthCounts[key] || 0) + 1;
+  });
+  const bestMonth = Object.entries(monthCounts).sort((a,b) => b[1]-a[1])[0];
+  if (bestMonth) insights.push({ type: 'PRODUCTIVITY', text: `Most active period: ${bestMonth[0]} with ${bestMonth[1]} entries.`, cls: 'success' });
+
+  // 2. Category concentration
+  const catCounts = {};
+  data.forEach(d => { if (d.category) catCounts[d.category] = (catCounts[d.category] || 0) + 1; });
+  const sorted = Object.entries(catCounts).sort((a,b) => b[1]-a[1]);
+  if (sorted.length >= 2) {
+    const topPct = Math.round(sorted[0][1] / data.length * 100);
+    if (topPct > 40) insights.push({ type: 'CONCENTRATION', text: `"${sorted[0][0]}" accounts for ${topPct}% of research. Consider diversifying or deepening adjacent areas.`, cls: 'warning' });
+  }
+
+  // 3. Stale topics
+  const catLastDate = {};
+  data.forEach(d => {
+    if (!d.category) return;
+    const dd = new Date(d.createdAt);
+    if (!catLastDate[d.category] || dd > catLastDate[d.category]) catLastDate[d.category] = dd;
+  });
+  const stale = Object.entries(catLastDate).filter(([_, d]) => (now - d) > 60 * 86400000).map(([c]) => c);
+  if (stale.length > 0) insights.push({ type: 'STALE TOPICS', text: `No new entries in 60+ days: ${stale.join(', ')}. Consider revisiting or archiving.`, cls: 'warning' });
+
+  // 4. High-similarity cluster
+  const simMatrix = getSimMatrix(data);
+  const highSim = simMatrix.filter(m => m.sim > 0.5);
+  if (highSim.length > 0) {
+    const pair = highSim.sort((a,b) => b.sim-a.sim)[0];
+    insights.push({ type: 'OVERLAP', text: `"${data[pair.i].title}" and "${data[pair.j].title}" are ${(pair.sim*100).toFixed(0)}% similar. Consider merging or differentiating.`, cls: 'info' });
+  }
+
+  // 5. Completion rate trend
+  const done = data.filter(d => d.status === 'done').length;
+  const inProgress = data.filter(d => (d.status || 'investigating') === 'investigating').length;
+  if (inProgress > done && inProgress > 2) insights.push({ type: 'WORKFLOW', text: `${inProgress} entries still in "investigating" vs ${done} completed. Consider processing backlog.`, cls: 'warning' });
+
+  // 6. Tag diversity
+  const tagSet = new Set();
+  data.forEach(d => (d.tags || []).forEach(t => tagSet.add(t)));
+  const avgTags = data.reduce((s, d) => s + (d.tags || []).length, 0) / data.length;
+  if (avgTags < 2) insights.push({ type: 'TAGGING', text: `Average ${avgTags.toFixed(1)} tags per entry. More tags improve graph connectivity and discovery.`, cls: 'info' });
+
+  // 7. Cross-category connections
+  const crossCat = simMatrix.filter(m => m.sim > 0.3 && data[m.i].category && data[m.j].category && data[m.i].category !== data[m.j].category);
+  if (crossCat.length > 0) insights.push({ type: 'CROSS-POLLINATION', text: `${crossCat.length} cross-category semantic connections found. Interdisciplinary potential detected.`, cls: 'success' });
+
+  document.getElementById('insightsContainer').innerHTML = insights.length > 0
+    ? insights.map(i => `<div class="insight-card ${i.cls}"><div class="insight-type">${i.type}</div>${esc(i.text)}</div>`).join('')
+    : '<div style="color:var(--text-muted);padding:12px;">Add more entries to generate insights.</div>';
+}
+
+function renderVelocity(data) {
+  const now = new Date();
+  const months = [];
+  for (let i = 5; i >= 0; i--) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    months.push({ year: d.getFullYear(), month: d.getMonth(), label: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()] });
+  }
+
+  const counts = months.map(m => data.filter(d => {
+    const dd = new Date(d.createdAt);
+    return dd.getFullYear() === m.year && dd.getMonth() === m.month;
+  }).length);
+
+  const max = Math.max(...counts, 1);
+  document.getElementById('velocityChart').innerHTML = counts.map((c, i) =>
+    `<div class="velocity-bar" style="height:${Math.max(4, c / max * 90)}px;${c === 0 ? 'opacity:0.3;' : ''}">
+      <span class="vb-count">${c}</span>
+      <span class="vb-label">${months[i].label}</span>
+    </div>`
+  ).join('');
+}
+
+function renderRadar(data) {
+  const svg = document.getElementById('radarChart');
+  if (!svg) return;
+  const cats = {};
+  data.forEach(d => { if (d.category) cats[d.category] = (cats[d.category] || 0) + 1; });
+  const entries = Object.entries(cats).sort((a,b) => b[1]-a[1]).slice(0, 8);
+  if (entries.length < 3) { svg.innerHTML = '<text x="140" y="140" text-anchor="middle" fill="#6b6b6b" font-size="12">Need 3+ categories</text>'; return; }
+
+  const n = entries.length;
+  const cx = 140, cy = 140, maxR = 110;
+  const max = Math.max(...entries.map(e => e[1]));
+  const levels = 4;
+
+  let html = '';
+
+  // Grid circles
+  for (let l = 1; l <= levels; l++) {
+    const r = maxR * l / levels;
+    html += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#e0ddd5" stroke-width="0.5"/>`;
+  }
+
+  // Axis lines + labels
+  entries.forEach(([cat, count], i) => {
+    const angle = (i / n) * Math.PI * 2 - Math.PI / 2;
+    const x2 = cx + Math.cos(angle) * maxR;
+    const y2 = cy + Math.sin(angle) * maxR;
+    html += `<line x1="${cx}" y1="${cy}" x2="${x2}" y2="${y2}" stroke="#e0ddd5" stroke-width="0.5"/>`;
+    const lx = cx + Math.cos(angle) * (maxR + 16);
+    const ly = cy + Math.sin(angle) * (maxR + 16);
+    const short = cat.length > 8 ? cat.slice(0, 7) + '…' : cat;
+    html += `<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" fill="#6b6b6b" font-size="9">${short}</text>`;
+  });
+
+  // Data polygon
+  const points = entries.map(([_, count], i) => {
+    const angle = (i / n) * Math.PI * 2 - Math.PI / 2;
+    const r = (count / max) * maxR;
+    return `${cx + Math.cos(angle) * r},${cy + Math.sin(angle) * r}`;
+  }).join(' ');
+  html += `<polygon points="${points}" fill="rgba(45,90,39,0.2)" stroke="#2d5a27" stroke-width="2"/>`;
+
+  // Data dots
+  entries.forEach(([_, count], i) => {
+    const angle = (i / n) * Math.PI * 2 - Math.PI / 2;
+    const r = (count / max) * maxR;
+    html += `<circle cx="${cx + Math.cos(angle) * r}" cy="${cy + Math.sin(angle) * r}" r="4" fill="#2d5a27"/>`;
+  });
+
+  svg.innerHTML = html;
+}
+
+function renderGlobalKeywords(data) {
+  const docs = data.map(d => [d.title, d.summary, (d.tags || []).join(' ')].filter(Boolean).join(' '));
+  const allText = docs.join(' ');
+  const tokens = tokenize(allText);
+  const freq = {};
+  tokens.forEach(t => { if (t.length >= 3) freq[t] = (freq[t] || 0) + 1; });
+
+  // IDF weighting
+  const n = docs.length;
+  const df = {};
+  docs.forEach(doc => {
+    const seen = new Set(tokenize(doc).filter(t => t.length >= 3));
+    seen.forEach(t => { df[t] = (df[t] || 0) + 1; });
+  });
+
+  const scored = Object.entries(freq).map(([term, tf]) => {
+    const idf = Math.log(n / (df[term] || 1) + 1);
+    return { term, score: tf * idf };
+  }).filter(k => k.term.length >= 3 && !/^[a-z]{2,3}$/.test(k.term))
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 20);
+
+  document.getElementById('globalKeywords').innerHTML = scored.map(k =>
+    `<span class="keyword">${esc(k.term)}<span class="kw-score">${k.score.toFixed(1)}</span></span>`
+  ).join('');
+}
+
+function renderBridgeAnalysis(data) {
+  // Find entries that share high similarity with entries in DIFFERENT categories
+  const simMatrix = getSimMatrix(data);
+  const bridges = [];
+
+  data.forEach((d, i) => {
+    if (!d.category) return;
+    const crossSims = simMatrix.filter(m =>
+      (m.i === i || m.j === i) && m.sim > 0.15
+    ).map(m => {
+      const other = data[m.i === i ? m.j : m.i];
+      return { other, sim: m.sim };
+    }).filter(x => x.other.category && x.other.category !== d.category);
+
+    if (crossSims.length >= 1) {
+      const connectedCats = [...new Set(crossSims.map(x => x.other.category))];
+      const avgSim = crossSims.reduce((s, x) => s + x.sim, 0) / crossSims.length;
+      bridges.push({ entry: d, cats: [d.category, ...connectedCats], score: avgSim, crossCount: crossSims.length });
+    }
+  });
+
+  bridges.sort((a, b) => b.score - a.score);
+
+  document.getElementById('bridgeAnalysis').innerHTML = bridges.length > 0
+    ? bridges.slice(0, 6).map(b => `
+      <div class="bridge-item">
+        <div>
+          <div style="font-weight:600;">${esc(b.entry.title)}</div>
+          <div class="bridge-cats">${b.cats.map(c => `<span class="tag">${esc(c)}</span>`).join('<span style="margin:0 2px;color:var(--text-muted)">↔</span>')}</div>
+        </div>
+        <div class="bridge-score">${b.crossCount} links<br>${(b.score*100).toFixed(0)}% avg</div>
+      </div>
+    `).join('')
+    : '<div style="color:var(--text-muted);font-size:0.82rem;padding:12px;">No cross-category bridges yet.</div>';
+}
+
+function renderGapAnalysis(data) {
+  const now = new Date();
+  const cats = {};
+  data.forEach(d => {
+    if (!d.category) return;
+    if (!cats[d.category]) cats[d.category] = { count: 0, lastDate: null, investigating: 0 };
+    cats[d.category].count++;
+    const dd = new Date(d.createdAt);
+    if (!cats[d.category].lastDate || dd > cats[d.category].lastDate) cats[d.category].lastDate = dd;
+    if ((d.status || 'investigating') === 'investigating') cats[d.category].investigating++;
+  });
+
+  const gaps = Object.entries(cats).map(([cat, info]) => {
+    const daysSince = Math.floor((now - info.lastDate) / 86400000);
+    return { cat, ...info, daysSince };
+  }).sort((a, b) => b.daysSince - a.daysSince);
+
+  // Also find tags used only once
+  const tagCounts = {};
+  data.forEach(d => (d.tags || []).forEach(t => { tagCounts[t] = (tagCounts[t] || 0) + 1; }));
+  const loneTags = Object.entries(tagCounts).filter(([_, c]) => c === 1).map(([t]) => t);
+
+  let html = '';
+  gaps.forEach(g => {
+    const isStale = g.daysSince > 30;
+    html += `<div class="gap-item ${isStale ? 'stale' : ''}">
+      <span class="gap-label">${esc(g.cat)} <span class="tag">${g.count} entries</span></span>
+      <span class="gap-meta">${g.daysSince}d ago${g.investigating > 0 ? ` · ${g.investigating} in progress` : ''}</span>
+    </div>`;
+  });
+
+  if (loneTags.length > 0) {
+    html += `<div style="margin-top:12px;font-size:0.78rem;color:var(--text-muted);">
+      <strong>Orphan tags</strong> (used once): ${loneTags.map(t => `<span class="tag">${esc(t)}</span>`).join(' ')}
+    </div>`;
+  }
+
+  document.getElementById('gapAnalysis').innerHTML = html || '<div style="color:var(--text-muted);font-size:0.82rem;padding:12px;">No gaps detected.</div>';
+}
+
+function renderClusterSummary(data) {
+  if (data.length < 2) { document.getElementById('clusterSummary').innerHTML = '<div style="color:var(--text-muted);padding:12px;">Need more entries.</div>'; return; }
+
+  // Use BM25 similarity to cluster
+  const simMatrix = getSimMatrix(data);
+  // Simple clustering: group by highest similarity (greedy agglomerative)
+  const assigned = new Array(data.length).fill(-1);
+  let nextCluster = 0;
+
+  // Sort pairs by similarity descending
+  const pairs = [...simMatrix].sort((a, b) => b.sim - a.sim);
+  pairs.forEach(({ i, j, sim }) => {
+    if (sim < 0.15) return;
+    if (assigned[i] >= 0 && assigned[j] >= 0) return; // both assigned
+    if (assigned[i] >= 0) assigned[j] = assigned[i];
+    else if (assigned[j] >= 0) assigned[i] = assigned[j];
+    else { assigned[i] = assigned[j] = nextCluster++; }
+  });
+
+  // Assign singletons
+  for (let i = 0; i < data.length; i++) {
+    if (assigned[i] < 0) assigned[i] = nextCluster++;
+  }
+
+  // Build clusters
+  const clusters = {};
+  data.forEach((d, i) => {
+    const c = assigned[i];
+    if (!clusters[c]) clusters[c] = [];
+    clusters[c].push(d);
+  });
+
+  const sortedClusters = Object.values(clusters).filter(c => c.length >= 1).sort((a, b) => b.length - a.length);
+
+  let html = '';
+  sortedClusters.forEach((cluster, ci) => {
+    // Extract top tags for cluster label
+    const tagFreq = {};
+    cluster.forEach(d => (d.tags || []).forEach(t => { tagFreq[t] = (tagFreq[t] || 0) + 1; }));
+    const topTags = Object.entries(tagFreq).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([t]) => t);
+    const catFreq = {};
+    cluster.forEach(d => { if (d.category) catFreq[d.category] = (catFreq[d.category] || 0) + 1; });
+    const topCat = Object.entries(catFreq).sort((a, b) => b[1] - a[1])[0];
+
+    const color = COMMUNITY_PALETTE[ci % COMMUNITY_PALETTE.length];
+    html += `<div style="margin-bottom:14px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+        <div style="width:10px;height:10px;border-radius:50%;background:${color}"></div>
+        <strong style="font-size:0.85rem;">Cluster ${ci + 1}</strong>
+        <span style="font-size:0.72rem;color:var(--text-muted);">${cluster.length} entries</span>
+        ${topCat ? `<span class="tag">${esc(topCat[0])}</span>` : ''}
+      </div>
+      <div style="padding-left:18px;">
+        ${cluster.map(d => `<div style="font-size:0.8rem;margin-bottom:3px;">· ${esc(d.title)}</div>`).join('')}
+        ${topTags.length > 0 ? `<div style="margin-top:4px;">${topTags.map(t => `<span class="tag">${esc(t)}</span>`).join(' ')}</div>` : ''}
+      </div>
+    </div>`;
+  });
+
+  document.getElementById('clusterSummary').innerHTML = html;
+}
+
+// ===== Similarity Matrix Tab =====
+function renderSimMatrix() {
+  const data = loadData();
+  const container = document.getElementById('simMatrixContainer');
+  if (!container || data.length < 2) {
+    if (container) container.innerHTML = '<p style="color:var(--text-muted);padding:20px;">Need at least 2 entries.</p>';
+    return;
+  }
+
+  const matrix = getSimMatrix(data);
+  // Build NxN grid
+  const n = data.length;
+  const grid = Array.from({ length: n }, () => new Float64Array(n));
+  for (let i = 0; i < n; i++) grid[i][i] = 1;
+  matrix.forEach(({ i, j, sim }) => { grid[i][j] = sim; grid[j][i] = sim; });
+
+  // Color scale: white (0) -> yellow (0.3) -> orange (0.6) -> red (1)
+  function simColor(v) {
+    if (v >= 1) return '#2d5a27';
+    const r = Math.round(255 * Math.min(1, v * 2.5));
+    const g = Math.round(255 * Math.max(0, 1 - v * 1.5));
+    const b = Math.round(80 * Math.max(0, 1 - v * 3));
+    return `rgb(${r},${g},${b})`;
+  }
+
+  function textColor(v) { return v > 0.5 ? '#fff' : '#333'; }
+
+  let html = '<table class="sim-matrix"><tr><th></th>';
+  // Column headers
+  data.forEach((d, i) => {
+    const short = d.title.length > 12 ? d.title.slice(0, 11) + '…' : d.title;
+    html += `<th class="col-label" title="${esc(d.title)}">${esc(short)}</th>`;
+  });
+  html += '</tr>';
+
+  // Rows
+  data.forEach((d, i) => {
+    const short = d.title.length > 14 ? d.title.slice(0, 13) + '…' : d.title;
+    html += `<tr><th class="row-label" title="${esc(d.title)}">${esc(short)}</th>`;
+    for (let j = 0; j < n; j++) {
+      const v = grid[i][j];
+      const cls = i === j ? ' class="diagonal"' : '';
+      const bg = i === j ? '' : `background:${simColor(v)};color:${textColor(v)}`;
+      const pct = i === j ? '---' : (v * 100).toFixed(0) + '%';
+      html += `<td${cls} style="${bg}" title="${esc(d.title)} × ${esc(data[j].title)}: ${(v*100).toFixed(1)}%">${pct}</td>`;
+    }
+    html += '</tr>';
+  });
+  html += '</table>';
+  container.innerHTML = html;
+}
+
 function renderAll() {
   if (currentTab === 'overview') renderOverview();
   else if (currentTab === 'research') renderResearchTab();
   else if (currentTab === 'graph') renderGraph();
+  else if (currentTab === 'analytics') renderAnalytics();
+  else if (currentTab === 'heatmap') renderSimMatrix();
   else if (currentTab === 'timeline') renderTimeline();
 }
 
@@ -1592,6 +2728,29 @@ function openDetail(id) {
   if (entry.tags && entry.tags.length) html += `<div class="field-label">タグ</div><div class="card-tags" style="margin-top:4px">${entry.tags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>`;
   html += `<div class="field-label">登録日</div><div class="field-value">${formatDate(entry.createdAt)}</div>`;
   if (entry.updatedAt !== entry.createdAt) html += `<div class="field-label">更新日</div><div class="field-value">${formatDate(entry.updatedAt)}</div>`;
+
+  // ダウンロード & 開くボタン
+  if (entry.source) {
+    const gdocsUrl = getGoogleDocsUrl(entry.source);
+    html += `<div class="detail-actions">`;
+    html += `<a class="btn-action" href="${esc(entry.source)}" download>&#11015; ダウンロード</a>`;
+    html += `<a class="btn-action btn-open" href="${esc(gdocsUrl)}" target="_blank">&#9654; Google ドキュメントで開く</a>`;
+    html += `</div>`;
+  }
+
+  // Related entries (BM25 similarity)
+  const related = getRelatedEntries(id, 5);
+  if (related.length > 0) {
+    html += `<div class="field-label">Related Research (BM25)</div>`;
+    html += `<div class="related-entries">`;
+    related.forEach(({ entry: re, sim }) => {
+      html += `<div class="related-entry" onclick="closeDetailModal();setTimeout(()=>openDetail('${re.id}'),100)">
+        <span class="re-title">${esc(re.title)}</span>
+        <span class="re-sim">${(sim * 100).toFixed(0)}%</span>
+      </div>`;
+    });
+    html += `</div>`;
+  }
 
   document.getElementById('detailContent').innerHTML = html;
   document.getElementById('detailModal').classList.add('active');
