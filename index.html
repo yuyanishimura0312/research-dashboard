@@ -48,21 +48,62 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Header */
-  header {
+  /* Masthead */
+  .masthead {
     background: var(--card);
     border-bottom: 1px solid var(--border);
-    padding: 16px 32px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: 0 24px;
     position: sticky;
     top: 0;
     z-index: 100;
   }
+  .masthead-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+  }
+  .masthead-brand {
+    font-family: Georgia, 'Noto Serif JP', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+  .masthead-brand em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 400;
+  }
+  .masthead-nav {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+  .masthead-nav a {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+  .masthead-nav a:hover { color: var(--text); }
+  .masthead-nav a.active { color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 2px; }
+  .masthead-nav .theme-btn {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    width: 30px; height: 30px;
+    cursor: pointer;
+    color: var(--text-muted);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
 
-  header h1 { font-size: 1.2rem; font-weight: 600; letter-spacing: 0.02em; }
-  header h1 span { color: var(--accent); }
+  /* Legacy compat */
   .header-actions { display: flex; gap: 8px; align-items: center; }
 
   .btn {
@@ -1125,18 +1166,18 @@
 </head>
 <body>
 
-<header>
-  <h1 style="font-family:Georgia,'Noto Serif JP',serif;letter-spacing:-0.02em;font-size:1.15rem;">
-    Future <em style="font-style:italic;color:var(--accent);font-weight:400;">esse-sense</em>
-  </h1>
-  <div class="header-actions">
-    <a href="magazine.html" class="btn btn-sm" style="text-decoration:none;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.06em;">Magazine</a>
-    <a href="#overview" class="btn btn-sm" style="text-decoration:none;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.06em;border-color:var(--accent);color:var(--accent);">Dashboard</a>
-    <button class="btn btn-sm" id="themeToggle" onclick="toggleDarkMode()" style="font-size:14px;padding:4px 10px;">&#9790;</button>
-    <button class="btn btn-sm" onclick="exportData()">Export</button>
-    <button class="btn btn-sm" onclick="document.getElementById('importFile').click()">Import</button>
-    <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
-    <button class="btn btn-primary" onclick="openAddModal()">+ 新規追加</button>
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="masthead-brand">Future <em>esse-sense</em></div>
+    <nav class="masthead-nav">
+      <a href="magazine.html">Magazine</a>
+      <a href="index.html" class="active">Dashboard</a>
+      <button class="theme-btn" id="themeToggle" onclick="toggleDarkMode()">&#9790;</button>
+      <button class="btn btn-sm" onclick="exportData()">Export</button>
+      <button class="btn btn-sm" onclick="document.getElementById('importFile').click()">Import</button>
+      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+      <button class="btn btn-primary" onclick="openAddModal()">+ 新規追加</button>
+    </nav>
   </div>
 </header>
 
