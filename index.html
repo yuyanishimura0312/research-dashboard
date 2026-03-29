@@ -1212,8 +1212,9 @@ function loadData() {
   try { localData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { localData = []; }
 
   const merged = new Map();
+  // localStorage first, then data.js overwrites — file is always authoritative
+  localData.forEach(e => merged.set(e.id, e));
   fileData.forEach(e => merged.set(e.id, e));
-  localData.forEach(e => { if (!merged.has(e.id)) merged.set(e.id, e); });
   return Array.from(merged.values());
 }
 
