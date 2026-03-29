@@ -857,8 +857,9 @@
   <h1><span>&#9679;</span> Research Dashboard</h1>
   <div class="header-actions">
     <button class="btn btn-sm" onclick="exportData()">Export</button>
-    <button class="btn btn-sm" onclick="document.getElementById('importFile').click()">Import</button>
+    <button class="btn btn-sm" onclick="document.getElementById('importFile').click()">Import JSON</button>
     <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+    <button class="btn btn-sm" onclick="openBulkUpload()">一括アップロード</button>
     <button class="btn btn-primary" onclick="openAddModal()">+ 新規追加</button>
   </div>
 </header>
@@ -1595,7 +1596,7 @@ function computeSimilarityMatrix(data) {
   for (let i = 0; i < data.length; i++) {
     for (let j = i + 1; j < data.length; j++) {
       const sim = cosineSimilarity(vectors[i], vectors[j]);
-      if (sim > 0.01) matrix.push({ i, j, sim });
+      if (sim > 0.10) matrix.push({ i, j, sim });
     }
   }
   return matrix;
@@ -2031,6 +2032,18 @@ function getFocusSet(nodeIdx, hops) {
   return visited;
 }
 
+function getCachedLabel(ctx, node, maxWidth, zoom) {
+  const cacheKey = `${node.id}:${zoom}:${Math.round(maxWidth)}`;
+  if (GRAPH.labelCache[cacheKey]) return GRAPH.labelCache[cacheKey];
+  let lb = node.label;
+  if (ctx.measureText(lb).width > maxWidth && lb.length > 3) {
+    while (ctx.measureText(lb + '…').width > maxWidth && lb.length > 2) lb = lb.slice(0, -1);
+    lb += '…';
+  }
+  GRAPH.labelCache[cacheKey] = lb;
+  return lb;
+}
+
 function drawGraph() {
   const canvas = document.getElementById('graphCanvas');
   if (!canvas) return;
@@ -2148,17 +2161,11 @@ function drawGraph() {
         ctx.fillText(lb, n.x, n.y);
       }
     } else if (zoomLevel === 'mid') {
-      // Mid: abbreviated inner label + external label for research
       ctx.fillStyle = '#fff';
       const fs = n.radius < 12 ? 7 : n.radius < 16 ? 8 : 10;
       ctx.font = `${n.type === 'research' ? 'bold ' : ''}${fs}px "Hiragino Kaku Gothic ProN", sans-serif`;
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      let lb = n.label;
-      const mw = n.radius * 1.6;
-      if (ctx.measureText(lb).width > mw && lb.length > 3) {
-        while (ctx.measureText(lb + '…').width > mw && lb.length > 2) lb = lb.slice(0, -1);
-        lb += '…';
-      }
+      const lb = getCachedLabel(ctx, n, n.radius * 1.6, 'mid');
       ctx.fillText(lb, n.x, n.y);
       if (isHovered || n.type === 'research') {
         ctx.fillStyle = 'rgba(0,0,0,0.65)';
@@ -2166,25 +2173,17 @@ function drawGraph() {
         ctx.fillText(n.label, n.x, n.y + n.radius + 11);
       }
     } else {
-      // Close: full labels + summary preview for hovered research
       ctx.fillStyle = '#fff';
       const fs = n.radius < 12 ? 8 : n.radius < 16 ? 9 : 11;
       ctx.font = `${n.type === 'research' ? 'bold ' : ''}${fs}px "Hiragino Kaku Gothic ProN", sans-serif`;
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      let lb = n.label;
-      const mw = n.radius * 1.8;
-      if (ctx.measureText(lb).width > mw && lb.length > 3) {
-        while (ctx.measureText(lb + '…').width > mw && lb.length > 2) lb = lb.slice(0, -1);
-        lb += '…';
-      }
+      const lb = getCachedLabel(ctx, n, n.radius * 1.8, 'close');
       ctx.fillText(lb, n.x, n.y);
 
-      // External full label
       ctx.fillStyle = 'rgba(0,0,0,0.7)';
       ctx.font = `${isHovered ? 'bold ' : ''}10px "Hiragino Kaku Gothic ProN", sans-serif`;
       ctx.fillText(n.label, n.x, n.y + n.radius + 12);
 
-      // Summary preview for hovered research
       if (isHovered && n.type === 'research' && n.data?.summary) {
         ctx.fillStyle = 'rgba(0,0,0,0.45)';
         ctx.font = '8px "Hiragino Kaku Gothic ProN", sans-serif';
