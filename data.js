@@ -152,8 +152,8 @@ window.RESEARCH_DATA = [
       "2040",
       "Gemini"
     ],
-    "createdAt": "2026-03-29T04:28:52.991831+00:00",
-    "updatedAt": "2026-03-29T04:28:52.991831+00:00"
+    "createdAt": "2026-02-12T03:09:51+00:00",
+    "updatedAt": "2026-02-12T03:09:51+00:00"
   },
   {
     "id": "69c8aa86ab8puo",
@@ -167,8 +167,8 @@ window.RESEARCH_DATA = [
       "戦略レポート",
       "Gemini"
     ],
-    "createdAt": "2026-03-29T04:28:54.541899+00:00",
-    "updatedAt": "2026-03-29T04:28:54.541899+00:00"
+    "createdAt": "2026-02-12T06:25:40+00:00",
+    "updatedAt": "2026-02-12T06:25:40+00:00"
   },
   {
     "id": "69c8aa87ljbij5",
@@ -183,8 +183,8 @@ window.RESEARCH_DATA = [
       "科学事業化",
       "Gemini"
     ],
-    "createdAt": "2026-03-29T04:28:55.228433+00:00",
-    "updatedAt": "2026-03-29T04:28:55.228433+00:00"
+    "createdAt": "2026-02-12T00:10:13+00:00",
+    "updatedAt": "2026-02-12T00:10:13+00:00"
   },
   {
     "id": "69c8aa8798obn8",
@@ -198,8 +198,8 @@ window.RESEARCH_DATA = [
       "ビジネスモデル",
       "Gemini"
     ],
-    "createdAt": "2026-03-29T04:28:55.905223+00:00",
-    "updatedAt": "2026-03-29T04:28:55.905223+00:00"
+    "createdAt": "2025-12-26T02:01:04+00:00",
+    "updatedAt": "2025-12-26T02:01:04+00:00"
   },
   {
     "id": "69c8aa88omm0hu",
@@ -229,8 +229,8 @@ window.RESEARCH_DATA = [
       "リサーチ事業",
       "Gemini"
     ],
-    "createdAt": "2026-03-29T04:28:57.226009+00:00",
-    "updatedAt": "2026-03-29T04:28:57.226009+00:00"
+    "createdAt": "2026-03-15T03:19:03+00:00",
+    "updatedAt": "2026-03-15T03:19:03+00:00"
   },
   {
     "id": "69c8aa8986fywx",
@@ -245,8 +245,8 @@ window.RESEARCH_DATA = [
       "リサーチ事業",
       "Gemini"
     ],
-    "createdAt": "2026-03-29T04:28:57.899615+00:00",
-    "updatedAt": "2026-03-29T04:28:57.899615+00:00"
+    "createdAt": "2026-03-15T03:18:35+00:00",
+    "updatedAt": "2026-03-15T03:18:35+00:00"
   },
   {
     "id": "69c8aa8arvbozf",
@@ -260,8 +260,8 @@ window.RESEARCH_DATA = [
       "ベンチマーク",
       "Gemini"
     ],
-    "createdAt": "2026-03-29T04:28:58.578256+00:00",
-    "updatedAt": "2026-03-29T04:28:58.578256+00:00"
+    "createdAt": "2026-03-14T14:17:48+00:00",
+    "updatedAt": "2026-03-14T14:17:48+00:00"
   },
   {
     "id": "69c8aa8ascp41x",
@@ -276,8 +276,8 @@ window.RESEARCH_DATA = [
       "学術",
       "Gemini"
     ],
-    "createdAt": "2026-03-29T04:28:58.590804+00:00",
-    "updatedAt": "2026-03-29T04:28:58.590804+00:00"
+    "createdAt": "2026-03-03T11:45:54+00:00",
+    "updatedAt": "2026-03-03T11:45:54+00:00"
   },
   {
     "id": "69c8aa8breewb4",
@@ -292,8 +292,8 @@ window.RESEARCH_DATA = [
       "持続可能性",
       "Gemini"
     ],
-    "createdAt": "2026-03-29T04:28:59.226301+00:00",
-    "updatedAt": "2026-03-29T04:28:59.226301+00:00"
+    "createdAt": "2025-12-09T01:18:43+00:00",
+    "updatedAt": "2025-12-09T01:18:43+00:00"
   },
   {
     "id": "69c8aa8by1yhwz",
@@ -308,8 +308,8 @@ window.RESEARCH_DATA = [
       "ガバナンス",
       "Gemini"
     ],
-    "createdAt": "2026-03-29T04:28:59.814833+00:00",
-    "updatedAt": "2026-03-29T04:28:59.814833+00:00"
+    "createdAt": "2026-02-25T04:40:21+00:00",
+    "updatedAt": "2026-02-25T04:40:21+00:00"
   },
   {
     "id": "69c8aa8cvlv6dc",
@@ -324,8 +324,8 @@ window.RESEARCH_DATA = [
       "基礎調査",
       "Gemini"
     ],
-    "createdAt": "2026-03-29T04:29:00.528843+00:00",
-    "updatedAt": "2026-03-29T04:29:00.528843+00:00"
+    "createdAt": "2026-01-06T15:10:13+00:00",
+    "updatedAt": "2026-01-06T15:10:13+00:00"
   },
   {
     "id": "69c8aa8d7ukrmr",
@@ -339,8 +339,8 @@ window.RESEARCH_DATA = [
       "社会的意義",
       "Gemini"
     ],
-    "createdAt": "2026-03-29T04:29:01.283701+00:00",
-    "updatedAt": "2026-03-29T04:29:01.283701+00:00"
+    "createdAt": "2026-03-18T09:51:38+00:00",
+    "updatedAt": "2026-03-18T09:51:38+00:00"
   },
   {
     "id": "69c8aa8e3nxgvk",
@@ -355,8 +355,8 @@ window.RESEARCH_DATA = [
       "分析",
       "Gemini"
     ],
-    "createdAt": "2026-03-29T04:29:02.004692+00:00",
-    "updatedAt": "2026-03-29T04:29:02.004692+00:00"
+    "createdAt": "2026-02-17T01:31:15+00:00",
+    "updatedAt": "2026-02-17T01:31:15+00:00"
   },
   {
     "id": "69c8aa8ek9ckl6",
@@ -370,8 +370,8 @@ window.RESEARCH_DATA = [
       "レポート",
       "Gemini"
     ],
-    "createdAt": "2026-03-29T04:29:02.723617+00:00",
-    "updatedAt": "2026-03-29T04:29:02.723617+00:00"
+    "createdAt": "2026-02-16T22:16:12+00:00",
+    "updatedAt": "2026-02-16T22:16:12+00:00"
   },
   {
     "id": "69c8aa8fqb7kjh",
@@ -416,8 +416,8 @@ window.RESEARCH_DATA = [
       "戦略",
       "Gemini"
     ],
-    "createdAt": "2026-03-29T04:29:04.907538+00:00",
-    "updatedAt": "2026-03-29T04:29:04.907538+00:00"
+    "createdAt": "2026-01-28T04:31:54+00:00",
+    "updatedAt": "2026-01-28T04:31:54+00:00"
   },
   {
     "id": "69c8aa91k9uj1i",
@@ -432,8 +432,8 @@ window.RESEARCH_DATA = [
       "フィールドワーク",
       "Gemini"
     ],
-    "createdAt": "2026-03-29T04:29:05.598982+00:00",
-    "updatedAt": "2026-03-29T04:29:05.598982+00:00"
+    "createdAt": "2026-01-18T05:28:17+00:00",
+    "updatedAt": "2026-01-18T05:28:17+00:00"
   },
   {
     "id": "69c8aa92fujuvw",
@@ -448,8 +448,8 @@ window.RESEARCH_DATA = [
       "自動化",
       "Gemini"
     ],
-    "createdAt": "2026-03-29T04:29:06.225118+00:00",
-    "updatedAt": "2026-03-29T04:29:06.225118+00:00"
+    "createdAt": "2026-02-12T00:58:59+00:00",
+    "updatedAt": "2026-02-12T00:58:59+00:00"
   },
   {
     "id": "69c8aa9222phix",
@@ -480,8 +480,8 @@ window.RESEARCH_DATA = [
       "戦略構想",
       "Gemini"
     ],
-    "createdAt": "2026-03-29T04:29:07.509090+00:00",
-    "updatedAt": "2026-03-29T04:29:07.509090+00:00"
+    "createdAt": "2026-03-01T23:38:38+00:00",
+    "updatedAt": "2026-03-01T23:38:38+00:00"
   },
   {
     "id": "69c8aa94nc7m7w",
@@ -511,8 +511,8 @@ window.RESEARCH_DATA = [
       "プログラム調査",
       "Gemini"
     ],
-    "createdAt": "2026-03-29T04:29:08.812370+00:00",
-    "updatedAt": "2026-03-29T04:29:08.812370+00:00"
+    "createdAt": "2025-12-29T08:04:28+00:00",
+    "updatedAt": "2025-12-29T08:04:28+00:00"
   },
   {
     "id": "69c8aa95kbu923",
@@ -527,8 +527,8 @@ window.RESEARCH_DATA = [
       "トレンドマッピング",
       "Gemini"
     ],
-    "createdAt": "2026-03-29T04:29:09.521016+00:00",
-    "updatedAt": "2026-03-29T04:29:09.521016+00:00"
+    "createdAt": "2026-03-03T07:23:25+00:00",
+    "updatedAt": "2026-03-03T07:23:25+00:00"
   },
   {
     "id": "69c8aa96ed35c4",
@@ -647,8 +647,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:56.102762+00:00",
-    "updatedAt": "2026-03-29T04:41:56.102765+00:00"
+    "createdAt": "2026-03-26T06:56:02+00:00",
+    "updatedAt": "2026-03-26T06:56:02+00:00"
   },
   {
     "id": "69c8ad940006zdd",
@@ -675,8 +675,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:56.103429+00:00",
-    "updatedAt": "2026-03-29T04:41:56.103431+00:00"
+    "createdAt": "2025-12-22T06:29:33+00:00",
+    "updatedAt": "2025-12-22T06:29:33+00:00"
   },
   {
     "id": "69c8ad940008dhc",
@@ -689,8 +689,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:56.103800+00:00",
-    "updatedAt": "2026-03-29T04:41:56.103802+00:00"
+    "createdAt": "2026-02-12T00:10:13+00:00",
+    "updatedAt": "2026-02-12T00:10:13+00:00"
   },
   {
     "id": "69c8ad940009blh",
@@ -703,8 +703,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:56.104143+00:00",
-    "updatedAt": "2026-03-29T04:41:56.104146+00:00"
+    "createdAt": "2026-02-20T01:14:58+00:00",
+    "updatedAt": "2026-02-20T01:14:58+00:00"
   },
   {
     "id": "69c8ad94000ahrw",
@@ -717,8 +717,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:56.104617+00:00",
-    "updatedAt": "2026-03-29T04:41:56.104619+00:00"
+    "createdAt": "2025-12-26T02:01:04+00:00",
+    "updatedAt": "2025-12-26T02:01:04+00:00"
   },
   {
     "id": "69c8ad94000bhmf",
@@ -731,8 +731,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:56.105032+00:00",
-    "updatedAt": "2026-03-29T04:41:56.105034+00:00"
+    "createdAt": "2025-12-30T16:20:16+00:00",
+    "updatedAt": "2025-12-30T16:20:16+00:00"
   },
   {
     "id": "69c8ad94000celb",
@@ -773,8 +773,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:56.106455+00:00",
-    "updatedAt": "2026-03-29T04:41:56.106458+00:00"
+    "createdAt": "2026-03-14T14:17:48+00:00",
+    "updatedAt": "2026-03-14T14:17:48+00:00"
   },
   {
     "id": "69c8ad94000fecb",
@@ -786,8 +786,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:56.106951+00:00",
-    "updatedAt": "2026-03-29T04:41:56.106953+00:00"
+    "createdAt": "2026-01-18T16:02:58+00:00",
+    "updatedAt": "2026-01-18T16:02:58+00:00"
   },
   {
     "id": "69c8ad940010jkt",
@@ -828,8 +828,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:56.108285+00:00",
-    "updatedAt": "2026-03-29T04:41:56.108287+00:00"
+    "createdAt": "2025-12-10T12:14:11+00:00",
+    "updatedAt": "2025-12-10T12:14:11+00:00"
   },
   {
     "id": "69c8ad940013zhv",
@@ -856,8 +856,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:56.108856+00:00",
-    "updatedAt": "2026-03-29T04:41:56.108859+00:00"
+    "createdAt": "2026-02-20T01:21:20+00:00",
+    "updatedAt": "2026-02-20T01:21:20+00:00"
   },
   {
     "id": "69c8ad940015hay",
@@ -870,8 +870,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:56.109233+00:00",
-    "updatedAt": "2026-03-29T04:41:56.109235+00:00"
+    "createdAt": "2026-03-17T06:13:13+00:00",
+    "updatedAt": "2026-03-17T06:13:13+00:00"
   },
   {
     "id": "69c8ad940016edp",
@@ -884,8 +884,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:56.109460+00:00",
-    "updatedAt": "2026-03-29T04:41:56.109463+00:00"
+    "createdAt": "2025-12-10T11:35:00+00:00",
+    "updatedAt": "2025-12-10T11:35:00+00:00"
   },
   {
     "id": "69c8ad940017yxt",
@@ -954,8 +954,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:56.116799+00:00",
-    "updatedAt": "2026-03-29T04:41:56.116803+00:00"
+    "createdAt": "2026-02-01T13:15:44+00:00",
+    "updatedAt": "2026-02-01T13:15:44+00:00"
   },
   {
     "id": "69c8ad94001cpkb",
@@ -967,8 +967,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:57.231829+00:00",
-    "updatedAt": "2026-03-29T04:41:57.232052+00:00"
+    "createdAt": "2024-11-20T02:56:30+00:00",
+    "updatedAt": "2024-11-20T02:56:30+00:00"
   },
   {
     "id": "69c8ad95001dfzn",
@@ -980,8 +980,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:57.372079+00:00",
-    "updatedAt": "2026-03-29T04:41:57.372088+00:00"
+    "createdAt": "2024-12-15T00:20:58+00:00",
+    "updatedAt": "2024-12-15T00:20:58+00:00"
   },
   {
     "id": "69c8ad95001etcy",
@@ -1019,8 +1019,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.806913+00:00",
-    "updatedAt": "2026-03-29T04:41:58.806934+00:00"
+    "createdAt": "2026-01-02T05:24:29+00:00",
+    "updatedAt": "2026-01-02T05:24:29+00:00"
   },
   {
     "id": "69c8ad960021pjj",
@@ -1045,8 +1045,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.807990+00:00",
-    "updatedAt": "2026-03-29T04:41:58.807993+00:00"
+    "createdAt": "2026-03-18T08:23:57+00:00",
+    "updatedAt": "2026-03-18T08:23:57+00:00"
   },
   {
     "id": "69c8ad960023nbk",
@@ -1101,8 +1101,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.809741+00:00",
-    "updatedAt": "2026-03-29T04:41:58.809744+00:00"
+    "createdAt": "2026-01-18T07:34:12+00:00",
+    "updatedAt": "2026-01-18T07:34:12+00:00"
   },
   {
     "id": "69c8ad960027yok",
@@ -1115,8 +1115,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.810259+00:00",
-    "updatedAt": "2026-03-29T04:41:58.810265+00:00"
+    "createdAt": "2026-01-31T21:35:55+00:00",
+    "updatedAt": "2026-01-31T21:35:55+00:00"
   },
   {
     "id": "69c8ad960028wch",
@@ -1129,8 +1129,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.810484+00:00",
-    "updatedAt": "2026-03-29T04:41:58.810487+00:00"
+    "createdAt": "2026-01-16T10:12:24+00:00",
+    "updatedAt": "2026-01-16T10:12:24+00:00"
   },
   {
     "id": "69c8ad960029ftp",
@@ -1185,8 +1185,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.811847+00:00",
-    "updatedAt": "2026-03-29T04:41:58.811850+00:00"
+    "createdAt": "2026-01-21T00:30:20+00:00",
+    "updatedAt": "2026-01-21T00:30:20+00:00"
   },
   {
     "id": "69c8ad96002dlxx",
@@ -1199,8 +1199,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.812180+00:00",
-    "updatedAt": "2026-03-29T04:41:58.812182+00:00"
+    "createdAt": "2026-01-18T08:13:36+00:00",
+    "updatedAt": "2026-01-18T08:13:36+00:00"
   },
   {
     "id": "69c8ad96002eqzj",
@@ -1212,8 +1212,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.812423+00:00",
-    "updatedAt": "2026-03-29T04:41:58.812425+00:00"
+    "createdAt": "2026-01-18T08:13:23+00:00",
+    "updatedAt": "2026-01-18T08:13:23+00:00"
   },
   {
     "id": "69c8ad96002fqbq",
@@ -1226,8 +1226,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.812930+00:00",
-    "updatedAt": "2026-03-29T04:41:58.812933+00:00"
+    "createdAt": "2025-12-07T21:12:40+00:00",
+    "updatedAt": "2025-12-07T21:12:40+00:00"
   },
   {
     "id": "69c8ad960030vfr",
@@ -1240,8 +1240,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.813338+00:00",
-    "updatedAt": "2026-03-29T04:41:58.813341+00:00"
+    "createdAt": "2026-01-31T21:47:07+00:00",
+    "updatedAt": "2026-01-31T21:47:07+00:00"
   },
   {
     "id": "69c8ad960031crj",
@@ -1266,8 +1266,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.814218+00:00",
-    "updatedAt": "2026-03-29T04:41:58.814220+00:00"
+    "createdAt": "2026-01-06T15:10:13+00:00",
+    "updatedAt": "2026-01-06T15:10:13+00:00"
   },
   {
     "id": "69c8ad960033zxl",
@@ -1279,8 +1279,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.814446+00:00",
-    "updatedAt": "2026-03-29T04:41:58.814448+00:00"
+    "createdAt": "2026-01-06T15:29:22+00:00",
+    "updatedAt": "2026-01-06T15:29:22+00:00"
   },
   {
     "id": "69c8ad960034lwk",
@@ -1305,8 +1305,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.815324+00:00",
-    "updatedAt": "2026-03-29T04:41:58.815326+00:00"
+    "createdAt": "2026-01-06T15:32:41+00:00",
+    "updatedAt": "2026-01-06T15:32:41+00:00"
   },
   {
     "id": "69c8ad960036fgm",
@@ -1387,8 +1387,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.817139+00:00",
-    "updatedAt": "2026-03-29T04:41:58.817141+00:00"
+    "createdAt": "2026-01-31T21:36:04+00:00",
+    "updatedAt": "2026-01-31T21:36:04+00:00"
   },
   {
     "id": "69c8ad96003cggj",
@@ -1427,8 +1427,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.818291+00:00",
-    "updatedAt": "2026-03-29T04:41:58.818294+00:00"
+    "createdAt": "2026-02-08T01:57:58+00:00",
+    "updatedAt": "2026-02-08T01:57:58+00:00"
   },
   {
     "id": "69c8ad96003fcby",
@@ -1441,8 +1441,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.818542+00:00",
-    "updatedAt": "2026-03-29T04:41:58.818545+00:00"
+    "createdAt": "2026-01-31T21:35:47+00:00",
+    "updatedAt": "2026-01-31T21:35:47+00:00"
   },
   {
     "id": "69c8ad960040avk",
@@ -1469,8 +1469,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.819068+00:00",
-    "updatedAt": "2026-03-29T04:41:58.819071+00:00"
+    "createdAt": "2026-01-18T16:20:09+00:00",
+    "updatedAt": "2026-01-18T16:20:09+00:00"
   },
   {
     "id": "69c8ad960042wpm",
@@ -1510,8 +1510,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.820086+00:00",
-    "updatedAt": "2026-03-29T04:41:58.820090+00:00"
+    "createdAt": "2026-02-17T01:31:15+00:00",
+    "updatedAt": "2026-02-17T01:31:15+00:00"
   },
   {
     "id": "69c8ad960045nko",
@@ -1565,8 +1565,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.821558+00:00",
-    "updatedAt": "2026-03-29T04:41:58.821560+00:00"
+    "createdAt": "2026-03-17T06:02:14+00:00",
+    "updatedAt": "2026-03-17T06:02:14+00:00"
   },
   {
     "id": "69c8ad960049vgr",
@@ -1579,8 +1579,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.822001+00:00",
-    "updatedAt": "2026-03-29T04:41:58.822003+00:00"
+    "createdAt": "2026-03-17T05:48:16+00:00",
+    "updatedAt": "2026-03-17T05:48:16+00:00"
   },
   {
     "id": "69c8ad96004acjj",
@@ -1593,8 +1593,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.822454+00:00",
-    "updatedAt": "2026-03-29T04:41:58.822456+00:00"
+    "createdAt": "2026-03-21T14:08:49+00:00",
+    "updatedAt": "2026-03-21T14:08:49+00:00"
   },
   {
     "id": "69c8ad96004bygp",
@@ -1634,8 +1634,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.823456+00:00",
-    "updatedAt": "2026-03-29T04:41:58.823458+00:00"
+    "createdAt": "2026-01-06T16:59:04+00:00",
+    "updatedAt": "2026-01-06T16:59:04+00:00"
   },
   {
     "id": "69c8ad96004eozu",
@@ -1648,8 +1648,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.823811+00:00",
-    "updatedAt": "2026-03-29T04:41:58.823813+00:00"
+    "createdAt": "2026-02-12T06:21:44+00:00",
+    "updatedAt": "2026-02-12T06:21:44+00:00"
   },
   {
     "id": "69c8ad96004fogk",
@@ -1662,8 +1662,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.824161+00:00",
-    "updatedAt": "2026-03-29T04:41:58.824163+00:00"
+    "createdAt": "2026-01-26T05:53:07+00:00",
+    "updatedAt": "2026-01-26T05:53:07+00:00"
   },
   {
     "id": "69c8ad960050vrl",
@@ -1676,8 +1676,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.824293+00:00",
-    "updatedAt": "2026-03-29T04:41:58.824296+00:00"
+    "createdAt": "2026-02-01T13:15:58+00:00",
+    "updatedAt": "2026-02-01T13:15:58+00:00"
   },
   {
     "id": "69c8ad960051fcr",
@@ -1746,8 +1746,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.826152+00:00",
-    "updatedAt": "2026-03-29T04:41:58.826154+00:00"
+    "createdAt": "2026-01-08T12:00:06+00:00",
+    "updatedAt": "2026-01-08T12:00:06+00:00"
   },
   {
     "id": "69c8ad960056pjt",
@@ -1760,8 +1760,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.826290+00:00",
-    "updatedAt": "2026-03-29T04:41:58.826292+00:00"
+    "createdAt": "2025-12-10T12:14:08+00:00",
+    "updatedAt": "2025-12-10T12:14:08+00:00"
   },
   {
     "id": "69c8ad960057gve",
@@ -1774,8 +1774,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.826881+00:00",
-    "updatedAt": "2026-03-29T04:41:58.826883+00:00"
+    "createdAt": "2026-03-02T02:39:38+00:00",
+    "updatedAt": "2026-03-02T02:39:38+00:00"
   },
   {
     "id": "69c8ad960058noq",
@@ -1815,8 +1815,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.827878+00:00",
-    "updatedAt": "2026-03-29T04:41:58.827880+00:00"
+    "createdAt": "2026-01-04T03:03:23+00:00",
+    "updatedAt": "2026-01-04T03:03:23+00:00"
   },
   {
     "id": "69c8ad96005bjhj",
@@ -1829,8 +1829,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.828148+00:00",
-    "updatedAt": "2026-03-29T04:41:58.828150+00:00"
+    "createdAt": "2026-02-22T08:08:07+00:00",
+    "updatedAt": "2026-02-22T08:08:07+00:00"
   },
   {
     "id": "69c8ad96005cnmn",
@@ -1843,8 +1843,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.828400+00:00",
-    "updatedAt": "2026-03-29T04:41:58.828402+00:00"
+    "createdAt": "2026-02-22T08:41:08+00:00",
+    "updatedAt": "2026-02-22T08:41:08+00:00"
   },
   {
     "id": "69c8ad96005dwcu",
@@ -1857,8 +1857,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.828649+00:00",
-    "updatedAt": "2026-03-29T04:41:58.828651+00:00"
+    "createdAt": "2026-03-03T13:43:00+00:00",
+    "updatedAt": "2026-03-03T13:43:00+00:00"
   },
   {
     "id": "69c8ad96005eewh",
@@ -1870,8 +1870,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.829078+00:00",
-    "updatedAt": "2026-03-29T04:41:58.829080+00:00"
+    "createdAt": "2026-03-01T22:08:35+00:00",
+    "updatedAt": "2026-03-01T22:08:35+00:00"
   },
   {
     "id": "69c8ad96005fzqi",
@@ -1938,8 +1938,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.830740+00:00",
-    "updatedAt": "2026-03-29T04:41:58.830742+00:00"
+    "createdAt": "2026-03-02T02:32:35+00:00",
+    "updatedAt": "2026-03-02T02:32:35+00:00"
   },
   {
     "id": "69c8ad960064xow",
@@ -1952,8 +1952,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.831033+00:00",
-    "updatedAt": "2026-03-29T04:41:58.831035+00:00"
+    "createdAt": "2025-12-13T09:18:20+00:00",
+    "updatedAt": "2025-12-13T09:18:20+00:00"
   },
   {
     "id": "69c8ad960065pwx",
@@ -1966,8 +1966,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.831332+00:00",
-    "updatedAt": "2026-03-29T04:41:58.831334+00:00"
+    "createdAt": "2026-01-10T00:42:27+00:00",
+    "updatedAt": "2026-01-10T00:42:27+00:00"
   },
   {
     "id": "69c8ad960066ocg",
@@ -2022,8 +2022,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.832378+00:00",
-    "updatedAt": "2026-03-29T04:41:58.832380+00:00"
+    "createdAt": "2026-01-14T04:13:25+00:00",
+    "updatedAt": "2026-01-14T04:13:25+00:00"
   },
   {
     "id": "69c8ad96006abcf",
@@ -2036,8 +2036,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.832705+00:00",
-    "updatedAt": "2026-03-29T04:41:58.832707+00:00"
+    "createdAt": "2026-01-13T01:34:03+00:00",
+    "updatedAt": "2026-01-13T01:34:03+00:00"
   },
   {
     "id": "69c8ad96006bznt",
@@ -2050,8 +2050,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.833219+00:00",
-    "updatedAt": "2026-03-29T04:41:58.833221+00:00"
+    "createdAt": "2025-12-29T08:04:28+00:00",
+    "updatedAt": "2025-12-29T08:04:28+00:00"
   },
   {
     "id": "69c8ad96006cihs",
@@ -2106,8 +2106,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.833925+00:00",
-    "updatedAt": "2026-03-29T04:41:58.833927+00:00"
+    "createdAt": "2026-03-10T06:46:49+00:00",
+    "updatedAt": "2026-03-10T06:46:49+00:00"
   },
   {
     "id": "69c8ad960070lyn",
@@ -2148,8 +2148,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.834486+00:00",
-    "updatedAt": "2026-03-29T04:41:58.834488+00:00"
+    "createdAt": "2026-03-03T23:01:46+00:00",
+    "updatedAt": "2026-03-03T23:01:46+00:00"
   },
   {
     "id": "69c8ad960073mld",
@@ -2162,8 +2162,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.834629+00:00",
-    "updatedAt": "2026-03-29T04:41:58.834630+00:00"
+    "createdAt": "2026-01-16T01:06:38+00:00",
+    "updatedAt": "2026-01-16T01:06:38+00:00"
   },
   {
     "id": "69c8ad960074zqe",
@@ -2176,8 +2176,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.834757+00:00",
-    "updatedAt": "2026-03-29T04:41:58.834758+00:00"
+    "createdAt": "2026-01-16T02:26:48+00:00",
+    "updatedAt": "2026-01-16T02:26:48+00:00"
   },
   {
     "id": "69c8ad960075ucw",
@@ -2231,8 +2231,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.836364+00:00",
-    "updatedAt": "2026-03-29T04:41:58.836366+00:00"
+    "createdAt": "2026-02-12T00:59:57+00:00",
+    "updatedAt": "2026-02-12T00:59:57+00:00"
   },
   {
     "id": "69c8ad960079rpo",
@@ -2259,8 +2259,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.836687+00:00",
-    "updatedAt": "2026-03-29T04:41:58.836689+00:00"
+    "createdAt": "2026-01-16T02:22:03+00:00",
+    "updatedAt": "2026-01-16T02:22:03+00:00"
   },
   {
     "id": "69c8ad96007buzh",
@@ -2273,8 +2273,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.836858+00:00",
-    "updatedAt": "2026-03-29T04:41:58.836860+00:00"
+    "createdAt": "2026-03-07T03:58:10+00:00",
+    "updatedAt": "2026-03-07T03:58:10+00:00"
   },
   {
     "id": "69c8ad96007cqfg",
@@ -2287,8 +2287,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.836993+00:00",
-    "updatedAt": "2026-03-29T04:41:58.836995+00:00"
+    "createdAt": "2026-03-07T03:27:28+00:00",
+    "updatedAt": "2026-03-07T03:27:28+00:00"
   },
   {
     "id": "69c8ad96007dait",
@@ -2314,8 +2314,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.837321+00:00",
-    "updatedAt": "2026-03-29T04:41:58.837323+00:00"
+    "createdAt": "2026-01-29T02:19:15+00:00",
+    "updatedAt": "2026-01-29T02:19:15+00:00"
   },
   {
     "id": "69c8ad96007fqhd",
@@ -2369,8 +2369,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.838013+00:00",
-    "updatedAt": "2026-03-29T04:41:58.838015+00:00"
+    "createdAt": "2026-01-18T05:22:38+00:00",
+    "updatedAt": "2026-01-18T05:22:38+00:00"
   },
   {
     "id": "69c8ad960083abv",
@@ -2383,8 +2383,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.838192+00:00",
-    "updatedAt": "2026-03-29T04:41:58.838194+00:00"
+    "createdAt": "2026-01-02T02:32:16+00:00",
+    "updatedAt": "2026-01-02T02:32:16+00:00"
   },
   {
     "id": "69c8ad960084fld",
@@ -2411,8 +2411,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.838451+00:00",
-    "updatedAt": "2026-03-29T04:41:58.838453+00:00"
+    "createdAt": "2025-12-10T12:14:20+00:00",
+    "updatedAt": "2025-12-10T12:14:20+00:00"
   },
   {
     "id": "69c8ad960086uyh",
@@ -2425,8 +2425,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.838578+00:00",
-    "updatedAt": "2026-03-29T04:41:58.838579+00:00"
+    "createdAt": "2025-12-10T11:34:53+00:00",
+    "updatedAt": "2025-12-10T11:34:53+00:00"
   },
   {
     "id": "69c8ad960087anp",
@@ -2439,8 +2439,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.838706+00:00",
-    "updatedAt": "2026-03-29T04:41:58.838708+00:00"
+    "createdAt": "2025-12-10T11:34:47+00:00",
+    "updatedAt": "2025-12-10T11:34:47+00:00"
   },
   {
     "id": "69c8ad960088awo",
@@ -2522,8 +2522,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.839467+00:00",
-    "updatedAt": "2026-03-29T04:41:58.839469+00:00"
+    "createdAt": "2026-01-13T15:23:07+00:00",
+    "updatedAt": "2026-01-13T15:23:07+00:00"
   },
   {
     "id": "69c8ad96008efrq",
@@ -2564,8 +2564,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.839842+00:00",
-    "updatedAt": "2026-03-29T04:41:58.839844+00:00"
+    "createdAt": "2026-01-29T08:30:11+00:00",
+    "updatedAt": "2026-01-29T08:30:11+00:00"
   },
   {
     "id": "69c8ad960091jkj",
@@ -2592,8 +2592,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.840225+00:00",
-    "updatedAt": "2026-03-29T04:41:58.840226+00:00"
+    "createdAt": "2025-12-08T05:55:24+00:00",
+    "updatedAt": "2025-12-08T05:55:24+00:00"
   },
   {
     "id": "69c8ad960093vyc",
@@ -2619,8 +2619,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.840426+00:00",
-    "updatedAt": "2026-03-29T04:41:58.840427+00:00"
+    "createdAt": "2026-02-15T00:25:16+00:00",
+    "updatedAt": "2026-02-15T00:25:16+00:00"
   },
   {
     "id": "69c8ad960095wzw",
@@ -2632,8 +2632,8 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.840637+00:00",
-    "updatedAt": "2026-03-29T04:41:58.840638+00:00"
+    "createdAt": "2026-02-16T22:16:12+00:00",
+    "updatedAt": "2026-02-16T22:16:12+00:00"
   },
   {
     "id": "69c8ad960096dyx",
@@ -2660,7 +2660,7 @@ window.RESEARCH_DATA = [
       "Gemini",
       "Google Drive"
     ],
-    "createdAt": "2026-03-29T04:41:58.841179+00:00",
-    "updatedAt": "2026-03-29T04:41:58.841180+00:00"
+    "createdAt": "2026-02-12T00:59:19+00:00",
+    "updatedAt": "2026-02-12T00:59:19+00:00"
   }
 ];
