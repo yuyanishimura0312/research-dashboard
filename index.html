@@ -4271,8 +4271,18 @@ function openDetail(id) {
   let html = '';
   html += `<div class="field-label">ステータス</div><div class="field-value">${statusBadgeHTML(entry.status || 'investigating')}</div>`;
   if (entry.category) html += `<div class="field-label">カテゴリ</div><div class="field-value">${esc(entry.category)}</div>`;
-  // Full text content (directly displayed)
-  if (entry.content) {
+  // Summary + full text with toggle
+  if (entry.content && entry.summary) {
+    html += `<div class="field-label">概要</div>`;
+    html += `<div class="field-value">${esc(entry.summary)}</div>`;
+    html += `<div style="margin:8px 0;">`;
+    html += `<button class="btn-action" id="toggleFullTextBtn" onclick="toggleFullText()" style="font-size:0.82rem;padding:4px 12px;">全文を表示</button>`;
+    html += `</div>`;
+    html += `<div id="fullTextWrap" style="display:none;">`;
+    html += `<div class="field-label">全文</div>`;
+    html += `<div class="field-value" style="white-space:pre-wrap;line-height:1.8;max-height:600px;overflow-y:auto;padding:12px 0;border-top:1px solid var(--border);">${esc(entry.content)}</div>`;
+    html += `</div>`;
+  } else if (entry.content) {
     html += `<div class="field-label">全文</div>`;
     html += `<div class="field-value" style="white-space:pre-wrap;line-height:1.8;max-height:600px;overflow-y:auto;padding:12px 0;border-top:1px solid var(--border);">${esc(entry.content)}</div>`;
   } else if (entry.summary) {
@@ -4282,13 +4292,16 @@ function openDetail(id) {
   if (entry.tags && entry.tags.length) html += `<div class="field-label">タグ</div><div class="card-tags" style="margin-top:4px">${entry.tags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>`;
   html += `<div class="field-label">登録日</div><div class="field-value">${formatDate(entry.createdAt)}</div>`;
 
-  // Source link
+  // Action buttons: source link + download
+  html += `<div class="detail-actions">`;
   if (entry.source) {
     const gdocsUrl = getGoogleDocsUrl(entry.source);
-    html += `<div class="detail-actions">`;
     html += `<a class="btn-action btn-open" href="${esc(gdocsUrl)}" target="_blank">&#9654; 元のドキュメントを開く</a>`;
-    html += `</div>`;
   }
+  if (entry.content) {
+    html += `<button class="btn-action" onclick="downloadAsMarkdown('${esc(entry.id)}')">Markdown をダウンロード</button>`;
+  }
+  html += `</div>`;
 
   // Feature 7: Prior/Derivative analysis
   const related = getRelatedEntries(id, 8);
@@ -4344,6 +4357,33 @@ function openDetail(id) {
 }
 
 function closeDetailModal() { document.getElementById('detailModal').classList.remove('active'); }
+
+function toggleFullText() {
+  const wrap = document.getElementById('fullTextWrap');
+  const btn = document.getElementById('toggleFullTextBtn');
+  if (wrap.style.display === 'none') {
+    wrap.style.display = 'block';
+    btn.textContent = '全文を閉じる';
+  } else {
+    wrap.style.display = 'none';
+    btn.textContent = '全文を表示';
+  }
+}
+
+function downloadAsMarkdown(id) {
+  const entry = loadData().find(d => d.id === id);
+  if (!entry || !entry.content) return;
+  const header = `# ${entry.title}\n\n`;
+  const blob = new Blob([header + entry.content], { type: 'text/markdown;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = (entry.title || 'report').replace(/[\/\\?%*:|"<>]/g, '_') + '.md';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 
 // Feature 1: Mini relation graph in detail modal
 function drawMiniGraph(center, related) {

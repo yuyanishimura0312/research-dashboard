@@ -19,15 +19,19 @@ SOURCE=""
 SUMMARY=""
 TAGS=""
 STATUS="investigating"
+CONTENT=""
+CONTENT_FILE=""
 
 while [[ $# -gt 0 ]]; do
   case $1 in
-    --title)    TITLE="$2";    shift 2 ;;
-    --category) CATEGORY="$2"; shift 2 ;;
-    --source)   SOURCE="$2";   shift 2 ;;
-    --summary)  SUMMARY="$2";  shift 2 ;;
-    --tags)     TAGS="$2";     shift 2 ;;
-    --status)   STATUS="$2";   shift 2 ;;
+    --title)        TITLE="$2";        shift 2 ;;
+    --category)     CATEGORY="$2";     shift 2 ;;
+    --source)       SOURCE="$2";       shift 2 ;;
+    --summary)      SUMMARY="$2";      shift 2 ;;
+    --tags)         TAGS="$2";         shift 2 ;;
+    --status)       STATUS="$2";       shift 2 ;;
+    --content)      CONTENT="$2";      shift 2 ;;
+    --content-file) CONTENT_FILE="$2"; shift 2 ;;
     *) echo "Unknown option: $1"; exit 1 ;;
   esac
 done
@@ -37,8 +41,13 @@ if [ -z "$TITLE" ]; then
   exit 1
 fi
 
+# If --content-file is given, read content from that file
+if [ -n "$CONTENT_FILE" ] && [ -f "$CONTENT_FILE" ]; then
+  CONTENT="$(cat "$CONTENT_FILE")"
+fi
+
 # Export for Python
-export DATA_JSON DATA_JS TITLE CATEGORY SOURCE SUMMARY TAGS STATUS
+export DATA_JSON DATA_JS TITLE CATEGORY SOURCE SUMMARY TAGS STATUS CONTENT
 
 # Use Python3 to safely manipulate JSON (no jq dependency)
 python3 << 'PYEOF'
@@ -52,6 +61,7 @@ source = os.environ.get("SOURCE", "")
 summary = os.environ.get("SUMMARY", "")
 tags_raw = os.environ.get("TAGS", "")
 status = os.environ.get("STATUS", "investigating")
+content = os.environ.get("CONTENT", "")
 
 # Load existing data
 try:
@@ -81,6 +91,8 @@ entry = {
     "createdAt": now,
     "updatedAt": now,
 }
+if content:
+    entry["content"] = content
 
 data.append(entry)
 
