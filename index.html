@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research Dashboard</title>
+<script src="data.js"></script>
+<style>
+  :root {
+    --bg: #f5f5f0;
+    --card: #ffffff;
+    --accent: #2d5a27;
+    --accent-light: #e8f0e7;
+    --text: #1a1a1a;
+    --text-muted: #6b6b6b;
+    --border: #e0ddd5;
+    --tag-bg: #eee8d5;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* Header */
+  header {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  header h1 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  header h1 span { color: var(--accent); }
+
+  .header-actions { display: flex; gap: 8px; }
+
+  .btn {
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--card);
+    color: var(--text);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+  }
+
+  .btn-primary:hover { background: #1e4a1a; }
+
+  .btn-danger { color: #c0392b; border-color: #e0b4ae; }
+  .btn-danger:hover { background: #fdf0ee; }
+
+  /* Layout */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  /* Stats bar */
+  .stats {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 24px;
+    flex: 1;
+    min-width: 140px;
+    box-shadow: var(--shadow);
+  }
+
+  .stat-card .label { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px; }
+  .stat-card .value { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
+
+  /* Toolbar */
+  .toolbar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .search-box {
+    flex: 1;
+    min-width: 200px;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.9rem;
+    background: var(--card);
+  }
+
+  .search-box:focus { outline: none; border-color: var(--accent); }
+
+  .filter-select {
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    background: var(--card);
+    min-width: 140px;
+  }
+
+  /* Cards grid */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 16px;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.2s;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+
+  .card-category {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .card-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+
+  .card-summary {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .card-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+
+  .tag {
+    background: var(--tag-bg);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.72rem;
+  }
+
+  .card-date { white-space: nowrap; }
+
+  .card-source {
+    font-size: 0.75rem;
+    color: var(--accent);
+    margin-bottom: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .card-source a { color: var(--accent); text-decoration: none; }
+  .card-source a:hover { text-decoration: underline; }
+
+  /* Modal */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 200;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 16px;
+    overflow-y: auto;
+  }
+
+  .modal-overlay.active { display: flex; }
+
+  .modal {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 32px;
+    width: 100%;
+    max-width: 640px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  }
+
+  .modal h2 { font-size: 1.1rem; margin-bottom: 20px; }
+
+  .form-group { margin-bottom: 16px; }
+
+  .form-group label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--text-muted);
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-family: inherit;
+  }
+
+  .form-group textarea { resize: vertical; min-height: 120px; }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  .modal-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 24px;
+  }
+
+  .modal-actions-right { display: flex; gap: 8px; }
+
+  /* Detail modal */
+  .detail-content { line-height: 1.8; }
+  .detail-content .field-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 16px;
+    margin-bottom: 4px;
+  }
+  .detail-content .field-value {
+    font-size: 0.95rem;
+    white-space: pre-wrap;
+  }
+
+  /* Empty state */
+  .empty-state {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--text-muted);
+  }
+  .empty-state .icon { font-size: 3rem; margin-bottom: 16px; }
+  .empty-state p { font-size: 0.95rem; }
+
+  /* Tag cloud */
+  .tag-cloud {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  .tag-cloud .tag {
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .tag-cloud .tag:hover, .tag-cloud .tag.active {
+    background: var(--accent);
+    color: white;
+  }
+
+  @media (max-width: 600px) {
+    header { padding: 16px; flex-direction: column; gap: 12px; }
+    .container { padding: 16px; }
+    .cards { grid-template-columns: 1fr; }
+    .modal { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1><span>&#9679;</span> Research Dashboard</h1>
+  <div class="header-actions">
+    <button class="btn" onclick="exportData()">エクスポート</button>
+    <button class="btn" onclick="document.getElementById('importFile').click()">インポート</button>
+    <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+    <button class="btn btn-primary" onclick="openAddModal()">+ 新規追加</button>
+  </div>
+</header>
+
+<div class="container">
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat-card">
+      <div class="label">リサーチ総数</div>
+      <div class="value" id="statTotal">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">カテゴリ数</div>
+      <div class="value" id="statCategories">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">今月の追加</div>
+      <div class="value" id="statThisMonth">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">タグ数</div>
+      <div class="value" id="statTags">0</div>
+    </div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <input type="text" class="search-box" id="searchBox" placeholder="タイトル・要約・タグで検索..." oninput="renderCards()">
+    <select class="filter-select" id="categoryFilter" onchange="renderCards()">
+      <option value="">すべてのカテゴリ</option>
+    </select>
+    <select class="filter-select" id="sortSelect" onchange="renderCards()">
+      <option value="newest">新しい順</option>
+      <option value="oldest">古い順</option>
+      <option value="title">タイトル順</option>
+    </select>
+  </div>
+
+  <!-- Tag cloud -->
+  <div class="tag-cloud" id="tagCloud"></div>
+
+  <!-- Cards -->
+  <div class="cards" id="cardsContainer"></div>
+
+  <!-- Empty state -->
+  <div class="empty-state" id="emptyState" style="display:none">
+    <div class="icon">&#128218;</div>
+    <p>リサーチがまだありません。<br>「+ 新規追加」から最初のリサーチを登録しましょう。</p>
+  </div>
+</div>
+
+<!-- Add/Edit Modal -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal">
+    <h2 id="modalTitle">新規リサーチを追加</h2>
+    <input type="hidden" id="editId">
+    <div class="form-group">
+      <label>タイトル *</label>
+      <input type="text" id="formTitle" placeholder="リサーチのタイトル">
+    </div>
+    <div class="form-group">
+      <label>カテゴリ</label>
+      <input type="text" id="formCategory" list="categoryList" placeholder="例: 人類学, ビジネス, テクノロジー">
+      <datalist id="categoryList"></datalist>
+    </div>
+    <div class="form-group">
+      <label>ソースURL</label>
+      <input type="url" id="formSource" placeholder="https://...">
+    </div>
+    <div class="form-group">
+      <label>要約・メモ</label>
+      <textarea id="formSummary" placeholder="調査内容の要約やメモを記入..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>タグ（カンマ区切り）</label>
+      <input type="text" id="formTags" placeholder="例: フィールドワーク, 民族誌, 都市">
+    </div>
+    <div class="modal-actions">
+      <div>
+        <button class="btn btn-danger" id="deleteBtn" onclick="deleteEntry()" style="display:none">削除</button>
+      </div>
+      <div class="modal-actions-right">
+        <button class="btn" onclick="closeModal()">キャンセル</button>
+        <button class="btn btn-primary" onclick="saveEntry()">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Detail Modal -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal">
+    <h2 id="detailTitle"></h2>
+    <div class="detail-content" id="detailContent"></div>
+    <div class="modal-actions">
+      <div></div>
+      <div class="modal-actions-right">
+        <button class="btn" onclick="closeDetailModal()">閉じる</button>
+        <button class="btn btn-primary" id="detailEditBtn" onclick="">編集</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY = 'research_dashboard_data';
+let activeTagFilter = '';
+
+function loadData() {
+  // Merge: data.js (file) + localStorage (browser edits)
+  const fileData = Array.isArray(window.RESEARCH_DATA) ? window.RESEARCH_DATA : [];
+  let localData;
+  try {
+    localData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+  } catch { localData = []; }
+
+  const merged = new Map();
+  // File data is authoritative for entries it contains
+  fileData.forEach(entry => merged.set(entry.id, entry));
+  // Add browser-only entries
+  localData.forEach(entry => {
+    if (!merged.has(entry.id)) merged.set(entry.id, entry);
+  });
+
+  return Array.from(merged.values());
+}
+
+function saveData(data) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+function generateId() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+}
+
+function formatDate(iso) {
+  const d = new Date(iso);
+  return `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function getAllCategories() {
+  const data = loadData();
+  const cats = new Set(data.map(d => d.category).filter(Boolean));
+  return [...cats].sort();
+}
+
+function getAllTags() {
+  const data = loadData();
+  const tagCount = {};
+  data.forEach(d => {
+    (d.tags || []).forEach(t => { tagCount[t] = (tagCount[t] || 0) + 1; });
+  });
+  return Object.entries(tagCount).sort((a, b) => b[1] - a[1]);
+}
+
+function updateStats() {
+  const data = loadData();
+  document.getElementById('statTotal').textContent = data.length;
+  document.getElementById('statCategories').textContent = getAllCategories().length;
+
+  const now = new Date();
+  const thisMonth = data.filter(d => {
+    const dd = new Date(d.createdAt);
+    return dd.getFullYear() === now.getFullYear() && dd.getMonth() === now.getMonth();
+  }).length;
+  document.getElementById('statThisMonth').textContent = thisMonth;
+  document.getElementById('statTags').textContent = getAllTags().length;
+}
+
+function updateCategoryFilter() {
+  const sel = document.getElementById('categoryFilter');
+  const current = sel.value;
+  const cats = getAllCategories();
+  sel.innerHTML = '<option value="">すべてのカテゴリ</option>' +
+    cats.map(c => `<option value="${c}" ${c === current ? 'selected' : ''}>${c}</option>`).join('');
+
+  const dl = document.getElementById('categoryList');
+  dl.innerHTML = cats.map(c => `<option value="${c}">`).join('');
+}
+
+function updateTagCloud() {
+  const tags = getAllTags();
+  const container = document.getElementById('tagCloud');
+  container.innerHTML = tags.map(([tag]) =>
+    `<span class="tag ${activeTagFilter === tag ? 'active' : ''}" onclick="toggleTagFilter('${tag.replace(/'/g, "\\'")}')">${tag}</span>`
+  ).join('');
+}
+
+function toggleTagFilter(tag) {
+  activeTagFilter = activeTagFilter === tag ? '' : tag;
+  renderCards();
+}
+
+function getFilteredData() {
+  let data = loadData();
+  const query = document.getElementById('searchBox').value.toLowerCase();
+  const cat = document.getElementById('categoryFilter').value;
+  const sort = document.getElementById('sortSelect').value;
+
+  if (query) {
+    data = data.filter(d =>
+      d.title.toLowerCase().includes(query) ||
+      (d.summary || '').toLowerCase().includes(query) ||
+      (d.tags || []).some(t => t.toLowerCase().includes(query))
+    );
+  }
+
+  if (cat) data = data.filter(d => d.category === cat);
+  if (activeTagFilter) data = data.filter(d => (d.tags || []).includes(activeTagFilter));
+
+  if (sort === 'newest') data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  else if (sort === 'oldest') data.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+  else if (sort === 'title') data.sort((a, b) => a.title.localeCompare(b.title, 'ja'));
+
+  return data;
+}
+
+function renderCards() {
+  const data = getFilteredData();
+  const container = document.getElementById('cardsContainer');
+  const empty = document.getElementById('emptyState');
+
+  updateStats();
+  updateCategoryFilter();
+  updateTagCloud();
+
+  if (data.length === 0) {
+    container.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+
+  empty.style.display = 'none';
+  container.innerHTML = data.map(d => `
+    <div class="card" onclick="openDetail('${d.id}')">
+      ${d.category ? `<div class="card-category">${esc(d.category)}</div>` : ''}
+      <div class="card-title">${esc(d.title)}</div>
+      ${d.source ? `<div class="card-source"><a href="${esc(d.source)}" target="_blank" onclick="event.stopPropagation()">${esc(new URL(d.source).hostname)}</a></div>` : ''}
+      ${d.summary ? `<div class="card-summary">${esc(d.summary)}</div>` : ''}
+      <div class="card-meta">
+        <div class="card-tags">${(d.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>
+        <div class="card-date">${formatDate(d.createdAt)}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function esc(s) {
+  const div = document.createElement('div');
+  div.textContent = s;
+  return div.innerHTML;
+}
+
+// Modal operations
+function openAddModal() {
+  document.getElementById('modalTitle').textContent = '新規リサーチを追加';
+  document.getElementById('editId').value = '';
+  document.getElementById('formTitle').value = '';
+  document.getElementById('formCategory').value = '';
+  document.getElementById('formSource').value = '';
+  document.getElementById('formSummary').value = '';
+  document.getElementById('formTags').value = '';
+  document.getElementById('deleteBtn').style.display = 'none';
+  document.getElementById('editModal').classList.add('active');
+  document.getElementById('formTitle').focus();
+}
+
+function openEditModal(id) {
+  const data = loadData();
+  const entry = data.find(d => d.id === id);
+  if (!entry) return;
+
+  document.getElementById('modalTitle').textContent = 'リサーチを編集';
+  document.getElementById('editId').value = id;
+  document.getElementById('formTitle').value = entry.title;
+  document.getElementById('formCategory').value = entry.category || '';
+  document.getElementById('formSource').value = entry.source || '';
+  document.getElementById('formSummary').value = entry.summary || '';
+  document.getElementById('formTags').value = (entry.tags || []).join(', ');
+  document.getElementById('deleteBtn').style.display = 'inline-block';
+  document.getElementById('editModal').classList.add('active');
+}
+
+function closeModal() {
+  document.getElementById('editModal').classList.remove('active');
+}
+
+function saveEntry() {
+  const title = document.getElementById('formTitle').value.trim();
+  if (!title) { alert('タイトルを入力してください'); return; }
+
+  const id = document.getElementById('editId').value;
+  const data = loadData();
+  const entry = {
+    id: id || generateId(),
+    title,
+    category: document.getElementById('formCategory').value.trim(),
+    source: document.getElementById('formSource').value.trim(),
+    summary: document.getElementById('formSummary').value.trim(),
+    tags: document.getElementById('formTags').value.split(',').map(t => t.trim()).filter(Boolean),
+    createdAt: id ? (data.find(d => d.id === id)?.createdAt || new Date().toISOString()) : new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
+
+  if (id) {
+    const idx = data.findIndex(d => d.id === id);
+    if (idx >= 0) data[idx] = entry;
+  } else {
+    data.push(entry);
+  }
+
+  saveData(data);
+  closeModal();
+  renderCards();
+}
+
+function deleteEntry() {
+  const id = document.getElementById('editId').value;
+  if (!id || !confirm('このリサーチを削除しますか？')) return;
+
+  const data = loadData().filter(d => d.id !== id);
+  saveData(data);
+  closeModal();
+  closeDetailModal();
+  renderCards();
+}
+
+// Detail modal
+function openDetail(id) {
+  const data = loadData();
+  const entry = data.find(d => d.id === id);
+  if (!entry) return;
+
+  document.getElementById('detailTitle').textContent = entry.title;
+  document.getElementById('detailEditBtn').onclick = () => { closeDetailModal(); openEditModal(id); };
+
+  let html = '';
+  if (entry.category) {
+    html += `<div class="field-label">カテゴリ</div><div class="field-value">${esc(entry.category)}</div>`;
+  }
+  if (entry.source) {
+    html += `<div class="field-label">ソース</div><div class="field-value"><a href="${esc(entry.source)}" target="_blank">${esc(entry.source)}</a></div>`;
+  }
+  if (entry.summary) {
+    html += `<div class="field-label">要約・メモ</div><div class="field-value">${esc(entry.summary)}</div>`;
+  }
+  if (entry.tags && entry.tags.length) {
+    html += `<div class="field-label">タグ</div><div class="card-tags" style="margin-top:4px">${entry.tags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>`;
+  }
+  html += `<div class="field-label">登録日</div><div class="field-value">${formatDate(entry.createdAt)}</div>`;
+  if (entry.updatedAt !== entry.createdAt) {
+    html += `<div class="field-label">更新日</div><div class="field-value">${formatDate(entry.updatedAt)}</div>`;
+  }
+
+  document.getElementById('detailContent').innerHTML = html;
+  document.getElementById('detailModal').classList.add('active');
+}
+
+function closeDetailModal() {
+  document.getElementById('detailModal').classList.remove('active');
+}
+
+// Export / Import
+function exportData() {
+  const data = loadData();
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `research_dashboard_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importData(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const imported = JSON.parse(e.target.result);
+      if (!Array.isArray(imported)) throw new Error();
+      const existing = loadData();
+      const existingIds = new Set(existing.map(d => d.id));
+      let added = 0;
+      imported.forEach(item => {
+        if (!existingIds.has(item.id)) {
+          existing.push(item);
+          added++;
+        }
+      });
+      saveData(existing);
+      renderCards();
+      alert(`${imported.length}件中 ${added}件を追加しました（重複${imported.length - added}件はスキップ）`);
+    } catch {
+      alert('JSONファイルの読み込みに失敗しました');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+// Close modals on overlay click
+document.getElementById('editModal').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) closeModal();
+});
+document.getElementById('detailModal').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) closeDetailModal();
+});
+
+// Keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') { closeModal(); closeDetailModal(); }
+  if (e.key === 'n' && !e.ctrlKey && !e.metaKey && document.activeElement === document.body) openAddModal();
+});
+
+// Initial render
+renderCards();
+</script>
+</body>
+</html>
