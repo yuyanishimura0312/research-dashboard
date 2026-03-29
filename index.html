@@ -1662,12 +1662,27 @@ function getGoogleDocsPreviewUrl(source) {
 }
 
 // ===== Tab navigation =====
-function switchTab(tab) {
+function switchTab(tab, pushHash) {
   currentTab = tab;
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === `tab-${tab}`));
+  if (pushHash !== false) history.replaceState(null, '', '#' + tab);
   renderAll();
 }
+
+// Restore tab from URL hash
+function initTabFromHash() {
+  const hash = location.hash.replace('#', '');
+  const valid = ['overview','library','research','graph','analytics','timeline'];
+  if (hash && valid.includes(hash)) {
+    switchTab(hash, false);
+  }
+}
+window.addEventListener('hashchange', () => {
+  const hash = location.hash.replace('#', '');
+  const valid = ['overview','library','research','graph','analytics','timeline'];
+  if (hash && valid.includes(hash) && hash !== currentTab) switchTab(hash, false);
+});
 
 // ===== View toggle =====
 function setView(view) {
@@ -4696,10 +4711,11 @@ function toggleDarkMode() {
   if (btn) btn.innerHTML = next === 'dark' ? '&#9788;' : '&#9790;';
 }
 initDarkMode();
+initTabFromHash();
 
 // Init — only render the active tab on startup, defer heavy tabs
 setupGraphEvents();
-renderOverview();
+renderAll();
 </script>
 </body>
 </html>
