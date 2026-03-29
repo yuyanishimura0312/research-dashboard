@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Future esse-sense — Dashboard</title>
-<script src="data.js?v=20260329"></script>
+<script src="data.js?v=20260330"></script>
+<script src="embeddings.js?v=20260330"></script>
 <style>
   :root {
     --bg: #f5f5f0;
@@ -334,6 +335,69 @@
     font-size: 0.8rem;
     background: var(--card);
     min-width: 120px;
+  }
+
+  /* Search group: search box + semantic toggle inline */
+  .search-group {
+    display: flex;
+    gap: 6px;
+    flex: 1;
+    min-width: 180px;
+    align-items: center;
+  }
+  .search-group .search-box { min-width: 0; }
+
+  /* Semantic search toggle */
+  .semantic-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--card);
+    cursor: pointer;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    user-select: none;
+  }
+  .semantic-toggle:hover { border-color: var(--accent); color: var(--text); }
+  .semantic-toggle.active {
+    background: var(--accent-light);
+    border-color: var(--accent);
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .semantic-toggle .toggle-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    flex-shrink: 0;
+  }
+  .semantic-toggle.active .toggle-dot { background: var(--accent); }
+  .semantic-toggle.loading .toggle-dot {
+    animation: pulse-dot 1s infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+  .semantic-status {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    padding: 2px 0;
+    min-height: 1.2em;
+  }
+  .similarity-badge {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 4px;
+    background: var(--accent-light);
+    color: var(--accent);
+    margin-left: 6px;
   }
 
   /* View toggle */
@@ -1314,7 +1378,12 @@
   <!-- ========== RESEARCH TAB ========== -->
   <div class="tab-panel" id="tab-research">
     <div class="toolbar">
-      <input type="text" class="search-box" id="searchBox" placeholder="タイトル・要約・タグで検索..." oninput="renderResearchTab()">
+      <div class="search-group">
+        <input type="text" class="search-box" id="searchBox" placeholder="タイトル・要約・タグで検索..." oninput="onSearchInput()" onkeydown="onSearchKeydown(event)">
+        <button class="semantic-toggle" id="semanticToggle" onclick="toggleSemanticMode()" title="AI意味検索：キーワード一致ではなく、意味的に近いリサーチを検索します">
+          <span class="toggle-dot"></span>AI検索
+        </button>
+      </div>
       <select class="filter-select" id="categoryFilter" onchange="renderResearchTab()">
         <option value="">すべてのカテゴリ</option>
       </select>
@@ -1336,6 +1405,7 @@
       </div>
     </div>
 
+    <div class="semantic-status" id="semanticStatus"></div>
     <div id="researchCards" class="cards"></div>
     <div id="researchList" class="list-view" style="display:none"></div>
     <div class="empty-state" id="emptyState" style="display:none">
@@ -1732,6 +1802,119 @@ function setView(view) {
   renderResearchTab();
 }
 
+// ===== Semantic Search =====
+let semanticMode = false;
+let semanticModel = null;
+let semanticLoading = false;
+let semanticScores = null; // Map<id, score> from last search
+let semanticSearchPending = false;
+
+function toggleSemanticMode() {
+  semanticMode = !semanticMode;
+  const btn = document.getElementById('semanticToggle');
+  const box = document.getElementById('searchBox');
+  btn.classList.toggle('active', semanticMode);
+  if (semanticMode) {
+    box.placeholder = 'AI検索: 自然文で入力してEnterキー...';
+    // If there is already a query, run semantic search
+    if (box.value.trim()) runSemanticSearch(box.value.trim());
+    else setSemanticStatus('自然文で検索できます。例：「社会変革に関する事例」');
+  } else {
+    box.placeholder = 'タイトル・要約・タグで検索...';
+    semanticScores = null;
+    setSemanticStatus('');
+    renderResearchTab();
+  }
+}
+
+function onSearchInput() {
+  if (semanticMode) {
+    // In semantic mode, don't search on every keystroke — wait for Enter
+    return;
+  }
+  renderResearchTab();
+}
+
+function onSearchKeydown(e) {
+  if (e.key === 'Enter' && semanticMode) {
+    const query = document.getElementById('searchBox')?.value?.trim();
+    if (query) runSemanticSearch(query);
+  }
+}
+
+function setSemanticStatus(msg) {
+  const el = document.getElementById('semanticStatus');
+  if (el) el.textContent = msg;
+}
+
+async function loadSemanticModel() {
+  if (semanticModel) return semanticModel;
+  semanticLoading = true;
+  document.getElementById('semanticToggle')?.classList.add('loading');
+  setSemanticStatus('AIモデルを読み込み中（初回のみ、約30秒）...');
+
+  try {
+    const { pipeline, env } = await import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3');
+    semanticModel = await pipeline('feature-extraction', 'Xenova/multilingual-e5-small', {
+      dtype: 'q8',
+    });
+  } catch (err) {
+    console.error('Failed to load semantic model:', err);
+    setSemanticStatus('モデルの読み込みに失敗しました。ブラウザを更新して再試行してください。');
+    semanticLoading = false;
+    document.getElementById('semanticToggle')?.classList.remove('loading');
+    return null;
+  }
+
+  semanticLoading = false;
+  document.getElementById('semanticToggle')?.classList.remove('loading');
+  return semanticModel;
+}
+
+async function runSemanticSearch(query) {
+  if (semanticSearchPending) return;
+  semanticSearchPending = true;
+
+  const embeddings = window.RESEARCH_EMBEDDINGS;
+  if (!embeddings || Object.keys(embeddings).length === 0) {
+    setSemanticStatus('埋め込みデータが見つかりません。');
+    semanticSearchPending = false;
+    return;
+  }
+
+  const model = await loadSemanticModel();
+  if (!model) { semanticSearchPending = false; return; }
+
+  setSemanticStatus('検索中...');
+
+  try {
+    // E5 models expect 'query: ' prefix
+    const output = await model('query: ' + query, { pooling: 'mean', normalize: true });
+    const queryVec = Array.from(output.data);
+    const dim = Object.values(embeddings)[0].length;
+
+    // Cosine similarity (vectors are already normalized, so dot product = cosine)
+    const scores = new Map();
+    for (const [id, docVec] of Object.entries(embeddings)) {
+      let dot = 0;
+      for (let i = 0; i < dim; i++) dot += queryVec[i] * docVec[i];
+      scores.set(id, dot);
+    }
+
+    semanticScores = scores;
+    const topScore = Math.max(...scores.values());
+    const threshold = Math.max(0.3, topScore * 0.5);
+    const matchCount = [...scores.values()].filter(s => s >= threshold).length;
+    setSemanticStatus(`${matchCount}件の関連リサーチが見つかりました（類似度 ${(threshold * 100).toFixed(0)}% 以上）`);
+    renderResearchTab();
+  } catch (err) {
+    console.error('Semantic search error:', err);
+    setSemanticStatus('検索中にエラーが発生しました。');
+  }
+
+  semanticSearchPending = false;
+}
+
 // ===== Filtering =====
 function getFilteredData() {
   let data = loadData();
@@ -1740,20 +1923,31 @@ function getFilteredData() {
   const status = document.getElementById('statusFilter')?.value || '';
   const sort = document.getElementById('sortSelect')?.value || 'newest';
 
-  if (query) {
-    data = data.filter(d =>
-      d.title.toLowerCase().includes(query) ||
-      (d.summary || '').toLowerCase().includes(query) ||
-      (d.tags || []).some(t => t.toLowerCase().includes(query))
-    );
+  // Semantic search mode: rank by vector similarity
+  if (semanticMode && semanticScores && semanticScores.size > 0) {
+    const topScore = Math.max(...semanticScores.values());
+    const threshold = Math.max(0.3, topScore * 0.5);
+    // Filter by similarity threshold and sort by score descending
+    data = data.filter(d => (semanticScores.get(d.id) || 0) >= threshold);
+    data.sort((a, b) => (semanticScores.get(b.id) || 0) - (semanticScores.get(a.id) || 0));
+    // Attach scores for display
+    data.forEach(d => { d._semanticScore = semanticScores.get(d.id) || 0; });
+  } else {
+    if (query) {
+      data = data.filter(d =>
+        d.title.toLowerCase().includes(query) ||
+        (d.summary || '').toLowerCase().includes(query) ||
+        (d.tags || []).some(t => t.toLowerCase().includes(query))
+      );
+    }
+    if (sort === 'newest') data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    else if (sort === 'oldest') data.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+    else if (sort === 'title') data.sort((a, b) => a.title.localeCompare(b.title, 'ja'));
   }
+
   if (cat) data = data.filter(d => d.category === cat);
   if (status) data = data.filter(d => (d.status || 'investigating') === status);
   if (activeTagFilter) data = data.filter(d => (d.tags || []).includes(activeTagFilter));
-
-  if (sort === 'newest') data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-  else if (sort === 'oldest') data.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-  else if (sort === 'title') data.sort((a, b) => a.title.localeCompare(b.title, 'ja'));
 
   return data;
 }
@@ -1958,57 +2152,75 @@ function renderResearchTab() {
   }
   emptyEl.style.display = 'none';
 
-  // Group data by date
-  const grouped = {};
-  data.forEach(d => {
-    const dateKey = new Date(d.createdAt).toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' });
-    if (!grouped[dateKey]) grouped[dateKey] = [];
-    grouped[dateKey].push(d);
-  });
+  const isSemanticResult = semanticMode && semanticScores && semanticScores.size > 0;
 
-  if (currentView === 'cards') {
-    cardsEl.style.display = 'block'; listEl.style.display = 'none';
-    cardsEl.innerHTML = Object.entries(grouped).map(([date, items]) => `
-      <div class="date-group">
-        <div class="date-group-header">${date}<span class="date-group-count">${items.length}件</span></div>
-        <div class="date-group-cards">
-          ${items.map(d => `
-            <div class="card" onclick="openDetail('${d.id}')">
-              <div class="card-header">
-                <div>${d.category ? `<div class="card-category">${esc(d.category)}</div>` : ''}<div class="card-title">${esc(d.title)}</div></div>
-                ${statusBadgeHTML(d.status || 'investigating')}
-              </div>
-              ${d.source ? `<div class="card-source"><a href="${esc(d.source)}" target="_blank" onclick="event.stopPropagation()">${esc(safeHostname(d.source))}</a></div>` : ''}
-              ${d.summary ? `<div class="card-summary">${esc(d.summary)}</div>` : ''}
-              <div class="card-meta">
-                <div class="card-tags">${(d.tags || []).filter(t => !NOISE_TAGS.has(t)).slice(0, 4).map(t => `<span class="tag">${esc(t)}</span>`).join('')}${(d.tags || []).filter(t => !NOISE_TAGS.has(t)).length > 4 ? `<span class="tag" style="opacity:0.5">+${(d.tags || []).filter(t => !NOISE_TAGS.has(t)).length - 4}</span>` : ''}</div>
-                <div class="card-date">${formatDate(d.createdAt)}</div>
-              </div>
-              <div class="card-actions" onclick="event.stopPropagation()">
-                <button class="btn-action" onclick="downloadReportMd('${d.id}')" title="Markdownでダウンロード">&#11015; DL</button>
-                ${d.content ? `<button class="btn-action btn-open" onclick="event.stopPropagation();openDetail('${d.id}')" title="内容を表示">&#9654; 開く</button>` : d.source ? `<a class="btn-action btn-open" href="${esc(getGoogleDocsUrl(d.source))}" target="_blank" title="開く">&#9654; 開く</a>` : `<button class="btn-action btn-open" onclick="openNewGoogleDoc('${d.id}')" title="Google Docsで開く">&#9654; 開く</button>`}
-              </div>
-            </div>
-          `).join('')}
+  // Render card for a single entry
+  function renderCard(d) {
+    return `
+      <div class="card" onclick="openDetail('${d.id}')">
+        <div class="card-header">
+          <div>${d.category ? `<div class="card-category">${esc(d.category)}</div>` : ''}<div class="card-title">${esc(d.title)}${d._semanticScore ? `<span class="similarity-badge">${(d._semanticScore * 100).toFixed(0)}%</span>` : ''}</div></div>
+          ${statusBadgeHTML(d.status || 'investigating')}
         </div>
-      </div>
-    `).join('');
+        ${d.source ? `<div class="card-source"><a href="${esc(d.source)}" target="_blank" onclick="event.stopPropagation()">${esc(safeHostname(d.source))}</a></div>` : ''}
+        ${d.summary ? `<div class="card-summary">${esc(d.summary)}</div>` : ''}
+        <div class="card-meta">
+          <div class="card-tags">${(d.tags || []).filter(t => !NOISE_TAGS.has(t)).slice(0, 4).map(t => `<span class="tag">${esc(t)}</span>`).join('')}${(d.tags || []).filter(t => !NOISE_TAGS.has(t)).length > 4 ? `<span class="tag" style="opacity:0.5">+${(d.tags || []).filter(t => !NOISE_TAGS.has(t)).length - 4}</span>` : ''}</div>
+          <div class="card-date">${formatDate(d.createdAt)}</div>
+        </div>
+        <div class="card-actions" onclick="event.stopPropagation()">
+          <button class="btn-action" onclick="downloadReportMd('${d.id}')" title="Markdownでダウンロード">&#11015; DL</button>
+          ${d.content ? `<button class="btn-action btn-open" onclick="event.stopPropagation();openDetail('${d.id}')" title="内容を表示">&#9654; 開く</button>` : d.source ? `<a class="btn-action btn-open" href="${esc(getGoogleDocsUrl(d.source))}" target="_blank" title="開く">&#9654; 開く</a>` : `<button class="btn-action btn-open" onclick="openNewGoogleDoc('${d.id}')" title="Google Docsで開く">&#9654; 開く</button>`}
+        </div>
+      </div>`;
+  }
+
+  function renderListItem(d) {
+    return `
+      <div class="list-item" onclick="openDetail('${d.id}')">
+        <span class="list-status" style="background:${(STATUS_MAP[d.status || 'investigating']).color}">${(STATUS_MAP[d.status || 'investigating']).label}</span>
+        <span class="list-title">${esc(d.title)}${d._semanticScore ? `<span class="similarity-badge">${(d._semanticScore * 100).toFixed(0)}%</span>` : ''}</span>
+        <span class="list-category">${esc(d.category || '')}</span>
+        <span class="list-tags">${(d.tags || []).slice(0, 4).map(t => `<span class="tag">${esc(t)}</span>`).join('')}</span>
+        <span class="list-date">${formatDate(d.createdAt)}</span>
+      </div>`;
+  }
+
+  if (isSemanticResult) {
+    // Semantic mode: flat list sorted by similarity (no date grouping)
+    if (currentView === 'cards') {
+      cardsEl.style.display = 'block'; listEl.style.display = 'none';
+      cardsEl.innerHTML = `<div class="date-group"><div class="date-group-header">類似度順<span class="date-group-count">${data.length}件</span></div><div class="date-group-cards">${data.map(renderCard).join('')}</div></div>`;
+    } else {
+      cardsEl.style.display = 'none'; listEl.style.display = 'flex';
+      listEl.innerHTML = `<div class="date-group"><div class="date-group-header">類似度順<span class="date-group-count">${data.length}件</span></div>${data.map(renderListItem).join('')}</div>`;
+    }
   } else {
-    cardsEl.style.display = 'none'; listEl.style.display = 'flex';
-    listEl.innerHTML = Object.entries(grouped).map(([date, items]) => `
-      <div class="date-group">
-        <div class="date-group-header">${date}<span class="date-group-count">${items.length}件</span></div>
-        ${items.map(d => `
-          <div class="list-item" onclick="openDetail('${d.id}')">
-            <span class="list-status" style="background:${(STATUS_MAP[d.status || 'investigating']).color}">${(STATUS_MAP[d.status || 'investigating']).label}</span>
-            <span class="list-title">${esc(d.title)}</span>
-            <span class="list-category">${esc(d.category || '')}</span>
-            <span class="list-tags">${(d.tags || []).slice(0, 4).map(t => `<span class="tag">${esc(t)}</span>`).join('')}</span>
-            <span class="list-date">${formatDate(d.createdAt)}</span>
-          </div>
-        `).join('')}
-      </div>
-    `).join('');
+    // Normal mode: group by date
+    const grouped = {};
+    data.forEach(d => {
+      const dateKey = new Date(d.createdAt).toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' });
+      if (!grouped[dateKey]) grouped[dateKey] = [];
+      grouped[dateKey].push(d);
+    });
+
+    if (currentView === 'cards') {
+      cardsEl.style.display = 'block'; listEl.style.display = 'none';
+      cardsEl.innerHTML = Object.entries(grouped).map(([date, items]) => `
+        <div class="date-group">
+          <div class="date-group-header">${date}<span class="date-group-count">${items.length}件</span></div>
+          <div class="date-group-cards">${items.map(renderCard).join('')}</div>
+        </div>
+      `).join('');
+    } else {
+      cardsEl.style.display = 'none'; listEl.style.display = 'flex';
+      listEl.innerHTML = Object.entries(grouped).map(([date, items]) => `
+        <div class="date-group">
+          <div class="date-group-header">${date}<span class="date-group-count">${items.length}件</span></div>
+          ${items.map(renderListItem).join('')}
+        </div>
+      `).join('');
+    }
   }
 }
 

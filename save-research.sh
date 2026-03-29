@@ -109,3 +109,10 @@ with open(data_js, "w", encoding="utf-8") as f:
 
 print(f"Saved: {title} (id: {entry_id})")
 PYEOF
+
+# Regenerate embeddings if generate_embeddings.py exists
+EMBED_SCRIPT="$SCRIPT_DIR/generate_embeddings.py"
+if [ -f "$EMBED_SCRIPT" ]; then
+  echo "Regenerating embeddings..."
+  python3 "$EMBED_SCRIPT"
+fi
