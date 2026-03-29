@@ -321,29 +321,66 @@ function renderSummaryContent(raw) {
   if (hasNewlines) {
     const lines = raw.split(/\n+/).filter(Boolean);
     let isFirst = true;
+    let listBuffer = [];
+
+    function flushList() {
+      if (listBuffer.length === 0) return;
+      listBuffer.forEach(item => { html += `<div class="summary-item">${esc(item)}</div>`; });
+      listBuffer = [];
+    }
+
     lines.forEach(line => {
       const t = line.trim();
-      if (/^[■●▶【\[]/.test(t) || /^\d+[\.\)]\s/.test(t)) {
-        html += `<h2>${esc(t.replace(/^[■●▶【\[\]】\d+\.\)\s]+/, '') || t)}</h2>`;
-      } else if (/^[-・•]\s/.test(t) || /^\(\d+\)/.test(t)) {
-        html += `<div class="summary-item">${esc(t.replace(/^[-・•]\s*/, ''))}</div>`;
-      } else {
-        html += `<p${isFirst ? ' class="drop-cap reader-lead"' : ''}>${esc(t)}</p>`;
+      // Headers: ■ ● ▶ 【 or standalone short labels ending with :
+      if (/^[■●▶【\[]/.test(t)) {
+        flushList();
+        html += `<h2>${esc(t.replace(/^[■●▶【\[\]】]+\s*/, '') || t)}</h2>`;
+      }
+      // Numbered items: 1. or 1) — render as list items, not headers
+      else if (/^\d+[\.\)]\s/.test(t)) {
+        listBuffer.push(t.replace(/^\d+[\.\)]\s*/, ''));
+      }
+      // Bullet items
+      else if (/^[-・•]\s/.test(t) || /^\(\d+\)/.test(t)) {
+        listBuffer.push(t.replace(/^[-・•]\s*/, '').replace(/^\(\d+\)\s*/, ''));
+      }
+      // Regular paragraph
+      else {
+        flushList();
+        const cls = isFirst && t.length > 30 ? ' class="drop-cap reader-lead"' : '';
+        html += `<p${cls}>${esc(t)}</p>`;
         isFirst = false;
       }
     });
+    flushList();
   } else {
-    // Split sentences for readability
-    const sentences = raw.split(/(?<=[。．.！!？?])\s*/).filter(Boolean);
+    // Single block — split at sentence boundaries, merge short ones
+    const rawSentences = raw.split(/(?<=[。．！!？?])\s*/).filter(Boolean);
+
+    // Merge short sentences (< 20 chars) with the next one
+    const sentences = [];
+    let carry = '';
+    rawSentences.forEach(s => {
+      carry += s;
+      if (carry.length >= 20 || s === rawSentences[rawSentences.length - 1]) {
+        sentences.push(carry);
+        carry = '';
+      }
+    });
+    if (carry) sentences.push(carry);
+
     if (sentences.length <= 1) {
-      html += `<p class="drop-cap reader-lead">${esc(raw)}</p>`;
+      const cls = raw.length > 30 ? ' class="drop-cap reader-lead"' : '';
+      html += `<p${cls}>${esc(raw)}</p>`;
     } else {
+      // Group into paragraphs of 2 sentences
       let para = '';
       let isFirst = true;
       sentences.forEach((s, i) => {
         para += s;
         if ((i + 1) % 2 === 0 || i === sentences.length - 1) {
-          html += `<p${isFirst ? ' class="drop-cap reader-lead"' : ''}>${esc(para)}</p>`;
+          const cls = isFirst && para.length > 30 ? ' class="drop-cap reader-lead"' : '';
+          html += `<p${cls}>${esc(para)}</p>`;
           isFirst = false;
           para = '';
         }
