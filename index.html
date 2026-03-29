@@ -95,6 +95,18 @@
   .tab-panel { display: none; }
   .tab-panel.active { display: block; }
 
+  /* Home section labels */
+  .home-section-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--accent);
+  }
+
   /* Stats bar */
   .stats { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
 
@@ -1108,6 +1120,9 @@
   <!-- ========== OVERVIEW TAB ========== -->
   <div class="tab-panel active" id="tab-overview">
 
+    <!-- ===== 上段：メディア ===== -->
+    <div class="home-section-label">リサーチメディア</div>
+
     <!-- Stats -->
     <div class="stats">
       <div class="stat-card">
@@ -1133,14 +1148,39 @@
       </div>
     </div>
 
-    <!-- Status pipeline -->
-    <div class="viz-panel" style="margin-bottom: 20px;">
-      <h3>ステータス</h3>
-      <div class="status-pipeline" id="statusPipeline"></div>
+    <!-- Recent + Category side by side -->
+    <div class="viz-row">
+      <div class="viz-panel" style="flex:2;">
+        <h3>最近のリサーチ</h3>
+        <div class="list-view" id="recentList"></div>
+      </div>
+      <div class="viz-panel" style="flex:1;">
+        <h3>カテゴリ</h3>
+        <div class="cat-bar-list" id="catChart"></div>
+        <div style="margin-top:16px;">
+          <h3 style="font-size:0.85rem;font-weight:600;margin-bottom:10px;color:var(--text-muted);">ステータス</h3>
+          <div class="status-pipeline" id="statusPipeline"></div>
+        </div>
+      </div>
     </div>
 
-    <!-- Viz row: Heatmap + Category chart -->
+    <!-- Tag cloud -->
+    <div class="viz-panel" style="margin-bottom: 20px;">
+      <h3>タグ</h3>
+      <div class="tag-cloud" id="tagCloud"></div>
+    </div>
+
+    <!-- ===== 下段：分析 ===== -->
+    <div class="home-section-label" style="margin-top:8px;">分析</div>
+
+    <!-- Insights -->
+    <div class="viz-panel" style="margin-bottom:16px;">
+      <h3>インサイト</h3>
+      <div id="homeInsights"></div>
+    </div>
+
     <div class="viz-row">
+      <!-- Activity heatmap -->
       <div class="viz-panel">
         <h3>活動（直近6ヶ月）</h3>
         <div class="heatmap-months" id="heatmapMonths"></div>
@@ -1157,43 +1197,42 @@
           More
         </div>
       </div>
+
+      <!-- Radar -->
       <div class="viz-panel">
-        <h3>カテゴリ</h3>
-        <div class="cat-bar-list" id="catChart"></div>
+        <h3>カテゴリ分布</h3>
+        <svg id="homeRadarChart" class="radar-svg" width="280" height="280"></svg>
       </div>
     </div>
 
-    <!-- Tag cloud -->
-    <div class="viz-panel" style="margin-bottom: 20px;">
-      <h3>タグ</h3>
-      <div class="tag-cloud" id="tagCloud"></div>
+    <div class="viz-row">
+      <!-- Keywords -->
+      <div class="viz-panel">
+        <h3>主要キーワード</h3>
+        <div class="keyword-list" id="homeKeywords"></div>
+      </div>
+
+      <!-- Research velocity -->
+      <div class="viz-panel">
+        <h3>リサーチ推移</h3>
+        <div class="velocity-bar-row" id="homeVelocity" style="margin-bottom:24px;"></div>
+      </div>
     </div>
 
-    <!-- Recent entries -->
-    <div class="viz-panel">
-      <h3>最近のリサーチ</h3>
-      <div class="list-view" id="recentList"></div>
-    </div>
+    <div class="viz-row">
+      <!-- Cross-category bridges -->
+      <div class="viz-panel">
+        <h3>分野横断のつながり</h3>
+        <div id="homeBridges"></div>
+      </div>
 
-    <!-- Narrative Report (moved from Analytics) -->
-    <div class="viz-panel" style="margin-top: 20px;">
-      <h3>Monthly Narrative Report</h3>
-      <div class="narrative-report" id="narrativeReport"></div>
-    </div>
-
-    <div class="viz-row" style="margin-top: 16px;">
       <!-- Rediscovery -->
       <div class="viz-panel">
-        <h3>Rediscovery — 再発見すべきリサーチ</h3>
+        <h3>再発見すべきリサーチ</h3>
         <div id="rediscoveryPanel"></div>
       </div>
-
-      <!-- Network Metrics Summary -->
-      <div class="viz-panel">
-        <h3>Network Metrics — 構造的重要度</h3>
-        <div id="networkMetricsSummary"></div>
-      </div>
     </div>
+
   </div>
 
   <!-- ========== RESEARCH TAB ========== -->
@@ -1648,22 +1687,73 @@ function renderOverview() {
   // Tag cloud
   renderTagCloud();
 
-  // Recent list
-  const recent = [...data].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 5);
+  // Recent list (8 entries)
+  const recent = [...data].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 8);
   document.getElementById('recentList').innerHTML = recent.map(d => `
     <div class="list-item" onclick="openDetail('${d.id}')">
       <span class="list-status" style="background:${(STATUS_MAP[d.status || 'investigating']).color}">${(STATUS_MAP[d.status || 'investigating']).label}</span>
       <span class="list-title">${esc(d.title)}</span>
       <span class="list-category">${esc(d.category || '')}</span>
-      <span class="list-tags">${(d.tags || []).slice(0, 3).map(t => `<span class="tag">${esc(t)}</span>`).join('')}</span>
+      <span class="list-tags">${(d.tags || []).filter(t => !NOISE_TAGS.has(t)).slice(0, 3).map(t => `<span class="tag">${esc(t)}</span>`).join('')}</span>
       <span class="list-date">${formatDate(d.createdAt)}</span>
     </div>
   `).join('') || '<div style="color:var(--text-muted);font-size:0.85rem;padding:16px;">まだエントリがありません。</div>';
 
-  // New features on Overview
-  renderNarrativeReport(data);
+  // Analysis section on home
+  renderHomeAnalysis(data);
+
+  // Existing features
   renderRediscovery(data);
-  renderNetworkMetricsSummary(data);
+}
+
+function renderHomeAnalysis(data) {
+  // Insights
+  renderInsights(data, document.getElementById('homeInsights'));
+
+  // Radar — reuse renderRadar but target homeRadarChart
+  const origRadar = document.getElementById('radarChart');
+  const homeRadar = document.getElementById('homeRadarChart');
+  if (homeRadar) {
+    // Temporarily swap ID so renderRadar writes to home element
+    if (origRadar) origRadar.id = '_radarChart';
+    homeRadar.id = 'radarChart';
+    renderRadar(data);
+    homeRadar.id = 'homeRadarChart';
+    if (origRadar) origRadar.id = 'radarChart';
+  }
+
+  // Keywords
+  const origKw = document.getElementById('globalKeywords');
+  const homeKw = document.getElementById('homeKeywords');
+  if (homeKw) {
+    if (origKw) origKw.id = '_globalKeywords';
+    homeKw.id = 'globalKeywords';
+    renderGlobalKeywords(data);
+    homeKw.id = 'homeKeywords';
+    if (origKw) origKw.id = 'globalKeywords';
+  }
+
+  // Velocity
+  const origVel = document.getElementById('velocityChart');
+  const homeVel = document.getElementById('homeVelocity');
+  if (homeVel) {
+    if (origVel) origVel.id = '_velocityChart';
+    homeVel.id = 'velocityChart';
+    renderVelocity(data);
+    homeVel.id = 'homeVelocity';
+    if (origVel) origVel.id = 'velocityChart';
+  }
+
+  // Bridges
+  const origBridge = document.getElementById('bridgeAnalysis');
+  const homeBridge = document.getElementById('homeBridges');
+  if (homeBridge) {
+    if (origBridge) origBridge.id = '_bridgeAnalysis';
+    homeBridge.id = 'bridgeAnalysis';
+    renderBridgeAnalysis(data);
+    homeBridge.id = 'homeBridges';
+    if (origBridge) origBridge.id = 'bridgeAnalysis';
+  }
 }
 
 function renderHeatmap(data) {
@@ -3142,7 +3232,7 @@ function renderAnalytics() {
   renderClusterSummary(data);
 }
 
-function renderInsights(data) {
+function renderInsights(data, targetEl) {
   const insights = [];
   const now = new Date();
 
@@ -3206,7 +3296,8 @@ function renderInsights(data) {
   // 8. カテゴリ数
   if (sorted.length > 0) insights.push({ type: '多様性', text: `${sorted.length}カテゴリ、${tagSet.size}種類のタグで構成。カバー範囲: ${sorted.map(([c]) => c).join('、')}`, cls: 'info' });
 
-  document.getElementById('insightsContainer').innerHTML = insights.length > 0
+  const el = targetEl || document.getElementById('insightsContainer');
+  if (el) el.innerHTML = insights.length > 0
     ? insights.map(i => `<div class="insight-card ${i.cls}"><div class="insight-type">${i.type}</div>${esc(i.text)}</div>`).join('')
     : '<div style="color:var(--text-muted);padding:12px;">エントリーを追加するとインサイトが生成されます。</div>';
 }
