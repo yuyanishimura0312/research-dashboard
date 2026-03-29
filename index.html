@@ -1011,9 +1011,7 @@
           <label style="font-weight:400;font-size:0.72rem;display:flex;align-items:center;gap:3px;">
             <input type="checkbox" id="showTags" checked onchange="rebuildAndRender()"> Tags
           </label>
-          <label style="font-weight:400;font-size:0.72rem;display:flex;align-items:center;gap:3px;">
-            <input type="checkbox" id="showCats" checked onchange="rebuildAndRender()"> Categories
-          </label>
+          <!-- Categories removed: too large, hides detail -->
           <label style="font-weight:400;font-size:0.72rem;display:flex;align-items:center;gap:3px;">
             <input type="checkbox" id="showSim" checked onchange="rebuildAndRender()"> Similarity
           </label>
@@ -1856,7 +1854,7 @@ function buildGraph() {
   const edges = [];
   const nodeMap = new Map();
   const showTags = document.getElementById('showTags')?.checked ?? true;
-  const showCats = document.getElementById('showCats')?.checked ?? true;
+  const showCats = false; // カテゴリノードは非表示（大きすぎて細部が見えにくくなるため）
   const showSim = document.getElementById('showSim')?.checked ?? true;
   const simThreshold = getSimThreshold();
 
