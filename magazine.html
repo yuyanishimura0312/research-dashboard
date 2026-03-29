@@ -99,6 +99,12 @@ const DATA = Array.isArray(window.RESEARCH_DATA) ? window.RESEARCH_DATA : [];
 const STATUS_COLORS = { investigating:'#e67e22', reading:'#3498db', organized:'#9b59b6', done:'#2d5a27' };
 const STATUS_LABELS = { investigating:'Investigating', reading:'Reading', organized:'Organized', done:'Completed' };
 const EXCLUDED_TAGS = new Set(['Gemini','Google Drive']);
+// Meta/dashboard articles to exclude from editorial display
+const META_KEYWORDS = ['ベンチマーク調査','ダッシュボード','ベストプラクティス','CSS','HTML','JavaScript','BM25','Louvain','PageRank','ナレッジグラフ高度化','実装パターン','世界ベンチマーク'];
+function isMetaArticle(d) {
+  const t = d.title || '';
+  return META_KEYWORDS.some(k => t.includes(k));
+}
 let activeCategory = '';
 
 function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
@@ -113,6 +119,8 @@ function getFiltered() {
   if (activeCategory) d = d.filter(x => x.category === activeCategory);
   return d;
 }
+// Editorial content = exclude meta/dashboard articles
+function getEditorial() { return getFiltered().filter(d => !isMetaArticle(d)); }
 
 // ===== Category bar =====
 function renderCatBar() {
@@ -148,8 +156,9 @@ function cardHTML(d, opts={}) {
 
 // ===== Hero =====
 function renderHero() {
-  const featured = getFiltered().filter(d => d.status === 'done' && d.summary && d.summary.length > 100);
-  const d = featured[0] || getFiltered()[0];
+  const editorial = getEditorial();
+  const featured = editorial.filter(d => d.summary && d.summary.length > 60);
+  const d = featured[0] || editorial[0];
   if (!d) return;
   document.getElementById('heroSection').innerHTML = `
     <div class="hero-inner" style="cursor:pointer" onclick="openReader('${d.id}')">
@@ -188,7 +197,8 @@ function renderDashboard() {
 
 // ===== Latest grid (NYT) =====
 function renderLatest() {
-  const items = getFiltered().slice(activeCategory ? 0 : 1, 10);
+  const editorial = getEditorial();
+  const items = editorial.slice(activeCategory ? 0 : 1, 10);
   if (items.length < 3) {
     document.getElementById('latestGrid').innerHTML = items.map(d => cardHTML(d)).join('');
     return;
@@ -208,11 +218,12 @@ function renderLatest() {
 // ===== Category sections =====
 function renderCategorySections() {
   if (activeCategory) { document.getElementById('categorySections').innerHTML = ''; return; }
+  const editorial = DATA.filter(d => !isMetaArticle(d));
   const cats = {};
-  DATA.forEach(d => { if (d.category) cats[d.category] = (cats[d.category]||0)+1; });
+  editorial.forEach(d => { if (d.category) cats[d.category] = (cats[d.category]||0)+1; });
   document.getElementById('categorySections').innerHTML = Object.entries(cats)
     .sort((a,b) => b[1]-a[1]).slice(0, 4).map(([cat]) => {
-    const items = DATA.filter(d => d.category === cat)
+    const items = editorial.filter(d => d.category === cat)
       .sort((a,b) => new Date(b.createdAt)-new Date(a.createdAt)).slice(0, 4);
     return `
       <section class="section" style="border-top:1px solid var(--border);">
@@ -240,18 +251,58 @@ function renderTopics() {
       </div>`).join('');
 }
 
-// ===== Related entries =====
+// ===== BM25-based Related entries =====
+function tokenize(text) {
+  if (!text) return [];
+  const clean = text.toLowerCase().replace(/[\s\n\r]+/g, ' ').trim();
+  const tokens = [];
+  // Character bi-grams (works for Japanese)
+  for (let i = 0; i <= clean.length - 2; i++) {
+    const g = clean.slice(i, i + 2);
+    if (!/^\s*$/.test(g)) tokens.push(g);
+  }
+  // Words
+  clean.split(/[\s,、。．.!！?？・\-—:：;；()（）\[\]「」『』]+/).filter(w => w.length >= 2).forEach(w => tokens.push(w));
+  return tokens;
+}
+
+let _relCache = {};
 function getRelated(id, topN) {
+  if (_relCache[id]) return _relCache[id].slice(0, topN);
   const idx = DATA.findIndex(d => d.id === id);
   if (idx < 0) return [];
   const entry = DATA[idx];
-  const eTags = new Set((entry.tags||[]).filter(t=>!EXCLUDED_TAGS.has(t)));
-  return DATA.map((d, i) => {
+  const entryText = [entry.title, entry.title, entry.category, entry.summary, (entry.tags||[]).join(' ')].join(' ');
+  const entryTokens = tokenize(entryText);
+  const entryFreq = {};
+  entryTokens.forEach(t => { entryFreq[t] = (entryFreq[t] || 0) + 1; });
+
+  const scores = DATA.map((d, i) => {
     if (i === idx) return null;
-    const overlap = (d.tags||[]).filter(t=>!EXCLUDED_TAGS.has(t)&&eTags.has(t)).length;
-    const catMatch = d.category === entry.category ? 2 : 0;
-    return { d, score: overlap + catMatch };
-  }).filter(x => x && x.score > 0).sort((a,b) => b.score-a.score).slice(0, topN);
+    const dText = [d.title, d.category, d.summary, (d.tags||[]).join(' ')].join(' ');
+    const dTokens = tokenize(dText);
+    const dFreq = {};
+    dTokens.forEach(t => { dFreq[t] = (dFreq[t] || 0) + 1; });
+
+    // Cosine similarity on token frequencies
+    let dot = 0, magA = 0, magB = 0;
+    for (const t in entryFreq) {
+      if (dFreq[t]) dot += entryFreq[t] * dFreq[t];
+      magA += entryFreq[t] * entryFreq[t];
+    }
+    for (const t in dFreq) magB += dFreq[t] * dFreq[t];
+    const sim = (magA && magB) ? dot / (Math.sqrt(magA) * Math.sqrt(magB)) : 0;
+
+    // Boost for same category and tag overlap
+    const eTags = new Set((entry.tags||[]).filter(t=>!EXCLUDED_TAGS.has(t)));
+    const tagOverlap = (d.tags||[]).filter(t=>!EXCLUDED_TAGS.has(t)&&eTags.has(t)).length;
+    const catBoost = d.category === entry.category ? 0.05 : 0;
+
+    return { d, score: sim + tagOverlap * 0.02 + catBoost };
+  }).filter(x => x && x.score > 0.05).sort((a,b) => b.score - a.score).slice(0, 8);
+
+  _relCache[id] = scores;
+  return scores.slice(0, topN);
 }
 
 // ===== Article Reader (enhanced editorial design) =====
@@ -273,30 +324,43 @@ function openReader(id) {
   let body = '';
 
   if (d.summary) {
-    const lines = d.summary.split(/\n+/).filter(Boolean);
-    // Parse structured content
-    let isFirst = true;
-    lines.forEach(line => {
-      const trimmed = line.trim();
-      // Section headers (lines starting with ■ or 【 or [number])
-      if (/^[■●▶\[【]/.test(trimmed) || /^\d+[\.\)]\s/.test(trimmed)) {
-        const clean = trimmed.replace(/^[■●▶\[【\]】\d+\.\)\s]+/, '');
-        body += `<h2>${esc(clean || trimmed)}</h2>`;
+    const raw = d.summary.trim();
+    const hasNewlines = raw.includes('\n');
+
+    if (hasNewlines) {
+      // Multi-line: parse structure
+      const lines = raw.split(/\n+/).filter(Boolean);
+      let isFirst = true;
+      lines.forEach(line => {
+        const t = line.trim();
+        if (/^[■●▶【\[]/.test(t) || /^\d+[\.\)]\s/.test(t)) {
+          body += `<h2>${esc(t.replace(/^[■●▶【\[\]】\d+\.\)\s]+/, '') || t)}</h2>`;
+        } else if (/^[-・•]\s/.test(t) || /^\(\d+\)/.test(t)) {
+          body += `<div class="summary-item">${esc(t.replace(/^[-・•]\s*/, ''))}</div>`;
+        } else {
+          body += `<p${isFirst ? ' class="drop-cap"' : ''}>${esc(t)}</p>`;
+          isFirst = false;
+        }
+      });
+    } else {
+      // Single block of text — split into sentences for readability
+      const sentences = raw.split(/(?<=[。．.！!？?])\s*/).filter(Boolean);
+      if (sentences.length <= 2) {
+        body += `<p class="drop-cap">${esc(raw)}</p>`;
+      } else {
+        // Group sentences into paragraphs of 2-3
+        let para = '';
+        let isFirst = true;
+        sentences.forEach((s, i) => {
+          para += s;
+          if ((i + 1) % 2 === 0 || i === sentences.length - 1) {
+            body += `<p${isFirst ? ' class="drop-cap"' : ''}>${esc(para)}</p>`;
+            isFirst = false;
+            para = '';
+          }
+        });
       }
-      // Bullet items (lines starting with - or ・ or ()
-      else if (/^[-・•]\s/.test(trimmed) || /^\(\d+\)/.test(trimmed)) {
-        body += `<div class="summary-item">${esc(trimmed.replace(/^[-・•]\s*/, ''))}</div>`;
-      }
-      // Pull quote (very short impactful lines)
-      else if (trimmed.length > 10 && trimmed.length < 80 && lines.length > 5 && lines.indexOf(line) === Math.floor(lines.length / 2)) {
-        body += `<div class="reader-pullquote">${esc(trimmed)}</div>`;
-      }
-      // Regular paragraph
-      else {
-        body += `<p${isFirst ? ' class="drop-cap"' : ''}>${esc(trimmed)}</p>`;
-        isFirst = false;
-      }
-    });
+    }
   }
 
   // Tags
@@ -309,17 +373,20 @@ function openReader(id) {
     body += `<a class="reader-source" href="${esc(d.source)}" target="_blank">Source &#8594;</a>`;
   }
 
-  // Related
+  // Related (BM25)
   const related = getRelated(id, 4);
   if (related.length > 0) {
     body += `<div class="reader-related">
       <h3>Related Research</h3>
       <div class="related-grid">
-        ${related.map(({d:r}) => `
+        ${related.map(({d:r, score}) => `
           <div class="related-card" onclick="openReader('${r.id}');document.getElementById('reader').scrollTo(0,0);">
             <div class="card-category">${esc(r.category||'')}</div>
             <div class="card-title">${esc(r.title)}</div>
-            <div class="card-meta">${formatDate(r.createdAt)}</div>
+            <div class="card-meta">
+              ${formatDate(r.createdAt)}
+              <span style="margin-left:8px;color:var(--accent);font-weight:600;">${Math.round(score*100)}%</span>
+            </div>
           </div>`).join('')}
       </div>
     </div>`;
