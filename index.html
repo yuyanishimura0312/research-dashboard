@@ -3210,29 +3210,48 @@ function renderRadar(data) {
 }
 
 function renderGlobalKeywords(data) {
-  const docs = data.map(d => [d.title, d.summary, (d.tags || []).join(' ')].filter(Boolean).join(' '));
-  const allText = docs.join(' ');
-  const tokens = tokenize(allText);
+  // Extract meaningful keywords from tags and titles (not n-gram noise)
   const freq = {};
-  tokens.forEach(t => { if (t.length >= 3) freq[t] = (freq[t] || 0) + 1; });
+  const docFreq = {};
+  const n = data.length;
 
-  // IDF weighting
-  const n = docs.length;
-  const df = {};
-  docs.forEach(doc => {
-    const seen = new Set(tokenize(doc).filter(t => t.length >= 3));
-    seen.forEach(t => { df[t] = (df[t] || 0) + 1; });
+  // 1. Count tags across all entries
+  data.forEach(d => {
+    const seen = new Set();
+    (d.tags || []).forEach(t => {
+      freq[t] = (freq[t] || 0) + 1;
+      if (!seen.has(t)) { docFreq[t] = (docFreq[t] || 0) + 1; seen.add(t); }
+    });
   });
 
+  // 2. Extract meaningful words from titles (3+ chars, skip noise)
+  const stopWords = new Set(['について','における','および','または','それぞれ','レポート','調査','分析','概要','詳細','まとめ','から','する','ため','こと','もの','など','として','による','との','への','から','まで','だけ','ところ','the','and','for','with','from']);
+  data.forEach(d => {
+    const title = d.title || '';
+    // Split by common delimiters, extract words 3+ chars
+    const words = title.split(/[\s,、。：:・\-—()（）「」『』【】\[\]\/]+/).filter(w => w.length >= 3 && !stopWords.has(w.toLowerCase()) && !/^\d+$/.test(w));
+    const seen = new Set();
+    words.forEach(w => {
+      // Skip if it's already a tag (avoid double counting)
+      if (!freq[w]) freq[w] = 0;
+      freq[w]++;
+      if (!seen.has(w)) { docFreq[w] = (docFreq[w] || 0) + 1; seen.add(w); }
+    });
+  });
+
+  // 3. Score with TF-IDF
   const scored = Object.entries(freq).map(([term, tf]) => {
-    const idf = Math.log(n / (df[term] || 1) + 1);
-    return { term, score: tf * idf };
-  }).filter(k => k.term.length >= 3 && !/^[a-z]{2,3}$/.test(k.term))
+    const df = docFreq[term] || 1;
+    const idf = Math.log(n / df + 1);
+    return { term, score: tf * idf, tf, df };
+  })
+    .filter(k => k.term.length >= 2 && k.tf >= 2)  // Appear at least twice
+    .filter(k => !/^[\d\s.]+$/.test(k.term))  // No pure numbers
     .sort((a, b) => b.score - a.score)
     .slice(0, 20);
 
   document.getElementById('globalKeywords').innerHTML = scored.map(k =>
-    `<span class="keyword">${esc(k.term)}<span class="kw-score">${k.score.toFixed(1)}</span></span>`
+    `<span class="keyword">${esc(k.term)}<span class="kw-score">${k.tf}</span></span>`
   ).join('');
 }
 

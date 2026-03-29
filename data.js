@@ -9018,7 +9018,7 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8b40ch85o1d",
     "title": "20251011_ハンス・ヨナスの『責任という原理』：哲学的背景・責任倫理の革新と現代的意義",
-    "category": "観光・移動",
+    "category": "テクノロジー",
     "status": "done",
     "source": "",
     "summary": "生成AIレポート/観光/20251011_ハンス・ヨナスの『責任という原理』：哲学的背景・責任倫理の革新と現代的意義.pages",
@@ -9040,7 +9040,7 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8b40cxnhzhq",
     "title": "20251011_リミタリアニズム：イングリッド・ロベインスの議論を中心とした充足に基づく正義論の包括的検討",
-    "category": "観光・移動",
+    "category": "テクノロジー",
     "status": "done",
     "source": "",
     "summary": "生成AIレポート/観光/20251011_リミタリアニズム：イングリッド・ロベインスの議論を中心とした充足に基づく正義論の包括的検討.pages",
@@ -9051,7 +9051,7 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8b40c8na78o",
     "title": "20251011_原研哉『低空飛行』にみる観光の新しい価値観の提唱と意義",
-    "category": "観光・移動",
+    "category": "テクノロジー",
     "status": "done",
     "source": "",
     "summary": "生成AIレポート/観光/20251011_原研哉『低空飛行』にみる観光の新しい価値観の提唱と意義.pages",
@@ -9062,7 +9062,7 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8b40cgy4izn",
     "title": "20251011_長期主義倫理学の哲学的基盤と現代的動向",
-    "category": "観光・移動",
+    "category": "テクノロジー",
     "status": "done",
     "source": "",
     "summary": "生成AIレポート/観光/20251011_長期主義倫理学の哲学的基盤と現代的動向.pages",
@@ -9084,7 +9084,7 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8b40c2t50qh",
     "title": "20251012_公立はこだて未来大学と地域社会の協働によるまちづくり",
-    "category": "観光・移動",
+    "category": "テクノロジー",
     "status": "done",
     "source": "",
     "summary": "生成AIレポート/観光/20251012_公立はこだて未来大学と地域社会の協働によるまちづくり.pages",
@@ -9128,7 +9128,7 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8b40cz7xrmd",
     "title": "20251028_COP30_freewll",
-    "category": "観光・移動",
+    "category": "テクノロジー",
     "status": "done",
     "source": "",
     "summary": "生成AIレポート/観光/20251028_COP30_freewll.pdf",
@@ -9139,7 +9139,7 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8b40c9ju54v",
     "title": "20251012_バリ島における歴史・文化と自然の共生：神と自然観の視点から",
-    "category": "観光・移動",
+    "category": "テクノロジー",
     "status": "done",
     "source": "",
     "summary": "生成AIレポート/観光/バリ島/20251012_バリ島における歴史・文化と自然の共生：神と自然観の視点から.pages",
@@ -9150,7 +9150,7 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8b40cktvuux",
     "title": "20251013_バリ島・ジ・オベロイ・バリに見る自然共生型観光",
-    "category": "観光・移動",
+    "category": "テクノロジー",
     "status": "done",
     "source": "",
     "summary": "生成AIレポート/観光/バリ島/20251013_バリ島・ジ・オベロイ・バリに見る自然共生型観光.pages",
@@ -9172,7 +9172,7 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8b40ce7vl40",
     "title": "20251101_バリ島におけるアグリフォレストリーの実践と意義",
-    "category": "観光・移動",
+    "category": "テクノロジー",
     "status": "done",
     "source": "",
     "summary": "生成AIレポート/観光/バリ島/20251101_バリ島におけるアグリフォレストリーの実践と意義.pages",
@@ -9183,7 +9183,7 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8b40cj2pnyp",
     "title": "20251101_バリ島における水の信仰とその比較文化的分析",
-    "category": "観光・移動",
+    "category": "テクノロジー",
     "status": "done",
     "source": "",
     "summary": "生成AIレポート/観光/バリ島/20251101_バリ島における水の信仰とその比較文化的分析.pages",
@@ -9194,7 +9194,7 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8b40cs4gzgq",
     "title": "20251105_バリ",
-    "category": "観光・移動",
+    "category": "テクノロジー",
     "status": "done",
     "source": "",
     "summary": "生成AIレポート/観光/バリ島/20251105_バリ.pages",
@@ -9205,7 +9205,7 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8b40c7iu3yr",
     "title": "ウブド王家",
-    "category": "観光・移動",
+    "category": "テクノロジー",
     "status": "done",
     "source": "",
     "summary": "生成AIレポート/観光/バリ島/ウブド王家.pages",
@@ -9216,7 +9216,7 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8b40cvg9kpr",
     "title": "バリ島における農業輸出と自給のバランス分析",
-    "category": "観光・移動",
+    "category": "テクノロジー",
     "status": "done",
     "source": "",
     "summary": "生成AIレポート/観光/バリ島/バリ島における農業輸出と自給のバランス分析.pages",
@@ -9227,7 +9227,7 @@ window.RESEARCH_DATA = [
   {
     "id": "69c8b40cu6oihu",
     "title": "バリ島の前近代的知恵と未来社会構築に向けたテクノロジー統合",
-    "category": "観光・移動",
+    "category": "テクノロジー",
     "status": "done",
     "source": "",
     "summary": "生成AIレポート/観光/バリ島/バリ島の前近代的知恵と未来社会構築に向けたテクノロジー統合.pages",
