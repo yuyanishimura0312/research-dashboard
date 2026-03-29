@@ -1096,6 +1096,38 @@
 
 </div>
 
+<!-- Bulk Upload Modal -->
+<div class="modal-overlay" id="bulkUploadModal">
+  <div class="modal" style="max-width:640px">
+    <h2>ファイル一括アップロード</h2>
+    <p style="color:var(--text-muted);font-size:0.8rem;margin-bottom:14px">複数ファイルをまとめてリサーチに登録できます。対応: .md .txt .csv .json .html .pdf(テキスト抽出)</p>
+    <div class="form-group">
+      <label>カテゴリ（全ファイル共通、空欄可）</label>
+      <input type="text" id="bulkCategory" list="categoryList" placeholder="例: テクノロジー">
+    </div>
+    <div class="form-group">
+      <label>タグ（全ファイル共通、カンマ区切り、空欄可）</label>
+      <input type="text" id="bulkTags" placeholder="例: AI, 調査">
+    </div>
+    <div id="bulkDropZone" style="border:2px dashed var(--border);border-radius:10px;padding:40px 20px;text-align:center;cursor:pointer;margin-bottom:14px;transition:all 0.15s">
+      <div style="font-size:2rem;margin-bottom:8px">&#128206;</div>
+      <div style="font-size:0.85rem;color:var(--text-muted)">ここにファイルをドラッグ&ドロップ<br>またはクリックして選択</div>
+      <input type="file" id="bulkFiles" multiple accept=".md,.txt,.csv,.json,.html,.pdf" style="display:none">
+    </div>
+    <div id="bulkFileList" style="max-height:200px;overflow-y:auto;margin-bottom:14px"></div>
+    <div id="bulkProgress" style="display:none;margin-bottom:14px">
+      <div style="background:var(--accent-light);border-radius:6px;height:8px;overflow:hidden">
+        <div id="bulkProgressBar" style="background:var(--accent);height:100%;width:0%;transition:width 0.3s"></div>
+      </div>
+      <div id="bulkProgressText" style="font-size:0.75rem;color:var(--text-muted);margin-top:4px"></div>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button class="btn" onclick="closeBulkUpload()">キャンセル</button>
+      <button class="btn btn-primary" id="bulkSubmitBtn" onclick="processBulkUpload()" disabled>アップロード</button>
+    </div>
+  </div>
+</div>
+
 <!-- Add/Edit Modal -->
 <div class="modal-overlay" id="editModal">
   <div class="modal">
@@ -2927,13 +2959,166 @@ function importData(event) {
   event.target.value = '';
 }
 
+// ===== Bulk Upload =====
+let bulkFilesQueue = [];
+
+function openBulkUpload() {
+  bulkFilesQueue = [];
+  document.getElementById('bulkCategory').value = '';
+  document.getElementById('bulkTags').value = '';
+  document.getElementById('bulkFileList').innerHTML = '';
+  document.getElementById('bulkProgress').style.display = 'none';
+  document.getElementById('bulkSubmitBtn').disabled = true;
+  document.getElementById('bulkUploadModal').classList.add('active');
+}
+
+function closeBulkUpload() {
+  document.getElementById('bulkUploadModal').classList.remove('active');
+}
+
+// Drag & drop + click
+(function() {
+  const zone = document.getElementById('bulkDropZone');
+  const input = document.getElementById('bulkFiles');
+
+  zone.addEventListener('click', () => input.click());
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.style.borderColor = 'var(--accent)'; zone.style.background = 'var(--accent-light)'; });
+  zone.addEventListener('dragleave', () => { zone.style.borderColor = 'var(--border)'; zone.style.background = ''; });
+  zone.addEventListener('drop', e => {
+    e.preventDefault();
+    zone.style.borderColor = 'var(--border)'; zone.style.background = '';
+    addBulkFiles(e.dataTransfer.files);
+  });
+  input.addEventListener('change', e => { addBulkFiles(e.target.files); e.target.value = ''; });
+})();
+
+function addBulkFiles(fileList) {
+  for (const f of fileList) {
+    if (!bulkFilesQueue.find(q => q.name === f.name && q.size === f.size)) {
+      bulkFilesQueue.push(f);
+    }
+  }
+  renderBulkFileList();
+}
+
+function removeBulkFile(idx) {
+  bulkFilesQueue.splice(idx, 1);
+  renderBulkFileList();
+}
+
+function renderBulkFileList() {
+  const el = document.getElementById('bulkFileList');
+  document.getElementById('bulkSubmitBtn').disabled = bulkFilesQueue.length === 0;
+  if (bulkFilesQueue.length === 0) { el.innerHTML = ''; return; }
+  el.innerHTML = bulkFilesQueue.map((f, i) => `
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;border-bottom:1px solid var(--border);font-size:0.8rem">
+      <span>${esc(f.name)} <span style="color:var(--text-muted)">(${(f.size / 1024).toFixed(1)} KB)</span></span>
+      <button class="btn btn-sm btn-danger" onclick="removeBulkFile(${i})">&#10005;</button>
+    </div>
+  `).join('');
+}
+
+async function readFileContent(file) {
+  return new Promise((resolve) => {
+    const ext = file.name.split('.').pop().toLowerCase();
+
+    if (ext === 'pdf') {
+      // For PDF: just use filename as title, note that it's a PDF
+      resolve({ title: file.name.replace(/\.pdf$/i, ''), content: `[PDF file: ${file.name}]`, ext });
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = e => {
+      const text = e.target.result;
+      let title = file.name.replace(/\.[^.]+$/, '');
+      let content = text;
+
+      if (ext === 'md' || ext === 'txt') {
+        // Extract first heading or first line as title
+        const headingMatch = text.match(/^#\s+(.+)/m);
+        if (headingMatch) title = headingMatch[1].trim();
+        else {
+          const firstLine = text.split('\n').find(l => l.trim());
+          if (firstLine && firstLine.length < 200) title = firstLine.trim();
+        }
+      } else if (ext === 'html') {
+        const titleMatch = text.match(/<title>([^<]+)<\/title>/i);
+        if (titleMatch) title = titleMatch[1].trim();
+        // Strip HTML tags for summary
+        content = text.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+      } else if (ext === 'json') {
+        try {
+          const obj = JSON.parse(text);
+          title = obj.title || obj.name || file.name.replace(/\.json$/, '');
+          content = obj.summary || obj.description || obj.content || JSON.stringify(obj).slice(0, 500);
+        } catch { /* use raw text */ }
+      } else if (ext === 'csv') {
+        const lines = text.split('\n');
+        title = file.name.replace(/\.csv$/, '');
+        content = `CSV: ${lines.length}行, ヘッダー: ${lines[0] || ''}`;
+      }
+
+      resolve({ title, content, ext });
+    };
+    reader.readAsText(file);
+  });
+}
+
+async function processBulkUpload() {
+  const category = document.getElementById('bulkCategory').value.trim();
+  const tagsRaw = document.getElementById('bulkTags').value;
+  const tags = tagsRaw.split(',').map(t => t.trim()).filter(Boolean);
+  const total = bulkFilesQueue.length;
+
+  document.getElementById('bulkProgress').style.display = 'block';
+  document.getElementById('bulkSubmitBtn').disabled = true;
+
+  const data = loadData();
+  let added = 0;
+
+  for (let i = 0; i < total; i++) {
+    const file = bulkFilesQueue[i];
+    document.getElementById('bulkProgressBar').style.width = `${((i + 1) / total * 100)}%`;
+    document.getElementById('bulkProgressText').textContent = `${i + 1} / ${total}: ${file.name}`;
+
+    const { title, content, ext } = await readFileContent(file);
+
+    // Create summary (first 300 chars)
+    const summary = content.length > 300 ? content.slice(0, 300) + '...' : content;
+
+    const fileTags = [...tags];
+    if (ext && !fileTags.includes(ext)) fileTags.push(ext);
+
+    data.push({
+      id: generateId(),
+      title,
+      category: category,
+      status: 'investigating',
+      source: '',
+      summary,
+      tags: fileTags,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    });
+    added++;
+  }
+
+  saveData(data);
+  renderAll();
+  closeBulkUpload();
+  alert(`${added}件のファイルを登録しました`);
+  bulkFilesQueue = [];
+}
+
 // Close modals
+document.getElementById('bulkUploadModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeBulkUpload(); });
 document.getElementById('editModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
 document.getElementById('detailModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeDetailModal(); });
 
 // Keyboard shortcuts
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeModal(); closeDetailModal(); }
+  if (e.key === 'Escape') { closeModal(); closeDetailModal(); closeBulkUpload(); }
   if (e.key === 'n' && !e.ctrlKey && !e.metaKey && document.activeElement === document.body) openAddModal();
 });
 
