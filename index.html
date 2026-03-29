@@ -761,6 +761,45 @@
   .gap-item .gap-meta { font-size: 0.72rem; color: var(--text-muted); }
   .gap-item.stale { border-left: 3px solid var(--status-investigating); }
 
+  /* Mini relation graph in detail modal */
+  .mini-graph-wrap { margin-top: 12px; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .mini-graph-canvas { display: block; width: 100%; background: #fafaf7; cursor: default; }
+
+  /* Prior/Derivative timeline */
+  .prior-deriv { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0; margin-top: 12px; }
+  .pd-col { display: flex; flex-direction: column; gap: 6px; }
+  .pd-col-header { font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; text-align: center; }
+  .pd-center { display: flex; flex-direction: column; align-items: center; padding: 0 12px; }
+  .pd-center-line { width: 2px; flex: 1; background: var(--border); }
+  .pd-center-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--accent); margin: 6px 0; flex-shrink: 0; }
+  .pd-item { padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.78rem; cursor: pointer; transition: background 0.15s; }
+  .pd-item:hover { background: var(--accent-light); }
+  .pd-item .pd-sim { font-size: 0.65rem; color: var(--accent); font-weight: 700; }
+  .pd-item .pd-date { font-size: 0.65rem; color: var(--text-muted); }
+
+  /* Narrative report */
+  .narrative-report { line-height: 1.8; font-size: 0.88rem; }
+  .narrative-report p { margin-bottom: 10px; }
+  .narrative-report strong { color: var(--accent); }
+  .narrative-report .nr-section { margin-bottom: 16px; }
+  .narrative-report .nr-heading { font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+
+  /* Rediscovery */
+  .rediscovery-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 6px; cursor: pointer; transition: background 0.15s; }
+  .rediscovery-item:hover { background: var(--accent-light); }
+  .rediscovery-item .rd-title { font-size: 0.85rem; font-weight: 500; }
+  .rediscovery-item .rd-meta { font-size: 0.7rem; color: var(--text-muted); text-align: right; }
+  .rediscovery-item .rd-ago { font-size: 0.72rem; color: var(--accent); font-weight: 600; }
+
+  /* Network metrics panel */
+  .metrics-panel { position: absolute; top: 50px; left: 12px; background: rgba(255,255,255,0.95); border-radius: 8px; padding: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); z-index: 11; font-size: 0.72rem; max-width: 200px; display: none; }
+  .metrics-panel.visible { display: block; }
+  .metrics-panel h4 { font-size: 0.75rem; margin-bottom: 8px; color: var(--accent); }
+  .metric-row { display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px solid #f0ede5; }
+  .metric-row:last-child { border-bottom: none; }
+  .metric-label { color: var(--text-muted); }
+  .metric-value { font-weight: 700; color: var(--text); }
+
   /* Knowledge Graph */
   .graph-container {
     position: relative;
@@ -1134,6 +1173,10 @@
           <button class="btn btn-sm" onclick="switchLayout('grid')">Grid</button>
         </div>
       </div>
+      <div class="metrics-panel" id="nodeMetricsPanel">
+        <h4 id="metricsNodeTitle">Node Metrics</h4>
+        <div id="metricsContent"></div>
+      </div>
       <canvas id="graphCanvas" class="graph-canvas"></canvas>
       <div class="graph-legend" id="graphLegend">
         <div class="graph-legend-item"><div class="graph-legend-dot" style="background:#e67e22"></div>Category</div>
@@ -1212,6 +1255,26 @@
       <div class="viz-panel">
         <h3>リサーチ推移</h3>
         <div class="velocity-bar-row" id="velocityChart"></div>
+      </div>
+    </div>
+
+    <!-- Narrative Report -->
+    <div class="viz-panel analytics-full">
+      <h3>Monthly Narrative Report</h3>
+      <div class="narrative-report" id="narrativeReport"></div>
+    </div>
+
+    <div class="analytics-grid">
+      <!-- Rediscovery -->
+      <div class="viz-panel">
+        <h3>Rediscovery — 再発見すべきリサーチ</h3>
+        <div id="rediscoveryPanel"></div>
+      </div>
+
+      <!-- Network Metrics Summary -->
+      <div class="viz-panel">
+        <h3>Network Metrics — 構造的重要度</h3>
+        <div id="networkMetricsSummary"></div>
       </div>
     </div>
   </div>
@@ -2839,6 +2902,7 @@ function setupGraphEvents() {
       const node = findNode(e.clientX, e.clientY);
       GRAPH.hoveredNode = node;
       canvas.style.cursor = node ? 'pointer' : 'grab';
+      showNodeMetrics(node);
 
       if (node && tooltip) {
         const rect = canvas.getBoundingClientRect();
@@ -2946,6 +3010,9 @@ function renderAnalytics() {
   renderBridgeAnalysis(data);
   renderTagAnalysis(data);
   renderClusterSummary(data);
+  renderNarrativeReport(data);
+  renderRediscovery(data);
+  renderNetworkMetricsSummary(data);
 }
 
 function renderInsights(data) {
@@ -3355,6 +3422,275 @@ function renderClusterSummary(data) {
   document.getElementById('clusterSummary').innerHTML = html;
 }
 
+// ===== Feature 3: Narrative Report =====
+function renderNarrativeReport(data) {
+  const el = document.getElementById('narrativeReport');
+  if (!el || data.length < 3) { if (el) el.innerHTML = '<p style="color:var(--text-muted)">Need more data for narrative.</p>'; return; }
+
+  const now = new Date();
+  const thisMonth = data.filter(d => { const dd = new Date(d.createdAt); return dd.getFullYear() === now.getFullYear() && dd.getMonth() === now.getMonth(); });
+  const lastMonth = data.filter(d => { const dd = new Date(d.createdAt); const lm = new Date(now.getFullYear(), now.getMonth() - 1); return dd.getFullYear() === lm.getFullYear() && dd.getMonth() === lm.getMonth(); });
+  const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+  // Category trends
+  const catThis = {}, catLast = {};
+  thisMonth.forEach(d => { if (d.category) catThis[d.category] = (catThis[d.category] || 0) + 1; });
+  lastMonth.forEach(d => { if (d.category) catLast[d.category] = (catLast[d.category] || 0) + 1; });
+  const growingCats = Object.entries(catThis).filter(([c, n]) => n > (catLast[c] || 0)).map(([c]) => c);
+  const decliningCats = Object.entries(catLast).filter(([c, n]) => n > (catThis[c] || 0)).map(([c]) => c);
+
+  // Status flow
+  const statusCounts = { investigating: 0, reading: 0, organized: 0, done: 0 };
+  data.forEach(d => { statusCounts[d.status || 'investigating']++; });
+  const completionRate = Math.round(statusCounts.done / data.length * 100);
+
+  // Cross-category connections
+  const simMatrix = getSimMatrix(data);
+  const crossLinks = simMatrix.filter(m => m.sim > 0.3 && data[m.i].category && data[m.j].category && data[m.i].category !== data[m.j].category);
+
+  // Top similar pair
+  const topPair = simMatrix.length > 0 ? simMatrix.sort((a, b) => b.sim - a.sim)[0] : null;
+
+  // Build narrative
+  let html = '';
+  html += `<div class="nr-section"><div class="nr-heading">Overview — ${monthNames[now.getMonth()]} ${now.getFullYear()}</div>`;
+  html += `<p>リサーチデータベースには現在 <strong>${data.length}件</strong> のエントリが蓄積されています。`;
+  html += `今月は <strong>${thisMonth.length}件</strong> を追加しました`;
+  if (lastMonth.length > 0) {
+    const delta = thisMonth.length - lastMonth.length;
+    html += `（前月比 ${delta > 0 ? '+' : ''}${delta}件）`;
+  }
+  html += `。完了率は <strong>${completionRate}%</strong>、${statusCounts.investigating}件が調査中です。</p></div>`;
+
+  if (growingCats.length > 0 || decliningCats.length > 0) {
+    html += `<div class="nr-section"><div class="nr-heading">Category Trends</div><p>`;
+    if (growingCats.length > 0) html += `<strong>${growingCats.join('、')}</strong> カテゴリへの関心が高まっています。`;
+    if (decliningCats.length > 0) html += `一方、<strong>${decliningCats.join('、')}</strong> は前月より活動が減少しています。`;
+    html += `</p></div>`;
+  }
+
+  if (crossLinks.length > 0) {
+    html += `<div class="nr-section"><div class="nr-heading">Cross-Pollination</div>`;
+    html += `<p>${crossLinks.length}件の分野横断的な意味的つながりが検出されています。`;
+    if (topPair) {
+      html += `最も強い接続は「<strong>${esc(data[topPair.i].title)}</strong>」と「<strong>${esc(data[topPair.j].title)}</strong>」（類似度 ${(topPair.sim * 100).toFixed(0)}%）です。`;
+    }
+    html += `異分野間の接続は新しい研究テーマの種になり得ます。</p></div>`;
+  }
+
+  // Stale areas
+  const catLastDate = {};
+  data.forEach(d => { if (d.category) { const dd = new Date(d.createdAt); if (!catLastDate[d.category] || dd > catLastDate[d.category]) catLastDate[d.category] = dd; } });
+  const stale = Object.entries(catLastDate).filter(([_, d]) => (now - d) > 30 * 86400000).map(([c, d]) => ({ cat: c, days: Math.floor((now - d) / 86400000) }));
+  if (stale.length > 0) {
+    html += `<div class="nr-section"><div class="nr-heading">Attention Needed</div>`;
+    html += `<p>${stale.map(s => `<strong>${esc(s.cat)}</strong>（${s.days}日間更新なし）`).join('、')} は長期間活動がありません。再訪するか、アーカイブを検討してください。</p></div>`;
+  }
+
+  el.innerHTML = html;
+}
+
+// ===== Feature 4: Rediscovery =====
+function renderRediscovery(data) {
+  const el = document.getElementById('rediscoveryPanel');
+  if (!el) return;
+  const now = new Date();
+  const items = [];
+
+  // "On this day" - entries from same day in previous months
+  data.forEach(d => {
+    const dd = new Date(d.createdAt);
+    if (dd.getDate() === now.getDate() && (dd.getMonth() !== now.getMonth() || dd.getFullYear() !== now.getFullYear())) {
+      const months = (now.getFullYear() - dd.getFullYear()) * 12 + (now.getMonth() - dd.getMonth());
+      items.push({ entry: d, type: 'onthisday', ago: `${months}ヶ月前の今日`, priority: 3 });
+    }
+  });
+
+  // Neglected entries - not "done", older than 14 days
+  data.filter(d => (d.status || 'investigating') !== 'done').forEach(d => {
+    const days = Math.floor((now - new Date(d.createdAt)) / 86400000);
+    if (days >= 14) {
+      items.push({ entry: d, type: 'neglected', ago: `${days}日前`, priority: days > 60 ? 2 : 1 });
+    }
+  });
+
+  // Sort by priority then age
+  items.sort((a, b) => b.priority - a.priority);
+  const shown = items.slice(0, 8);
+
+  if (shown.length === 0) { el.innerHTML = '<div style="color:var(--text-muted);font-size:0.82rem;padding:8px;">All research is up to date.</div>'; return; }
+
+  el.innerHTML = shown.map(({ entry: d, type, ago }) => `
+    <div class="rediscovery-item" onclick="openDetail('${d.id}')">
+      <div>
+        <div class="rd-title">${esc(d.title)}</div>
+        <div style="font-size:0.7rem;color:var(--text-muted)">${esc(d.category || '')} · ${statusBadgeHTML(d.status || 'investigating')}</div>
+      </div>
+      <div class="rd-meta">
+        <div class="rd-ago">${type === 'onthisday' ? '📅 ' : ''}${ago}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ===== Feature 8: Network Metrics =====
+function computeBetweenness(nodeCount, edges) {
+  // Brandes algorithm for betweenness centrality
+  const cb = new Float64Array(nodeCount);
+  const adj = Array.from({ length: nodeCount }, () => []);
+  edges.forEach(e => { adj[e.source].push(e.target); adj[e.target].push(e.source); });
+
+  for (let s = 0; s < nodeCount; s++) {
+    const stack = [];
+    const pred = Array.from({ length: nodeCount }, () => []);
+    const sigma = new Float64Array(nodeCount); sigma[s] = 1;
+    const dist = new Int32Array(nodeCount).fill(-1); dist[s] = 0;
+    const queue = [s];
+    let qi = 0;
+
+    while (qi < queue.length) {
+      const v = queue[qi++];
+      stack.push(v);
+      for (const w of adj[v]) {
+        if (dist[w] < 0) { dist[w] = dist[v] + 1; queue.push(w); }
+        if (dist[w] === dist[v] + 1) { sigma[w] += sigma[v]; pred[w].push(v); }
+      }
+    }
+
+    const delta = new Float64Array(nodeCount);
+    while (stack.length > 0) {
+      const w = stack.pop();
+      for (const v of pred[w]) {
+        delta[v] += (sigma[v] / sigma[w]) * (1 + delta[w]);
+      }
+      if (w !== s) cb[w] += delta[w];
+    }
+  }
+
+  // Normalize
+  const maxCb = Math.max(...cb) || 1;
+  for (let i = 0; i < nodeCount; i++) cb[i] /= maxCb;
+  return cb;
+}
+
+function computeClusterCoeff(nodeCount, edges) {
+  const adj = Array.from({ length: nodeCount }, () => new Set());
+  edges.forEach(e => { adj[e.source].add(e.target); adj[e.target].add(e.source); });
+  const cc = new Float64Array(nodeCount);
+
+  for (let i = 0; i < nodeCount; i++) {
+    const neighbors = [...adj[i]];
+    const k = neighbors.length;
+    if (k < 2) { cc[i] = 0; continue; }
+    let triangles = 0;
+    for (let a = 0; a < k; a++) {
+      for (let b = a + 1; b < k; b++) {
+        if (adj[neighbors[a]].has(neighbors[b])) triangles++;
+      }
+    }
+    cc[i] = (2 * triangles) / (k * (k - 1));
+  }
+  return cc;
+}
+
+function renderNetworkMetricsSummary(data) {
+  const el = document.getElementById('networkMetricsSummary');
+  if (!el || data.length < 3) { if (el) el.innerHTML = '<div style="color:var(--text-muted);font-size:0.82rem;">Need more data.</div>'; return; }
+
+  // Build a simple graph from similarity + tags
+  const simMatrix = getSimMatrix(data);
+  const edges = [];
+  simMatrix.filter(m => m.sim > 0.15).forEach(m => edges.push({ source: m.i, target: m.j }));
+
+  // Tag co-occurrence edges
+  const EXCLUDED = new Set(['Gemini', 'Google Drive', 'gemini', 'google drive']);
+  data.forEach((d, i) => {
+    data.forEach((e, j) => {
+      if (j <= i) return;
+      const sharedTags = (d.tags || []).filter(t => !EXCLUDED.has(t) && (e.tags || []).includes(t));
+      if (sharedTags.length >= 2) edges.push({ source: i, target: j });
+    });
+  });
+
+  const n = data.length;
+  const betweenness = computeBetweenness(n, edges);
+  const clusterCoeff = computeClusterCoeff(n, edges);
+  const degree = new Float64Array(n);
+  edges.forEach(e => { degree[e.source]++; degree[e.target]++; });
+
+  // Find top entries by each metric
+  const byBetweenness = data.map((d, i) => ({ d, v: betweenness[i] })).sort((a, b) => b.v - a.v).slice(0, 5);
+  const byDegree = data.map((d, i) => ({ d, v: degree[i] })).sort((a, b) => b.v - a.v).slice(0, 5);
+  const byClustering = data.map((d, i) => ({ d, v: clusterCoeff[i] })).filter(x => x.v > 0).sort((a, b) => b.v - a.v).slice(0, 5);
+
+  let html = '';
+  html += `<div style="margin-bottom:14px;"><div style="font-size:0.75rem;font-weight:700;color:var(--text-muted);margin-bottom:6px;">Bridge Nodes (媒介中心性)</div>`;
+  html += `<div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:6px;">異なるクラスタを橋渡しする重要エントリ</div>`;
+  byBetweenness.forEach(({ d, v }) => {
+    html += `<div class="bridge-item" onclick="openDetail('${d.id}')"><span style="font-weight:500">${esc(d.title)}</span><span class="bridge-score">${(v * 100).toFixed(0)}%</span></div>`;
+  });
+  html += `</div>`;
+
+  html += `<div style="margin-bottom:14px;"><div style="font-size:0.75rem;font-weight:700;color:var(--text-muted);margin-bottom:6px;">Hub Nodes (次数中心性)</div>`;
+  html += `<div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:6px;">最も多くのエントリと接続</div>`;
+  byDegree.forEach(({ d, v }) => {
+    html += `<div class="bridge-item" onclick="openDetail('${d.id}')"><span style="font-weight:500">${esc(d.title)}</span><span class="bridge-score">${v.toFixed(0)} links</span></div>`;
+  });
+  html += `</div>`;
+
+  if (byClustering.length > 0) {
+    html += `<div><div style="font-size:0.75rem;font-weight:700;color:var(--text-muted);margin-bottom:6px;">Cluster Cores (クラスタ係数)</div>`;
+    html += `<div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:6px;">密に接続されたクラスタの中心</div>`;
+    byClustering.forEach(({ d, v }) => {
+      html += `<div class="bridge-item" onclick="openDetail('${d.id}')"><span style="font-weight:500">${esc(d.title)}</span><span class="bridge-score">${(v * 100).toFixed(0)}%</span></div>`;
+    });
+    html += `</div>`;
+  }
+
+  el.innerHTML = html;
+}
+
+// ===== Feature 8b: Graph Node Metrics Panel =====
+function showNodeMetrics(node) {
+  const panel = document.getElementById('nodeMetricsPanel');
+  if (!panel || !node) { if (panel) panel.classList.remove('visible'); return; }
+
+  const { nodes, edges, adj } = GRAPH;
+  const idx = GRAPH.nodeIdx.get(node);
+  if (idx === undefined) return;
+
+  // Degree
+  const deg = (adj[idx] || []).length;
+
+  // Local clustering coefficient
+  const neighbors = (adj[idx] || []).map(a => a.node);
+  let triangles = 0;
+  const neighborSet = new Set(neighbors);
+  for (let i = 0; i < neighbors.length; i++) {
+    for (const { node: nn } of (adj[neighbors[i]] || [])) {
+      if (neighborSet.has(nn) && nn > neighbors[i]) triangles++;
+    }
+  }
+  const cc = neighbors.length >= 2 ? (2 * triangles) / (neighbors.length * (neighbors.length - 1)) : 0;
+
+  // Community
+  const comm = node.community !== undefined ? node.community : '—';
+
+  // Sim edges count
+  const simEdges = edges.filter(e => e.type === 'similarity' && (e.source === idx || e.target === idx));
+
+  document.getElementById('metricsNodeTitle').textContent = node.label;
+  document.getElementById('metricsContent').innerHTML = `
+    <div class="metric-row"><span class="metric-label">Type</span><span class="metric-value">${node.type}</span></div>
+    <div class="metric-row"><span class="metric-label">Degree</span><span class="metric-value">${deg}</span></div>
+    <div class="metric-row"><span class="metric-label">Cluster Coeff</span><span class="metric-value">${(cc * 100).toFixed(0)}%</span></div>
+    <div class="metric-row"><span class="metric-label">Community</span><span class="metric-value">#${comm}</span></div>
+    <div class="metric-row"><span class="metric-label">Radius</span><span class="metric-value">${node.radius.toFixed(1)}</span></div>
+    ${simEdges.length > 0 ? `<div class="metric-row"><span class="metric-label">Sim Links</span><span class="metric-value">${simEdges.length}</span></div>` : ''}
+  `;
+  panel.classList.add('visible');
+}
+
 // ===== Similarity Matrix Tab =====
 function renderSimMatrix() {
   const allData = loadData();
@@ -3527,12 +3863,42 @@ function openDetail(id) {
     html += `</div>`;
   }
 
-  // Related entries (BM25 similarity)
-  const related = getRelatedEntries(id, 5);
+  // Feature 7: Prior/Derivative analysis
+  const related = getRelatedEntries(id, 8);
   if (related.length > 0) {
-    html += `<div class="field-label">Related Research (BM25)</div>`;
-    html += `<div class="related-entries">`;
-    related.forEach(({ entry: re, sim }) => {
+    const entryDate = new Date(entry.createdAt);
+    const prior = related.filter(r => new Date(r.entry.createdAt) < entryDate);
+    const derivative = related.filter(r => new Date(r.entry.createdAt) >= entryDate);
+
+    if (prior.length > 0 || derivative.length > 0) {
+      html += `<div class="field-label">Research Timeline — Prior ↔ Derivative</div>`;
+      html += `<div class="prior-deriv">`;
+      html += `<div class="pd-col"><div class="pd-col-header">← Prior Works</div>`;
+      prior.sort((a, b) => new Date(b.entry.createdAt) - new Date(a.entry.createdAt)).slice(0, 4).forEach(({ entry: re, sim }) => {
+        html += `<div class="pd-item" onclick="closeDetailModal();setTimeout(()=>openDetail('${re.id}'),100)">
+          <div>${esc(re.title)}</div>
+          <div><span class="pd-sim">${(sim*100).toFixed(0)}%</span> <span class="pd-date">${formatDate(re.createdAt)}</span></div>
+        </div>`;
+      });
+      if (prior.length === 0) html += `<div style="color:var(--text-muted);font-size:0.78rem;text-align:center;">—</div>`;
+      html += `</div>`;
+      html += `<div class="pd-center"><div class="pd-center-line"></div><div class="pd-center-dot"></div><div class="pd-center-line"></div></div>`;
+      html += `<div class="pd-col"><div class="pd-col-header">Derivative Works →</div>`;
+      derivative.sort((a, b) => new Date(a.entry.createdAt) - new Date(b.entry.createdAt)).slice(0, 4).forEach(({ entry: re, sim }) => {
+        html += `<div class="pd-item" onclick="closeDetailModal();setTimeout(()=>openDetail('${re.id}'),100)">
+          <div>${esc(re.title)}</div>
+          <div><span class="pd-sim">${(sim*100).toFixed(0)}%</span> <span class="pd-date">${formatDate(re.createdAt)}</span></div>
+        </div>`;
+      });
+      if (derivative.length === 0) html += `<div style="color:var(--text-muted);font-size:0.78rem;text-align:center;">—</div>`;
+      html += `</div></div>`;
+    }
+
+    // Feature 1: Mini relation graph + related list
+    html += `<div class="field-label">Related Research Map</div>`;
+    html += `<div class="mini-graph-wrap"><canvas id="miniGraphCanvas" class="mini-graph-canvas" width="576" height="200"></canvas></div>`;
+    html += `<div class="related-entries" style="margin-top:8px;">`;
+    related.slice(0, 5).forEach(({ entry: re, sim }) => {
       html += `<div class="related-entry" onclick="closeDetailModal();setTimeout(()=>openDetail('${re.id}'),100)">
         <span class="re-title">${esc(re.title)}</span>
         <span class="re-sim">${(sim * 100).toFixed(0)}%</span>
@@ -3543,9 +3909,91 @@ function openDetail(id) {
 
   document.getElementById('detailContent').innerHTML = html;
   document.getElementById('detailModal').classList.add('active');
+
+  // Feature 1: Draw mini graph after DOM update
+  if (related.length > 0) {
+    requestAnimationFrame(() => drawMiniGraph(entry, related.slice(0, 6)));
+  }
 }
 
 function closeDetailModal() { document.getElementById('detailModal').classList.remove('active'); }
+
+// Feature 1: Mini relation graph in detail modal
+function drawMiniGraph(center, related) {
+  const canvas = document.getElementById('miniGraphCanvas');
+  if (!canvas) return;
+  const dpr = window.devicePixelRatio || 1;
+  const w = canvas.parentElement.clientWidth;
+  const h = 200;
+  canvas.width = w * dpr; canvas.height = h * dpr;
+  canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+
+  // Build nodes: center + related
+  const nodes = [{ x: w / 2, y: h / 2, r: 24, label: center.title, color: '#2d5a27', isCtr: true }];
+  related.forEach(({ entry: re, sim }, i) => {
+    const angle = (i / related.length) * Math.PI * 2 - Math.PI / 2;
+    const dist = 50 + (1 - sim) * 60;
+    nodes.push({
+      x: w / 2 + Math.cos(angle) * dist,
+      y: h / 2 + Math.sin(angle) * dist,
+      r: 10 + sim * 12,
+      label: re.title,
+      color: COMMUNITY_PALETTE[i % COMMUNITY_PALETTE.length],
+      sim,
+    });
+  });
+
+  // Draw edges
+  for (let i = 1; i < nodes.length; i++) {
+    const n = nodes[i];
+    ctx.beginPath();
+    ctx.moveTo(nodes[0].x, nodes[0].y);
+    ctx.lineTo(n.x, n.y);
+    ctx.strokeStyle = `rgba(192,57,43,${0.15 + n.sim * 0.4})`;
+    ctx.lineWidth = 1 + n.sim * 2;
+    ctx.setLineDash([4, 3]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    // Sim label
+    const mx = (nodes[0].x + n.x) / 2, my = (nodes[0].y + n.y) / 2;
+    ctx.fillStyle = 'rgba(192,57,43,0.6)';
+    ctx.font = 'bold 8px "Hiragino Kaku Gothic ProN", sans-serif';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText((n.sim * 100).toFixed(0) + '%', mx, my - 5);
+  }
+
+  // Draw nodes
+  nodes.forEach(n => {
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+    ctx.fillStyle = n.color + 'dd';
+    ctx.fill();
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Label
+    ctx.fillStyle = '#fff';
+    ctx.font = `${n.isCtr ? 'bold 9' : '7'}px "Hiragino Kaku Gothic ProN", sans-serif`;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    let lb = n.label;
+    const mw = n.r * 1.6;
+    if (ctx.measureText(lb).width > mw && lb.length > 3) {
+      while (ctx.measureText(lb + '…').width > mw && lb.length > 2) lb = lb.slice(0, -1);
+      lb += '…';
+    }
+    ctx.fillText(lb, n.x, n.y);
+
+    // External label
+    ctx.fillStyle = 'rgba(0,0,0,0.6)';
+    ctx.font = '8px "Hiragino Kaku Gothic ProN", sans-serif';
+    const extLb = n.label.length > 15 ? n.label.slice(0, 14) + '…' : n.label;
+    ctx.fillText(extLb, n.x, n.y + n.r + 10);
+  });
+}
 
 // Export / Import
 function exportData() {
