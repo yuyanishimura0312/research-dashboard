@@ -578,7 +578,7 @@
     border-radius: 12px;
     padding: 28px;
     width: 100%;
-    max-width: 640px;
+    max-width: 800px;
     box-shadow: 0 20px 60px rgba(0,0,0,0.15);
   }
 
@@ -614,6 +614,20 @@
 
   .modal-actions { display: flex; justify-content: space-between; gap: 8px; margin-top: 20px; }
   .modal-actions-right { display: flex; gap: 8px; }
+
+  /* Google Docs embed */
+  .gdoc-embed-wrap {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 8px 0 16px;
+    background: #fff;
+  }
+  .gdoc-embed {
+    width: 100%;
+    height: 500px;
+    border: none;
+  }
 
   /* Detail modal */
   .detail-content { line-height: 1.8; }
@@ -1609,6 +1623,21 @@ function getGoogleDocsUrl(source) {
   } catch {
     return 'https://drive.google.com';
   }
+}
+
+function getGoogleDocsPreviewUrl(source) {
+  if (!source) return null;
+  // Google Docs: /edit → /preview for embedding
+  const docsMatch = source.match(/docs\.google\.com\/document\/d\/([^/]+)/);
+  if (docsMatch) {
+    return `https://docs.google.com/document/d/${docsMatch[1]}/preview`;
+  }
+  // Google Sheets
+  const sheetsMatch = source.match(/docs\.google\.com\/spreadsheets\/d\/([^/]+)/);
+  if (sheetsMatch) {
+    return `https://docs.google.com/spreadsheets/d/${sheetsMatch[1]}/preview`;
+  }
+  return null;
 }
 
 // ===== Tab navigation =====
@@ -4229,11 +4258,19 @@ function openDetail(id) {
   html += `<div class="field-label">登録日</div><div class="field-value">${formatDate(entry.createdAt)}</div>`;
   if (entry.updatedAt !== entry.createdAt) html += `<div class="field-label">更新日</div><div class="field-value">${formatDate(entry.updatedAt)}</div>`;
 
-  // ダウンロード & 開くボタン
+  // Google ドキュメント埋め込み & ボタン
   if (entry.source) {
     const gdocsUrl = getGoogleDocsUrl(entry.source);
+    const previewUrl = getGoogleDocsPreviewUrl(entry.source);
+
+    if (previewUrl) {
+      html += `<div class="field-label">全文</div>`;
+      html += `<div class="gdoc-embed-wrap">`;
+      html += `<iframe src="${esc(previewUrl)}" class="gdoc-embed" frameborder="0" allowfullscreen></iframe>`;
+      html += `</div>`;
+    }
+
     html += `<div class="detail-actions">`;
-    html += `<a class="btn-action" href="${esc(entry.source)}" download>&#11015; ダウンロード</a>`;
     html += `<a class="btn-action btn-open" href="${esc(gdocsUrl)}" target="_blank">&#9654; Google ドキュメントで開く</a>`;
     html += `</div>`;
   }
