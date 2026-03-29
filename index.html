@@ -1800,16 +1800,20 @@ function buildGraph() {
       });
     });
 
-    // Tag co-occurrence
+    // Tag co-occurrence (Set-based dedup: O(1) per check)
+    const cooccurSet = new Set();
     data.forEach(d => {
-      const tags = d.tags || [];
+      const tags = (d.tags || []).filter(t => !EXCLUDED_TAGS.has(t));
       for (let i = 0; i < tags.length; i++) {
         for (let j = i + 1; j < tags.length; j++) {
           const a = nodeMap.get(`t:${tags[i]}`);
           const b = nodeMap.get(`t:${tags[j]}`);
           if (a !== undefined && b !== undefined) {
-            const exists = edges.some(e => e.type === 'cooccur' && ((e.source === a && e.target === b) || (e.source === b && e.target === a)));
-            if (!exists) edges.push({ source: a, target: b, strength: 0.15, type: 'cooccur' });
+            const key = a < b ? `${a}-${b}` : `${b}-${a}`;
+            if (!cooccurSet.has(key)) {
+              cooccurSet.add(key);
+              edges.push({ source: a, target: b, strength: 0.15, type: 'cooccur' });
+            }
           }
         }
       }
