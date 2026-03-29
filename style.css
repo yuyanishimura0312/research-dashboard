@@ -85,6 +85,57 @@ img { display: block; max-width: 100%; }
 }
 @keyframes grow-progress { from { width: 0%; } to { width: 100%; } }
 
+/* ===== Brand Header ===== */
+.brand-header {
+  background: var(--bg); text-align: center;
+  padding: 36px 24px 28px;
+  border-bottom: 1px solid var(--border);
+}
+.brand-header-inner {
+  max-width: var(--measure-wide); margin: 0 auto;
+}
+.brand-rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border) 20%, var(--text) 40%, var(--text) 60%, var(--border) 80%, transparent);
+  margin: 0 auto;
+  max-width: 600px;
+}
+.brand-wordmark {
+  padding: 18px 0 10px;
+  line-height: 1;
+}
+.brand-future {
+  font-family: var(--font-headline);
+  font-size: clamp(2.4rem, 2rem + 4vw, 5rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  display: block;
+}
+.brand-esse {
+  font-family: var(--font-headline);
+  font-size: clamp(1.4rem, 1.2rem + 2vw, 2.8rem);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  display: block;
+  margin-top: 2px;
+}
+.brand-tagline {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--text-light);
+  margin: 12px 0 16px;
+}
+
+/* Dark adjustments */
+[data-theme="dark"] .brand-rule {
+  background: linear-gradient(90deg, transparent, var(--border) 20%, var(--text-muted) 40%, var(--text-muted) 60%, var(--border) 80%, transparent);
+}
+
 /* ===== Masthead ===== */
 .masthead {
   position: sticky; top: 0; z-index: 100;
