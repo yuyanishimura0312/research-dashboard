@@ -429,14 +429,24 @@ function openReader(id) {
     body += renderSummaryContent(d.summary.trim());
   }
 
-  // Source link
-  if (d.source) {
-    const label = isGDocs ? 'Google ドキュメントで開く' : 'ソースを開く';
-    const href = isGDocs ? gdocsUrl : d.source;
-    body += `<div style="margin-top:32px;padding-top:16px;border-top:1px solid var(--border);text-align:right;">
-      <a href="${esc(href)}" target="_blank" style="color:var(--accent);font-size:0.85rem;text-decoration:none;">${label} &#8594;</a>
-    </div>`;
+  // Action buttons: Download + Open
+  const textContent = d.content || d.summary || '';
+  body += `<div style="margin-top:32px;padding-top:20px;border-top:1px solid var(--border);display:flex;gap:10px;flex-wrap:wrap;align-items:center;">`;
+
+  // Download as Markdown
+  body += `<button class="reader-source" onclick="downloadReport('${d.id}')" style="cursor:pointer;border:1px solid var(--accent);background:none;">DL</button>`;
+
+  // Open in Google Docs
+  if (isGDocs) {
+    body += `<a class="reader-source" href="${esc(gdocsUrl)}" target="_blank">Open</a>`;
+  } else if (d.source) {
+    body += `<a class="reader-source" href="${esc(d.source)}" target="_blank">Open</a>`;
+  } else {
+    // No source: create new Google Doc with content
+    body += `<button class="reader-source" onclick="openAsGoogleDoc('${d.id}')" style="cursor:pointer;border:1px solid var(--accent);background:none;">Open</button>`;
   }
+
+  body += `</div>`;
 
   // Tags
   if (tags.length > 0) {
@@ -475,6 +485,30 @@ function openReader(id) {
     const scrollHeight = readerEl.scrollHeight - readerEl.clientHeight;
     progressEl.style.width = scrollHeight > 0 ? (scrollTop / scrollHeight * 100) + '%' : '0%';
   };
+}
+
+function downloadReport(id) {
+  const d = DATA.find(x => x.id === id);
+  if (!d) return;
+  const text = d.content || d.summary || '';
+  const tags = (d.tags||[]).filter(t=>!EXCLUDED_TAGS.has(t));
+  const md = `# ${d.title}\n\n**Category:** ${d.category||''}\n**Date:** ${formatDate(d.createdAt)}\n**Status:** ${STATUS_LABELS[d.status||'investigating']}\n**Tags:** ${tags.join(', ')}\n\n---\n\n${text}\n`;
+  const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${d.title.replace(/[\/\\:*?"<>|]/g, '_')}.md`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function openAsGoogleDoc(id) {
+  const d = DATA.find(x => x.id === id);
+  if (!d) return;
+  const text = d.content || d.summary || '';
+  const title = encodeURIComponent(d.title);
+  const body = encodeURIComponent(text);
+  window.open(`https://docs.google.com/document/create?title=${title}&body=${body}`, '_blank');
 }
 
 function closeReader() {
