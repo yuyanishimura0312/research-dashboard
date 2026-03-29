@@ -1986,7 +1986,7 @@ function renderResearchTab() {
               </div>
               <div class="card-actions" onclick="event.stopPropagation()">
                 <button class="btn-action" onclick="downloadReportMd('${d.id}')" title="Markdownでダウンロード">&#11015; DL</button>
-                ${d.source ? `<a class="btn-action btn-open" href="${esc(getGoogleDocsUrl(d.source))}" target="_blank" title="開く">&#9654; 開く</a>` : `<button class="btn-action btn-open" onclick="openNewGoogleDoc('${d.id}')" title="Google Docsで開く">&#9654; 開く</button>`}
+                ${d.content ? `<button class="btn-action btn-open" onclick="event.stopPropagation();openDetail('${d.id}')" title="内容を表示">&#9654; 開く</button>` : d.source ? `<a class="btn-action btn-open" href="${esc(getGoogleDocsUrl(d.source))}" target="_blank" title="開く">&#9654; 開く</a>` : `<button class="btn-action btn-open" onclick="openNewGoogleDoc('${d.id}')" title="Google Docsで開く">&#9654; 開く</button>`}
               </div>
             </div>
           `).join('')}
@@ -4348,14 +4348,14 @@ function openDetail(id) {
   if (entry.tags && entry.tags.length) html += `<div class="field-label">タグ</div><div class="card-tags" style="margin-top:4px">${entry.tags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>`;
   html += `<div class="field-label">登録日</div><div class="field-value">${formatDate(entry.createdAt)}</div>`;
 
-  // Action buttons: source link + download
+  // Action buttons
   html += `<div class="detail-actions">`;
+  if (entry.content) {
+    html += `<button class="btn-action" onclick="downloadAsMarkdown('${esc(entry.id)}')">&#11015; Markdownをダウンロード</button>`;
+  }
   if (entry.source) {
     const gdocsUrl = getGoogleDocsUrl(entry.source);
-    html += `<a class="btn-action btn-open" href="${esc(gdocsUrl)}" target="_blank">&#9654; 元のドキュメントを開く</a>`;
-  }
-  if (entry.content) {
-    html += `<button class="btn-action" onclick="downloadAsMarkdown('${esc(entry.id)}')">Markdown をダウンロード</button>`;
+    html += `<a class="btn-action" href="${esc(gdocsUrl)}" target="_blank" style="font-size:0.78rem">&#128279; 元のドキュメント</a>`;
   }
   html += `</div>`;
 
