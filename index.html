@@ -1174,6 +1174,26 @@
       <h3>Recent</h3>
       <div class="list-view" id="recentList"></div>
     </div>
+
+    <!-- Narrative Report (moved from Analytics) -->
+    <div class="viz-panel" style="margin-top: 20px;">
+      <h3>Monthly Narrative Report</h3>
+      <div class="narrative-report" id="narrativeReport"></div>
+    </div>
+
+    <div class="viz-row" style="margin-top: 16px;">
+      <!-- Rediscovery -->
+      <div class="viz-panel">
+        <h3>Rediscovery — 再発見すべきリサーチ</h3>
+        <div id="rediscoveryPanel"></div>
+      </div>
+
+      <!-- Network Metrics Summary -->
+      <div class="viz-panel">
+        <h3>Network Metrics — 構造的重要度</h3>
+        <div id="networkMetricsSummary"></div>
+      </div>
+    </div>
   </div>
 
   <!-- ========== RESEARCH TAB ========== -->
@@ -1339,25 +1359,6 @@
       </div>
     </div>
 
-    <!-- Narrative Report -->
-    <div class="viz-panel analytics-full">
-      <h3>Monthly Narrative Report</h3>
-      <div class="narrative-report" id="narrativeReport"></div>
-    </div>
-
-    <div class="analytics-grid">
-      <!-- Rediscovery -->
-      <div class="viz-panel">
-        <h3>Rediscovery — 再発見すべきリサーチ</h3>
-        <div id="rediscoveryPanel"></div>
-      </div>
-
-      <!-- Network Metrics Summary -->
-      <div class="viz-panel">
-        <h3>Network Metrics — 構造的重要度</h3>
-        <div id="networkMetricsSummary"></div>
-      </div>
-    </div>
   </div>
 
   <!-- ========== LIBRARY TAB ========== -->
@@ -1657,6 +1658,11 @@ function renderOverview() {
       <span class="list-date">${formatDate(d.createdAt)}</span>
     </div>
   `).join('') || '<div style="color:var(--text-muted);font-size:0.85rem;padding:16px;">No entries yet.</div>';
+
+  // New features on Overview
+  renderNarrativeReport(data);
+  renderRediscovery(data);
+  renderNetworkMetricsSummary(data);
 }
 
 function renderHeatmap(data) {
@@ -3100,9 +3106,6 @@ function renderAnalytics() {
   renderBridgeAnalysis(data);
   renderTagAnalysis(data);
   renderClusterSummary(data);
-  renderNarrativeReport(data);
-  renderRediscovery(data);
-  renderNetworkMetricsSummary(data);
 }
 
 function renderInsights(data) {
