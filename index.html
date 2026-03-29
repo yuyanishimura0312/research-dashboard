@@ -972,6 +972,112 @@
     .card { padding: 12px; }
     .card-title { font-size: 0.85rem; }
   }
+  /* Library Tab */
+  .library-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 16px; margin-bottom: 20px; flex-wrap: wrap;
+  }
+  .library-stats {
+    display: flex; gap: 12px; flex-wrap: wrap;
+  }
+  .library-stat {
+    background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+    padding: 10px 16px; box-shadow: var(--shadow); text-align: center;
+  }
+  .library-stat .ls-value { font-size: 1.3rem; font-weight: 700; color: var(--accent); }
+  .library-stat .ls-label { font-size: 0.68rem; color: var(--text-muted); }
+  .library-controls { display: flex; gap: 10px; align-items: center; }
+
+  .library-topic-map {
+    display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px;
+    padding: 16px; background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; box-shadow: var(--shadow);
+  }
+  .topic-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 14px; border-radius: 20px; font-size: 0.78rem;
+    cursor: pointer; transition: all 0.15s; border: 2px solid transparent;
+    color: #fff; font-weight: 500;
+  }
+  .topic-chip:hover { opacity: 0.85; transform: translateY(-1px); }
+  .topic-chip.active { border-color: var(--text); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+  .topic-chip .chip-count {
+    background: rgba(255,255,255,0.3); padding: 1px 7px; border-radius: 10px;
+    font-size: 0.68rem; font-weight: 700;
+  }
+
+  .library-topic-section {
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+    margin-bottom: 16px; box-shadow: var(--shadow); overflow: hidden;
+  }
+  .topic-section-header {
+    padding: 16px 20px; cursor: pointer; display: flex;
+    justify-content: space-between; align-items: center;
+    transition: background 0.15s;
+  }
+  .topic-section-header:hover { background: var(--accent-light); }
+  .topic-section-left { display: flex; align-items: center; gap: 12px; }
+  .topic-section-dot {
+    width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0;
+  }
+  .topic-section-title { font-size: 1rem; font-weight: 600; }
+  .topic-section-subtitle {
+    font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;
+  }
+  .topic-section-right {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .topic-section-count {
+    font-size: 0.78rem; color: var(--text-muted);
+    background: var(--accent-light); padding: 3px 10px; border-radius: 12px;
+  }
+  .topic-section-arrow {
+    font-size: 0.8rem; color: var(--text-muted);
+    transition: transform 0.2s;
+  }
+  .topic-section-header.open .topic-section-arrow { transform: rotate(90deg); }
+
+  .topic-section-body {
+    display: none; border-top: 1px solid var(--border);
+  }
+  .topic-section-body.open { display: block; }
+
+  .topic-description {
+    padding: 14px 20px; font-size: 0.82rem; color: var(--text-muted);
+    line-height: 1.6; background: var(--accent-light);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .library-entry {
+    padding: 14px 20px; border-bottom: 1px solid var(--border);
+    cursor: pointer; transition: background 0.1s;
+  }
+  .library-entry:last-child { border-bottom: none; }
+  .library-entry:hover { background: #fafaf6; }
+  .library-entry-header {
+    display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;
+  }
+  .library-entry-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+  .library-entry-date { font-size: 0.7rem; color: var(--text-muted); white-space: nowrap; }
+  .library-entry-summary {
+    font-size: 0.82rem; color: var(--text-muted); line-height: 1.6;
+    margin-top: 6px;
+  }
+  .library-entry-summary.collapsed {
+    display: -webkit-box; -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .library-entry-tags {
+    display: flex; gap: 4px; flex-wrap: wrap; margin-top: 8px;
+  }
+  .library-entry-actions {
+    display: flex; gap: 6px; margin-top: 8px;
+  }
+  .expand-btn {
+    font-size: 0.72rem; color: var(--accent); cursor: pointer;
+    background: none; border: none; padding: 2px 0; font-weight: 600;
+  }
+  .expand-btn:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
@@ -995,6 +1101,7 @@
     <button class="tab-btn" data-tab="research" onclick="switchTab('research')">Research</button>
     <button class="tab-btn" data-tab="graph" onclick="switchTab('graph')">Knowledge Graph</button>
     <button class="tab-btn" data-tab="analytics" onclick="switchTab('analytics')">Analytics</button>
+    <button class="tab-btn" data-tab="library" onclick="switchTab('library')">Library</button>
     <button class="tab-btn" data-tab="timeline" onclick="switchTab('timeline')">Timeline</button>
   </div>
 
@@ -1251,6 +1358,23 @@
         <div id="networkMetricsSummary"></div>
       </div>
     </div>
+  </div>
+
+  <!-- ========== LIBRARY TAB ========== -->
+  <div class="tab-panel" id="tab-library">
+    <div class="library-header">
+      <div class="library-stats" id="libraryStats"></div>
+      <div class="library-controls">
+        <input type="text" class="search-box" id="librarySearch" placeholder="ライブラリ内を検索..." oninput="renderLibrary()">
+        <select class="filter-select" id="librarySortMode" onchange="renderLibrary()">
+          <option value="size">トピック規模順</option>
+          <option value="recent">最新順</option>
+          <option value="alpha">名前順</option>
+        </select>
+      </div>
+    </div>
+    <div class="library-topic-map" id="libraryTopicMap"></div>
+    <div class="library-topics" id="libraryTopics"></div>
   </div>
 
   <!-- ========== TIMELINE TAB ========== -->
@@ -3657,11 +3781,239 @@ function showNodeMetrics(node) {
   panel.classList.add('visible');
 }
 
+// ===== Library Tab =====
+let libraryFocusTopic = null;
+let libraryExpandedEntries = new Set();
+
+function buildLibraryTopics(data) {
+  // Auto-cluster using BM25 similarity + agglomerative grouping
+  const simMatrix = getSimMatrix(data);
+
+  // Group by highest similarity (greedy agglomerative with threshold)
+  const assigned = new Array(data.length).fill(-1);
+  let nextCluster = 0;
+  const MIN_SIM = 0.12;
+
+  // Sort pairs by similarity descending
+  const pairs = [...simMatrix].filter(p => p.sim >= MIN_SIM).sort((a, b) => b.sim - a.sim);
+
+  pairs.forEach(({ i, j }) => {
+    if (assigned[i] >= 0 && assigned[j] >= 0) {
+      // Merge smaller cluster into larger
+      if (assigned[i] !== assigned[j]) {
+        const ci = assigned[i], cj = assigned[j];
+        const sizeI = assigned.filter(a => a === ci).length;
+        const sizeJ = assigned.filter(a => a === cj).length;
+        const target = sizeI >= sizeJ ? ci : cj;
+        const source = target === ci ? cj : ci;
+        for (let k = 0; k < assigned.length; k++) {
+          if (assigned[k] === source) assigned[k] = target;
+        }
+      }
+    } else if (assigned[i] >= 0) assigned[j] = assigned[i];
+    else if (assigned[j] >= 0) assigned[i] = assigned[j];
+    else { assigned[i] = assigned[j] = nextCluster++; }
+  });
+
+  // Assign singletons
+  for (let i = 0; i < data.length; i++) {
+    if (assigned[i] < 0) assigned[i] = nextCluster++;
+  }
+
+  // Build topic groups
+  const topicMap = {};
+  data.forEach((d, i) => {
+    const c = assigned[i];
+    if (!topicMap[c]) topicMap[c] = [];
+    topicMap[c].push(d);
+  });
+
+  // Generate topic metadata
+  const topics = Object.values(topicMap).map(entries => {
+    // Extract top keywords for auto-naming
+    const textBag = entries.map(e =>
+      [e.title, e.title, e.category, ...(e.tags || [])].join(' ')
+    ).join(' ');
+
+    const words = textBag.split(/[\s,、。．・\-—:：;；()（）\[\]「」『』]+/)
+      .filter(w => w.length >= 2 && !NOISE_TAGS.has(w));
+    const freq = {};
+    words.forEach(w => { freq[w] = (freq[w] || 0) + 1; });
+
+    // Remove words that appear in most topics (too generic)
+    const topWords = Object.entries(freq)
+      .sort((a, b) => b[1] - a[1])
+      .filter(([w]) => w.length >= 2)
+      .slice(0, 5)
+      .map(([w]) => w);
+
+    // Dominant category
+    const catFreq = {};
+    entries.forEach(e => {
+      if (e.category) catFreq[e.category] = (catFreq[e.category] || 0) + 1;
+    });
+    const domCat = Object.entries(catFreq).sort((a, b) => b[1] - a[1])[0];
+
+    // Auto-generated topic name: top 2-3 keywords
+    const label = topWords.slice(0, 3).join(' / ');
+
+    // Most recent date
+    const latestDate = entries.reduce((max, e) => {
+      const d = new Date(e.createdAt);
+      return d > max ? d : max;
+    }, new Date(0));
+
+    // Description: what this cluster is about
+    const catList = Object.entries(catFreq).sort((a, b) => b[1] - a[1])
+      .map(([c, n]) => `${c}(${n})`).join(', ');
+
+    return {
+      label,
+      entries: entries.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
+      keywords: topWords,
+      dominantCategory: domCat ? domCat[0] : '',
+      categoryBreakdown: catList,
+      latestDate,
+      color: COMMUNITY_PALETTE[Object.keys(topicMap).indexOf(
+        Object.keys(topicMap).find(k => topicMap[k] === entries)
+      ) % COMMUNITY_PALETTE.length],
+    };
+  });
+
+  return topics;
+}
+
+function renderLibrary() {
+  const data = loadData();
+  const search = (document.getElementById('librarySearch')?.value || '').toLowerCase();
+  const sortMode = document.getElementById('librarySortMode')?.value || 'size';
+
+  let topics = buildLibraryTopics(data);
+
+  // Filter by search
+  if (search) {
+    topics = topics.map(t => ({
+      ...t,
+      entries: t.entries.filter(e =>
+        e.title.toLowerCase().includes(search) ||
+        (e.summary || '').toLowerCase().includes(search) ||
+        (e.tags || []).some(tag => tag.toLowerCase().includes(search))
+      ),
+    })).filter(t => t.entries.length > 0);
+  }
+
+  // Filter by focused topic
+  if (libraryFocusTopic !== null) {
+    topics = topics.filter((_, i) => i === libraryFocusTopic);
+  }
+
+  // Sort topics
+  if (sortMode === 'size') topics.sort((a, b) => b.entries.length - a.entries.length);
+  else if (sortMode === 'recent') topics.sort((a, b) => b.latestDate - a.latestDate);
+  else if (sortMode === 'alpha') topics.sort((a, b) => a.label.localeCompare(b.label, 'ja'));
+
+  // Merge small clusters (< 3 entries) into "その他"
+  const mainTopics = topics.filter(t => t.entries.length >= 3);
+  const smallEntries = topics.filter(t => t.entries.length < 3).flatMap(t => t.entries);
+  if (smallEntries.length > 0) {
+    mainTopics.push({
+      label: 'その他',
+      entries: smallEntries.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
+      keywords: [],
+      dominantCategory: '',
+      categoryBreakdown: '',
+      latestDate: smallEntries.reduce((max, e) => {
+        const d = new Date(e.createdAt); return d > max ? d : max;
+      }, new Date(0)),
+      color: '#95a5a6',
+    });
+  }
+
+  // Stats
+  const statsEl = document.getElementById('libraryStats');
+  statsEl.innerHTML = `
+    <div class="library-stat"><div class="ls-value">${data.length}</div><div class="ls-label">Total Entries</div></div>
+    <div class="library-stat"><div class="ls-value">${mainTopics.length}</div><div class="ls-label">Auto Topics</div></div>
+    <div class="library-stat"><div class="ls-value">${getAllCategories().length}</div><div class="ls-label">Categories</div></div>
+  `;
+
+  // Topic map (chip navigation)
+  const allTopics = buildLibraryTopics(data);
+  const allMain = allTopics.filter(t => t.entries.length >= 3)
+    .sort((a, b) => b.entries.length - a.entries.length);
+
+  document.getElementById('libraryTopicMap').innerHTML = allMain.map((t, i) => `
+    <span class="topic-chip ${libraryFocusTopic === i ? 'active' : ''}"
+          style="background:${t.color}"
+          onclick="libraryFocusTopic = libraryFocusTopic === ${i} ? null : ${i}; renderLibrary()">
+      ${esc(t.label)}
+      <span class="chip-count">${t.entries.length}</span>
+    </span>
+  `).join('');
+
+  // Topic sections
+  const topicsEl = document.getElementById('libraryTopics');
+  topicsEl.innerHTML = mainTopics.map((topic, ti) => {
+    const isOpen = libraryFocusTopic !== null || mainTopics.length <= 3;
+    return `
+    <div class="library-topic-section">
+      <div class="topic-section-header ${isOpen ? 'open' : ''}" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+        <div class="topic-section-left">
+          <div class="topic-section-dot" style="background:${topic.color}"></div>
+          <div>
+            <div class="topic-section-title">${esc(topic.label)}</div>
+            <div class="topic-section-subtitle">${esc(topic.categoryBreakdown)}</div>
+          </div>
+        </div>
+        <div class="topic-section-right">
+          <span class="topic-section-count">${topic.entries.length}件</span>
+          <span class="topic-section-arrow">&#9654;</span>
+        </div>
+      </div>
+      <div class="topic-section-body ${isOpen ? 'open' : ''}">
+        <div class="topic-description">
+          このグループには${topic.entries.length}件のリサーチが含まれています。
+          主なキーワード: ${topic.keywords.map(w => `<strong>${esc(w)}</strong>`).join(', ') || '—'}
+        </div>
+        ${topic.entries.map(e => {
+          const expanded = libraryExpandedEntries.has(e.id);
+          return `
+          <div class="library-entry">
+            <div class="library-entry-header" onclick="openDetail('${e.id}')">
+              <div class="library-entry-title">${esc(e.title)}</div>
+              <div class="library-entry-date">${formatDate(e.createdAt)}</div>
+            </div>
+            ${e.summary ? `
+              <div class="library-entry-summary ${expanded ? '' : 'collapsed'}">${esc(e.summary)}</div>
+              <button class="expand-btn" onclick="event.stopPropagation();toggleLibraryExpand('${e.id}')">
+                ${expanded ? '折りたたむ' : '続きを読む'}
+              </button>
+            ` : ''}
+            <div class="library-entry-tags">
+              ${(e.tags || []).filter(t => !NOISE_TAGS.has(t)).slice(0, 5).map(t =>
+                `<span class="tag">${esc(t)}</span>`
+              ).join('')}
+              ${e.source ? `<a class="btn-action" href="${esc(getGoogleDocsUrl(e.source))}" target="_blank" onclick="event.stopPropagation()" style="font-size:0.68rem;padding:2px 8px;margin-left:4px;">&#9654; 開く</a>` : ''}
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleLibraryExpand(id) {
+  if (libraryExpandedEntries.has(id)) libraryExpandedEntries.delete(id);
+  else libraryExpandedEntries.add(id);
+  renderLibrary();
+}
+
 function renderAll() {
   if (currentTab === 'overview') renderOverview();
   else if (currentTab === 'research') renderResearchTab();
   else if (currentTab === 'graph') renderGraph();
   else if (currentTab === 'analytics') renderAnalytics();
+  else if (currentTab === 'library') renderLibrary();
   else if (currentTab === 'timeline') renderTimeline();
 }
 
