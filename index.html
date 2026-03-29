@@ -1085,8 +1085,8 @@
 <header>
   <h1><span>&#9679;</span> Research Dashboard</h1>
   <div class="header-actions">
-    <button class="btn btn-sm" onclick="exportData()">Export</button>
-    <button class="btn btn-sm" onclick="document.getElementById('importFile').click()">Import JSON</button>
+    <button class="btn btn-sm" onclick="exportData()">書き出し</button>
+    <button class="btn btn-sm" onclick="document.getElementById('importFile').click()">読み込み</button>
     <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
     <button class="btn btn-sm" onclick="openBulkUpload()">一括アップロード</button>
     <button class="btn btn-primary" onclick="openAddModal()">+ 新規追加</button>
@@ -1097,12 +1097,12 @@
 
   <!-- Tab navigation -->
   <div class="tab-nav">
-    <button class="tab-btn active" data-tab="overview" onclick="switchTab('overview')">Overview</button>
-    <button class="tab-btn" data-tab="research" onclick="switchTab('research')">Research</button>
-    <button class="tab-btn" data-tab="graph" onclick="switchTab('graph')">Knowledge Graph</button>
-    <button class="tab-btn" data-tab="analytics" onclick="switchTab('analytics')">Analytics</button>
-    <button class="tab-btn" data-tab="library" onclick="switchTab('library')">Library</button>
-    <button class="tab-btn" data-tab="timeline" onclick="switchTab('timeline')">Timeline</button>
+    <button class="tab-btn active" data-tab="overview" onclick="switchTab('overview')">ホーム</button>
+    <button class="tab-btn" data-tab="library" onclick="switchTab('library')">ライブラリ</button>
+    <button class="tab-btn" data-tab="research" onclick="switchTab('research')">一覧</button>
+    <button class="tab-btn" data-tab="graph" onclick="switchTab('graph')">つながり</button>
+    <button class="tab-btn" data-tab="analytics" onclick="switchTab('analytics')">分析</button>
+    <button class="tab-btn" data-tab="timeline" onclick="switchTab('timeline')">時系列</button>
   </div>
 
   <!-- ========== OVERVIEW TAB ========== -->
@@ -1111,38 +1111,38 @@
     <!-- Stats -->
     <div class="stats">
       <div class="stat-card">
-        <div class="label">Total</div>
+        <div class="label">リサーチ総数</div>
         <div class="value" id="statTotal">0</div>
       </div>
       <div class="stat-card">
-        <div class="label">Categories</div>
+        <div class="label">カテゴリ</div>
         <div class="value" id="statCategories">0</div>
       </div>
       <div class="stat-card">
-        <div class="label">This Month</div>
+        <div class="label">今月</div>
         <div class="value" id="statThisMonth">0</div>
         <div class="sub" id="statMonthDelta"></div>
       </div>
       <div class="stat-card">
-        <div class="label">Tags</div>
+        <div class="label">タグ数</div>
         <div class="value" id="statTags">0</div>
       </div>
       <div class="stat-card">
-        <div class="label">Completion</div>
+        <div class="label">完了率</div>
         <div class="value" id="statCompletion">-</div>
       </div>
     </div>
 
     <!-- Status pipeline -->
     <div class="viz-panel" style="margin-bottom: 20px;">
-      <h3>Status Pipeline</h3>
+      <h3>ステータス</h3>
       <div class="status-pipeline" id="statusPipeline"></div>
     </div>
 
     <!-- Viz row: Heatmap + Category chart -->
     <div class="viz-row">
       <div class="viz-panel">
-        <h3>Activity (past 6 months)</h3>
+        <h3>活動（直近6ヶ月）</h3>
         <div class="heatmap-months" id="heatmapMonths"></div>
         <div class="heatmap-wrap">
           <div class="heatmap" id="heatmapGrid"></div>
@@ -1158,20 +1158,20 @@
         </div>
       </div>
       <div class="viz-panel">
-        <h3>Categories</h3>
+        <h3>カテゴリ</h3>
         <div class="cat-bar-list" id="catChart"></div>
       </div>
     </div>
 
     <!-- Tag cloud -->
     <div class="viz-panel" style="margin-bottom: 20px;">
-      <h3>Tags</h3>
+      <h3>タグ</h3>
       <div class="tag-cloud" id="tagCloud"></div>
     </div>
 
     <!-- Recent entries -->
     <div class="viz-panel">
-      <h3>Recent</h3>
+      <h3>最近のリサーチ</h3>
       <div class="list-view" id="recentList"></div>
     </div>
 
@@ -1199,25 +1199,25 @@
   <!-- ========== RESEARCH TAB ========== -->
   <div class="tab-panel" id="tab-research">
     <div class="toolbar">
-      <input type="text" class="search-box" id="searchBox" placeholder="Search..." oninput="renderResearchTab()">
+      <input type="text" class="search-box" id="searchBox" placeholder="タイトル・要約・タグで検索..." oninput="renderResearchTab()">
       <select class="filter-select" id="categoryFilter" onchange="renderResearchTab()">
-        <option value="">All Categories</option>
+        <option value="">すべてのカテゴリ</option>
       </select>
       <select class="filter-select" id="statusFilter" onchange="renderResearchTab()">
-        <option value="">All Status</option>
+        <option value="">すべてのステータス</option>
         <option value="investigating">調査中</option>
         <option value="reading">読了</option>
         <option value="organized">整理済</option>
         <option value="done">完了</option>
       </select>
       <select class="filter-select" id="sortSelect" onchange="renderResearchTab()">
-        <option value="newest">Newest</option>
-        <option value="oldest">Oldest</option>
-        <option value="title">Title</option>
+        <option value="newest">新しい順</option>
+        <option value="oldest">古い順</option>
+        <option value="title">タイトル順</option>
       </select>
       <div class="view-toggle">
-        <button class="active" data-view="cards" onclick="setView('cards')">Cards</button>
-        <button data-view="list" onclick="setView('list')">List</button>
+        <button class="active" data-view="cards" onclick="setView('cards')">カード</button>
+        <button data-view="list" onclick="setView('list')">リスト</button>
       </div>
     </div>
 
@@ -1225,7 +1225,7 @@
     <div id="researchList" class="list-view" style="display:none"></div>
     <div class="empty-state" id="emptyState" style="display:none">
       <div class="icon">&#128218;</div>
-      <p>No research found.</p>
+      <p>リサーチが見つかりません。</p>
     </div>
   </div>
 
@@ -1233,47 +1233,46 @@
   <div class="tab-panel" id="tab-graph">
     <div class="graph-container">
       <div class="graph-toolbar">
-        <button class="btn btn-sm" onclick="graphZoom(1.2)" title="Zoom In">+</button>
-        <button class="btn btn-sm" onclick="graphZoom(0.8)" title="Zoom Out">-</button>
-        <button class="btn btn-sm" onclick="graphReset()" title="Reset">Reset</button>
+        <button class="btn btn-sm" onclick="graphZoom(1.2)" title="拡大">+</button>
+        <button class="btn btn-sm" onclick="graphZoom(0.8)" title="縮小">-</button>
+        <button class="btn btn-sm" onclick="graphReset()" title="リセット">リセット</button>
       </div>
       <div class="graph-controls">
-        <label>Similarity Threshold</label>
+        <label>関連度</label>
         <div class="range-row">
           <input type="range" id="simThreshold" min="0" max="80" value="20" oninput="onSimThresholdChange()">
           <span class="range-val" id="simThresholdVal">0.20</span>
         </div>
-        <label style="margin-top:4px;">Show</label>
+        <label style="margin-top:4px;">表示</label>
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
           <label style="font-weight:400;font-size:0.72rem;display:flex;align-items:center;gap:3px;">
-            <input type="checkbox" id="showTags" checked onchange="rebuildAndRender()"> Tags
+            <input type="checkbox" id="showTags" checked onchange="rebuildAndRender()"> タグ
           </label>
-          <!-- Categories removed: too large, hides detail -->
           <label style="font-weight:400;font-size:0.72rem;display:flex;align-items:center;gap:3px;">
-            <input type="checkbox" id="showSim" checked onchange="rebuildAndRender()"> Similarity
+            <input type="checkbox" id="showSim" checked onchange="rebuildAndRender()"> 類似関係
           </label>
         </div>
-        <label style="margin-top:4px;">Focus Hops</label>
+        <label style="margin-top:4px;">探索の深さ</label>
         <div class="range-row">
           <input type="range" id="focusHops" min="1" max="4" value="2" oninput="GRAPH.focusHops=parseInt(this.value);document.getElementById('focusHopsVal').textContent=this.value">
           <span class="range-val" id="focusHopsVal">2</span>
         </div>
-        <button class="btn btn-sm" onclick="GRAPH.focusNode=null" style="font-size:0.68rem;">Clear Focus</button>
-        <label style="margin-top:4px;">Search</label>
-        <input type="text" class="graph-search-input" id="graphSearch" placeholder="ノード検索..." oninput="onGraphSearch(this.value)">
+        <button class="btn btn-sm" onclick="GRAPH.focusNode=null" style="font-size:0.68rem;">フォーカス解除</button>
+        <label style="margin-top:4px;">検索</label>
+        <input type="text" class="graph-search-input" id="graphSearch" placeholder="キーワードで絞り込み..." oninput="onGraphSearch(this.value)">
         <span class="graph-search-count" id="graphSearchCount"></span>
-        <label style="margin-top:4px;">Max Edges/Node</label>
+        <label style="margin-top:4px;">線の数</label>
         <div class="range-row">
           <input type="range" id="maxEdgesPerNode" min="1" max="10" value="3" oninput="GRAPH.maxEdgesPerNode=parseInt(this.value);document.getElementById('maxEdgesVal').textContent=this.value">
           <span class="range-val" id="maxEdgesVal">3</span>
         </div>
-        <label style="margin-top:4px;">Category</label>
+        <label style="margin-top:4px;">カテゴリで絞り込み</label>
         <div id="graphCatFilter" style="display:flex;flex-direction:column;gap:3px;max-height:160px;overflow-y:auto;font-size:0.72rem;"></div>
-        <label style="margin-top:4px;">Layout</label>
+        <label style="margin-top:4px;">配置</label>
         <div class="layout-btns" id="layoutBtns">
-          <button class="btn btn-sm active" onclick="switchLayout('force')">Force</button>
-          <button class="btn btn-sm" onclick="switchLayout('radial')">Radial</button>
-          <button class="btn btn-sm" onclick="switchLayout('grid')">Grid</button>
+          <button class="btn btn-sm active" onclick="switchLayout('force')">自動</button>
+          <button class="btn btn-sm" onclick="switchLayout('radial')">放射</button>
+          <button class="btn btn-sm" onclick="switchLayout('grid')">整列</button>
         </div>
       </div>
       <div class="metrics-panel" id="nodeMetricsPanel">
@@ -1282,10 +1281,10 @@
       </div>
       <canvas id="graphCanvas" class="graph-canvas"></canvas>
       <div class="graph-legend" id="graphLegend">
-        <div class="graph-legend-item"><div class="graph-legend-dot" style="background:#e67e22"></div>Category</div>
-        <div class="graph-legend-item"><div class="graph-legend-dot" style="background:#3498db"></div>Tag</div>
-        <div class="graph-legend-item"><div class="graph-legend-dot" style="background:rgba(192,57,43,0.6);border:1px dashed #c0392b"></div>BM25 Similarity</div>
-        <span style="opacity:0.5">| Research = community color + PageRank size | Click: focus | DblClick: open</span>
+        <div class="graph-legend-item"><div class="graph-legend-dot" style="background:#e67e22"></div>カテゴリ</div>
+        <div class="graph-legend-item"><div class="graph-legend-dot" style="background:#3498db"></div>タグ</div>
+        <div class="graph-legend-item"><div class="graph-legend-dot" style="background:rgba(192,57,43,0.6);border:1px dashed #c0392b"></div>類似度</div>
+        <span style="opacity:0.5">| クリック: フォーカス | ダブルクリック: 詳細を開く</span>
       </div>
       <div class="graph-tooltip" id="graphTooltip">
         <div class="tt-type" id="ttType"></div>
@@ -1659,7 +1658,7 @@ function renderOverview() {
       <span class="list-tags">${(d.tags || []).slice(0, 3).map(t => `<span class="tag">${esc(t)}</span>`).join('')}</span>
       <span class="list-date">${formatDate(d.createdAt)}</span>
     </div>
-  `).join('') || '<div style="color:var(--text-muted);font-size:0.85rem;padding:16px;">No entries yet.</div>';
+  `).join('') || '<div style="color:var(--text-muted);font-size:0.85rem;padding:16px;">まだエントリがありません。</div>';
 
   // New features on Overview
   renderNarrativeReport(data);
@@ -1754,7 +1753,7 @@ function renderResearchTab() {
   const sel = document.getElementById('categoryFilter');
   const current = sel.value;
   const cats = getAllCategories();
-  sel.innerHTML = '<option value="">All Categories</option>' + cats.map(c => `<option value="${c}" ${c === current ? 'selected' : ''}>${c}</option>`).join('');
+  sel.innerHTML = '<option value="">すべてのカテゴリ</option>' + cats.map(c => `<option value="${c}" ${c === current ? 'selected' : ''}>${c}</option>`).join('');
   document.getElementById('categoryList').innerHTML = cats.map(c => `<option value="${c}">`).join('');
 
   if (data.length === 0) {
@@ -1825,7 +1824,7 @@ function renderTimeline() {
   const container = document.getElementById('timelineContainer');
 
   if (data.length === 0) {
-    container.innerHTML = '<div class="empty-state"><div class="icon">&#128197;</div><p>No entries for timeline.</p></div>';
+    container.innerHTML = '<div class="empty-state"><div class="icon">&#128197;</div><p>タイムラインに表示するエントリがありません。</p></div>';
     return;
   }
 
@@ -2805,7 +2804,7 @@ function renderGraph() {
 
   // Reset layout buttons UI
   document.querySelectorAll('#layoutBtns .btn-sm').forEach(btn => {
-    btn.classList.toggle('active', btn.textContent.toLowerCase() === 'force');
+    btn.classList.toggle('active', btn.textContent === '自動');
   });
 
   // ローディング表示
@@ -2815,7 +2814,7 @@ function renderGraph() {
   ctx.fillStyle = '#6b6b6b';
   ctx.font = '14px sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText('Knowledge Graph を構築中...', w / 2, h / 2);
+  ctx.fillText('つながりマップを構築中...', w / 2, h / 2);
 
   if (GRAPH.animFrame) cancelAnimationFrame(GRAPH.animFrame);
 
@@ -2875,7 +2874,7 @@ function onGraphSearch(query) {
   }
   const countEl = document.getElementById('graphSearchCount');
   if (countEl) {
-    countEl.textContent = GRAPH.searchQuery ? `${GRAPH.searchMatches.size} hits` : '';
+    countEl.textContent = GRAPH.searchQuery ? `${GRAPH.searchMatches.size}件` : '';
   }
 }
 
@@ -2884,7 +2883,8 @@ function switchLayout(mode) {
   GRAPH.layoutMode = mode;
   // Update button active states
   document.querySelectorAll('#layoutBtns .btn-sm').forEach(btn => {
-    btn.classList.toggle('active', btn.textContent.toLowerCase() === mode);
+    const modeMap = { force: '自動', radial: '放射', grid: '整列' };
+    btn.classList.toggle('active', btn.textContent === modeMap[mode]);
   });
 
   if (mode === 'force') {
