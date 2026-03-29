@@ -1267,6 +1267,8 @@
           <input type="range" id="maxEdgesPerNode" min="1" max="10" value="3" oninput="GRAPH.maxEdgesPerNode=parseInt(this.value);document.getElementById('maxEdgesVal').textContent=this.value">
           <span class="range-val" id="maxEdgesVal">3</span>
         </div>
+        <label style="margin-top:4px;">Category</label>
+        <div id="graphCatFilter" style="display:flex;flex-direction:column;gap:3px;max-height:160px;overflow-y:auto;font-size:0.72rem;"></div>
         <label style="margin-top:4px;">Layout</label>
         <div class="layout-btns" id="layoutBtns">
           <button class="btn btn-sm active" onclick="switchLayout('force')">Force</button>
@@ -2130,13 +2132,44 @@ const COMMUNITY_PALETTE = [
 ];
 
 // ===== Graph Builder =====
+function getGraphCatFilter() {
+  const checks = document.querySelectorAll('#graphCatFilter input[type="checkbox"]');
+  if (checks.length === 0) return null; // not initialized yet — show all
+  const selected = new Set();
+  checks.forEach(cb => { if (cb.checked) selected.add(cb.value); });
+  return selected.size === checks.length ? null : selected; // null = all selected
+}
+
+function initGraphCatFilter() {
+  const container = document.getElementById('graphCatFilter');
+  if (!container) return;
+  const cats = getAllCategories();
+  container.innerHTML =
+    `<label style="font-weight:400;display:flex;align-items:center;gap:3px;margin-bottom:2px;">
+      <input type="checkbox" checked onchange="toggleAllGraphCats(this.checked)"> <strong>すべて</strong>
+    </label>` +
+    cats.map(c =>
+      `<label style="font-weight:400;display:flex;align-items:center;gap:3px;">
+        <input type="checkbox" value="${esc(c)}" checked onchange="rebuildAndRender()"> ${esc(c)}
+      </label>`
+    ).join('');
+}
+
+function toggleAllGraphCats(checked) {
+  document.querySelectorAll('#graphCatFilter input[type="checkbox"]').forEach(cb => { cb.checked = checked; });
+  rebuildAndRender();
+}
+
 function buildGraph() {
-  const data = loadData();
+  const allData = loadData();
+  const catFilter = getGraphCatFilter();
+  const data = catFilter ? allData.filter(d => catFilter.has(d.category)) : allData;
+
   const nodes = [];
   const edges = [];
   const nodeMap = new Map();
   const showTags = document.getElementById('showTags')?.checked ?? true;
-  const showCats = false; // カテゴリノードは非表示（大きすぎて細部が見えにくくなるため）
+  const showCats = false;
   const showSim = document.getElementById('showSim')?.checked ?? true;
   const simThreshold = getSimThreshold();
 
@@ -2751,6 +2784,7 @@ function graphAnimLoop() {
 
 let graphBuilt = false;
 function renderGraph() {
+  initGraphCatFilter();
   const canvas = document.getElementById('graphCanvas');
   if (!canvas) return;
   const container = canvas.parentElement;
