@@ -16,6 +16,10 @@
     --border: #e0ddd5;
     --tag-bg: #eee8d5;
     --shadow: 0 1px 3px rgba(0,0,0,0.08);
+    --status-investigating: #e67e22;
+    --status-reading: #3498db;
+    --status-organized: #9b59b6;
+    --status-done: #2d5a27;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -31,7 +35,7 @@
   header {
     background: var(--card);
     border-bottom: 1px solid var(--border);
-    padding: 20px 32px;
+    padding: 16px 32px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -40,110 +44,257 @@
     z-index: 100;
   }
 
-  header h1 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-  }
-
+  header h1 { font-size: 1.2rem; font-weight: 600; letter-spacing: 0.02em; }
   header h1 span { color: var(--accent); }
-
-  .header-actions { display: flex; gap: 8px; }
+  .header-actions { display: flex; gap: 8px; align-items: center; }
 
   .btn {
-    padding: 8px 16px;
+    padding: 7px 14px;
     border: 1px solid var(--border);
     border-radius: 6px;
     background: var(--card);
     color: var(--text);
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     cursor: pointer;
     transition: all 0.15s;
   }
 
   .btn:hover { border-color: var(--accent); color: var(--accent); }
-
-  .btn-primary {
-    background: var(--accent);
-    color: white;
-    border-color: var(--accent);
-  }
-
+  .btn-primary { background: var(--accent); color: white; border-color: var(--accent); }
   .btn-primary:hover { background: #1e4a1a; }
-
   .btn-danger { color: #c0392b; border-color: #e0b4ae; }
   .btn-danger:hover { background: #fdf0ee; }
+  .btn-sm { padding: 4px 10px; font-size: 0.75rem; }
 
   /* Layout */
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 24px;
+  .container { max-width: 1280px; margin: 0 auto; padding: 20px 24px; }
+
+  /* Tab navigation */
+  .tab-nav {
+    display: flex;
+    gap: 0;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--border);
   }
 
-  /* Stats bar */
-  .stats {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 24px;
-    flex-wrap: wrap;
+  .tab-btn {
+    padding: 10px 20px;
+    border: none;
+    background: none;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.15s;
   }
+
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* Stats bar */
+  .stats { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
 
   .stat-card {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 8px;
-    padding: 16px 24px;
+    padding: 14px 20px;
     flex: 1;
-    min-width: 140px;
+    min-width: 120px;
     box-shadow: var(--shadow);
   }
 
-  .stat-card .label { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px; }
-  .stat-card .value { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
+  .stat-card .label { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 2px; }
+  .stat-card .value { font-size: 1.4rem; font-weight: 700; color: var(--accent); }
+  .stat-card .sub { font-size: 0.7rem; color: var(--text-muted); margin-top: 2px; }
+
+  /* Visualization panels */
+  .viz-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+
+  .viz-panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+  }
+
+  .viz-panel h3 { font-size: 0.85rem; font-weight: 600; margin-bottom: 14px; color: var(--text-muted); }
+
+  /* Activity heatmap */
+  .heatmap-wrap { overflow-x: auto; }
+
+  .heatmap {
+    display: grid;
+    grid-template-rows: repeat(7, 14px);
+    grid-auto-flow: column;
+    grid-auto-columns: 14px;
+    gap: 2px;
+  }
+
+  .heatmap-cell {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    background: #e8e5dd;
+  }
+
+  .heatmap-cell[data-level="1"] { background: #c6e48b; }
+  .heatmap-cell[data-level="2"] { background: #7bc96f; }
+  .heatmap-cell[data-level="3"] { background: #449e48; }
+  .heatmap-cell[data-level="4"] { background: #2d5a27; }
+
+  .heatmap-cell[title] { cursor: default; }
+
+  .heatmap-legend {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 8px;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    justify-content: flex-end;
+  }
+
+  .heatmap-legend .heatmap-cell { cursor: default; }
+
+  .heatmap-months {
+    display: flex;
+    gap: 0;
+    margin-bottom: 4px;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+  }
+
+  .heatmap-months span { min-width: 48px; }
+
+  /* Category chart */
+  .cat-bar-list { display: flex; flex-direction: column; gap: 8px; }
+
+  .cat-bar-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 30px;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.8rem;
+  }
+
+  .cat-bar-label {
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--text-muted);
+  }
+
+  .cat-bar-track {
+    background: var(--accent-light);
+    border-radius: 4px;
+    height: 20px;
+    overflow: hidden;
+  }
+
+  .cat-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 4px;
+    transition: width 0.3s;
+    min-width: 4px;
+  }
+
+  .cat-bar-count { font-size: 0.75rem; color: var(--text-muted); }
+
+  /* Status pipeline */
+  .status-pipeline { display: flex; gap: 2px; }
+
+  .status-stage {
+    flex: 1;
+    text-align: center;
+    padding: 10px 8px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    color: white;
+    position: relative;
+  }
+
+  .status-stage .stage-count { font-size: 1.3rem; font-weight: 700; display: block; }
+  .status-stage .stage-label { font-size: 0.65rem; opacity: 0.9; }
+  .status-stage.investigating { background: var(--status-investigating); }
+  .status-stage.reading { background: var(--status-reading); }
+  .status-stage.organized { background: var(--status-organized); }
+  .status-stage.done { background: var(--status-done); }
+
+  /* Tag cloud (proportional) */
+  .tag-cloud { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-bottom: 20px; }
+
+  .tag-cloud .tag {
+    cursor: pointer;
+    transition: all 0.15s;
+    line-height: 1.4;
+  }
+
+  .tag-cloud .tag:hover, .tag-cloud .tag.active {
+    background: var(--accent);
+    color: white;
+  }
 
   /* Toolbar */
-  .toolbar {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 24px;
-    flex-wrap: wrap;
-    align-items: center;
-  }
+  .toolbar { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
 
   .search-box {
     flex: 1;
-    min-width: 200px;
-    padding: 10px 14px;
+    min-width: 180px;
+    padding: 8px 12px;
     border: 1px solid var(--border);
     border-radius: 6px;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     background: var(--card);
   }
 
   .search-box:focus { outline: none; border-color: var(--accent); }
 
   .filter-select {
-    padding: 10px 14px;
+    padding: 8px 12px;
     border: 1px solid var(--border);
     border-radius: 6px;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     background: var(--card);
-    min-width: 140px;
+    min-width: 120px;
   }
+
+  /* View toggle */
+  .view-toggle { display: flex; gap: 0; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+
+  .view-toggle button {
+    padding: 7px 12px;
+    border: none;
+    background: var(--card);
+    font-size: 0.8rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    border-right: 1px solid var(--border);
+  }
+
+  .view-toggle button:last-child { border-right: none; }
+  .view-toggle button.active { background: var(--accent-light); color: var(--accent); font-weight: 600; }
+  .view-toggle button:hover { background: var(--accent-light); }
 
   /* Cards grid */
   .cards {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 14px;
   }
 
   .card {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 10px;
-    padding: 20px;
+    padding: 18px;
     box-shadow: var(--shadow);
     transition: box-shadow 0.2s;
     cursor: pointer;
@@ -152,26 +303,32 @@
 
   .card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
 
+  .card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+
   .card-category {
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--accent);
     font-weight: 600;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
 
-  .card-title {
-    font-size: 1.05rem;
-    font-weight: 600;
-    margin-bottom: 8px;
-    line-height: 1.4;
+  .card-status-badge {
+    font-size: 0.65rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    color: white;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
+
+  .card-title { font-size: 1rem; font-weight: 600; margin-bottom: 6px; line-height: 1.4; }
 
   .card-summary {
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     color: var(--text-muted);
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
@@ -182,25 +339,18 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: var(--text-muted);
   }
 
-  .card-tags { display: flex; gap: 6px; flex-wrap: wrap; }
-
-  .tag {
-    background: var(--tag-bg);
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 0.72rem;
-  }
-
+  .card-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+  .tag { background: var(--tag-bg); padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; }
   .card-date { white-space: nowrap; }
 
   .card-source {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: var(--accent);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -208,6 +358,83 @@
 
   .card-source a { color: var(--accent); text-decoration: none; }
   .card-source a:hover { text-decoration: underline; }
+
+  /* List view */
+  .list-view { display: flex; flex-direction: column; gap: 6px; }
+
+  .list-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 18px;
+    display: grid;
+    grid-template-columns: auto 1fr auto auto auto;
+    gap: 16px;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.15s;
+  }
+
+  .list-item:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .list-item .list-status { font-size: 0.65rem; padding: 2px 8px; border-radius: 10px; color: white; }
+  .list-item .list-title { font-size: 0.9rem; font-weight: 600; }
+  .list-item .list-category { font-size: 0.75rem; color: var(--accent); min-width: 70px; }
+  .list-item .list-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+  .list-item .list-date { font-size: 0.72rem; color: var(--text-muted); white-space: nowrap; }
+
+  /* Timeline view */
+  .timeline { position: relative; padding-left: 30px; }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+
+  .timeline-month {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin: 20px 0 10px -30px;
+    padding-left: 30px;
+  }
+
+  .timeline-item {
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: box-shadow 0.15s;
+  }
+
+  .timeline-item:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -24px;
+    top: 18px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--card);
+  }
+
+  .timeline-item .tl-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  .timeline-item .tl-title { font-size: 0.95rem; font-weight: 600; }
+  .timeline-item .tl-date { font-size: 0.72rem; color: var(--text-muted); }
+  .timeline-item .tl-summary { font-size: 0.82rem; color: var(--text-muted); margin-top: 4px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .timeline-item .tl-meta { display: flex; gap: 6px; margin-top: 8px; align-items: center; }
 
   /* Modal */
   .modal-overlay {
@@ -227,19 +454,18 @@
   .modal {
     background: var(--card);
     border-radius: 12px;
-    padding: 32px;
+    padding: 28px;
     width: 100%;
     max-width: 640px;
     box-shadow: 0 20px 60px rgba(0,0,0,0.15);
   }
 
-  .modal h2 { font-size: 1.1rem; margin-bottom: 20px; }
-
-  .form-group { margin-bottom: 16px; }
+  .modal h2 { font-size: 1.05rem; margin-bottom: 18px; }
+  .form-group { margin-bottom: 14px; }
 
   .form-group label {
     display: block;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 600;
     margin-bottom: 4px;
     color: var(--text-muted);
@@ -249,76 +475,111 @@
   .form-group textarea,
   .form-group select {
     width: 100%;
-    padding: 10px 12px;
+    padding: 9px 12px;
     border: 1px solid var(--border);
     border-radius: 6px;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     font-family: inherit;
   }
 
-  .form-group textarea { resize: vertical; min-height: 120px; }
+  .form-group textarea { resize: vertical; min-height: 110px; }
   .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
     outline: none;
     border-color: var(--accent);
   }
 
-  .modal-actions {
-    display: flex;
-    justify-content: space-between;
-    gap: 8px;
-    margin-top: 24px;
-  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
+  .modal-actions { display: flex; justify-content: space-between; gap: 8px; margin-top: 20px; }
   .modal-actions-right { display: flex; gap: 8px; }
 
   /* Detail modal */
   .detail-content { line-height: 1.8; }
   .detail-content .field-label {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: var(--text-muted);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    margin-top: 16px;
+    margin-top: 14px;
     margin-bottom: 4px;
   }
-  .detail-content .field-value {
-    font-size: 0.95rem;
-    white-space: pre-wrap;
-  }
+  .detail-content .field-value { font-size: 0.92rem; white-space: pre-wrap; }
 
   /* Empty state */
-  .empty-state {
-    text-align: center;
-    padding: 80px 20px;
-    color: var(--text-muted);
-  }
-  .empty-state .icon { font-size: 3rem; margin-bottom: 16px; }
-  .empty-state p { font-size: 0.95rem; }
+  .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+  .empty-state .icon { font-size: 2.5rem; margin-bottom: 12px; }
+  .empty-state p { font-size: 0.9rem; }
 
-  /* Tag cloud */
-  .tag-cloud {
+  /* Knowledge Graph */
+  .graph-container {
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .graph-canvas { display: block; width: 100%; cursor: grab; }
+  .graph-canvas:active { cursor: grabbing; }
+
+  .graph-toolbar {
+    position: absolute;
+    top: 12px;
+    right: 12px;
     display: flex;
     gap: 6px;
-    flex-wrap: wrap;
-    margin-bottom: 24px;
+    z-index: 10;
   }
 
-  .tag-cloud .tag {
-    cursor: pointer;
-    transition: all 0.15s;
+  .graph-legend {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    display: flex;
+    gap: 14px;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    background: rgba(255,255,255,0.9);
+    padding: 8px 12px;
+    border-radius: 6px;
+    z-index: 10;
   }
 
-  .tag-cloud .tag:hover, .tag-cloud .tag.active {
-    background: var(--accent);
-    color: white;
+  .graph-legend-item { display: flex; align-items: center; gap: 4px; }
+  .graph-legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  .graph-tooltip {
+    display: none;
+    position: absolute;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    z-index: 20;
+    max-width: 300px;
+    pointer-events: none;
   }
 
-  @media (max-width: 600px) {
-    header { padding: 16px; flex-direction: column; gap: 12px; }
+  .graph-tooltip.visible { display: block; }
+  .graph-tooltip .tt-title { font-size: 0.88rem; font-weight: 600; margin-bottom: 4px; }
+  .graph-tooltip .tt-type { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 4px; }
+  .graph-tooltip .tt-detail { font-size: 0.78rem; color: var(--text-muted); }
+  .graph-tooltip .tt-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px; }
+
+  @media (max-width: 768px) {
+    header { padding: 12px 16px; flex-direction: column; gap: 10px; }
     .container { padding: 16px; }
+    .viz-row { grid-template-columns: 1fr; }
     .cards { grid-template-columns: 1fr; }
-    .modal { padding: 24px; }
+    .list-item { grid-template-columns: auto 1fr auto; }
+    .list-item .list-category, .list-item .list-tags { display: none; }
+    .modal { padding: 20px; }
+    .form-row { grid-template-columns: 1fr; }
+    .status-pipeline { flex-wrap: wrap; }
+    .status-stage { min-width: 70px; }
   }
 </style>
 </head>
@@ -327,58 +588,155 @@
 <header>
   <h1><span>&#9679;</span> Research Dashboard</h1>
   <div class="header-actions">
-    <button class="btn" onclick="exportData()">エクスポート</button>
-    <button class="btn" onclick="document.getElementById('importFile').click()">インポート</button>
+    <button class="btn btn-sm" onclick="exportData()">Export</button>
+    <button class="btn btn-sm" onclick="document.getElementById('importFile').click()">Import</button>
     <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
     <button class="btn btn-primary" onclick="openAddModal()">+ 新規追加</button>
   </div>
 </header>
 
 <div class="container">
-  <!-- Stats -->
-  <div class="stats">
-    <div class="stat-card">
-      <div class="label">リサーチ総数</div>
-      <div class="value" id="statTotal">0</div>
+
+  <!-- Tab navigation -->
+  <div class="tab-nav">
+    <button class="tab-btn active" data-tab="overview" onclick="switchTab('overview')">Overview</button>
+    <button class="tab-btn" data-tab="research" onclick="switchTab('research')">Research</button>
+    <button class="tab-btn" data-tab="graph" onclick="switchTab('graph')">Knowledge Graph</button>
+    <button class="tab-btn" data-tab="timeline" onclick="switchTab('timeline')">Timeline</button>
+  </div>
+
+  <!-- ========== OVERVIEW TAB ========== -->
+  <div class="tab-panel active" id="tab-overview">
+
+    <!-- Stats -->
+    <div class="stats">
+      <div class="stat-card">
+        <div class="label">Total</div>
+        <div class="value" id="statTotal">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Categories</div>
+        <div class="value" id="statCategories">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">This Month</div>
+        <div class="value" id="statThisMonth">0</div>
+        <div class="sub" id="statMonthDelta"></div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Tags</div>
+        <div class="value" id="statTags">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Completion</div>
+        <div class="value" id="statCompletion">-</div>
+      </div>
     </div>
-    <div class="stat-card">
-      <div class="label">カテゴリ数</div>
-      <div class="value" id="statCategories">0</div>
+
+    <!-- Status pipeline -->
+    <div class="viz-panel" style="margin-bottom: 20px;">
+      <h3>Status Pipeline</h3>
+      <div class="status-pipeline" id="statusPipeline"></div>
     </div>
-    <div class="stat-card">
-      <div class="label">今月の追加</div>
-      <div class="value" id="statThisMonth">0</div>
+
+    <!-- Viz row: Heatmap + Category chart -->
+    <div class="viz-row">
+      <div class="viz-panel">
+        <h3>Activity (past 6 months)</h3>
+        <div class="heatmap-months" id="heatmapMonths"></div>
+        <div class="heatmap-wrap">
+          <div class="heatmap" id="heatmapGrid"></div>
+        </div>
+        <div class="heatmap-legend">
+          Less
+          <div class="heatmap-cell"></div>
+          <div class="heatmap-cell" data-level="1"></div>
+          <div class="heatmap-cell" data-level="2"></div>
+          <div class="heatmap-cell" data-level="3"></div>
+          <div class="heatmap-cell" data-level="4"></div>
+          More
+        </div>
+      </div>
+      <div class="viz-panel">
+        <h3>Categories</h3>
+        <div class="cat-bar-list" id="catChart"></div>
+      </div>
     </div>
-    <div class="stat-card">
-      <div class="label">タグ数</div>
-      <div class="value" id="statTags">0</div>
+
+    <!-- Tag cloud -->
+    <div class="viz-panel" style="margin-bottom: 20px;">
+      <h3>Tags</h3>
+      <div class="tag-cloud" id="tagCloud"></div>
+    </div>
+
+    <!-- Recent entries -->
+    <div class="viz-panel">
+      <h3>Recent</h3>
+      <div class="list-view" id="recentList"></div>
     </div>
   </div>
 
-  <!-- Toolbar -->
-  <div class="toolbar">
-    <input type="text" class="search-box" id="searchBox" placeholder="タイトル・要約・タグで検索..." oninput="renderCards()">
-    <select class="filter-select" id="categoryFilter" onchange="renderCards()">
-      <option value="">すべてのカテゴリ</option>
-    </select>
-    <select class="filter-select" id="sortSelect" onchange="renderCards()">
-      <option value="newest">新しい順</option>
-      <option value="oldest">古い順</option>
-      <option value="title">タイトル順</option>
-    </select>
+  <!-- ========== RESEARCH TAB ========== -->
+  <div class="tab-panel" id="tab-research">
+    <div class="toolbar">
+      <input type="text" class="search-box" id="searchBox" placeholder="Search..." oninput="renderResearchTab()">
+      <select class="filter-select" id="categoryFilter" onchange="renderResearchTab()">
+        <option value="">All Categories</option>
+      </select>
+      <select class="filter-select" id="statusFilter" onchange="renderResearchTab()">
+        <option value="">All Status</option>
+        <option value="investigating">調査中</option>
+        <option value="reading">読了</option>
+        <option value="organized">整理済</option>
+        <option value="done">完了</option>
+      </select>
+      <select class="filter-select" id="sortSelect" onchange="renderResearchTab()">
+        <option value="newest">Newest</option>
+        <option value="oldest">Oldest</option>
+        <option value="title">Title</option>
+      </select>
+      <div class="view-toggle">
+        <button class="active" data-view="cards" onclick="setView('cards')">Cards</button>
+        <button data-view="list" onclick="setView('list')">List</button>
+      </div>
+    </div>
+
+    <div id="researchCards" class="cards"></div>
+    <div id="researchList" class="list-view" style="display:none"></div>
+    <div class="empty-state" id="emptyState" style="display:none">
+      <div class="icon">&#128218;</div>
+      <p>No research found.</p>
+    </div>
   </div>
 
-  <!-- Tag cloud -->
-  <div class="tag-cloud" id="tagCloud"></div>
-
-  <!-- Cards -->
-  <div class="cards" id="cardsContainer"></div>
-
-  <!-- Empty state -->
-  <div class="empty-state" id="emptyState" style="display:none">
-    <div class="icon">&#128218;</div>
-    <p>リサーチがまだありません。<br>「+ 新規追加」から最初のリサーチを登録しましょう。</p>
+  <!-- ========== KNOWLEDGE GRAPH TAB ========== -->
+  <div class="tab-panel" id="tab-graph">
+    <div class="graph-container">
+      <div class="graph-toolbar">
+        <button class="btn btn-sm" onclick="graphZoom(1.2)" title="Zoom In">+</button>
+        <button class="btn btn-sm" onclick="graphZoom(0.8)" title="Zoom Out">-</button>
+        <button class="btn btn-sm" onclick="graphReset()" title="Reset">Reset</button>
+      </div>
+      <canvas id="graphCanvas" class="graph-canvas"></canvas>
+      <div class="graph-legend">
+        <div class="graph-legend-item"><div class="graph-legend-dot" style="background:#2d5a27"></div>Research</div>
+        <div class="graph-legend-item"><div class="graph-legend-dot" style="background:#e67e22"></div>Category</div>
+        <div class="graph-legend-item"><div class="graph-legend-dot" style="background:#3498db"></div>Tag</div>
+      </div>
+      <div class="graph-tooltip" id="graphTooltip">
+        <div class="tt-type" id="ttType"></div>
+        <div class="tt-title" id="ttTitle"></div>
+        <div class="tt-detail" id="ttDetail"></div>
+        <div class="tt-tags" id="ttTags"></div>
+      </div>
+    </div>
   </div>
+
+  <!-- ========== TIMELINE TAB ========== -->
+  <div class="tab-panel" id="tab-timeline">
+    <div class="timeline" id="timelineContainer"></div>
+  </div>
+
 </div>
 
 <!-- Add/Edit Modal -->
@@ -390,10 +748,21 @@
       <label>タイトル *</label>
       <input type="text" id="formTitle" placeholder="リサーチのタイトル">
     </div>
-    <div class="form-group">
-      <label>カテゴリ</label>
-      <input type="text" id="formCategory" list="categoryList" placeholder="例: 人類学, ビジネス, テクノロジー">
-      <datalist id="categoryList"></datalist>
+    <div class="form-row">
+      <div class="form-group">
+        <label>カテゴリ</label>
+        <input type="text" id="formCategory" list="categoryList" placeholder="例: 人類学, ビジネス">
+        <datalist id="categoryList"></datalist>
+      </div>
+      <div class="form-group">
+        <label>ステータス</label>
+        <select id="formStatus">
+          <option value="investigating">調査中</option>
+          <option value="reading">読了</option>
+          <option value="organized">整理済</option>
+          <option value="done">完了</option>
+        </select>
+      </div>
     </div>
     <div class="form-group">
       <label>ソースURL</label>
@@ -437,97 +806,83 @@
 <script>
 const STORAGE_KEY = 'research_dashboard_data';
 let activeTagFilter = '';
+let currentView = 'cards';
+let currentTab = 'overview';
 
+const STATUS_MAP = {
+  investigating: { label: '調査中', color: 'var(--status-investigating)' },
+  reading:       { label: '読了',   color: 'var(--status-reading)' },
+  organized:     { label: '整理済', color: 'var(--status-organized)' },
+  done:          { label: '完了',   color: 'var(--status-done)' },
+};
+
+// ===== Data layer =====
 function loadData() {
-  // Merge: data.js (file) + localStorage (browser edits)
   const fileData = Array.isArray(window.RESEARCH_DATA) ? window.RESEARCH_DATA : [];
   let localData;
-  try {
-    localData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-  } catch { localData = []; }
+  try { localData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { localData = []; }
 
   const merged = new Map();
-  // File data is authoritative for entries it contains
-  fileData.forEach(entry => merged.set(entry.id, entry));
-  // Add browser-only entries
-  localData.forEach(entry => {
-    if (!merged.has(entry.id)) merged.set(entry.id, entry);
-  });
-
+  fileData.forEach(e => merged.set(e.id, e));
+  localData.forEach(e => { if (!merged.has(e.id)) merged.set(e.id, e); });
   return Array.from(merged.values());
 }
 
-function saveData(data) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-}
-
-function generateId() {
-  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-}
+function saveData(data) { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
+function generateId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
 
 function formatDate(iso) {
   const d = new Date(iso);
   return `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`;
 }
 
+function esc(s) {
+  const div = document.createElement('div');
+  div.textContent = s;
+  return div.innerHTML;
+}
+
 function getAllCategories() {
-  const data = loadData();
-  const cats = new Set(data.map(d => d.category).filter(Boolean));
-  return [...cats].sort();
+  return [...new Set(loadData().map(d => d.category).filter(Boolean))].sort();
 }
 
 function getAllTags() {
-  const data = loadData();
-  const tagCount = {};
-  data.forEach(d => {
-    (d.tags || []).forEach(t => { tagCount[t] = (tagCount[t] || 0) + 1; });
-  });
-  return Object.entries(tagCount).sort((a, b) => b[1] - a[1]);
+  const tc = {};
+  loadData().forEach(d => (d.tags || []).forEach(t => { tc[t] = (tc[t] || 0) + 1; }));
+  return Object.entries(tc).sort((a, b) => b[1] - a[1]);
 }
 
-function updateStats() {
-  const data = loadData();
-  document.getElementById('statTotal').textContent = data.length;
-  document.getElementById('statCategories').textContent = getAllCategories().length;
-
-  const now = new Date();
-  const thisMonth = data.filter(d => {
-    const dd = new Date(d.createdAt);
-    return dd.getFullYear() === now.getFullYear() && dd.getMonth() === now.getMonth();
-  }).length;
-  document.getElementById('statThisMonth').textContent = thisMonth;
-  document.getElementById('statTags').textContent = getAllTags().length;
+function statusBadgeHTML(status) {
+  const s = STATUS_MAP[status] || STATUS_MAP.investigating;
+  return `<span class="card-status-badge" style="background:${s.color}">${s.label}</span>`;
 }
 
-function updateCategoryFilter() {
-  const sel = document.getElementById('categoryFilter');
-  const current = sel.value;
-  const cats = getAllCategories();
-  sel.innerHTML = '<option value="">すべてのカテゴリ</option>' +
-    cats.map(c => `<option value="${c}" ${c === current ? 'selected' : ''}>${c}</option>`).join('');
-
-  const dl = document.getElementById('categoryList');
-  dl.innerHTML = cats.map(c => `<option value="${c}">`).join('');
+function safeHostname(url) {
+  try { return new URL(url).hostname; } catch { return url; }
 }
 
-function updateTagCloud() {
-  const tags = getAllTags();
-  const container = document.getElementById('tagCloud');
-  container.innerHTML = tags.map(([tag]) =>
-    `<span class="tag ${activeTagFilter === tag ? 'active' : ''}" onclick="toggleTagFilter('${tag.replace(/'/g, "\\'")}')">${tag}</span>`
-  ).join('');
+// ===== Tab navigation =====
+function switchTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === `tab-${tab}`));
+  renderAll();
 }
 
-function toggleTagFilter(tag) {
-  activeTagFilter = activeTagFilter === tag ? '' : tag;
-  renderCards();
+// ===== View toggle =====
+function setView(view) {
+  currentView = view;
+  document.querySelectorAll('.view-toggle button').forEach(b => b.classList.toggle('active', b.dataset.view === view));
+  renderResearchTab();
 }
 
+// ===== Filtering =====
 function getFilteredData() {
   let data = loadData();
-  const query = document.getElementById('searchBox').value.toLowerCase();
-  const cat = document.getElementById('categoryFilter').value;
-  const sort = document.getElementById('sortSelect').value;
+  const query = document.getElementById('searchBox')?.value?.toLowerCase() || '';
+  const cat = document.getElementById('categoryFilter')?.value || '';
+  const status = document.getElementById('statusFilter')?.value || '';
+  const sort = document.getElementById('sortSelect')?.value || 'newest';
 
   if (query) {
     data = data.filter(d =>
@@ -536,8 +891,8 @@ function getFilteredData() {
       (d.tags || []).some(t => t.toLowerCase().includes(query))
     );
   }
-
   if (cat) data = data.filter(d => d.category === cat);
+  if (status) data = data.filter(d => (d.status || 'investigating') === status);
   if (activeTagFilter) data = data.filter(d => (d.tags || []).includes(activeTagFilter));
 
   if (sort === 'newest') data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -547,48 +902,620 @@ function getFilteredData() {
   return data;
 }
 
-function renderCards() {
-  const data = getFilteredData();
-  const container = document.getElementById('cardsContainer');
-  const empty = document.getElementById('emptyState');
+// ===== Overview Tab =====
+function renderOverview() {
+  const data = loadData();
 
-  updateStats();
-  updateCategoryFilter();
-  updateTagCloud();
+  // Stats
+  document.getElementById('statTotal').textContent = data.length;
+  document.getElementById('statCategories').textContent = getAllCategories().length;
+  document.getElementById('statTags').textContent = getAllTags().length;
+
+  const now = new Date();
+  const thisMonth = data.filter(d => { const dd = new Date(d.createdAt); return dd.getFullYear() === now.getFullYear() && dd.getMonth() === now.getMonth(); }).length;
+  const lastMonth = data.filter(d => { const dd = new Date(d.createdAt); const lm = new Date(now.getFullYear(), now.getMonth() - 1); return dd.getFullYear() === lm.getFullYear() && dd.getMonth() === lm.getMonth(); }).length;
+  document.getElementById('statThisMonth').textContent = thisMonth;
+  const delta = thisMonth - lastMonth;
+  document.getElementById('statMonthDelta').textContent = delta > 0 ? `+${delta} vs last month` : delta < 0 ? `${delta} vs last month` : '';
+
+  const doneCount = data.filter(d => d.status === 'done').length;
+  document.getElementById('statCompletion').textContent = data.length > 0 ? Math.round(doneCount / data.length * 100) + '%' : '-';
+
+  // Status pipeline
+  const statusCounts = { investigating: 0, reading: 0, organized: 0, done: 0 };
+  data.forEach(d => { const s = d.status || 'investigating'; statusCounts[s] = (statusCounts[s] || 0) + 1; });
+  document.getElementById('statusPipeline').innerHTML = Object.entries(STATUS_MAP).map(([key, val]) =>
+    `<div class="status-stage ${key}"><span class="stage-count">${statusCounts[key]}</span><span class="stage-label">${val.label}</span></div>`
+  ).join('');
+
+  // Heatmap
+  renderHeatmap(data);
+
+  // Category chart
+  renderCategoryChart(data);
+
+  // Tag cloud
+  renderTagCloud();
+
+  // Recent list
+  const recent = [...data].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 5);
+  document.getElementById('recentList').innerHTML = recent.map(d => `
+    <div class="list-item" onclick="openDetail('${d.id}')">
+      <span class="list-status" style="background:${(STATUS_MAP[d.status || 'investigating']).color}">${(STATUS_MAP[d.status || 'investigating']).label}</span>
+      <span class="list-title">${esc(d.title)}</span>
+      <span class="list-category">${esc(d.category || '')}</span>
+      <span class="list-tags">${(d.tags || []).slice(0, 3).map(t => `<span class="tag">${esc(t)}</span>`).join('')}</span>
+      <span class="list-date">${formatDate(d.createdAt)}</span>
+    </div>
+  `).join('') || '<div style="color:var(--text-muted);font-size:0.85rem;padding:16px;">No entries yet.</div>';
+}
+
+function renderHeatmap(data) {
+  const grid = document.getElementById('heatmapGrid');
+  const monthsEl = document.getElementById('heatmapMonths');
+
+  // Build date counts for past 6 months
+  const today = new Date();
+  const dateCounts = {};
+  data.forEach(d => {
+    const key = new Date(d.createdAt).toISOString().slice(0, 10);
+    dateCounts[key] = (dateCounts[key] || 0) + 1;
+  });
+
+  // Start from ~6 months ago, aligned to Sunday
+  const start = new Date(today);
+  start.setMonth(start.getMonth() - 5);
+  start.setDate(1);
+  while (start.getDay() !== 0) start.setDate(start.getDate() - 1);
+
+  const cells = [];
+  const months = [];
+  let lastMonth = -1;
+  const cursor = new Date(start);
+
+  while (cursor <= today) {
+    const key = cursor.toISOString().slice(0, 10);
+    const count = dateCounts[key] || 0;
+    const level = count === 0 ? 0 : count === 1 ? 1 : count === 2 ? 2 : count <= 4 ? 3 : 4;
+
+    if (cursor.getDay() === 0 && cursor.getMonth() !== lastMonth) {
+      months.push({ month: cursor.getMonth(), col: Math.floor(cells.length / 7) });
+      lastMonth = cursor.getMonth();
+    }
+
+    cells.push(`<div class="heatmap-cell" data-level="${level}" title="${key}: ${count}件"></div>`);
+    cursor.setDate(cursor.getDate() + 1);
+  }
+
+  grid.innerHTML = cells.join('');
+
+  const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  monthsEl.innerHTML = months.map(m => `<span>${monthNames[m.month]}</span>`).join('');
+}
+
+function renderCategoryChart(data) {
+  const catCounts = {};
+  data.forEach(d => { if (d.category) catCounts[d.category] = (catCounts[d.category] || 0) + 1; });
+  const sorted = Object.entries(catCounts).sort((a, b) => b[1] - a[1]).slice(0, 8);
+  const max = sorted.length > 0 ? sorted[0][1] : 1;
+
+  document.getElementById('catChart').innerHTML = sorted.map(([cat, count]) =>
+    `<div class="cat-bar-row">
+      <div class="cat-bar-label">${esc(cat)}</div>
+      <div class="cat-bar-track"><div class="cat-bar-fill" style="width:${Math.round(count / max * 100)}%"></div></div>
+      <div class="cat-bar-count">${count}</div>
+    </div>`
+  ).join('') || '<div style="color:var(--text-muted);font-size:0.82rem;">No categories yet.</div>';
+}
+
+function renderTagCloud() {
+  const tags = getAllTags();
+  if (tags.length === 0) { document.getElementById('tagCloud').innerHTML = '<span style="color:var(--text-muted);font-size:0.82rem;">No tags yet.</span>'; return; }
+  const maxCount = tags[0][1];
+  const minSize = 0.72;
+  const maxSize = 1.4;
+
+  document.getElementById('tagCloud').innerHTML = tags.map(([tag, count]) => {
+    const size = minSize + (count / maxCount) * (maxSize - minSize);
+    return `<span class="tag ${activeTagFilter === tag ? 'active' : ''}" style="font-size:${size}rem;padding:${Math.round(size * 3)}px ${Math.round(size * 8)}px" onclick="toggleTagFilter('${tag.replace(/'/g, "\\'")}')">${tag} <sup style="font-size:0.6em;opacity:0.6">${count}</sup></span>`;
+  }).join('');
+}
+
+function toggleTagFilter(tag) {
+  activeTagFilter = activeTagFilter === tag ? '' : tag;
+  renderAll();
+}
+
+// ===== Research Tab =====
+function renderResearchTab() {
+  const data = getFilteredData();
+  const cardsEl = document.getElementById('researchCards');
+  const listEl = document.getElementById('researchList');
+  const emptyEl = document.getElementById('emptyState');
+
+  // Update category filter options
+  const sel = document.getElementById('categoryFilter');
+  const current = sel.value;
+  const cats = getAllCategories();
+  sel.innerHTML = '<option value="">All Categories</option>' + cats.map(c => `<option value="${c}" ${c === current ? 'selected' : ''}>${c}</option>`).join('');
+  document.getElementById('categoryList').innerHTML = cats.map(c => `<option value="${c}">`).join('');
 
   if (data.length === 0) {
-    container.innerHTML = '';
-    empty.style.display = 'block';
+    cardsEl.innerHTML = ''; listEl.innerHTML = '';
+    emptyEl.style.display = 'block';
+    cardsEl.style.display = 'none'; listEl.style.display = 'none';
+    return;
+  }
+  emptyEl.style.display = 'none';
+
+  if (currentView === 'cards') {
+    cardsEl.style.display = 'grid'; listEl.style.display = 'none';
+    cardsEl.innerHTML = data.map(d => `
+      <div class="card" onclick="openDetail('${d.id}')">
+        <div class="card-header">
+          <div>${d.category ? `<div class="card-category">${esc(d.category)}</div>` : ''}<div class="card-title">${esc(d.title)}</div></div>
+          ${statusBadgeHTML(d.status || 'investigating')}
+        </div>
+        ${d.source ? `<div class="card-source"><a href="${esc(d.source)}" target="_blank" onclick="event.stopPropagation()">${esc(safeHostname(d.source))}</a></div>` : ''}
+        ${d.summary ? `<div class="card-summary">${esc(d.summary)}</div>` : ''}
+        <div class="card-meta">
+          <div class="card-tags">${(d.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>
+          <div class="card-date">${formatDate(d.createdAt)}</div>
+        </div>
+      </div>
+    `).join('');
+  } else {
+    cardsEl.style.display = 'none'; listEl.style.display = 'flex';
+    listEl.innerHTML = data.map(d => `
+      <div class="list-item" onclick="openDetail('${d.id}')">
+        <span class="list-status" style="background:${(STATUS_MAP[d.status || 'investigating']).color}">${(STATUS_MAP[d.status || 'investigating']).label}</span>
+        <span class="list-title">${esc(d.title)}</span>
+        <span class="list-category">${esc(d.category || '')}</span>
+        <span class="list-tags">${(d.tags || []).slice(0, 4).map(t => `<span class="tag">${esc(t)}</span>`).join('')}</span>
+        <span class="list-date">${formatDate(d.createdAt)}</span>
+      </div>
+    `).join('');
+  }
+}
+
+// ===== Timeline Tab =====
+function renderTimeline() {
+  const data = [...loadData()].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  const container = document.getElementById('timelineContainer');
+
+  if (data.length === 0) {
+    container.innerHTML = '<div class="empty-state"><div class="icon">&#128197;</div><p>No entries for timeline.</p></div>';
     return;
   }
 
-  empty.style.display = 'none';
-  container.innerHTML = data.map(d => `
-    <div class="card" onclick="openDetail('${d.id}')">
-      ${d.category ? `<div class="card-category">${esc(d.category)}</div>` : ''}
-      <div class="card-title">${esc(d.title)}</div>
-      ${d.source ? `<div class="card-source"><a href="${esc(d.source)}" target="_blank" onclick="event.stopPropagation()">${esc(new URL(d.source).hostname)}</a></div>` : ''}
-      ${d.summary ? `<div class="card-summary">${esc(d.summary)}</div>` : ''}
-      <div class="card-meta">
-        <div class="card-tags">${(d.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>
-        <div class="card-date">${formatDate(d.createdAt)}</div>
+  let html = '';
+  let currentMonth = '';
+
+  data.forEach(d => {
+    const date = new Date(d.createdAt);
+    const monthKey = `${date.getFullYear()}/${date.getMonth() + 1}`;
+    const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+    if (monthKey !== currentMonth) {
+      currentMonth = monthKey;
+      html += `<div class="timeline-month">${monthNames[date.getMonth()]} ${date.getFullYear()}</div>`;
+    }
+
+    html += `
+      <div class="timeline-item" onclick="openDetail('${d.id}')">
+        <div class="tl-header">
+          <span class="tl-title">${esc(d.title)}</span>
+          <span class="tl-date">${formatDate(d.createdAt)}</span>
+        </div>
+        ${d.summary ? `<div class="tl-summary">${esc(d.summary)}</div>` : ''}
+        <div class="tl-meta">
+          ${statusBadgeHTML(d.status || 'investigating')}
+          ${d.category ? `<span class="tag">${esc(d.category)}</span>` : ''}
+          ${(d.tags || []).slice(0, 3).map(t => `<span class="tag">${esc(t)}</span>`).join('')}
+        </div>
       </div>
-    </div>
-  `).join('');
+    `;
+  });
+
+  container.innerHTML = html;
 }
 
-function esc(s) {
-  const div = document.createElement('div');
-  div.textContent = s;
-  return div.innerHTML;
+// ===== Knowledge Graph =====
+const GRAPH = {
+  nodes: [], edges: [], // { id, label, type, x, y, vx, vy, radius, color, data }
+  scale: 1, offsetX: 0, offsetY: 0,
+  dragNode: null, isPanning: false, panStart: null,
+  hoveredNode: null, animFrame: null,
+  width: 0, height: 0,
+};
+
+const NODE_COLORS = {
+  research: '#2d5a27',
+  category: '#e67e22',
+  tag: '#3498db',
+};
+
+function buildGraph() {
+  const data = loadData();
+  const nodes = [];
+  const edges = [];
+  const nodeMap = new Map();
+
+  // Research nodes
+  data.forEach(d => {
+    const id = `r:${d.id}`;
+    nodeMap.set(id, nodes.length);
+    nodes.push({
+      id, label: d.title, type: 'research',
+      x: 0, y: 0, vx: 0, vy: 0,
+      radius: 18, color: NODE_COLORS.research,
+      data: d,
+    });
+  });
+
+  // Category nodes
+  const cats = new Set();
+  data.forEach(d => { if (d.category) cats.add(d.category); });
+  cats.forEach(cat => {
+    const id = `c:${cat}`;
+    const count = data.filter(d => d.category === cat).length;
+    nodeMap.set(id, nodes.length);
+    nodes.push({
+      id, label: cat, type: 'category',
+      x: 0, y: 0, vx: 0, vy: 0,
+      radius: 12 + count * 3, color: NODE_COLORS.category,
+      data: null,
+    });
+  });
+
+  // Tag nodes
+  const tagCounts = {};
+  data.forEach(d => (d.tags || []).forEach(t => { tagCounts[t] = (tagCounts[t] || 0) + 1; }));
+  Object.entries(tagCounts).forEach(([tag, count]) => {
+    const id = `t:${tag}`;
+    nodeMap.set(id, nodes.length);
+    nodes.push({
+      id, label: tag, type: 'tag',
+      x: 0, y: 0, vx: 0, vy: 0,
+      radius: 8 + count * 2.5, color: NODE_COLORS.tag,
+      data: null,
+    });
+  });
+
+  // Edges: research -> category
+  data.forEach(d => {
+    if (d.category && nodeMap.has(`c:${d.category}`)) {
+      edges.push({ source: nodeMap.get(`r:${d.id}`), target: nodeMap.get(`c:${d.category}`), strength: 0.8 });
+    }
+    // research -> tags
+    (d.tags || []).forEach(t => {
+      if (nodeMap.has(`t:${t}`)) {
+        edges.push({ source: nodeMap.get(`r:${d.id}`), target: nodeMap.get(`t:${t}`), strength: 0.5 });
+      }
+    });
+  });
+
+  // Edges: tag co-occurrence (entries sharing tags)
+  data.forEach(d => {
+    const tags = d.tags || [];
+    for (let i = 0; i < tags.length; i++) {
+      for (let j = i + 1; j < tags.length; j++) {
+        const a = nodeMap.get(`t:${tags[i]}`);
+        const b = nodeMap.get(`t:${tags[j]}`);
+        if (a !== undefined && b !== undefined) {
+          // Check if edge already exists
+          const exists = edges.some(e => (e.source === a && e.target === b) || (e.source === b && e.target === a));
+          if (!exists) edges.push({ source: a, target: b, strength: 0.15 });
+        }
+      }
+    }
+  });
+
+  // Initial positions: spread in circle
+  const cx = GRAPH.width / 2, cy = GRAPH.height / 2;
+  nodes.forEach((n, i) => {
+    const angle = (i / nodes.length) * Math.PI * 2 + Math.random() * 0.5;
+    const r = 100 + Math.random() * 150;
+    n.x = cx + Math.cos(angle) * r;
+    n.y = cy + Math.sin(angle) * r;
+  });
+
+  GRAPH.nodes = nodes;
+  GRAPH.edges = edges;
 }
 
-// Modal operations
+function simulateGraph() {
+  const { nodes, edges } = GRAPH;
+  const cx = GRAPH.width / 2, cy = GRAPH.height / 2;
+  const alpha = 0.3; // cooling
+  const repulsion = 3000;
+  const springLen = 120;
+  const springK = 0.01;
+  const gravity = 0.02;
+  const damping = 0.85;
+
+  // Repulsion (all pairs)
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      let dx = nodes[j].x - nodes[i].x;
+      let dy = nodes[j].y - nodes[i].y;
+      let dist = Math.sqrt(dx * dx + dy * dy) || 1;
+      let force = repulsion / (dist * dist);
+      let fx = (dx / dist) * force;
+      let fy = (dy / dist) * force;
+      nodes[i].vx -= fx; nodes[i].vy -= fy;
+      nodes[j].vx += fx; nodes[j].vy += fy;
+    }
+  }
+
+  // Spring (edges)
+  edges.forEach(e => {
+    const a = nodes[e.source], b = nodes[e.target];
+    let dx = b.x - a.x, dy = b.y - a.y;
+    let dist = Math.sqrt(dx * dx + dy * dy) || 1;
+    let force = (dist - springLen) * springK * e.strength;
+    let fx = (dx / dist) * force;
+    let fy = (dy / dist) * force;
+    a.vx += fx; a.vy += fy;
+    b.vx -= fx; b.vy -= fy;
+  });
+
+  // Gravity toward center
+  nodes.forEach(n => {
+    n.vx += (cx - n.x) * gravity;
+    n.vy += (cy - n.y) * gravity;
+  });
+
+  // Apply velocity
+  nodes.forEach(n => {
+    if (n === GRAPH.dragNode) return;
+    n.vx *= damping;
+    n.vy *= damping;
+    n.x += n.vx * alpha;
+    n.y += n.vy * alpha;
+  });
+}
+
+function drawGraph() {
+  const canvas = document.getElementById('graphCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const { nodes, edges, scale, offsetX, offsetY, width, height } = GRAPH;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.save();
+  ctx.scale(dpr, dpr);
+  ctx.translate(offsetX + width / 2 * (1 - scale), offsetY + height / 2 * (1 - scale));
+  ctx.scale(scale, scale);
+
+  // Edges
+  edges.forEach(e => {
+    const a = nodes[e.source], b = nodes[e.target];
+    ctx.beginPath();
+    ctx.moveTo(a.x, a.y);
+    ctx.lineTo(b.x, b.y);
+    ctx.strokeStyle = e.strength > 0.3 ? 'rgba(0,0,0,0.12)' : 'rgba(0,0,0,0.05)';
+    ctx.lineWidth = e.strength > 0.3 ? 1.2 : 0.6;
+    ctx.stroke();
+  });
+
+  // Nodes
+  nodes.forEach(n => {
+    const isHovered = n === GRAPH.hoveredNode;
+
+    // Glow for hovered
+    if (isHovered) {
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.radius + 6, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(45,90,39,0.12)';
+      ctx.fill();
+    }
+
+    // Node circle
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
+    ctx.fillStyle = isHovered ? n.color : n.color + (n.type === 'research' ? 'dd' : 'bb');
+    ctx.fill();
+    ctx.strokeStyle = isHovered ? n.color : 'rgba(255,255,255,0.8)';
+    ctx.lineWidth = isHovered ? 2.5 : 1.5;
+    ctx.stroke();
+
+    // Label
+    ctx.fillStyle = '#fff';
+    ctx.font = `${n.type === 'research' ? 'bold ' : ''}${n.radius < 12 ? 8 : n.radius < 16 ? 9 : 11}px "Hiragino Kaku Gothic ProN", sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    // Truncate label to fit
+    let label = n.label;
+    const maxWidth = n.radius * 1.6;
+    if (ctx.measureText(label).width > maxWidth && label.length > 4) {
+      while (ctx.measureText(label + '…').width > maxWidth && label.length > 2) label = label.slice(0, -1);
+      label += '…';
+    }
+    ctx.fillText(label, n.x, n.y);
+
+    // External label for small nodes or on hover
+    if (isHovered || n.type === 'research') {
+      ctx.fillStyle = 'rgba(0,0,0,0.7)';
+      ctx.font = `${isHovered ? 'bold ' : ''}10px "Hiragino Kaku Gothic ProN", sans-serif`;
+      ctx.fillText(n.label, n.x, n.y + n.radius + 12);
+    }
+  });
+
+  ctx.restore();
+}
+
+function graphAnimLoop() {
+  simulateGraph();
+  drawGraph();
+  GRAPH.animFrame = requestAnimationFrame(graphAnimLoop);
+}
+
+function renderGraph() {
+  const canvas = document.getElementById('graphCanvas');
+  if (!canvas) return;
+  const container = canvas.parentElement;
+  const dpr = window.devicePixelRatio || 1;
+  const w = container.clientWidth;
+  const h = Math.max(500, window.innerHeight - 180);
+
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  canvas.style.width = w + 'px';
+  canvas.style.height = h + 'px';
+
+  GRAPH.width = w;
+  GRAPH.height = h;
+  GRAPH.scale = 1;
+  GRAPH.offsetX = 0;
+  GRAPH.offsetY = 0;
+
+  buildGraph();
+
+  if (GRAPH.animFrame) cancelAnimationFrame(GRAPH.animFrame);
+
+  // Warm up simulation
+  for (let i = 0; i < 120; i++) simulateGraph();
+  graphAnimLoop();
+}
+
+function graphZoom(factor) {
+  GRAPH.scale *= factor;
+  GRAPH.scale = Math.max(0.2, Math.min(4, GRAPH.scale));
+}
+
+function graphReset() {
+  GRAPH.scale = 1;
+  GRAPH.offsetX = 0;
+  GRAPH.offsetY = 0;
+  buildGraph();
+  for (let i = 0; i < 120; i++) simulateGraph();
+}
+
+// Graph mouse interactions
+function setupGraphEvents() {
+  const canvas = document.getElementById('graphCanvas');
+  if (!canvas) return;
+  const tooltip = document.getElementById('graphTooltip');
+
+  function canvasToWorld(cx, cy) {
+    const rect = canvas.getBoundingClientRect();
+    const px = cx - rect.left;
+    const py = cy - rect.top;
+    const wx = (px - GRAPH.offsetX - GRAPH.width / 2 * (1 - GRAPH.scale)) / GRAPH.scale;
+    const wy = (py - GRAPH.offsetY - GRAPH.height / 2 * (1 - GRAPH.scale)) / GRAPH.scale;
+    return [wx, wy];
+  }
+
+  function findNode(mx, my) {
+    const [wx, wy] = canvasToWorld(mx, my);
+    for (let i = GRAPH.nodes.length - 1; i >= 0; i--) {
+      const n = GRAPH.nodes[i];
+      const dx = wx - n.x, dy = wy - n.y;
+      if (dx * dx + dy * dy < (n.radius + 4) * (n.radius + 4)) return n;
+    }
+    return null;
+  }
+
+  canvas.addEventListener('mousedown', (e) => {
+    const node = findNode(e.clientX, e.clientY);
+    if (node) {
+      GRAPH.dragNode = node;
+      canvas.style.cursor = 'grabbing';
+    } else {
+      GRAPH.isPanning = true;
+      GRAPH.panStart = { x: e.clientX - GRAPH.offsetX, y: e.clientY - GRAPH.offsetY };
+      canvas.style.cursor = 'grabbing';
+    }
+  });
+
+  canvas.addEventListener('mousemove', (e) => {
+    if (GRAPH.dragNode) {
+      const [wx, wy] = canvasToWorld(e.clientX, e.clientY);
+      GRAPH.dragNode.x = wx;
+      GRAPH.dragNode.y = wy;
+      GRAPH.dragNode.vx = 0;
+      GRAPH.dragNode.vy = 0;
+    } else if (GRAPH.isPanning && GRAPH.panStart) {
+      GRAPH.offsetX = e.clientX - GRAPH.panStart.x;
+      GRAPH.offsetY = e.clientY - GRAPH.panStart.y;
+    } else {
+      const node = findNode(e.clientX, e.clientY);
+      GRAPH.hoveredNode = node;
+      canvas.style.cursor = node ? 'pointer' : 'grab';
+
+      if (node && tooltip) {
+        const rect = canvas.getBoundingClientRect();
+        tooltip.classList.add('visible');
+        tooltip.style.left = (e.clientX - rect.left + 14) + 'px';
+        tooltip.style.top = (e.clientY - rect.top - 10) + 'px';
+
+        document.getElementById('ttType').textContent =
+          node.type === 'research' ? 'RESEARCH' : node.type === 'category' ? 'CATEGORY' : 'TAG';
+        document.getElementById('ttTitle').textContent = node.label;
+
+        if (node.type === 'research' && node.data) {
+          const d = node.data;
+          document.getElementById('ttDetail').textContent = d.summary ? d.summary.slice(0, 120) + (d.summary.length > 120 ? '…' : '') : '';
+          document.getElementById('ttTags').innerHTML = (d.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join('');
+        } else {
+          // Count connections
+          const conns = GRAPH.edges.filter(e => GRAPH.nodes[e.source] === node || GRAPH.nodes[e.target] === node).length;
+          document.getElementById('ttDetail').textContent = `${conns} connections`;
+          document.getElementById('ttTags').innerHTML = '';
+        }
+      } else if (tooltip) {
+        tooltip.classList.remove('visible');
+      }
+    }
+  });
+
+  canvas.addEventListener('mouseup', () => {
+    GRAPH.dragNode = null;
+    GRAPH.isPanning = false;
+    GRAPH.panStart = null;
+    canvas.style.cursor = 'grab';
+  });
+
+  canvas.addEventListener('mouseleave', () => {
+    GRAPH.dragNode = null;
+    GRAPH.isPanning = false;
+    GRAPH.hoveredNode = null;
+    if (tooltip) tooltip.classList.remove('visible');
+  });
+
+  canvas.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    const factor = e.deltaY < 0 ? 1.08 : 0.92;
+    GRAPH.scale *= factor;
+    GRAPH.scale = Math.max(0.2, Math.min(4, GRAPH.scale));
+  }, { passive: false });
+
+  canvas.addEventListener('dblclick', (e) => {
+    const node = findNode(e.clientX, e.clientY);
+    if (node && node.type === 'research' && node.data) {
+      openDetail(node.data.id);
+    }
+  });
+}
+
+// ===== Render all =====
+function renderAll() {
+  if (currentTab === 'overview') renderOverview();
+  else if (currentTab === 'research') renderResearchTab();
+  else if (currentTab === 'graph') renderGraph();
+  else if (currentTab === 'timeline') renderTimeline();
+}
+
+// ===== Modal operations =====
 function openAddModal() {
   document.getElementById('modalTitle').textContent = '新規リサーチを追加';
   document.getElementById('editId').value = '';
   document.getElementById('formTitle').value = '';
   document.getElementById('formCategory').value = '';
+  document.getElementById('formStatus').value = 'investigating';
   document.getElementById('formSource').value = '';
   document.getElementById('formSummary').value = '';
   document.getElementById('formTags').value = '';
@@ -598,14 +1525,13 @@ function openAddModal() {
 }
 
 function openEditModal(id) {
-  const data = loadData();
-  const entry = data.find(d => d.id === id);
+  const entry = loadData().find(d => d.id === id);
   if (!entry) return;
-
   document.getElementById('modalTitle').textContent = 'リサーチを編集';
   document.getElementById('editId').value = id;
   document.getElementById('formTitle').value = entry.title;
   document.getElementById('formCategory').value = entry.category || '';
+  document.getElementById('formStatus').value = entry.status || 'investigating';
   document.getElementById('formSource').value = entry.source || '';
   document.getElementById('formSummary').value = entry.summary || '';
   document.getElementById('formTags').value = (entry.tags || []).join(', ');
@@ -613,9 +1539,7 @@ function openEditModal(id) {
   document.getElementById('editModal').classList.add('active');
 }
 
-function closeModal() {
-  document.getElementById('editModal').classList.remove('active');
-}
+function closeModal() { document.getElementById('editModal').classList.remove('active'); }
 
 function saveEntry() {
   const title = document.getElementById('formTitle').value.trim();
@@ -627,6 +1551,7 @@ function saveEntry() {
     id: id || generateId(),
     title,
     category: document.getElementById('formCategory').value.trim(),
+    status: document.getElementById('formStatus').value,
     source: document.getElementById('formSource').value.trim(),
     summary: document.getElementById('formSummary').value.trim(),
     tags: document.getElementById('formTags').value.split(',').map(t => t.trim()).filter(Boolean),
@@ -634,74 +1559,53 @@ function saveEntry() {
     updatedAt: new Date().toISOString(),
   };
 
-  if (id) {
-    const idx = data.findIndex(d => d.id === id);
-    if (idx >= 0) data[idx] = entry;
-  } else {
-    data.push(entry);
-  }
+  if (id) { const idx = data.findIndex(d => d.id === id); if (idx >= 0) data[idx] = entry; }
+  else data.push(entry);
 
   saveData(data);
   closeModal();
-  renderCards();
+  renderAll();
 }
 
 function deleteEntry() {
   const id = document.getElementById('editId').value;
   if (!id || !confirm('このリサーチを削除しますか？')) return;
-
-  const data = loadData().filter(d => d.id !== id);
-  saveData(data);
+  saveData(loadData().filter(d => d.id !== id));
   closeModal();
   closeDetailModal();
-  renderCards();
+  renderAll();
 }
 
 // Detail modal
 function openDetail(id) {
-  const data = loadData();
-  const entry = data.find(d => d.id === id);
+  const entry = loadData().find(d => d.id === id);
   if (!entry) return;
 
   document.getElementById('detailTitle').textContent = entry.title;
   document.getElementById('detailEditBtn').onclick = () => { closeDetailModal(); openEditModal(id); };
 
   let html = '';
-  if (entry.category) {
-    html += `<div class="field-label">カテゴリ</div><div class="field-value">${esc(entry.category)}</div>`;
-  }
-  if (entry.source) {
-    html += `<div class="field-label">ソース</div><div class="field-value"><a href="${esc(entry.source)}" target="_blank">${esc(entry.source)}</a></div>`;
-  }
-  if (entry.summary) {
-    html += `<div class="field-label">要約・メモ</div><div class="field-value">${esc(entry.summary)}</div>`;
-  }
-  if (entry.tags && entry.tags.length) {
-    html += `<div class="field-label">タグ</div><div class="card-tags" style="margin-top:4px">${entry.tags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>`;
-  }
+  html += `<div class="field-label">ステータス</div><div class="field-value">${statusBadgeHTML(entry.status || 'investigating')}</div>`;
+  if (entry.category) html += `<div class="field-label">カテゴリ</div><div class="field-value">${esc(entry.category)}</div>`;
+  if (entry.source) html += `<div class="field-label">ソース</div><div class="field-value"><a href="${esc(entry.source)}" target="_blank">${esc(entry.source)}</a></div>`;
+  if (entry.summary) html += `<div class="field-label">要約・メモ</div><div class="field-value">${esc(entry.summary)}</div>`;
+  if (entry.tags && entry.tags.length) html += `<div class="field-label">タグ</div><div class="card-tags" style="margin-top:4px">${entry.tags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>`;
   html += `<div class="field-label">登録日</div><div class="field-value">${formatDate(entry.createdAt)}</div>`;
-  if (entry.updatedAt !== entry.createdAt) {
-    html += `<div class="field-label">更新日</div><div class="field-value">${formatDate(entry.updatedAt)}</div>`;
-  }
+  if (entry.updatedAt !== entry.createdAt) html += `<div class="field-label">更新日</div><div class="field-value">${formatDate(entry.updatedAt)}</div>`;
 
   document.getElementById('detailContent').innerHTML = html;
   document.getElementById('detailModal').classList.add('active');
 }
 
-function closeDetailModal() {
-  document.getElementById('detailModal').classList.remove('active');
-}
+function closeDetailModal() { document.getElementById('detailModal').classList.remove('active'); }
 
 // Export / Import
 function exportData() {
-  const data = loadData();
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const blob = new Blob([JSON.stringify(loadData(), null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
+  const a = document.createElement('a'); a.href = url;
   a.download = `research_dashboard_${new Date().toISOString().slice(0,10)}.json`;
-  a.click();
-  URL.revokeObjectURL(url);
+  a.click(); URL.revokeObjectURL(url);
 }
 
 function importData(event) {
@@ -713,41 +1617,31 @@ function importData(event) {
       const imported = JSON.parse(e.target.result);
       if (!Array.isArray(imported)) throw new Error();
       const existing = loadData();
-      const existingIds = new Set(existing.map(d => d.id));
+      const ids = new Set(existing.map(d => d.id));
       let added = 0;
-      imported.forEach(item => {
-        if (!existingIds.has(item.id)) {
-          existing.push(item);
-          added++;
-        }
-      });
+      imported.forEach(item => { if (!ids.has(item.id)) { existing.push(item); added++; } });
       saveData(existing);
-      renderCards();
-      alert(`${imported.length}件中 ${added}件を追加しました（重複${imported.length - added}件はスキップ）`);
-    } catch {
-      alert('JSONファイルの読み込みに失敗しました');
-    }
+      renderAll();
+      alert(`${imported.length}件中 ${added}件を追加しました`);
+    } catch { alert('JSONファイルの読み込みに失敗しました'); }
   };
   reader.readAsText(file);
   event.target.value = '';
 }
 
-// Close modals on overlay click
-document.getElementById('editModal').addEventListener('click', (e) => {
-  if (e.target === e.currentTarget) closeModal();
-});
-document.getElementById('detailModal').addEventListener('click', (e) => {
-  if (e.target === e.currentTarget) closeDetailModal();
-});
+// Close modals
+document.getElementById('editModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+document.getElementById('detailModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeDetailModal(); });
 
 // Keyboard shortcuts
-document.addEventListener('keydown', (e) => {
+document.addEventListener('keydown', e => {
   if (e.key === 'Escape') { closeModal(); closeDetailModal(); }
   if (e.key === 'n' && !e.ctrlKey && !e.metaKey && document.activeElement === document.body) openAddModal();
 });
 
-// Initial render
-renderCards();
+// Init
+setupGraphEvents();
+renderAll();
 </script>
 </body>
 </html>

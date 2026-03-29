@@ -1,7 +1,7 @@
 #!/bin/bash
 # save-research.sh -- リサーチ結果をダッシュボードに保存するスクリプト
 # 使い方:
-#   ./save-research.sh --title "タイトル" --summary "要約" --tags "tag1,tag2" [--category "カテゴリ"] [--source "URL"]
+#   ./save-research.sh --title "タイトル" --summary "要約" --tags "tag1,tag2" [--category "カテゴリ"] [--source "URL"] [--status "investigating|reading|organized|done"]
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 DATA_JSON="$SCRIPT_DIR/data.json"
@@ -18,14 +18,16 @@ CATEGORY=""
 SOURCE=""
 SUMMARY=""
 TAGS=""
+STATUS="investigating"
 
 while [[ $# -gt 0 ]]; do
   case $1 in
-    --title)   TITLE="$2";    shift 2 ;;
+    --title)    TITLE="$2";    shift 2 ;;
     --category) CATEGORY="$2"; shift 2 ;;
-    --source)  SOURCE="$2";   shift 2 ;;
-    --summary) SUMMARY="$2";  shift 2 ;;
-    --tags)    TAGS="$2";     shift 2 ;;
+    --source)   SOURCE="$2";   shift 2 ;;
+    --summary)  SUMMARY="$2";  shift 2 ;;
+    --tags)     TAGS="$2";     shift 2 ;;
+    --status)   STATUS="$2";   shift 2 ;;
     *) echo "Unknown option: $1"; exit 1 ;;
   esac
 done
@@ -36,7 +38,7 @@ if [ -z "$TITLE" ]; then
 fi
 
 # Export for Python
-export DATA_JSON DATA_JS TITLE CATEGORY SOURCE SUMMARY TAGS
+export DATA_JSON DATA_JS TITLE CATEGORY SOURCE SUMMARY TAGS STATUS
 
 # Use Python3 to safely manipulate JSON (no jq dependency)
 python3 << 'PYEOF'
@@ -49,6 +51,7 @@ category = os.environ.get("CATEGORY", "")
 source = os.environ.get("SOURCE", "")
 summary = os.environ.get("SUMMARY", "")
 tags_raw = os.environ.get("TAGS", "")
+status = os.environ.get("STATUS", "investigating")
 
 # Load existing data
 try:
@@ -71,6 +74,7 @@ entry = {
     "id": entry_id,
     "title": title,
     "category": category,
+    "status": status,
     "source": source,
     "summary": summary,
     "tags": tags,
