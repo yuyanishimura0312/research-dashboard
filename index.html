@@ -283,10 +283,38 @@
   .view-toggle button.active { background: var(--accent-light); color: var(--accent); font-weight: 600; }
   .view-toggle button:hover { background: var(--accent-light); }
 
-  /* Cards grid */
-  .cards {
+  /* Date group */
+  .date-group { margin-bottom: 24px; }
+
+  .date-group-header {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--accent);
+    padding: 8px 0;
+    margin-bottom: 12px;
+    border-bottom: 2px solid var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .date-group-count {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    background: var(--accent-light);
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+
+  .date-group-cards {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 14px;
+  }
+
+  /* Cards grid */
+  .cards {
     gap: 14px;
   }
 
@@ -1393,35 +1421,55 @@ function renderResearchTab() {
   }
   emptyEl.style.display = 'none';
 
+  // Group data by date
+  const grouped = {};
+  data.forEach(d => {
+    const dateKey = new Date(d.createdAt).toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' });
+    if (!grouped[dateKey]) grouped[dateKey] = [];
+    grouped[dateKey].push(d);
+  });
+
   if (currentView === 'cards') {
-    cardsEl.style.display = 'grid'; listEl.style.display = 'none';
-    cardsEl.innerHTML = data.map(d => `
-      <div class="card" onclick="openDetail('${d.id}')">
-        <div class="card-header">
-          <div>${d.category ? `<div class="card-category">${esc(d.category)}</div>` : ''}<div class="card-title">${esc(d.title)}</div></div>
-          ${statusBadgeHTML(d.status || 'investigating')}
+    cardsEl.style.display = 'block'; listEl.style.display = 'none';
+    cardsEl.innerHTML = Object.entries(grouped).map(([date, items]) => `
+      <div class="date-group">
+        <div class="date-group-header">${date}<span class="date-group-count">${items.length}件</span></div>
+        <div class="date-group-cards">
+          ${items.map(d => `
+            <div class="card" onclick="openDetail('${d.id}')">
+              <div class="card-header">
+                <div>${d.category ? `<div class="card-category">${esc(d.category)}</div>` : ''}<div class="card-title">${esc(d.title)}</div></div>
+                ${statusBadgeHTML(d.status || 'investigating')}
+              </div>
+              ${d.source ? `<div class="card-source"><a href="${esc(d.source)}" target="_blank" onclick="event.stopPropagation()">${esc(safeHostname(d.source))}</a></div>` : ''}
+              ${d.summary ? `<div class="card-summary">${esc(d.summary)}</div>` : ''}
+              <div class="card-meta">
+                <div class="card-tags">${(d.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>
+                <div class="card-date">${formatDate(d.createdAt)}</div>
+              </div>
+              ${d.source ? `<div class="card-actions" onclick="event.stopPropagation()">
+                <a class="btn-action" href="${esc(d.source)}" download title="ダウンロード">&#11015; DL</a>
+                <a class="btn-action btn-open" href="${esc(getGoogleDocsUrl(d.source))}" target="_blank" title="Google ドキュメントで開く">&#9654; 開く</a>
+              </div>` : ''}
+            </div>
+          `).join('')}
         </div>
-        ${d.source ? `<div class="card-source"><a href="${esc(d.source)}" target="_blank" onclick="event.stopPropagation()">${esc(safeHostname(d.source))}</a></div>` : ''}
-        ${d.summary ? `<div class="card-summary">${esc(d.summary)}</div>` : ''}
-        <div class="card-meta">
-          <div class="card-tags">${(d.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>
-          <div class="card-date">${formatDate(d.createdAt)}</div>
-        </div>
-        ${d.source ? `<div class="card-actions" onclick="event.stopPropagation()">
-          <a class="btn-action" href="${esc(d.source)}" download title="ダウンロード">&#11015; DL</a>
-          <a class="btn-action btn-open" href="${esc(getGoogleDocsUrl(d.source))}" target="_blank" title="Google ドキュメントで開く">&#9654; 開く</a>
-        </div>` : ''}
       </div>
     `).join('');
   } else {
     cardsEl.style.display = 'none'; listEl.style.display = 'flex';
-    listEl.innerHTML = data.map(d => `
-      <div class="list-item" onclick="openDetail('${d.id}')">
-        <span class="list-status" style="background:${(STATUS_MAP[d.status || 'investigating']).color}">${(STATUS_MAP[d.status || 'investigating']).label}</span>
-        <span class="list-title">${esc(d.title)}</span>
-        <span class="list-category">${esc(d.category || '')}</span>
-        <span class="list-tags">${(d.tags || []).slice(0, 4).map(t => `<span class="tag">${esc(t)}</span>`).join('')}</span>
-        <span class="list-date">${formatDate(d.createdAt)}</span>
+    listEl.innerHTML = Object.entries(grouped).map(([date, items]) => `
+      <div class="date-group">
+        <div class="date-group-header">${date}<span class="date-group-count">${items.length}件</span></div>
+        ${items.map(d => `
+          <div class="list-item" onclick="openDetail('${d.id}')">
+            <span class="list-status" style="background:${(STATUS_MAP[d.status || 'investigating']).color}">${(STATUS_MAP[d.status || 'investigating']).label}</span>
+            <span class="list-title">${esc(d.title)}</span>
+            <span class="list-category">${esc(d.category || '')}</span>
+            <span class="list-tags">${(d.tags || []).slice(0, 4).map(t => `<span class="tag">${esc(t)}</span>`).join('')}</span>
+            <span class="list-date">${formatDate(d.createdAt)}</span>
+          </div>
+        `).join('')}
       </div>
     `).join('');
   }
@@ -1438,16 +1486,15 @@ function renderTimeline() {
   }
 
   let html = '';
-  let currentMonth = '';
+  let currentDay = '';
 
   data.forEach(d => {
     const date = new Date(d.createdAt);
-    const monthKey = `${date.getFullYear()}/${date.getMonth() + 1}`;
-    const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const dayKey = date.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' });
 
-    if (monthKey !== currentMonth) {
-      currentMonth = monthKey;
-      html += `<div class="timeline-month">${monthNames[date.getMonth()]} ${date.getFullYear()}</div>`;
+    if (dayKey !== currentDay) {
+      currentDay = dayKey;
+      html += `<div class="timeline-month">${dayKey}</div>`;
     }
 
     html += `
@@ -1717,10 +1764,11 @@ function buildGraph() {
     });
   }
 
-  // Tag nodes
+  // Tag nodes (exclude noise tags)
+  const EXCLUDED_TAGS = new Set(['Gemini', 'Google Drive', 'gemini', 'google drive']);
   if (showTags) {
     const tagCounts = {};
-    data.forEach(d => (d.tags || []).forEach(t => { tagCounts[t] = (tagCounts[t] || 0) + 1; }));
+    data.forEach(d => (d.tags || []).forEach(t => { if (!EXCLUDED_TAGS.has(t)) tagCounts[t] = (tagCounts[t] || 0) + 1; }));
     Object.entries(tagCounts).forEach(([tag, count]) => {
       const id = `t:${tag}`;
       nodeMap.set(id, nodes.length);
