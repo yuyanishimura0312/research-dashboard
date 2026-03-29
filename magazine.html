@@ -122,8 +122,12 @@ function getFiltered() {
   if (activeCategory) d = d.filter(x => x.category === activeCategory);
   return d;
 }
-// Editorial content = exclude meta/dashboard articles
-function getEditorial() { return getFiltered().filter(d => !isMetaArticle(d)); }
+// Editorial content = exclude meta articles + entries with no content and no source
+function hasReadableContent(d) {
+  const text = d.content || d.summary || '';
+  return text.trim().length >= 50 || (d.source && d.source.trim().length > 0);
+}
+function getEditorial() { return getFiltered().filter(d => !isMetaArticle(d) && hasReadableContent(d)); }
 
 // ===== Category bar =====
 function renderCatBar() {
@@ -244,7 +248,8 @@ function renderCategorySections() {
 // ===== Topics =====
 function renderTopics() {
   const cats = {};
-  DATA.forEach(d => { if (d.category) cats[d.category] = (cats[d.category]||0)+1; });
+  const editorial = DATA.filter(d => !isMetaArticle(d) && hasReadableContent(d));
+  editorial.forEach(d => { if (d.category) cats[d.category] = (cats[d.category]||0)+1; });
   document.getElementById('topicGrid').innerHTML = Object.entries(cats)
     .sort((a,b) => b[1]-a[1])
     .map(([c,n]) => `
