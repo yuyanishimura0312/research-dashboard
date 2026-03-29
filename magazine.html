@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research Journal — Yuya Nishimura</title>
+<script src="data.js"></script>
+<style>
+/* ===== Theme tokens (3-layer) ===== */
+:root {
+  --bg:          #ffffff;
+  --bg-alt:      #f7f7f5;
+  --bg-hero:     #1a1a1a;
+  --text:        #121212;
+  --text-muted:  #666666;
+  --text-light:  #999999;
+  --accent:      #567b47;
+  --accent-hover:#3d5a31;
+  --border:      #e2e2e2;
+  --card-shadow: 0 1px 4px rgba(0,0,0,0.06);
+
+  --font-headline: 'Georgia', 'Noto Serif JP', 'Times New Roman', serif;
+  --font-body:     'Hiragino Kaku Gothic ProN', 'Noto Sans JP', system-ui, sans-serif;
+  --font-mono:     'Menlo', 'Courier New', monospace;
+
+  --text-hero:   clamp(2.2rem, 2rem + 3vw, 4.5rem);
+  --text-h1:     clamp(1.6rem, 1.2rem + 2vw, 2.8rem);
+  --text-h2:     clamp(1.2rem, 1rem + 1vw, 1.8rem);
+  --text-h3:     clamp(1rem, 0.9rem + 0.5vw, 1.3rem);
+  --text-body:   clamp(0.95rem, 0.9rem + 0.2vw, 1.1rem);
+  --text-sm:     clamp(0.78rem, 0.75rem + 0.15vw, 0.88rem);
+  --text-xs:     clamp(0.68rem, 0.65rem + 0.1vw, 0.78rem);
+
+  --measure:     min(680px, 90vw);
+  --measure-wide:min(1100px, 94vw);
+}
+
+[data-theme="dark"] {
+  --bg:          #0a0a0a;
+  --bg-alt:      #141414;
+  --bg-hero:     #0a0a0a;
+  --text:        #e8e6e3;
+  --text-muted:  #9a9a9a;
+  --text-light:  #666;
+  --accent:      #8ab87a;
+  --accent-hover:#a5d395;
+  --border:      #2a2a2a;
+  --card-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  *, *::before, *::after { transition: background-color 0.3s, color 0.2s, border-color 0.3s, opacity 0.3s; }
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body { font-family: var(--font-body); background: var(--bg); color: var(--text); line-height: 1.7; }
+
+/* ===== Progress bar ===== */
+#progressBar {
+  position: fixed; top: 0; left: 0; height: 2px; width: 0%;
+  background: var(--accent); z-index: 1000;
+  animation: grow-progress linear;
+  animation-timeline: scroll(root block);
+}
+@keyframes grow-progress { from { width: 0%; } to { width: 100%; } }
+
+/* ===== Masthead ===== */
+.masthead {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--bg); border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+}
+.masthead-inner {
+  max-width: var(--measure-wide); margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center;
+  height: 48px;
+}
+.masthead-title {
+  font-family: var(--font-headline); font-size: 1.1rem; font-weight: 700;
+  letter-spacing: -0.02em; color: var(--text);
+}
+.masthead-nav { display: flex; gap: 20px; align-items: center; }
+.masthead-nav a {
+  font-size: var(--text-xs); color: var(--text-muted); text-decoration: none;
+  text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500;
+}
+.masthead-nav a:hover { color: var(--text); }
+.theme-toggle {
+  background: none; border: 1px solid var(--border); border-radius: 50%;
+  width: 30px; height: 30px; cursor: pointer; color: var(--text-muted);
+  display: flex; align-items: center; justify-content: center; font-size: 14px;
+}
+
+/* ===== Category bar ===== */
+.cat-bar {
+  border-bottom: 1px solid var(--border); background: var(--bg);
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+}
+.cat-bar-inner {
+  max-width: var(--measure-wide); margin: 0 auto; padding: 0 24px;
+  display: flex; gap: 0;
+}
+.cat-link {
+  padding: 10px 16px; font-size: var(--text-xs); color: var(--text-muted);
+  text-decoration: none; white-space: nowrap; border-bottom: 2px solid transparent;
+  font-weight: 500; letter-spacing: 0.03em;
+}
+.cat-link:hover, .cat-link.active { color: var(--text); border-bottom-color: var(--text); }
+
+/* ===== Hero ===== */
+.hero {
+  background: var(--bg-hero); color: #f0f0f0; padding: 60px 24px 50px;
+  border-bottom: 3px double var(--border);
+}
+.hero-inner { max-width: var(--measure-wide); margin: 0 auto; }
+.hero-label {
+  font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--accent); font-weight: 600; margin-bottom: 14px;
+}
+.hero-title {
+  font-family: var(--font-headline); font-size: var(--text-hero);
+  font-weight: 700; line-height: 1.15; letter-spacing: -0.02em;
+  margin-bottom: 16px; max-width: 800px;
+}
+.hero-summary {
+  font-size: var(--text-body); line-height: 1.7; color: #c0c0c0;
+  max-width: 600px; margin-bottom: 20px;
+}
+.hero-meta { font-size: var(--text-xs); color: #888; }
+.hero-meta span { margin-right: 16px; }
+
+/* ===== Grid sections ===== */
+.section { max-width: var(--measure-wide); margin: 0 auto; padding: 40px 24px; }
+
+.section-header {
+  display: flex; justify-content: space-between; align-items: baseline;
+  border-bottom: 2px solid var(--text); padding-bottom: 8px; margin-bottom: 24px;
+}
+.section-title {
+  font-family: var(--font-headline); font-size: var(--text-h2);
+  font-weight: 700; letter-spacing: -0.01em;
+}
+.section-more {
+  font-size: var(--text-xs); color: var(--accent); text-decoration: none;
+  text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600;
+}
+
+/* NYT-style mixed grid */
+.nyt-grid {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr 1px 1fr;
+  gap: 0;
+}
+.nyt-grid .divider { background: var(--border); }
+
+.nyt-featured {
+  grid-column: 1 / 2; padding-right: 24px;
+}
+.nyt-stack {
+  grid-column: 3 / 4; padding: 0 24px;
+  display: flex; flex-direction: column; gap: 20px;
+}
+.nyt-sidebar {
+  grid-column: 5 / 6; padding-left: 24px;
+}
+
+/* Article cards */
+.article-card { cursor: pointer; }
+.article-card:hover .card-title { color: var(--accent); }
+
+.card-img {
+  width: 100%; aspect-ratio: 16/10; object-fit: cover;
+  border-radius: 2px; margin-bottom: 12px; background: var(--bg-alt);
+}
+.card-category {
+  font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--accent); font-weight: 600; margin-bottom: 6px;
+}
+.card-title {
+  font-family: var(--font-headline); font-size: var(--text-h3);
+  font-weight: 700; line-height: 1.3; margin-bottom: 8px;
+  letter-spacing: -0.01em; transition: color 0.15s;
+}
+.card-title-lg { font-size: var(--text-h1); }
+.card-summary {
+  font-size: var(--text-sm); color: var(--text-muted); line-height: 1.6;
+  margin-bottom: 8px;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.card-meta {
+  font-size: var(--text-xs); color: var(--text-light);
+}
+.card-meta .status-dot {
+  display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+  margin-right: 4px; vertical-align: middle;
+}
+.card-divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+/* Compact card (sidebar/stack) */
+.card-compact .card-title { font-size: var(--text-h3); }
+.card-compact .card-summary { -webkit-line-clamp: 2; }
+
+/* ===== Article reader ===== */
+.reader-overlay {
+  display: none; position: fixed; inset: 0; z-index: 200;
+  background: var(--bg); overflow-y: auto;
+}
+.reader-overlay.active { display: block; }
+
+.reader-close {
+  position: fixed; top: 14px; right: 24px; z-index: 210;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 50%;
+  width: 36px; height: 36px; font-size: 18px; cursor: pointer;
+  color: var(--text-muted); display: flex; align-items: center; justify-content: center;
+}
+.reader-close:hover { color: var(--text); }
+
+.reader-header {
+  max-width: var(--measure); margin: 0 auto; padding: 80px 24px 40px;
+  border-bottom: 1px solid var(--border);
+}
+.reader-cat {
+  font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--accent); font-weight: 600; margin-bottom: 12px;
+}
+.reader-title {
+  font-family: var(--font-headline); font-size: var(--text-h1);
+  font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 16px;
+}
+.reader-meta { font-size: var(--text-sm); color: var(--text-muted); margin-bottom: 8px; }
+.reader-meta span { margin-right: 14px; }
+
+.reader-body {
+  max-width: var(--measure); margin: 0 auto; padding: 40px 24px 80px;
+}
+.reader-body p {
+  font-family: var(--font-headline); font-size: var(--text-body);
+  line-height: 1.85; margin-bottom: 1.4em;
+}
+.reader-body .tag-row { display: flex; gap: 6px; flex-wrap: wrap; margin: 24px 0; }
+.reader-body .tag-item {
+  background: var(--bg-alt); border: 1px solid var(--border);
+  padding: 4px 12px; border-radius: 20px; font-size: var(--text-xs); color: var(--text-muted);
+}
+
+/* Related in reader */
+.reader-related { border-top: 2px solid var(--text); padding-top: 24px; margin-top: 40px; }
+.reader-related h3 {
+  font-family: var(--font-headline); font-size: var(--text-h3);
+  font-weight: 700; margin-bottom: 16px;
+}
+.related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+.related-card { cursor: pointer; }
+.related-card:hover .card-title { color: var(--accent); }
+.related-card .card-title { font-size: var(--text-sm); }
+.related-card .card-meta { margin-top: 4px; }
+
+/* ===== Topic grid ===== */
+.topic-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+}
+.topic-tile {
+  background: var(--bg-alt); border: 1px solid var(--border); border-radius: 6px;
+  padding: 20px 16px; text-align: center; cursor: pointer; transition: all 0.15s;
+}
+.topic-tile:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--card-shadow); }
+.topic-count { font-size: 1.8rem; font-weight: 700; color: var(--accent); }
+.topic-name { font-size: var(--text-sm); color: var(--text-muted); margin-top: 4px; }
+
+/* ===== Footer ===== */
+.site-footer {
+  border-top: 3px double var(--border); background: var(--bg-alt);
+  padding: 40px 24px; margin-top: 60px;
+}
+.footer-inner {
+  max-width: var(--measure-wide); margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 20px;
+}
+.footer-brand { font-family: var(--font-headline); font-size: 1rem; font-weight: 700; }
+.footer-links { display: flex; gap: 20px; }
+.footer-links a { font-size: var(--text-xs); color: var(--text-muted); text-decoration: none; }
+.footer-links a:hover { color: var(--text); }
+
+/* ===== Scroll animations ===== */
+.animate-in { opacity: 0; transform: translateY(1.5rem); transition: opacity 0.6s ease, transform 0.6s ease; }
+.animate-in.visible { opacity: 1; transform: translateY(0); }
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .nyt-grid { grid-template-columns: 1fr; gap: 24px; }
+  .nyt-grid .divider { display: none; }
+  .nyt-featured, .nyt-stack, .nyt-sidebar { padding: 0; grid-column: auto; }
+  .hero { padding: 40px 16px 36px; }
+  .section { padding: 28px 16px; }
+  .masthead-nav a:not(:first-child):not(:last-child) { display: none; }
+  .reader-header { padding: 60px 16px 30px; }
+  .reader-body { padding: 30px 16px 60px; }
+}
+</style>
+</head>
+<body>
+<div id="progressBar"></div>
+
+<!-- Masthead -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="masthead-title">Research Journal</div>
+    <nav class="masthead-nav">
+      <a href="index.html">Dashboard</a>
+      <a href="#topics">Topics</a>
+      <a href="#latest">Latest</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">☽</button>
+    </nav>
+  </div>
+</header>
+
+<!-- Category bar -->
+<nav class="cat-bar">
+  <div class="cat-bar-inner" id="catBar"></div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="heroSection"></section>
+
+<!-- Latest -->
+<section class="section" id="latest">
+  <div class="section-header">
+    <h2 class="section-title">Latest Research</h2>
+  </div>
+  <div class="nyt-grid" id="latestGrid"></div>
+</section>
+
+<!-- By category sections -->
+<div id="categorySections"></div>
+
+<!-- Topics -->
+<section class="section" id="topics">
+  <div class="section-header">
+    <h2 class="section-title">Topics</h2>
+  </div>
+  <div class="topic-grid" id="topicGrid"></div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">Research Journal — Yuya Nishimura</div>
+    <div class="footer-links">
+      <a href="index.html">Dashboard</a>
+      <a href="#topics">Topics</a>
+      <a href="#">About</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Article Reader Overlay -->
+<div class="reader-overlay" id="reader">
+  <button class="reader-close" onclick="closeReader()">✕</button>
+  <div class="reader-header" id="readerHeader"></div>
+  <div class="reader-body" id="readerBody"></div>
+</div>
+
+<script>
+const DATA = Array.isArray(window.RESEARCH_DATA) ? window.RESEARCH_DATA : [];
+const STATUS_COLORS = { investigating:'#e67e22', reading:'#3498db', organized:'#9b59b6', done:'#2d5a27' };
+const STATUS_LABELS = { investigating:'調査中', reading:'読了', organized:'整理済', done:'完了' };
+const EXCLUDED_TAGS = new Set(['Gemini','Google Drive']);
+let activeCategory = '';
+
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+function formatDate(iso) { const d = new Date(iso); return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`; }
+function readTime(text) { return Math.max(1, Math.round((text || '').length / 400)); }
+
+function getFiltered() {
+  let d = [...DATA].sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+  if (activeCategory) d = d.filter(x => x.category === activeCategory);
+  return d;
+}
+
+// ===== Category bar =====
+function renderCatBar() {
+  const cats = {};
+  DATA.forEach(d => { if (d.category) cats[d.category] = (cats[d.category]||0)+1; });
+  const sorted = Object.entries(cats).sort((a,b) => b[1]-a[1]);
+  document.getElementById('catBar').innerHTML =
+    `<a class="cat-link ${activeCategory===''?'active':''}" href="#" onclick="filterCat('');return false">All</a>` +
+    sorted.map(([c]) =>
+      `<a class="cat-link ${activeCategory===c?'active':''}" href="#" onclick="filterCat('${c}');return false">${esc(c)}</a>`
+    ).join('');
+}
+
+function filterCat(c) { activeCategory = c; renderAll(); window.scrollTo({top:0,behavior:'smooth'}); }
+
+// ===== Card HTML =====
+function cardHTML(d, opts={}) {
+  const s = d.status || 'investigating';
+  const tags = (d.tags||[]).filter(t=>!EXCLUDED_TAGS.has(t));
+  const cls = opts.compact ? 'article-card card-compact' : 'article-card';
+  const titleCls = opts.large ? 'card-title card-title-lg' : 'card-title';
+  return `
+    <div class="${cls} animate-in" onclick="openReader('${d.id}')">
+      ${opts.large ? `<div style="height:6px;background:var(--accent);margin-bottom:16px;border-radius:2px;width:60px;"></div>` : ''}
+      <div class="card-category">${esc(d.category||'')}</div>
+      <div class="${titleCls}">${esc(d.title)}</div>
+      ${d.summary && !opts.noSummary ? `<div class="card-summary">${esc(d.summary)}</div>` : ''}
+      <div class="card-meta">
+        <span class="status-dot" style="background:${STATUS_COLORS[s]}"></span>${STATUS_LABELS[s]}
+        <span style="margin-left:12px">${formatDate(d.createdAt)}</span>
+        <span style="margin-left:12px">${readTime(d.summary)} min read</span>
+      </div>
+    </div>`;
+}
+
+// ===== Hero =====
+function renderHero() {
+  const featured = getFiltered().filter(d => d.status === 'done' && d.summary && d.summary.length > 80);
+  const d = featured[0] || getFiltered()[0];
+  if (!d) return;
+  const s = d.status || 'investigating';
+  document.getElementById('heroSection').innerHTML = `
+    <div class="hero-inner" style="cursor:pointer" onclick="openReader('${d.id}')">
+      <div class="hero-label">${esc(d.category||'Research')}</div>
+      <h1 class="hero-title">${esc(d.title)}</h1>
+      <p class="hero-summary">${esc((d.summary||'').slice(0, 200))}${(d.summary||'').length > 200 ? '...' : ''}</p>
+      <div class="hero-meta">
+        <span>${formatDate(d.createdAt)}</span>
+        <span>${readTime(d.summary)} min read</span>
+        <span>${STATUS_LABELS[s]}</span>
+      </div>
+    </div>`;
+}
+
+// ===== Latest grid (NYT-style) =====
+function renderLatest() {
+  const items = getFiltered().slice(activeCategory ? 0 : 1, 10);
+  if (items.length < 3) {
+    document.getElementById('latestGrid').innerHTML = items.map(d => cardHTML(d)).join('');
+    return;
+  }
+  const feat = items[0];
+  const stack = items.slice(1, 4);
+  const side = items.slice(4, 7);
+
+  document.getElementById('latestGrid').innerHTML = `
+    <div class="nyt-featured">${cardHTML(feat, {large:true})}</div>
+    <div class="divider"></div>
+    <div class="nyt-stack">
+      ${stack.map((d,i) => cardHTML(d, {compact:true}) + (i < stack.length-1 ? '<hr class="card-divider">' : '')).join('')}
+    </div>
+    <div class="divider"></div>
+    <div class="nyt-sidebar">
+      ${side.map((d,i) => cardHTML(d, {compact:true, noSummary:true}) + (i < side.length-1 ? '<hr class="card-divider">' : '')).join('')}
+    </div>`;
+}
+
+// ===== Category sections =====
+function renderCategorySections() {
+  if (activeCategory) { document.getElementById('categorySections').innerHTML = ''; return; }
+  const cats = {};
+  DATA.forEach(d => { if (d.category) cats[d.category] = (cats[d.category]||0)+1; });
+  const sorted = Object.entries(cats).sort((a,b) => b[1]-a[1]).slice(0, 4);
+
+  document.getElementById('categorySections').innerHTML = sorted.map(([cat]) => {
+    const items = DATA.filter(d => d.category === cat).sort((a,b) => new Date(b.createdAt)-new Date(a.createdAt)).slice(0, 4);
+    return `
+      <section class="section" style="border-top:1px solid var(--border);">
+        <div class="section-header">
+          <h2 class="section-title">${esc(cat)}</h2>
+          <a class="section-more" href="#" onclick="filterCat('${cat}');return false">See all →</a>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:24px;">
+          ${items.map(d => cardHTML(d, {compact:true})).join('')}
+        </div>
+      </section>`;
+  }).join('');
+}
+
+// ===== Topics grid =====
+function renderTopics() {
+  const cats = {};
+  DATA.forEach(d => { if (d.category) cats[d.category] = (cats[d.category]||0)+1; });
+  document.getElementById('topicGrid').innerHTML = Object.entries(cats)
+    .sort((a,b) => b[1]-a[1])
+    .map(([c,n]) => `
+      <div class="topic-tile animate-in" onclick="filterCat('${c}')">
+        <div class="topic-count">${n}</div>
+        <div class="topic-name">${esc(c)}</div>
+      </div>`).join('');
+}
+
+// ===== BM25 related =====
+function getRelated(id, topN) {
+  const idx = DATA.findIndex(d => d.id === id);
+  if (idx < 0) return [];
+  // Simple tag overlap scoring
+  const entry = DATA[idx];
+  const eTags = new Set((entry.tags||[]).filter(t=>!EXCLUDED_TAGS.has(t)));
+  return DATA.map((d, i) => {
+    if (i === idx) return null;
+    const dTags = (d.tags||[]).filter(t=>!EXCLUDED_TAGS.has(t));
+    const overlap = dTags.filter(t => eTags.has(t)).length;
+    const catMatch = d.category === entry.category ? 2 : 0;
+    return { d, score: overlap + catMatch };
+  }).filter(x => x && x.score > 0).sort((a,b) => b.score - a.score).slice(0, topN);
+}
+
+// ===== Reader =====
+function openReader(id) {
+  const d = DATA.find(x => x.id === id);
+  if (!d) return;
+  const s = d.status || 'investigating';
+  const tags = (d.tags||[]).filter(t=>!EXCLUDED_TAGS.has(t));
+
+  document.getElementById('readerHeader').innerHTML = `
+    <div class="reader-cat">${esc(d.category||'')}</div>
+    <h1 class="reader-title">${esc(d.title)}</h1>
+    <div class="reader-meta">
+      <span>${formatDate(d.createdAt)}</span>
+      <span>${readTime(d.summary)} min read</span>
+      <span><span class="status-dot" style="background:${STATUS_COLORS[s]}"></span>${STATUS_LABELS[s]}</span>
+    </div>`;
+
+  let bodyHTML = '';
+
+  // Summary as paragraphs
+  if (d.summary) {
+    const paragraphs = d.summary.split(/\n+/).filter(Boolean);
+    paragraphs.forEach(p => { bodyHTML += `<p>${esc(p)}</p>`; });
+  }
+
+  // Tags
+  if (tags.length > 0) {
+    bodyHTML += `<div class="tag-row">${tags.map(t => `<span class="tag-item">${esc(t)}</span>`).join('')}</div>`;
+  }
+
+  // Source
+  if (d.source) {
+    bodyHTML += `<p style="font-size:var(--text-sm);"><a href="${esc(d.source)}" target="_blank" style="color:var(--accent);">Source →</a></p>`;
+  }
+
+  // Related
+  const related = getRelated(id, 4);
+  if (related.length > 0) {
+    bodyHTML += `<div class="reader-related">
+      <h3>Related Research</h3>
+      <div class="related-grid">
+        ${related.map(({d:r}) => `
+          <div class="related-card" onclick="openReader('${r.id}');document.getElementById('reader').scrollTo(0,0);">
+            <div class="card-category">${esc(r.category||'')}</div>
+            <div class="card-title">${esc(r.title)}</div>
+            <div class="card-meta">${formatDate(r.createdAt)}</div>
+          </div>`).join('')}
+      </div>
+    </div>`;
+  }
+
+  document.getElementById('readerBody').innerHTML = bodyHTML;
+  document.getElementById('reader').classList.add('active');
+  document.getElementById('reader').scrollTo(0, 0);
+  document.body.style.overflow = 'hidden';
+}
+
+function closeReader() {
+  document.getElementById('reader').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// ===== Dark mode =====
+function initTheme() {
+  const stored = localStorage.getItem('magazine-theme');
+  const theme = stored || (window.matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', theme);
+  document.getElementById('themeToggle').textContent = theme === 'dark' ? '☀' : '☽';
+}
+document.getElementById('themeToggle').addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('magazine-theme', next);
+  document.getElementById('themeToggle').textContent = next === 'dark' ? '☀' : '☽';
+});
+
+// ===== Scroll animations =====
+function initScrollAnimations() {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.1 });
+  document.querySelectorAll('.animate-in').forEach(el => observer.observe(el));
+}
+
+// ===== Keyboard =====
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeReader(); });
+
+// ===== Render all =====
+function renderAll() {
+  renderCatBar();
+  renderHero();
+  renderLatest();
+  renderCategorySections();
+  renderTopics();
+  requestAnimationFrame(initScrollAnimations);
+}
+
+initTheme();
+renderAll();
+</script>
+</body>
+</html>
