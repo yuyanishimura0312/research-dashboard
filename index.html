@@ -1953,11 +1953,13 @@ function onSimThresholdChange() {
 
 function rebuildAndRender() {
   buildGraph();
+  buildClusterData();
   let left = 120;
   function batch() {
     const n = Math.min(20, left);
     for (let i = 0; i < n; i++) simulateGraph();
     left -= n;
+    buildClusterData();
     drawGraph();
     if (left > 0) requestAnimationFrame(batch);
   }
@@ -2308,6 +2310,57 @@ function drawGraph() {
   ctx.translate(offsetX + width / 2 * (1 - scale), offsetY + height / 2 * (1 - scale));
   ctx.scale(scale, scale);
 
+  // Semantic zoom levels (cluster mode triggers below 0.4)
+  const zoomLevel = scale < 0.4 ? 'cluster' : scale < 0.5 ? 'far' : scale < 1.2 ? 'mid' : 'close';
+
+  // ===== Cluster Overview Mode =====
+  if (zoomLevel === 'cluster' && GRAPH.clusterData.length > 0) {
+    GRAPH.clusterMode = true;
+    GRAPH.clusterData.forEach(cl => {
+      // Recalculate center from current node positions
+      let sx = 0, sy = 0;
+      cl.nodes.forEach(ni => { sx += nodes[ni].x; sy += nodes[ni].y; });
+      cl.cx = sx / cl.nodes.length;
+      cl.cy = sy / cl.nodes.length;
+
+      // Draw cluster circle
+      ctx.beginPath();
+      ctx.arc(cl.cx, cl.cy, cl.radius, 0, Math.PI * 2);
+      ctx.fillStyle = cl.color + 'bb';
+      ctx.fill();
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Count inside circle
+      ctx.fillStyle = '#fff';
+      ctx.font = `bold ${Math.max(14, cl.radius * 0.35)}px "Hiragino Kaku Gothic ProN", sans-serif`;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(cl.count.toString(), cl.cx, cl.cy - 4);
+
+      // Category label below count
+      ctx.font = `${Math.max(9, cl.radius * 0.18)}px "Hiragino Kaku Gothic ProN", sans-serif`;
+      ctx.fillStyle = 'rgba(0,0,0,0.7)';
+      const lbl = cl.label.length > 14 ? cl.label.slice(0, 13) + '…' : cl.label;
+      ctx.fillText(lbl, cl.cx, cl.cy + cl.radius + 14);
+    });
+    ctx.restore();
+    return;
+  }
+  GRAPH.clusterMode = false;
+
+  // ===== Viewport Culling: compute visible world-space bounds =====
+  const vpLeft = (-offsetX - width / 2 * (1 - scale)) / scale;
+  const vpTop = (-offsetY - height / 2 * (1 - scale)) / scale;
+  const vpRight = vpLeft + width / scale;
+  const vpBottom = vpTop + height / scale;
+  const vpMargin = 60; // extra margin for labels
+
+  function isVisible(x, y, r) {
+    return x + r + vpMargin >= vpLeft && x - r - vpMargin <= vpRight &&
+           y + r + vpMargin >= vpTop && y - r - vpMargin <= vpBottom;
+  }
+
   // Focus set
   let focusSet = null;
   if (focusNode) {
@@ -2326,12 +2379,31 @@ function drawGraph() {
     });
   }
 
-  // Semantic zoom levels
-  const zoomLevel = scale < 0.5 ? 'far' : scale < 1.2 ? 'mid' : 'close';
+  // Search state
+  const hasSearch = GRAPH.searchQuery && GRAPH.searchMatches.size > 0;
 
-  // Draw edges
-  edges.forEach(e => {
+  // ===== Edge Density: pick top N strongest edges per node =====
+  const maxEPN = GRAPH.maxEdgesPerNode;
+  const edgeCountPerNode = new Uint16Array(nodes.length);
+  // Sort edges by strength descending for priority
+  const sortedEdgeIndices = edges.map((_, i) => i).sort((a, b) => (edges[b].strength || 0) - (edges[a].strength || 0));
+  const drawnEdges = new Set();
+  for (const ei of sortedEdgeIndices) {
+    const e = edges[ei];
+    if (edgeCountPerNode[e.source] < maxEPN && edgeCountPerNode[e.target] < maxEPN) {
+      drawnEdges.add(ei);
+      edgeCountPerNode[e.source]++;
+      edgeCountPerNode[e.target]++;
+    }
+  }
+
+  // Draw edges (with culling and density control)
+  edges.forEach((e, ei) => {
+    if (!drawnEdges.has(ei)) return;
     const a = nodes[e.source], b = nodes[e.target];
+    // Viewport culling: skip if both endpoints outside view
+    if (!isVisible(a.x, a.y, a.radius) && !isVisible(b.x, b.y, b.radius)) return;
+
     const inFocus = !focusSet || (focusSet.has(e.source) && focusSet.has(e.target));
     if (!inFocus) { ctx.globalAlpha = 0.04; } else { ctx.globalAlpha = 1; }
 
@@ -2363,15 +2435,30 @@ function drawGraph() {
   });
   ctx.globalAlpha = 1;
 
-  // Draw nodes
+  // Draw nodes (with culling and search highlighting)
   nodes.forEach((n, ni) => {
+    // Viewport culling
+    if (!isVisible(n.x, n.y, n.radius)) return;
+
     const isHovered = n === GRAPH.hoveredNode;
     const isFocused = n === focusNode;
     const inFocus = !focusSet || focusSet.has(ni);
     const isDimmedHover = GRAPH.hoveredNode && !focusNode && !connectedSet.has(ni);
-    const isDimmed = (!inFocus) || isDimmedHover;
+    // Search dimming: if searching and this node is not a match, dim it
+    const isDimmedSearch = hasSearch && !GRAPH.searchMatches.has(ni);
+    const isDimmed = (!inFocus) || isDimmedHover || isDimmedSearch;
+    const isSearchMatch = hasSearch && GRAPH.searchMatches.has(ni);
 
     ctx.globalAlpha = isDimmed ? 0.08 : 1;
+
+    // Search highlight ring
+    if (isSearchMatch) {
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.radius + 6, 0, Math.PI * 2);
+      ctx.strokeStyle = '#f1c40f';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+    }
 
     // Focus ring
     if (isFocused) {
@@ -2392,9 +2479,10 @@ function drawGraph() {
       ctx.fill();
     }
 
-    // Node circle
+    // Node circle (larger if search match)
+    const drawRadius = isSearchMatch ? n.radius * 1.25 : n.radius;
     ctx.beginPath();
-    ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
+    ctx.arc(n.x, n.y, drawRadius, 0, Math.PI * 2);
     ctx.fillStyle = n.color + (isHovered || isFocused ? 'ff' : n.type === 'research' ? 'dd' : 'bb');
     ctx.fill();
     ctx.strokeStyle = isHovered || isFocused ? '#fff' : 'rgba(255,255,255,0.6)';
@@ -2404,7 +2492,7 @@ function drawGraph() {
     // Semantic zoom: labels
     if (zoomLevel === 'far') {
       // Far: only show label for large research nodes
-      if (n.type === 'research' && n.radius > 22) {
+      if (n.type === 'research' && (n.radius > 22 || isSearchMatch)) {
         ctx.fillStyle = '#fff';
         ctx.font = 'bold 8px "Hiragino Kaku Gothic ProN", sans-serif';
         ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
@@ -2487,7 +2575,17 @@ function drawGraph() {
 }
 
 function graphAnimLoop() {
-  simulateGraph();
+  // After warmup, throttle to ~10fps unless dragging (saves CPU on 700+ nodes)
+  if (GRAPH.warmupDone && !GRAPH.isDragging) {
+    const now = performance.now();
+    if (now - GRAPH.lastDrawTime < 100) { // 100ms = ~10fps
+      GRAPH.animFrame = requestAnimationFrame(graphAnimLoop);
+      return;
+    }
+    GRAPH.lastDrawTime = now;
+  }
+  // Skip simulation for non-force layouts (radial/grid are static)
+  if (GRAPH.layoutMode === 'force') simulateGraph();
   drawGraph();
   GRAPH.animFrame = requestAnimationFrame(graphAnimLoop);
 }
@@ -2512,6 +2610,11 @@ function renderGraph() {
   GRAPH.offsetX = 0;
   GRAPH.offsetY = 0;
 
+  // Reset layout buttons UI
+  document.querySelectorAll('#layoutBtns .btn-sm').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.toLowerCase() === 'force');
+  });
+
   // ローディング表示
   const ctx = canvas.getContext('2d');
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -2525,7 +2628,10 @@ function renderGraph() {
 
   // 重い計算をrequestIdleCallbackまたはsetTimeoutで遅延
   const build = () => {
+    GRAPH.warmupDone = false;
+    GRAPH.layoutMode = 'force';
     buildGraph();
+    buildClusterData();
     graphBuilt = true;
 
     // ウォームアップのバッチ数を削減（762件対応）
@@ -2535,9 +2641,14 @@ function renderGraph() {
       const batchSize = Math.min(15, warmupLeft);
       for (let i = 0; i < batchSize; i++) simulateGraph();
       warmupLeft -= batchSize;
+      buildClusterData(); // update cluster positions during warmup
       drawGraph();
       if (warmupLeft > 0) requestAnimationFrame(warmupBatch);
-      else graphAnimLoop();
+      else {
+        GRAPH.warmupDone = true;
+        GRAPH.lastDrawTime = performance.now();
+        graphAnimLoop();
+      }
     }
     warmupBatch();
   };
@@ -2705,6 +2816,7 @@ function setupGraphEvents() {
     const node = findNode(e.clientX, e.clientY);
     if (node) {
       GRAPH.dragNode = node;
+      GRAPH.isDragging = true;
       canvas.style.cursor = 'grabbing';
     } else {
       GRAPH.isPanning = true;
@@ -2767,6 +2879,7 @@ function setupGraphEvents() {
 
   canvas.addEventListener('mouseup', () => {
     GRAPH.dragNode = null;
+    GRAPH.isDragging = false;
     GRAPH.isPanning = false;
     GRAPH.panStart = null;
     canvas.style.cursor = 'grab';
@@ -2774,6 +2887,7 @@ function setupGraphEvents() {
 
   canvas.addEventListener('mouseleave', () => {
     GRAPH.dragNode = null;
+    GRAPH.isDragging = false;
     GRAPH.isPanning = false;
     GRAPH.hoveredNode = null;
     if (tooltip) tooltip.classList.remove('visible');
@@ -2786,8 +2900,22 @@ function setupGraphEvents() {
     GRAPH.scale = Math.max(0.2, Math.min(4, GRAPH.scale));
   }, { passive: false });
 
-  // Single click: focus mode
+  // Single click: focus mode or cluster zoom
   canvas.addEventListener('click', (e) => {
+    // If in cluster mode, check if a cluster was clicked and zoom in
+    if (GRAPH.clusterMode && GRAPH.clusterData.length > 0) {
+      const [wx, wy] = canvasToWorld(e.clientX, e.clientY);
+      for (const cl of GRAPH.clusterData) {
+        const dx = wx - cl.cx, dy = wy - cl.cy;
+        if (dx * dx + dy * dy < cl.radius * cl.radius) {
+          // Zoom into this cluster
+          GRAPH.scale = 0.8;
+          GRAPH.offsetX = GRAPH.width / 2 - cl.cx * GRAPH.scale;
+          GRAPH.offsetY = GRAPH.height / 2 - cl.cy * GRAPH.scale;
+          return;
+        }
+      }
+    }
     const node = findNode(e.clientX, e.clientY);
     if (node) {
       GRAPH.focusNode = (GRAPH.focusNode === node) ? null : node;
