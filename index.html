@@ -1868,76 +1868,164 @@ function buildGraph() {
     n.y = cy + Math.sin(commAngle) * spread + (Math.random() - 0.5) * 60;
   });
 
+  // Build adjacency list for O(1) neighbor lookups
+  const adj = Array.from({ length: nodes.length }, () => []);
+  edges.forEach((e, ei) => {
+    adj[e.source].push({ node: e.target, edge: ei });
+    adj[e.target].push({ node: e.source, edge: ei });
+  });
+
+  // Node index map for O(1) lookup
+  const nodeIdx = new Map();
+  nodes.forEach((n, i) => nodeIdx.set(n, i));
+
   GRAPH.nodes = nodes;
   GRAPH.edges = edges;
+  GRAPH.adj = adj;
+  GRAPH.nodeIdx = nodeIdx;
   GRAPH.focusNode = null;
+  GRAPH.labelCache = {}; // invalidate text cache
+}
+
+// ===== Barnes-Hut Quadtree =====
+function buildQuadtree(nodes) {
+  // Find bounds
+  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+  for (const n of nodes) {
+    if (n.x < minX) minX = n.x; if (n.x > maxX) maxX = n.x;
+    if (n.y < minY) minY = n.y; if (n.y > maxY) maxY = n.y;
+  }
+  const pad = 10;
+  minX -= pad; minY -= pad; maxX += pad; maxY += pad;
+  const size = Math.max(maxX - minX, maxY - minY) || 1;
+
+  // Quadtree node: { cx, cy, mass, children: [NW,NE,SW,SE] | null, node: single-node | null }
+  function createCell(x, y, s) { return { x, y, s, cx: 0, cy: 0, mass: 0, children: null, body: null }; }
+
+  function insert(cell, node) {
+    if (cell.mass === 0 && !cell.body) {
+      // Empty cell
+      cell.body = node;
+      cell.cx = node.x; cell.cy = node.y; cell.mass = 1;
+      return;
+    }
+    if (!cell.children) {
+      // Subdivide
+      const hs = cell.s / 2;
+      cell.children = [
+        createCell(cell.x, cell.y, hs),
+        createCell(cell.x + hs, cell.y, hs),
+        createCell(cell.x, cell.y + hs, hs),
+        createCell(cell.x + hs, cell.y + hs, hs),
+      ];
+      // Re-insert existing body
+      if (cell.body) {
+        const old = cell.body;
+        cell.body = null;
+        insertIntoChild(cell, old);
+      }
+    }
+    insertIntoChild(cell, node);
+    // Update center of mass
+    const totalMass = cell.mass + 1;
+    cell.cx = (cell.cx * cell.mass + node.x) / totalMass;
+    cell.cy = (cell.cy * cell.mass + node.y) / totalMass;
+    cell.mass = totalMass;
+  }
+
+  function insertIntoChild(cell, node) {
+    const mx = cell.x + cell.s / 2, my = cell.y + cell.s / 2;
+    const qi = (node.x < mx ? 0 : 1) + (node.y < my ? 0 : 2);
+    insert(cell.children[qi], node);
+  }
+
+  const root = createCell(minX, minY, size);
+  for (const n of nodes) insert(root, n);
+  return root;
+}
+
+function quadtreeForce(node, cell, theta, repulsion) {
+  if (cell.mass === 0) return;
+  const dx = cell.cx - node.x;
+  const dy = cell.cy - node.y;
+  const distSq = dx * dx + dy * dy || 1;
+  const dist = Math.sqrt(distSq);
+
+  // If cell is far enough or is a leaf, treat as single body
+  if (cell.s / dist < theta || (!cell.children && cell.mass === 1)) {
+    if (cell.body === node) return;
+    const force = repulsion * cell.mass / distSq;
+    node.vx -= (dx / dist) * force;
+    node.vy -= (dy / dist) * force;
+    return;
+  }
+
+  // Otherwise recurse into children
+  if (cell.children) {
+    for (const child of cell.children) {
+      if (child) quadtreeForce(node, child, theta, repulsion);
+    }
+  }
 }
 
 function simulateGraph() {
   const { nodes, edges } = GRAPH;
   const cx = GRAPH.width / 2, cy = GRAPH.height / 2;
-  const alpha = 0.3; // cooling
+  const alpha = 0.3;
   const repulsion = 3000;
   const springLen = 120;
   const springK = 0.01;
   const gravity = 0.02;
   const damping = 0.85;
+  const theta = 0.8; // Barnes-Hut threshold (higher = faster but less accurate)
 
-  // Repulsion (all pairs)
-  for (let i = 0; i < nodes.length; i++) {
-    for (let j = i + 1; j < nodes.length; j++) {
-      let dx = nodes[j].x - nodes[i].x;
-      let dy = nodes[j].y - nodes[i].y;
-      let dist = Math.sqrt(dx * dx + dy * dy) || 1;
-      let force = repulsion / (dist * dist);
-      let fx = (dx / dist) * force;
-      let fy = (dy / dist) * force;
-      nodes[i].vx -= fx; nodes[i].vy -= fy;
-      nodes[j].vx += fx; nodes[j].vy += fy;
-    }
+  // Barnes-Hut repulsion: O(n log n) instead of O(n²)
+  const tree = buildQuadtree(nodes);
+  for (const n of nodes) {
+    quadtreeForce(n, tree, theta, repulsion);
   }
 
   // Spring (edges)
-  edges.forEach(e => {
+  for (const e of edges) {
     const a = nodes[e.source], b = nodes[e.target];
-    let dx = b.x - a.x, dy = b.y - a.y;
-    let dist = Math.sqrt(dx * dx + dy * dy) || 1;
-    let force = (dist - springLen) * springK * e.strength;
-    let fx = (dx / dist) * force;
-    let fy = (dy / dist) * force;
+    const dx = b.x - a.x, dy = b.y - a.y;
+    const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+    const force = (dist - springLen) * springK * e.strength;
+    const fx = (dx / dist) * force;
+    const fy = (dy / dist) * force;
     a.vx += fx; a.vy += fy;
     b.vx -= fx; b.vy -= fy;
-  });
+  }
 
-  // Gravity toward center
-  nodes.forEach(n => {
+  // Gravity
+  for (const n of nodes) {
     n.vx += (cx - n.x) * gravity;
     n.vy += (cy - n.y) * gravity;
-  });
+  }
 
   // Apply velocity
-  nodes.forEach(n => {
-    if (n === GRAPH.dragNode) return;
+  for (const n of nodes) {
+    if (n === GRAPH.dragNode) continue;
     n.vx *= damping;
     n.vy *= damping;
     n.x += n.vx * alpha;
     n.y += n.vy * alpha;
-  });
+  }
 }
 
 // Focus mode: compute N-hop neighborhood
 function getFocusSet(nodeIdx, hops) {
-  const { nodes, edges } = GRAPH;
+  const adj = GRAPH.adj;
+  if (!adj) return new Set([nodeIdx]);
   const visited = new Set([nodeIdx]);
   let frontier = [nodeIdx];
   for (let h = 0; h < hops; h++) {
     const next = [];
-    frontier.forEach(ni => {
-      edges.forEach(e => {
-        if (e.source === ni && !visited.has(e.target)) { visited.add(e.target); next.push(e.target); }
-        if (e.target === ni && !visited.has(e.source)) { visited.add(e.source); next.push(e.source); }
-      });
-    });
+    for (const ni of frontier) {
+      for (const { node } of (adj[ni] || [])) {
+        if (!visited.has(node)) { visited.add(node); next.push(node); }
+      }
+    }
     frontier = next;
   }
   return visited;
@@ -1959,14 +2047,14 @@ function drawGraph() {
   // Focus set
   let focusSet = null;
   if (focusNode) {
-    const fIdx = nodes.indexOf(focusNode);
+    const fIdx = GRAPH.nodeIdx ? GRAPH.nodeIdx.get(focusNode) : nodes.indexOf(focusNode);
     if (fIdx >= 0) focusSet = getFocusSet(fIdx, GRAPH.focusHops);
   }
 
   // Hover connected set
   const connectedSet = new Set();
   if (GRAPH.hoveredNode && !focusNode) {
-    const hIdx = nodes.indexOf(GRAPH.hoveredNode);
+    const hIdx = GRAPH.nodeIdx ? GRAPH.nodeIdx.get(GRAPH.hoveredNode) : nodes.indexOf(GRAPH.hoveredNode);
     connectedSet.add(hIdx);
     edges.forEach(e => {
       if (e.source === hIdx) connectedSet.add(e.target);
