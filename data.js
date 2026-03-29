@@ -524,7 +524,7 @@ window.RESEARCH_DATA = [
     "id": "69c8aa96u80qz1",
     "title": "esse-sense 2026年事業戦略",
     "category": "ビジネス・経営",
-    "source": "",
+    "source": "https://docs.google.com/spreadsheets/d/1cI7riu_O2BHtHUtC9zAlXIPMWgTvP63eiN6nxRFOz0o/edit",
     "summary": "esse-senseの2026年事業戦略。「知的資本市場を創出するインフラの構築」をミッションに、ANSWER事業（AIによる学術知アクセス）、共創人材事業、Future Forum事業の3本柱を展開。Translational Edit（トランスレーショナル・エディット）をコア概念に、学術知と産業の構造的分断を解消する。",
     "tags": [
       "esse-sense",
@@ -2690,7 +2690,7 @@ window.RESEARCH_DATA = [
     "title": "中長期ビジョン",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=202250322_株主総会_中長期ビジョン.pdf",
     "summary": "生成AIレポート/01_書き起こし/20250323_株主総会2025/中長期ビジョン.vtt",
     "tags": [
       "学術",
@@ -2847,7 +2847,7 @@ window.RESEARCH_DATA = [
     "title": "251215おおさか建築賞パンフレット",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=251215おおさか建築賞パンフレット.pdf",
     "summary": "生成AIレポート/02_ミラツク/251215おおさか建築賞パンフレット.pdf",
     "tags": [
       "AI",
@@ -2862,7 +2862,7 @@ window.RESEARCH_DATA = [
     "title": "ハビテーションヒアリング記事_素材 (2025/03)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250331_ハビテーションヒアリング記事_素材.pdf",
     "summary": "生成AIレポート/02_ミラツク/JAXA/20250331_ハビテーションヒアリング記事_素材.pages",
     "tags": [
       "経営",
@@ -2878,7 +2878,7 @@ window.RESEARCH_DATA = [
     "title": "【最終版】市場調査・形成分科会_報告書（2025年6月）",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=【最終版】市場調査・形成分科会_報告書（2025年6月）.pdf",
     "summary": "生成AIレポート/02_ミラツク/【最終版】市場調査・形成分科会_報告書（2025年6月）.pdf",
     "tags": [
       "経営",
@@ -2908,7 +2908,7 @@ window.RESEARCH_DATA = [
     "title": "SINICコンソーシアムDAY_3名プレゼン (2025/03)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250328_SINICコンソーシアムDAY_3名プレゼン.pdf",
     "summary": "生成AIレポート/02_ミラツク/オムロン/20250328_SINICコンソーシアムDAY_3名プレゼン.pages",
     "tags": [
       "SINIC",
@@ -2923,7 +2923,7 @@ window.RESEARCH_DATA = [
     "title": "SINICコンソーシアムDAY_パネルセッション (2025/03)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250328_SINICコンソーシアムDAY_パネルセッション.pdf",
     "summary": "生成AIレポート/02_ミラツク/オムロン/20250328_SINICコンソーシアムDAY_パネルセッション.pages",
     "tags": [
       "SINIC",
@@ -2938,7 +2938,7 @@ window.RESEARCH_DATA = [
     "title": "SINICコンソーシアムDAYレポート (2025/03)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250328_SINICコンソーシアムDAYレポート_signal.pdf",
     "summary": "生成AIレポート/02_ミラツク/オムロン/20250328_SINICコンソーシアムDAYレポート.pages",
     "tags": [
       "SINIC",
@@ -2953,7 +2953,7 @@ window.RESEARCH_DATA = [
     "title": "SINICコンソーシアムDAYレポート_signal (2025/03)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250328_SINICコンソーシアムDAYレポート_signal.pdf",
     "summary": "生成AIレポート/02_ミラツク/オムロン/20250328_SINICコンソーシアムDAYレポート_signal.pages",
     "tags": [
       "SINIC",
@@ -2968,7 +2968,7 @@ window.RESEARCH_DATA = [
     "title": "比叡山未来会議_パネルセッション1 (2025/03)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250328_比叡山未来会議_パネルセッション1.pdf",
     "summary": "生成AIレポート/02_ミラツク/オムロン/20250328_比叡山未来会議_パネルセッション1.pages",
     "tags": [
       "AI",
@@ -2982,7 +2982,7 @@ window.RESEARCH_DATA = [
     "title": "比叡山未来会議_パネルセッション2 (2025/03)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250328_比叡山未来会議_パネルセッション2.pdf",
     "summary": "生成AIレポート/02_ミラツク/オムロン/20250328_比叡山未来会議_パネルセッション2.pages",
     "tags": [
       "AI",
@@ -2996,7 +2996,7 @@ window.RESEARCH_DATA = [
     "title": "比叡山未来会議_参加者コメント (2025/03)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250328_比叡山未来会議_参加者コメント.pdf",
     "summary": "生成AIレポート/02_ミラツク/オムロン/20250328_比叡山未来会議_参加者コメント.pages",
     "tags": [
       "AI",
@@ -3010,7 +3010,7 @@ window.RESEARCH_DATA = [
     "title": "比叡山未来会議_基調講演 (2025/03)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250328_比叡山未来会議_基調講演.pdf",
     "summary": "生成AIレポート/02_ミラツク/オムロン/20250328_比叡山未来会議_基調講演.pages",
     "tags": [
       "AI",
@@ -3024,7 +3024,7 @@ window.RESEARCH_DATA = [
     "title": "比叡山未来会議レポート (2025/03)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250328_比叡山未来会議レポート_signal.pdf",
     "summary": "生成AIレポート/02_ミラツク/オムロン/20250328_比叡山未来会議レポート.pages",
     "tags": [
       "AI",
@@ -3038,7 +3038,7 @@ window.RESEARCH_DATA = [
     "title": "比叡山未来会議レポート_signal (2025/03)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250328_比叡山未来会議レポート_signal.pdf",
     "summary": "生成AIレポート/02_ミラツク/オムロン/20250328_比叡山未来会議レポート_signal.pages",
     "tags": [
       "AI",
@@ -3094,7 +3094,7 @@ window.RESEARCH_DATA = [
     "title": "仮設建築総論",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=仮設建築総論.pdf",
     "summary": "生成AIレポート/02_ミラツク/コマニー/仮設建築総論.pages",
     "tags": [
       "AI",
@@ -3109,7 +3109,7 @@ window.RESEARCH_DATA = [
     "title": "ミラツク2026",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=ミラツク2026.pdf",
     "summary": "生成AIレポート/02_ミラツク/ミラツク2026.pages",
     "tags": [
       "AI",
@@ -3123,7 +3123,7 @@ window.RESEARCH_DATA = [
     "title": "5_エスノグラフィック・フューチャーズ・リサーチ (2025/05)",
     "category": "人類学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=202505115_エスノグラフィック・フューチャーズ・リサーチ_2.pdf",
     "summary": "生成AIレポート/02_ミラツク/合宿資料/2025/202505115_エスノグラフィック・フューチャーズ・リサーチ.pages",
     "tags": [
       "未来",
@@ -3138,7 +3138,7 @@ window.RESEARCH_DATA = [
     "title": "5_エスノグラフィック・フューチャーズ・リサーチ_2 (2025/05)",
     "category": "人類学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=202505115_エスノグラフィック・フューチャーズ・リサーチ_2.pdf",
     "summary": "生成AIレポート/02_ミラツク/合宿資料/2025/202505115_エスノグラフィック・フューチャーズ・リサーチ_2.pages",
     "tags": [
       "未来",
@@ -3153,7 +3153,7 @@ window.RESEARCH_DATA = [
     "title": "5_シナリオプランニングの全体像と未来志向的展望に関する網羅的研究 (2025/05)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=202505115_シナリオプランニングの全体像と未来志向的展望に関する網羅的研究.pdf",
     "summary": "生成AIレポート/02_ミラツク/合宿資料/2025/202505115_シナリオプランニングの全体像と未来志向的展望に関する網羅的研究.pages",
     "tags": [
       "学術",
@@ -3169,7 +3169,7 @@ window.RESEARCH_DATA = [
     "title": "ウィークシグナルの歴史的展開と現代的意義に関する総合的論考 (2025/05)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250515_ウィークシグナルの歴史的展開と現代的意義に関する総合的論考.pdf",
     "summary": "生成AIレポート/02_ミラツク/合宿資料/2025/20250515_ウィークシグナルの歴史的展開と現代的意義に関する総合的論考.pages",
     "tags": [
       "AI",
@@ -3183,7 +3183,7 @@ window.RESEARCH_DATA = [
     "title": "因果階層分析（Causal Layered Analysis）の理論と展開 (2025/05)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250515_因果階層分析（Causal Layered Analysis）の理論と展開.pdf",
     "summary": "生成AIレポート/02_ミラツク/合宿資料/2025/20250515_因果階層分析（Causal Layered Analysis）の理論と展開.pages",
     "tags": [
       "AI",
@@ -3197,7 +3197,7 @@ window.RESEARCH_DATA = [
     "title": "地政学の歴史と理論的展開に関する総合的論考 (2025/05)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250515_地政学の歴史と理論的展開に関する総合的論考 .pdf",
     "summary": "生成AIレポート/02_ミラツク/合宿資料/2025/20250515_地政学の歴史と理論的展開に関する総合的論考 .pages",
     "tags": [
       "AI",
@@ -3211,7 +3211,7 @@ window.RESEARCH_DATA = [
     "title": "ウィークシグナルの2タイプと観点",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=ウィークシグナルの2タイプと観点.pdf",
     "summary": "生成AIレポート/02_ミラツク/合宿資料/2025/ワーク資料/ウィークシグナルの2タイプと観点.pages",
     "tags": [
       "AI",
@@ -3239,7 +3239,7 @@ window.RESEARCH_DATA = [
     "title": "國吉先生まとめ",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=國吉先生まとめ.docx",
     "summary": "生成AIレポート/02_ミラツク/國吉先生まとめ.docx",
     "tags": [
       "AI",
@@ -3268,7 +3268,7 @@ window.RESEARCH_DATA = [
     "title": "2050年に向けたグローバル・メガトレンドの展望- 18のテーマに関する学際的分析とシナリオ予測 (2025/04)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250401_2050年に向けたグローバル・メガトレンドの展望- 18のテーマに関する学際的分析とシナリオ予測.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/20250401_2050年に向けたグローバル・メガトレンドの展望- 18のテーマに関する学際的分析とシナリオ予測.pages",
     "tags": [
       "学術",
@@ -3284,7 +3284,7 @@ window.RESEARCH_DATA = [
     "title": "2050年に向けた巨大潮流（メガトレンド）の検証と分析 (2025/04)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250401_2050年に向けた巨大潮流（メガトレンド）の検証と分析.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/20250401_2050年に向けた巨大潮流（メガトレンド）の検証と分析.pages",
     "tags": [
       "AI",
@@ -3298,7 +3298,7 @@ window.RESEARCH_DATA = [
     "title": "Shell法シナリオ・プランニングの理論とプロセスに関する包括的研究 (2025/04)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250401_Shell法シナリオ・プランニングの理論とプロセスに関する包括的研究.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/20250401_Shell法シナリオ・プランニングの理論とプロセスに関する包括的研究.pages",
     "tags": [
       "学術",
@@ -3314,7 +3314,7 @@ window.RESEARCH_DATA = [
     "title": "Shell法以外のシナリオプランニング主要手法の理論と実践 (2025/04)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250401_Shell法以外のシナリオプランニング主要手法の理論と実践.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/20250401_Shell法以外のシナリオプランニング主要手法の理論と実践.pages",
     "tags": [
       "AI",
@@ -3328,7 +3328,7 @@ window.RESEARCH_DATA = [
     "title": "pestel分析600項目 (2025/04)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250401_pestel分析600項目.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/20250401_pestel分析600項目.pages",
     "tags": [
       "AI",
@@ -3342,7 +3342,7 @@ window.RESEARCH_DATA = [
     "title": "pestel分析（追加）100項目_フィランソロピー (2025/04)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250401_pestel分析（追加）100項目_フィランソロピー.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/20250401_pestel分析（追加）100項目_フィランソロピー.pages",
     "tags": [
       "AI",
@@ -3356,7 +3356,7 @@ window.RESEARCH_DATA = [
     "title": "pestel分析（追加）100項目_学術・科学 (2025/04)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250401_pestel分析（追加）100項目_学術・科学.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/20250401_pestel分析（追加）100項目_学術・科学.pages",
     "tags": [
       "研究",
@@ -3373,7 +3373,7 @@ window.RESEARCH_DATA = [
     "title": "pestel分析（追加）100項目_教育・高等教育 (2025/04)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250401_pestel分析（追加）100項目_教育・高等教育.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/20250401_pestel分析（追加）100項目_教育・高等教育.pages",
     "tags": [
       "教育",
@@ -3388,7 +3388,7 @@ window.RESEARCH_DATA = [
     "title": "pestel分析（追加）100項目_新産業 (2025/04)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250401_pestel分析（追加）100項目_新産業.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/20250401_pestel分析（追加）100項目_新産業.pages",
     "tags": [
       "AI",
@@ -3402,7 +3402,7 @@ window.RESEARCH_DATA = [
     "title": "pestel分析（追加）100項目_空間価値 (2025/04)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250401_pestel分析（追加）100項目_空間価値.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/20250401_pestel分析（追加）100項目_空間価値.pages",
     "tags": [
       "AI",
@@ -3416,7 +3416,7 @@ window.RESEARCH_DATA = [
     "title": "pestel分析（追加）100項目_起業・スタートアップ (2025/04)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250401_pestel分析（追加）100項目_起業・スタートアップ.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/20250401_pestel分析（追加）100項目_起業・スタートアップ.pages",
     "tags": [
       "AI",
@@ -3430,7 +3430,7 @@ window.RESEARCH_DATA = [
     "title": "pestel分析（追加）100項目_車 (2025/04)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250401_pestel分析（追加）100項目_車.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/20250401_pestel分析（追加）100項目_車.pages",
     "tags": [
       "AI",
@@ -3444,7 +3444,7 @@ window.RESEARCH_DATA = [
     "title": "pestel分析（追加）100項目_金融・投資 (2025/04)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250401_pestel分析（追加）100項目_金融・投資.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/20250401_pestel分析（追加）100項目_金融・投資.pages",
     "tags": [
       "AI",
@@ -3459,7 +3459,7 @@ window.RESEARCH_DATA = [
     "title": "ピーター・シュワルツ『ロング・ビュー』 (2025/04)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250401_ピーター・シュワルツ『ロング・ビュー』.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/20250401_ピーター・シュワルツ『ロング・ビュー』.pages",
     "tags": [
       "AI",
@@ -3473,7 +3473,7 @@ window.RESEARCH_DATA = [
     "title": "メガトレンド（12トレンド） (2025/04)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250401_メガトレンド（12トレンド）.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/20250401_メガトレンド（12トレンド）.pages",
     "tags": [
       "AI",
@@ -3487,7 +3487,7 @@ window.RESEARCH_DATA = [
     "title": "メガトレンド（18トレンド） (2025/04)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250401_メガトレンド（18トレンド）.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/20250401_メガトレンド（18トレンド）.pages",
     "tags": [
       "AI",
@@ -3501,7 +3501,7 @@ window.RESEARCH_DATA = [
     "title": "変化の潮流に関する包括的メガトレンド分析 (2025/04)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250401_変化の潮流に関する包括的メガトレンド分析.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/20250401_変化の潮流に関する包括的メガトレンド分析.pages",
     "tags": [
       "AI",
@@ -3515,7 +3515,7 @@ window.RESEARCH_DATA = [
     "title": "弱いシグナルを活用する未来洞察プロセスの理論と実践 (2025/04)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250401_弱いシグナルを活用する未来洞察プロセスの理論と実践.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/20250401_弱いシグナルを活用する未来洞察プロセスの理論と実践.pages",
     "tags": [
       "AI",
@@ -3529,7 +3529,7 @@ window.RESEARCH_DATA = [
     "title": "未来洞察における弱いシグナルの理論と実践 (2025/04)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250401_未来洞察における弱いシグナルの理論と実践.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/20250401_未来洞察における弱いシグナルの理論と実践.pages",
     "tags": [
       "AI",
@@ -3543,7 +3543,7 @@ window.RESEARCH_DATA = [
     "title": "欧米におけるフォーサイト経営のフレームワーク活用とベンチマーク事例 (2025/04)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250401_欧米におけるフォーサイト経営のフレームワーク活用とベンチマーク事例.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/20250401_欧米におけるフォーサイト経営のフレームワーク活用とベンチマーク事例.pages",
     "tags": [
       "経営",
@@ -3558,7 +3558,7 @@ window.RESEARCH_DATA = [
     "title": "社会シナリオプランニングにおけるPESTLE分析の情報処理 (2025/04)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250401_社会シナリオプランニングにおけるPESTLE分析の情報処理.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/20250401_社会シナリオプランニングにおけるPESTLE分析の情報処理.pages",
     "tags": [
       "AI",
@@ -3572,7 +3572,7 @@ window.RESEARCH_DATA = [
     "title": "統合メガトレンドレポート (2025/04)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250401_統合メガトレンドレポート.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/20250401_統合メガトレンドレポート.pages",
     "tags": [
       "AI",
@@ -3586,7 +3586,7 @@ window.RESEARCH_DATA = [
     "title": "シナリオプランニング_研究者と民間の協働 (2025/04)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250401_シナリオプランニング_研究者と民間の協働.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/シナリオプランニング例/20250401_シナリオプランニング_研究者と民間の協働.pages",
     "tags": [
       "学術",
@@ -3602,7 +3602,7 @@ window.RESEARCH_DATA = [
     "title": "シナリオプランニング_研究者と民間の協働_エッセンス (2025/04)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250401_シナリオプランニング_研究者と民間の協働_エッセンス.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/シナリオプランニング例/20250401_シナリオプランニング_研究者と民間の協働_エッセンス.pages",
     "tags": [
       "ミラツク",
@@ -3617,7 +3617,7 @@ window.RESEARCH_DATA = [
     "title": "2024年以降の欧米における未来に関する言及の網羅的整理 (2025/06)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=202506092024年以降の欧米における未来に関する言及の網羅的整理.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/動向調査/202506092024年以降の欧米における未来に関する言及の網羅的整理.pages",
     "tags": [
       "AI",
@@ -3631,7 +3631,7 @@ window.RESEARCH_DATA = [
     "title": "2024年以降の欧米における未来シナリオの網羅的分析 (2025/06)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=202506092024年以降の欧米における未来シナリオの網羅的分析.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/動向調査/202506092024年以降の欧米における未来シナリオの網羅的分析.pages",
     "tags": [
       "AI",
@@ -3645,7 +3645,7 @@ window.RESEARCH_DATA = [
     "title": "欧米における企業寄付型共創モデルのベンチマーク調査 (2025/06)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250612欧米における企業寄付型共創モデルのベンチマーク調査.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/動向調査/20250612欧米における企業寄付型共創モデルのベンチマーク調査.pdf",
     "tags": [
       "経営",
@@ -3661,7 +3661,7 @@ window.RESEARCH_DATA = [
     "title": "ネクストキャピタリズムと聖地の価値の関係に関する学術的論考 (2025/06)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250615ネクストキャピタリズムと聖地の価値の関係に関する学術的論考.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/動向調査/20250615ネクストキャピタリズムと聖地の価値の関係に関する学術的論考.pages",
     "tags": [
       "学術",
@@ -3677,7 +3677,7 @@ window.RESEARCH_DATA = [
     "title": "世界の聖地におけるネクストキャピタリズム事例の学術的分析 (2025/06)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250615世界の聖地におけるネクストキャピタリズム事例の学術的分析.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/動向調査/20250615世界の聖地におけるネクストキャピタリズム事例の学術的分析.pages",
     "tags": [
       "学術",
@@ -3693,7 +3693,7 @@ window.RESEARCH_DATA = [
     "title": "社会理論から見る聖地とネクスト・キャピタリズムの学術的構築 (2025/06)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250615社会理論から見る聖地とネクスト・キャピタリズムの学術的構築.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/動向調査/20250615社会理論から見る聖地とネクスト・キャピタリズムの学術的構築.pages",
     "tags": [
       "学術",
@@ -3723,7 +3723,7 @@ window.RESEARCH_DATA = [
     "title": "技術シナリオ",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=技術シナリオ.docx",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/未来予測/技術シナリオ.docx",
     "tags": [
       "AI",
@@ -3737,7 +3737,7 @@ window.RESEARCH_DATA = [
     "title": "未来予測一覧",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=未来予測一覧.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/未来予測/未来予測一覧.docx",
     "tags": [
       "AI",
@@ -3751,7 +3751,7 @@ window.RESEARCH_DATA = [
     "title": "未来予測一覧_技術",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=未来予測一覧_技術.docx",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/未来予測/未来予測一覧_技術.docx",
     "tags": [
       "AI",
@@ -3765,7 +3765,7 @@ window.RESEARCH_DATA = [
     "title": "未来予測一覧_技術_まとめ",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=未来予測一覧_技術_まとめ.docx",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/未来予測/未来予測一覧_技術_まとめ.docx",
     "tags": [
       "AI",
@@ -3779,7 +3779,7 @@ window.RESEARCH_DATA = [
     "title": "未来予測一覧_非技術",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=未来予測一覧_非技術.docx",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/未来予測/未来予測一覧_非技術.docx",
     "tags": [
       "AI",
@@ -3793,7 +3793,7 @@ window.RESEARCH_DATA = [
     "title": "未来技術_シグナル",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=未来技術_シグナル.pdf",
     "summary": "生成AIレポート/02_ミラツク/未来洞察/未来予測/未来技術_シグナル.docx",
     "tags": [
       "AI",
@@ -3807,7 +3807,7 @@ window.RESEARCH_DATA = [
     "title": "民間公共による公共事業の理論的バックグラウンド",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=民間公共による公共事業の理論的バックグラウンド.pdf",
     "summary": "生成AIレポート/02_ミラツク/民間公共による公共事業の理論的バックグラウンド.pdf",
     "tags": [
       "経営",
@@ -3822,7 +3822,7 @@ window.RESEARCH_DATA = [
     "title": "医療と社会的共通資本──「嘘をつく病院」から「在宅緩和ケア」へ (2025/04)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250412_医療と社会的共通資本──「嘘をつく病院」から「在宅緩和ケア」へ.docx",
     "summary": "生成AIレポート/02_ミラツク/社会的共通資本/20250412_医療と社会的共通資本──「嘘をつく病院」から「在宅緩和ケア」へ.docx",
     "tags": [
       "社会的共通資本",
@@ -3837,7 +3837,7 @@ window.RESEARCH_DATA = [
     "title": "社会的共通資本_医療_シナリオ (2025/04)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250412_社会的共通資本_医療_シナリオ.docx",
     "summary": "生成AIレポート/02_ミラツク/社会的共通資本/20250412_社会的共通資本_医療_シナリオ.docx",
     "tags": [
       "社会的共通資本",
@@ -3852,7 +3852,7 @@ window.RESEARCH_DATA = [
     "title": "西廣先生_ネイチャーポジティブ (2025/04)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250422_西廣先生_ネイチャーポジティブ.pdf",
     "summary": "生成AIレポート/02_ミラツク/社会的共通資本/20250422_西廣先生_ネイチャーポジティブ.pages",
     "tags": [
       "社会的共通資本",
@@ -3882,7 +3882,7 @@ window.RESEARCH_DATA = [
     "title": "「“文化的処方”が社会を変える──京都大学・近藤尚己が語る“生きる技術”と健康の未来」",
     "category": "人類学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=「“文化的処方”が社会を変える──京都大学・近藤尚己が語る“生きる技術”と健康の未来」.docx",
     "summary": "生成AIレポート/02_ミラツク/社会的共通資本/「“文化的処方”が社会を変える──京都大学・近藤尚己が語る“生きる技術”と健康の未来」.docx",
     "tags": [
       "京都大学",
@@ -3898,7 +3898,7 @@ window.RESEARCH_DATA = [
     "title": "下訳１",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=下訳１.docx",
     "summary": "生成AIレポート/02_ミラツク/社会的共通資本/下訳１.docx",
     "tags": [
       "社会的共通資本",
@@ -3913,7 +3913,7 @@ window.RESEARCH_DATA = [
     "title": "医療と社会的共通資本嘘をつく病院から在宅緩和ケアへ_コメント挿入",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=医療と社会的共通資本嘘をつく病院から在宅緩和ケアへ_コメント挿入.pdf",
     "summary": "生成AIレポート/02_ミラツク/社会的共通資本/医療と社会的共通資本嘘をつく病院から在宅緩和ケアへ_コメント挿入.pdf",
     "tags": [
       "社会的共通資本",
@@ -3958,7 +3958,7 @@ window.RESEARCH_DATA = [
     "title": "大きく変わる「医療」と「つながり」のカタチ──社会的処方がひらく新しいケアの未来 ",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=大きく変わる「医療」と「つながり」のカタチ──社会的処方がひらく新しいケアの未来 .pdf",
     "summary": "生成AIレポート/02_ミラツク/社会的共通資本/大きく変わる「医療」と「つながり」のカタチ──社会的処方がひらく新しいケアの未来 .docx",
     "tags": [
       "社会的共通資本",
@@ -3973,7 +3973,7 @@ window.RESEARCH_DATA = [
     "title": "社会的共通資本：宇沢弘文の理論と現代的応用",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=社会的共通資本：宇沢弘文の理論と現代的応用.pdf",
     "summary": "生成AIレポート/02_ミラツク/社会的共通資本/社会的共通資本：宇沢弘文の理論と現代的応用.pages",
     "tags": [
       "社会的共通資本",
@@ -3988,7 +3988,7 @@ window.RESEARCH_DATA = [
     "title": "第3回三枝先生",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=第3回三枝先生.docx",
     "summary": "生成AIレポート/02_ミラツク/社会的共通資本/第3回三枝先生.docx",
     "tags": [
       "社会的共通資本",
@@ -4003,7 +4003,7 @@ window.RESEARCH_DATA = [
     "title": "第3回三枝先生_校正",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=第3回三枝先生_校正.docx",
     "summary": "生成AIレポート/02_ミラツク/社会的共通資本/第3回三枝先生_校正.docx",
     "tags": [
       "社会的共通資本",
@@ -4018,7 +4018,7 @@ window.RESEARCH_DATA = [
     "title": "第5回西廣先生",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=第5回西廣先生.docx",
     "summary": "生成AIレポート/02_ミラツク/社会的共通資本/第5回西廣先生.docx",
     "tags": [
       "社会的共通資本",
@@ -4033,7 +4033,7 @@ window.RESEARCH_DATA = [
     "title": "第5回西廣先生_校正",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=第5回西廣先生_校正.docx",
     "summary": "生成AIレポート/02_ミラツク/社会的共通資本/第5回西廣先生_校正.docx",
     "tags": [
       "社会的共通資本",
@@ -4048,7 +4048,7 @@ window.RESEARCH_DATA = [
     "title": "5_安田先生パトロン講義2025_1 (2022/50)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=202250325_安田先生パトロン講義2025_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/202250325_安田先生パトロン講義2025_1.pages",
     "tags": [
       "AI",
@@ -4078,7 +4078,7 @@ window.RESEARCH_DATA = [
     "title": "180_STORIUM_AI_1",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=180_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/180_STORIUM_AI_1.pages",
     "tags": [
       "AI",
@@ -4092,7 +4092,7 @@ window.RESEARCH_DATA = [
     "title": "Narem_九州 SEED NEXT FORCE",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=Narem_九州 SEED NEXT FORCE.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/2025.1/Narem_九州 SEED NEXT FORCE.pdf",
     "tags": [
       "AI",
@@ -4106,7 +4106,7 @@ window.RESEARCH_DATA = [
     "title": "NewLo株式会社_九州 SEED NEXT FORCE",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=NewLo株式会社_九州 SEED NEXT FORCE.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/2025.1/NewLo株式会社_九州 SEED NEXT FORCE.pdf",
     "tags": [
       "AI",
@@ -4120,7 +4120,7 @@ window.RESEARCH_DATA = [
     "title": "boshu株式会社_九州 SEED NEXT FORCE",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=boshu株式会社_九州 SEED NEXT FORCE.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/2025.1/boshu株式会社_九州 SEED NEXT FORCE.pdf",
     "tags": [
       "AI",
@@ -4134,7 +4134,7 @@ window.RESEARCH_DATA = [
     "title": "ヨクト株式会社_九州 SEED NEXT FORCE",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=ヨクト株式会社_九州 SEED NEXT FORCE.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/2025.1/ヨクト株式会社_九州 SEED NEXT FORCE.pdf",
     "tags": [
       "AI",
@@ -4148,7 +4148,7 @@ window.RESEARCH_DATA = [
     "title": "九州大学SACMOTs_九州 SEED NEXT FORCE",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=九州大学SACMOTs_九州 SEED NEXT FORCE.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/2025.1/九州大学SACMOTs_九州 SEED NEXT FORCE.pdf",
     "tags": [
       "AI",
@@ -4162,7 +4162,7 @@ window.RESEARCH_DATA = [
     "title": "株式会社HaKaL_九州 SEED NEXT FORCE",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=株式会社HaKaL_九州 SEED NEXT FORCE.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/2025.1/株式会社HaKaL_九州 SEED NEXT FORCE.pdf",
     "tags": [
       "AI",
@@ -4176,7 +4176,7 @@ window.RESEARCH_DATA = [
     "title": "株式会社NextStairs_九州 SEED NEXT FORCE",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=株式会社NextStairs_九州 SEED NEXT FORCE.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/2025.1/株式会社NextStairs_九州 SEED NEXT FORCE.pdf",
     "tags": [
       "AI",
@@ -4190,7 +4190,7 @@ window.RESEARCH_DATA = [
     "title": "株式会社Pascaline_九州 SEED NEXT FORCE",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=株式会社Pascaline_九州 SEED NEXT FORCE.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/2025.1/株式会社Pascaline_九州 SEED NEXT FORCE.pdf",
     "tags": [
       "AI",
@@ -4204,7 +4204,7 @@ window.RESEARCH_DATA = [
     "title": "株式会社おまけ_九州 SEED NEXT FORCE",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=株式会社おまけ_九州 SEED NEXT FORCE.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/2025.1/株式会社おまけ_九州 SEED NEXT FORCE.pdf",
     "tags": [
       "AI",
@@ -4218,7 +4218,7 @@ window.RESEARCH_DATA = [
     "title": "株式会社グリフォンアルマ_九州 SEED NEXT FORCE",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=株式会社グリフォンアルマ_九州 SEED NEXT FORCE.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/2025.1/株式会社グリフォンアルマ_九州 SEED NEXT FORCE.pdf",
     "tags": [
       "AI",
@@ -4232,7 +4232,7 @@ window.RESEARCH_DATA = [
     "title": "BIOTECHWORKS-H2_STORIUM_AI_1",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=BIOTECHWORKS-H2_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/BIOTECHWORKS-H2_STORIUM_AI_1.pages",
     "tags": [
       "AI",
@@ -4246,7 +4246,7 @@ window.RESEARCH_DATA = [
     "title": "Cavipla_STORIUM_AI_1",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=Cavipla_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/Cavipla_STORIUM_AI_1.pages",
     "tags": [
       "AI",
@@ -4260,7 +4260,7 @@ window.RESEARCH_DATA = [
     "title": "E-OPTO_STORIUM_AI_1",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=E-OPTO_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/E-OPTO_STORIUM_AI_1.pages",
     "tags": [
       "AI",
@@ -4274,7 +4274,7 @@ window.RESEARCH_DATA = [
     "title": "IKETEL_STORIUM_AI_1",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=IKETEL_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/IKETEL_STORIUM_AI_1.pages",
     "tags": [
       "AI",
@@ -4288,7 +4288,7 @@ window.RESEARCH_DATA = [
     "title": "MIST_STORIUM_AI_1",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=MIST_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/MIST_STORIUM_AI_1.pages",
     "tags": [
       "AI",
@@ -4302,7 +4302,7 @@ window.RESEARCH_DATA = [
     "title": "RASCAL's_STORIUM_AI_1",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=RASCAL's_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/RASCAL's_STORIUM_AI_1.pages",
     "tags": [
       "AI",
@@ -4316,7 +4316,7 @@ window.RESEARCH_DATA = [
     "title": "STAR UP_STORIUM_AI_1",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=STAR UP_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/STAR UP_STORIUM_AI_1.pages",
     "tags": [
       "AI",
@@ -4344,7 +4344,7 @@ window.RESEARCH_DATA = [
     "title": "SocialBridge_STORIUM_AI_1",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=SocialBridge_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/SocialBridge_STORIUM_AI_1.pages",
     "tags": [
       "AI",
@@ -4358,7 +4358,7 @@ window.RESEARCH_DATA = [
     "title": "Surg storage _STORIUM_AI_1",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=Surg storage _STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/Surg storage _STORIUM_AI_1.pages",
     "tags": [
       "AI",
@@ -4372,7 +4372,7 @@ window.RESEARCH_DATA = [
     "title": "Value way_STORIUM_AI_1",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=Value way_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/Value way_STORIUM_AI_1.pages",
     "tags": [
       "AI",
@@ -4386,7 +4386,7 @@ window.RESEARCH_DATA = [
     "title": "Walkable Future _STORIUM_AI_1",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=Walkable Future _STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/Walkable Future _STORIUM_AI_1.pages",
     "tags": [
       "AI",
@@ -4400,7 +4400,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_株式会社bionto",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_株式会社bionto.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/forum2025_株式会社bionto.pages",
     "tags": [
       "AI",
@@ -4414,7 +4414,7 @@ window.RESEARCH_DATA = [
     "title": "アニバーサリーコンシェル_STORIUM_AI_1",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=アニバーサリーコンシェル_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/アニバーサリーコンシェル_STORIUM_AI_1.pages",
     "tags": [
       "AI",
@@ -4428,7 +4428,7 @@ window.RESEARCH_DATA = [
     "title": "コテラス_STORIUM_AI_1",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=コテラス_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/コテラス_STORIUM_AI_1.pages",
     "tags": [
       "AI",
@@ -4442,7 +4442,7 @@ window.RESEARCH_DATA = [
     "title": "シー・システム_STORIUM_AI_1",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=シー・システム_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/シー・システム_STORIUM_AI_1.pages",
     "tags": [
       "AI",
@@ -4456,7 +4456,7 @@ window.RESEARCH_DATA = [
     "title": "デイジーヘルステック_STORIUM_AI_1",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=デイジーヘルステック_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/デイジーヘルステック_STORIUM_AI_1.pages",
     "tags": [
       "AI",
@@ -4470,7 +4470,7 @@ window.RESEARCH_DATA = [
     "title": "ネオキュア_STORIUM_AI_1",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=ネオキュア_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/ネオキュア_STORIUM_AI_1.pages",
     "tags": [
       "AI",
@@ -4484,7 +4484,7 @@ window.RESEARCH_DATA = [
     "title": "ハプキタス_STORIUM_AI_1",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=ハプキタス_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/ハプキタス_STORIUM_AI_1.pages",
     "tags": [
       "AI",
@@ -4498,7 +4498,7 @@ window.RESEARCH_DATA = [
     "title": "マイクロアルゲミー_STORIUM_AI_1",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=マイクロアルゲミー_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/マイクロアルゲミー_STORIUM_AI_1.pages",
     "tags": [
       "AI",
@@ -4526,7 +4526,7 @@ window.RESEARCH_DATA = [
     "title": "日本美容創生_STORIUM_AI_1",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=日本美容創生_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/完成版レポート/日本美容創生_STORIUM_AI_1.pages",
     "tags": [
       "AI",
@@ -4540,7 +4540,7 @@ window.RESEARCH_DATA = [
     "title": "物語運輸_STORIUM_AI_1",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=物語運輸_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/完成版レポート/物語運輸_STORIUM_AI_1.pages",
     "tags": [
       "AI",
@@ -4554,7 +4554,7 @@ window.RESEARCH_DATA = [
     "title": "180_STORIUM_AI",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=180_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/標準レポート/180_STORIUM_AI.pages",
     "tags": [
       "AI",
@@ -4568,7 +4568,7 @@ window.RESEARCH_DATA = [
     "title": "BIOTECHWORKS-H2_STORIUM_AI",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=BIOTECHWORKS-H2_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/標準レポート/BIOTECHWORKS-H2_STORIUM_AI.pages",
     "tags": [
       "AI",
@@ -4582,7 +4582,7 @@ window.RESEARCH_DATA = [
     "title": "Cavipla_STORIUM_AI",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=Cavipla_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/標準レポート/Cavipla_STORIUM_AI.pages",
     "tags": [
       "AI",
@@ -4596,7 +4596,7 @@ window.RESEARCH_DATA = [
     "title": "E-OPTO_STORIUM_AI",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=E-OPTO_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/標準レポート/E-OPTO_STORIUM_AI.pages",
     "tags": [
       "AI",
@@ -4610,7 +4610,7 @@ window.RESEARCH_DATA = [
     "title": "IKETEL_STORIUM_AI",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=IKETEL_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/標準レポート/IKETEL_STORIUM_AI.pages",
     "tags": [
       "AI",
@@ -4624,7 +4624,7 @@ window.RESEARCH_DATA = [
     "title": "MIST_STORIUM_AI",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=MIST_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/標準レポート/MIST_STORIUM_AI.pages",
     "tags": [
       "AI",
@@ -4638,7 +4638,7 @@ window.RESEARCH_DATA = [
     "title": "RASCAL's_STORIUM_AI",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=RASCAL's_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/標準レポート/RASCAL's_STORIUM_AI.pages",
     "tags": [
       "AI",
@@ -4652,7 +4652,7 @@ window.RESEARCH_DATA = [
     "title": "STAR UP_STORIUM_AI",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=STAR UP_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/標準レポート/STAR UP_STORIUM_AI.pages",
     "tags": [
       "AI",
@@ -4666,7 +4666,7 @@ window.RESEARCH_DATA = [
     "title": "SocialBridge_STORIUM_AI",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=SocialBridge_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/標準レポート/SocialBridge_STORIUM_AI.pages",
     "tags": [
       "AI",
@@ -4680,7 +4680,7 @@ window.RESEARCH_DATA = [
     "title": "Surg storage _STORIUM_AI",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=Surg storage _STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/標準レポート/Surg storage _STORIUM_AI.pages",
     "tags": [
       "AI",
@@ -4694,7 +4694,7 @@ window.RESEARCH_DATA = [
     "title": "Value way_STORIUM_AI",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=Value way_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/標準レポート/Value way_STORIUM_AI.pages",
     "tags": [
       "AI",
@@ -4708,7 +4708,7 @@ window.RESEARCH_DATA = [
     "title": "Walkable Future _STORIUM_AI",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=Walkable Future _STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/標準レポート/Walkable Future _STORIUM_AI.pages",
     "tags": [
       "AI",
@@ -4722,7 +4722,7 @@ window.RESEARCH_DATA = [
     "title": "アニバーサリーコンシェル_STORIUM_AI",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=アニバーサリーコンシェル_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/標準レポート/アニバーサリーコンシェル_STORIUM_AI.pages",
     "tags": [
       "AI",
@@ -4736,7 +4736,7 @@ window.RESEARCH_DATA = [
     "title": "コテラス_STORIUM_AI",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=コテラス_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/標準レポート/コテラス_STORIUM_AI.pages",
     "tags": [
       "AI",
@@ -4750,7 +4750,7 @@ window.RESEARCH_DATA = [
     "title": "シー・システム_STORIUM_AI",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=シー・システム_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/標準レポート/シー・システム_STORIUM_AI.pages",
     "tags": [
       "AI",
@@ -4764,7 +4764,7 @@ window.RESEARCH_DATA = [
     "title": "デイジーヘルステック_STORIUM_AI",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=デイジーヘルステック_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/標準レポート/デイジーヘルステック_STORIUM_AI.pages",
     "tags": [
       "AI",
@@ -4778,7 +4778,7 @@ window.RESEARCH_DATA = [
     "title": "ネオキュア_STORIUM_AI",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=ネオキュア_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/標準レポート/ネオキュア_STORIUM_AI.pages",
     "tags": [
       "AI",
@@ -4792,7 +4792,7 @@ window.RESEARCH_DATA = [
     "title": "ハプキタス_STORIUM_AI",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=ハプキタス_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/標準レポート/ハプキタス_STORIUM_AI.pages",
     "tags": [
       "AI",
@@ -4806,7 +4806,7 @@ window.RESEARCH_DATA = [
     "title": "マイクロアルゲミー_STORIUM_AI",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=マイクロアルゲミー_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/標準レポート/マイクロアルゲミー_STORIUM_AI.pages",
     "tags": [
       "AI",
@@ -4820,7 +4820,7 @@ window.RESEARCH_DATA = [
     "title": "日本美容創生_STORIUM_AI",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=日本美容創生_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/標準レポート/日本美容創生_STORIUM_AI.pages",
     "tags": [
       "AI",
@@ -4834,7 +4834,7 @@ window.RESEARCH_DATA = [
     "title": "物語運輸_STORIUM_AI",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=物語運輸_STORIUM_AI_1.pdf",
     "summary": "生成AIレポート/03_エッセンス/STORIUM/標準レポート/物語運輸_STORIUM_AI.pages",
     "tags": [
       "AI",
@@ -4876,7 +4876,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_ E-OPTO",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_ E-OPTO.pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_ E-OPTO.pages",
     "tags": [
       "フォーラム",
@@ -4891,7 +4891,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_ Epsilon Molecular Engineering ",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_ Epsilon Molecular Engineering .pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_ Epsilon Molecular Engineering .pages",
     "tags": [
       "EC",
@@ -4906,7 +4906,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_ MEMORY LAB",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_ MEMORY LAB.pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_ MEMORY LAB.pages",
     "tags": [
       "フォーラム",
@@ -4921,7 +4921,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_ MORPHEUS株式会社",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_ MORPHEUS株式会社.pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_ MORPHEUS株式会社.pages",
     "tags": [
       "フォーラム",
@@ -4936,7 +4936,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_ MUSVI株式会社 ",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_ MUSVI株式会社 .pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_ MUSVI株式会社 .pages",
     "tags": [
       "フォーラム",
@@ -4951,7 +4951,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_ mocomoco株式会社",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_ mocomoco株式会社.pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_ mocomoco株式会社.pages",
     "tags": [
       "フォーラム",
@@ -4966,7 +4966,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_BioPhenolics株式会社",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_BioPhenolics株式会社.pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_BioPhenolics株式会社.pages",
     "tags": [
       "フォーラム",
@@ -4981,7 +4981,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_Zip Infrastructure",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_Zip Infrastructure.pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_Zip Infrastructure.pages",
     "tags": [
       "フォーラム",
@@ -4996,7 +4996,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_サンプルのコピー2",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_サンプルのコピー27.pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_サンプルのコピー2.pages",
     "tags": [
       "フォーラム",
@@ -5011,7 +5011,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_サンプルのコピー27",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_サンプルのコピー27.pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_サンプルのコピー27.pages",
     "tags": [
       "フォーラム",
@@ -5026,7 +5026,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_サンプルのコピー4",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_サンプルのコピー4.pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_サンプルのコピー4.pdf",
     "tags": [
       "フォーラム",
@@ -5041,7 +5041,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_テトラ・アビエーション",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_テトラ・アビエーション.pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_テトラ・アビエーション.pages",
     "tags": [
       "フォーラム",
@@ -5056,7 +5056,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_ネクスファイ・テクノロジー株式会社",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_ネクスファイ・テクノロジー株式会社.pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_ネクスファイ・テクノロジー株式会社.pages",
     "tags": [
       "フォーラム",
@@ -5071,7 +5071,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_ファーメンステーション",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_ファーメンステーション.pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_ファーメンステーション.pages",
     "tags": [
       "フォーラム",
@@ -5086,7 +5086,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_ポルタパーク株式会社 ",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_ポルタパーク株式会社 .pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_ポルタパーク株式会社 .pages",
     "tags": [
       "フォーラム",
@@ -5101,7 +5101,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_マイクロバイオファクトリー株式会社",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_マイクロバイオファクトリー株式会社.pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_マイクロバイオファクトリー株式会社.pages",
     "tags": [
       "フォーラム",
@@ -5116,7 +5116,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_株式会社AOZORA",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_株式会社AOZORA.pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_株式会社AOZORA.pages",
     "tags": [
       "フォーラム",
@@ -5131,7 +5131,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_株式会社Ashirase",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_株式会社Ashirase.pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_株式会社Ashirase.pages",
     "tags": [
       "フォーラム",
@@ -5146,7 +5146,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_株式会社BiPSEE ",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_株式会社BiPSEE .pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_株式会社BiPSEE .pages",
     "tags": [
       "フォーラム",
@@ -5161,7 +5161,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_株式会社ERISA",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_株式会社ERISA.pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_株式会社ERISA.pages",
     "tags": [
       "フォーラム",
@@ -5176,7 +5176,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_株式会社Eco-Pork",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_株式会社Eco-Pork.pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_株式会社Eco-Pork.pages",
     "tags": [
       "EC",
@@ -5191,7 +5191,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_株式会社JOYCLE",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_株式会社JOYCLE.pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_株式会社JOYCLE.pages",
     "tags": [
       "フォーラム",
@@ -5206,7 +5206,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_株式会社NERON",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_株式会社NERON.pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_株式会社NERON.pages",
     "tags": [
       "フォーラム",
@@ -5221,7 +5221,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_株式会社NexaScience ",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_株式会社NexaScience .pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_株式会社NexaScience .pages",
     "tags": [
       "フォーラム",
@@ -5236,7 +5236,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_株式会社Plasma ",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_株式会社Plasma .pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_株式会社Plasma .pages",
     "tags": [
       "フォーラム",
@@ -5251,7 +5251,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_株式会社UMIAILE ",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_株式会社UMIAILE .pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_株式会社UMIAILE .pages",
     "tags": [
       "フォーラム",
@@ -5266,7 +5266,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_株式会社イノカ",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_株式会社イノカ.pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_株式会社イノカ.pages",
     "tags": [
       "フォーラム",
@@ -5281,7 +5281,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_株式会社オリィ研究所",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_株式会社オリィ研究所.pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_株式会社オリィ研究所.pages",
     "tags": [
       "研究",
@@ -5298,7 +5298,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_株式会社クォンタムフラワーズ＆フーズ",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_株式会社クォンタムフラワーズ＆フーズ.pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_株式会社クォンタムフラワーズ＆フーズ.pages",
     "tags": [
       "フォーラム",
@@ -5313,7 +5313,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_株式会社シンギュレイト",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_株式会社シンギュレイト.pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_株式会社シンギュレイト.pages",
     "tags": [
       "フォーラム",
@@ -5328,7 +5328,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_株式会社ソラリス",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_株式会社ソラリス.pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_株式会社ソラリス.pages",
     "tags": [
       "フォーラム",
@@ -5343,7 +5343,7 @@ window.RESEARCH_DATA = [
     "title": "forum2025_株式会社ミーバイオ",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=forum2025_株式会社ミーバイオ.pdf",
     "summary": "生成AIレポート/03_エッセンス/フォーラム : STORIUM/forum2025_株式会社ミーバイオ.pages",
     "tags": [
       "フォーラム",
@@ -5358,7 +5358,7 @@ window.RESEARCH_DATA = [
     "title": "LLM（大規模言語モデル）が人文社会学研究に与える影響 (2025/03)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250309_LLM（大規模言語モデル）が人文社会学研究に与える影響.pdf",
     "summary": "生成AIレポート/20250309_LLM（大規模言語モデル）が人文社会学研究に与える影響.pages",
     "tags": [
       "学術",
@@ -5374,7 +5374,7 @@ window.RESEARCH_DATA = [
     "title": "ゼブラ企業とソーシャルイノベーション (2025/03)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250311_ゼブラ企業とソーシャルイノベーション.pdf",
     "summary": "生成AIレポート/20250311_ゼブラ企業とソーシャルイノベーション.pages",
     "tags": [
       "経営",
@@ -5403,7 +5403,7 @@ window.RESEARCH_DATA = [
     "title": "研究と実践を繋ぐ次世代人材育成：グローバル助成財団の取り組み、課題、および理論的枠組み (2025/03)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250315_研究と実践を繋ぐ次世代人材育成：グローバル助成財団の取り組み、課題、および理論的枠組み.pdf",
     "summary": "生成AIレポート/PA/20250315_研究と実践を繋ぐ次世代人材育成：グローバル助成財団の取り組み、課題、および理論的枠組み.pages",
     "tags": [
       "PA",
@@ -5417,7 +5417,7 @@ window.RESEARCH_DATA = [
     "title": "民間助成財団による新規奨学金事業戦略に関する研究 (2025/03)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250317_民間助成財団による新規奨学金事業戦略に関する研究.pdf",
     "summary": "生成AIレポート/PA/20250317_民間助成財団による新規奨学金事業戦略に関する研究.pages",
     "tags": [
       "PA",
@@ -5431,7 +5431,7 @@ window.RESEARCH_DATA = [
     "title": "東洋水産助成テーマ再考 (2025/03)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250331_東洋水産助成テーマ再考.pdf",
     "summary": "生成AIレポート/PA/20250331_東洋水産助成テーマ再考.pages",
     "tags": [
       "AI",
@@ -5446,7 +5446,7 @@ window.RESEARCH_DATA = [
     "title": "研究と実践をつなぐ企業人博士号取得支援の国際比較研究 (2025/04)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250401_研究と実践をつなぐ企業人博士号取得支援の国際比較研究.pdf",
     "summary": "生成AIレポート/PA/20250401_研究と実践をつなぐ企業人博士号取得支援の国際比較研究.pages",
     "tags": [
       "研究",
@@ -5463,7 +5463,7 @@ window.RESEARCH_DATA = [
     "title": "研究と実践をつなぐ次世代ハイブリッド人材育成のための研究助成プログラムの提案 (2025/04)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250401_研究と実践をつなぐ次世代ハイブリッド人材育成のための研究助成プログラムの提案.pdf",
     "summary": "生成AIレポート/PA/20250401_研究と実践をつなぐ次世代ハイブリッド人材育成のための研究助成プログラムの提案.pages",
     "tags": [
       "研究",
@@ -5480,7 +5480,7 @@ window.RESEARCH_DATA = [
     "title": "日本の食・水産分野における持続可能性対応の専門知識・人材の変化と産学分断の影響 (2025/04)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250404_日本の食・水産分野における持続可能性対応の専門知識・人材の変化と産学分断の影響.pdf",
     "summary": "生成AIレポート/PA/20250404_日本の食・水産分野における持続可能性対応の専門知識・人材の変化と産学分断の影響.pages",
     "tags": [
       "AI",
@@ -5495,7 +5495,7 @@ window.RESEARCH_DATA = [
     "title": "日本の食・水産分野における企業研究と学術研究の乖離：現状、課題と展望 (2025/04)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250408_日本の食・水産分野における企業研究と学術研究の乖離：現状、課題と展望.pdf",
     "summary": "生成AIレポート/PA/20250408_日本の食・水産分野における企業研究と学術研究の乖離：現状、課題と展望.pages",
     "tags": [
       "研究",
@@ -5527,7 +5527,7 @@ window.RESEARCH_DATA = [
     "title": "2025_0317海外における食と水産分野の研究者が直面する現状の課題",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=2025_0317海外における食と水産分野の研究者が直面する現状の課題.pdf",
     "summary": "生成AIレポート/PA/2025_0317海外における食と水産分野の研究者が直面する現状の課題.pages",
     "tags": [
       "研究",
@@ -5544,7 +5544,7 @@ window.RESEARCH_DATA = [
     "title": "MEER_東大渡邊先生",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=MEER_東大渡邊先生.pdf",
     "summary": "生成AIレポート/PA/MEER_東大渡邊先生/MEER_東大渡邊先生.pages",
     "tags": [
       "AI",
@@ -5602,7 +5602,7 @@ window.RESEARCH_DATA = [
     "title": "「神経建築学が拓くコミュニティの未来： 短期・長期効果モデルに基づく“集い続ける”空間デザイン」 (2025/02)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250222_「神経建築学が拓くコミュニティの未来： 短期・長期効果モデルに基づく“集い続ける”空間デザイン」.pdf",
     "summary": "生成AIレポート/その他レポート/20250222_「神経建築学が拓くコミュニティの未来： 短期・長期効果モデルに基づく“集い続ける”空間デザイン」.pages",
     "tags": [
       "AI",
@@ -5618,7 +5618,7 @@ window.RESEARCH_DATA = [
     "title": "オフィスデザインが働き手の能力発揮に与える影響 (2025/02)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250222_建築学の観点から見たオフィスデザインが働き手の能力発揮に与える影響_概要.pdf",
     "summary": "生成AIレポート/その他レポート/20250222_オフィスデザインが働き手の能力発揮に与える影響.pages",
     "tags": [
       "その他レポート",
@@ -5633,7 +5633,7 @@ window.RESEARCH_DATA = [
     "title": "医療人類学における死生学的観点 (2025/02)",
     "category": "人類学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250222_医療人類学における死生学的観点.pdf",
     "summary": "生成AIレポート/その他レポート/20250222_医療人類学における死生学的観点.pages",
     "tags": [
       "AI",
@@ -5648,7 +5648,7 @@ window.RESEARCH_DATA = [
     "title": "建築学の観点から見たオフィスデザインが働き手の能力発揮に与える影響_概要 (2025/02)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250222_建築学の観点から見たオフィスデザインが働き手の能力発揮に与える影響_概要.pdf",
     "summary": "生成AIレポート/その他レポート/20250222_建築学の観点から見たオフィスデザインが働き手の能力発揮に与える影響_概要.pdf",
     "tags": [
       "AI",
@@ -5694,7 +5694,7 @@ window.RESEARCH_DATA = [
     "title": "SINICレポート202050215",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=SINICレポート202050215.pdf",
     "summary": "生成AIレポート/その他レポート/SINICレポート202050215.pages",
     "tags": [
       "SINIC",
@@ -5708,7 +5708,7 @@ window.RESEARCH_DATA = [
     "title": "アフリカにおける「ウグンツ」（ウブントゥ）の人類学的・経済人類学的考察20250218",
     "category": "人類学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=アフリカにおける「ウグンツ」（ウブントゥ）の人類学的・経済人類学的考察20250218.pdf",
     "summary": "生成AIレポート/その他レポート/アフリカにおける「ウグンツ」（ウブントゥ）の人類学的・経済人類学的考察20250218.pages",
     "tags": [
       "AI",
@@ -5787,7 +5787,7 @@ window.RESEARCH_DATA = [
     "title": "サンプル_量子コンピューターと睡眠科学の融合：新たな学際領域の可能性",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=サンプル_量子コンピューターと睡眠科学の融合：新たな学際領域の可能性.pdf",
     "summary": "生成AIレポート/その他レポート/サンプル_量子コンピューターと睡眠科学の融合：新たな学際領域の可能性.pages",
     "tags": [
       "量子コンピューティング",
@@ -5801,7 +5801,7 @@ window.RESEARCH_DATA = [
     "title": "ラザニアレシピ2",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=ラザニアレシピ2.pdf",
     "summary": "生成AIレポート/その他レポート/ラザニアレシピ2.pdf",
     "tags": [
       "その他レポート",
@@ -5938,7 +5938,7 @@ window.RESEARCH_DATA = [
     "title": "科学大辻本先生_エコシステム 2",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=科学大辻本先生_エコシステム 2.pdf",
     "summary": "生成AIレポート/イベントレポート/UoC20250228/科学大辻本先生_エコシステム 2.pdf",
     "tags": [
       "AI",
@@ -5954,7 +5954,7 @@ window.RESEARCH_DATA = [
     "title": "科学大辻本先生_エコシステム",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=科学大辻本先生_エコシステム.pdf",
     "summary": "生成AIレポート/イベントレポート/UoC20250228/科学大辻本先生_エコシステム.pdf",
     "tags": [
       "AI",
@@ -5986,7 +5986,7 @@ window.RESEARCH_DATA = [
     "title": "地域における分散的自己：社会・心理・哲学・経済の視点からの考察 (2022/02)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20220222_地域における分散的自己：社会・心理・哲学・経済の視点からの考察_再考察.pdf",
     "summary": "生成AIレポート/ウェルビーイング/20220222_地域における分散的自己：社会・心理・哲学・経済の視点からの考察.pages",
     "tags": [
       "AI",
@@ -6002,7 +6002,7 @@ window.RESEARCH_DATA = [
     "title": "地域における分散的自己：社会・心理・哲学・経済の視点からの考察_再考察 (2022/02)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20220222_地域における分散的自己：社会・心理・哲学・経済の視点からの考察_再考察.pdf",
     "summary": "生成AIレポート/ウェルビーイング/20220222_地域における分散的自己：社会・心理・哲学・経済の視点からの考察_再考察.pages",
     "tags": [
       "AI",
@@ -6018,7 +6018,7 @@ window.RESEARCH_DATA = [
     "title": "wellbeing文献20250215",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=wellbeing文献20250215.pdf",
     "summary": "生成AIレポート/ウェルビーイング/wellbeing文献20250215.pages",
     "tags": [
       "AI",
@@ -6033,7 +6033,7 @@ window.RESEARCH_DATA = [
     "title": "ウェルビーイング共通概念",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=ウェルビーイング共通概念.pdf",
     "summary": "生成AIレポート/ウェルビーイング/ウェルビーイング共通概念.pages",
     "tags": [
       "AI",
@@ -6048,7 +6048,7 @@ window.RESEARCH_DATA = [
     "title": "ウェルビーイング共通概念_表",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=ウェルビーイング共通概念_表.pdf",
     "summary": "生成AIレポート/ウェルビーイング/ウェルビーイング共通概念_表.numbers",
     "tags": [
       "AI",
@@ -6063,7 +6063,7 @@ window.RESEARCH_DATA = [
     "title": "esse-senseサロンビジネス_イノベーションラウンド事例 (2025/02)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250226_esse-senseサロンビジネス_イノベーションラウンド事例.pdf",
     "summary": "生成AIレポート/エッセンス/エッセンス企画/20250226_esse-senseサロンビジネス_イノベーションラウンド事例.pages",
     "tags": [
       "esse-sense",
@@ -6077,7 +6077,7 @@ window.RESEARCH_DATA = [
     "title": "esse-senseサロンビジネス_イノベーションラウンド事例＿カンファレンス (2025/02)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://docs.google.com/document/d/15F5061ZBmbzMz0nnCqMsw6AuW_f8MLtxgUiV_30Vlq0/edit",
     "summary": "生成AIレポート/エッセンス/エッセンス企画/20250226_esse-senseサロンビジネス_イノベーションラウンド事例＿カンファレンス.pages",
     "tags": [
       "esse-sense",
@@ -6091,7 +6091,7 @@ window.RESEARCH_DATA = [
     "title": "esse-senseサロンビジネス_価格戦略 (2025/02)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://docs.google.com/document/d/15F5061ZBmbzMz0nnCqMsw6AuW_f8MLtxgUiV_30Vlq0/edit",
     "summary": "生成AIレポート/エッセンス/エッセンス企画/20250226_esse-senseサロンビジネス_価格戦略.pages",
     "tags": [
       "esse-sense",
@@ -6105,7 +6105,7 @@ window.RESEARCH_DATA = [
     "title": "esse-senseサロン企画 (2025/02)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250226_esse-senseサロン企画_概論.pdf",
     "summary": "生成AIレポート/エッセンス/エッセンス企画/20250226_esse-senseサロン企画.pages",
     "tags": [
       "esse-sense",
@@ -6119,7 +6119,7 @@ window.RESEARCH_DATA = [
     "title": "esse-senseサロン企画_2 (2025/02)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://docs.google.com/document/d/15F5061ZBmbzMz0nnCqMsw6AuW_f8MLtxgUiV_30Vlq0/edit",
     "summary": "生成AIレポート/エッセンス/エッセンス企画/20250226_esse-senseサロン企画_2.pages",
     "tags": [
       "esse-sense",
@@ -6133,7 +6133,7 @@ window.RESEARCH_DATA = [
     "title": "esse-senseサロン企画_ベンチマーク・バークレー (2025/02)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250226_esse-senseサロン企画_ベンチマーク・バークレー.pdf",
     "summary": "生成AIレポート/エッセンス/エッセンス企画/20250226_esse-senseサロン企画_ベンチマーク・バークレー.pages",
     "tags": [
       "esse-sense",
@@ -6147,7 +6147,7 @@ window.RESEARCH_DATA = [
     "title": "esse-senseサロン企画_戦略 (2025/02)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250226_esse-senseサロン企画_戦略2.pdf",
     "summary": "生成AIレポート/エッセンス/エッセンス企画/20250226_esse-senseサロン企画_戦略.pages",
     "tags": [
       "esse-sense",
@@ -6161,7 +6161,7 @@ window.RESEARCH_DATA = [
     "title": "esse-senseサロン企画_戦略2 (2025/02)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250226_esse-senseサロン企画_戦略2.pdf",
     "summary": "生成AIレポート/エッセンス/エッセンス企画/20250226_esse-senseサロン企画_戦略2.pages",
     "tags": [
       "esse-sense",
@@ -6175,7 +6175,7 @@ window.RESEARCH_DATA = [
     "title": "esse-senseサロン企画_概論 (2025/02)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250226_esse-senseサロン企画_概論.pdf",
     "summary": "生成AIレポート/エッセンス/エッセンス企画/20250226_esse-senseサロン企画_概論.pages",
     "tags": [
       "esse-sense",
@@ -6189,7 +6189,7 @@ window.RESEARCH_DATA = [
     "title": "esse-senseデータベースビジネス (2025/02)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250226_esse-senseデータベースビジネス.pdf",
     "summary": "生成AIレポート/エッセンス/エッセンス企画/20250226_esse-senseデータベースビジネス.pages",
     "tags": [
       "esse-sense",
@@ -6203,7 +6203,7 @@ window.RESEARCH_DATA = [
     "title": "esse-senseデータベースビジネス_ブルームバーグ事例 (2025/02)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250226_esse-senseデータベースビジネス_ブルームバーグ事例.pdf",
     "summary": "生成AIレポート/エッセンス/エッセンス企画/20250226_esse-senseデータベースビジネス_ブルームバーグ事例.pages",
     "tags": [
       "esse-sense",
@@ -6217,7 +6217,7 @@ window.RESEARCH_DATA = [
     "title": "esse-senseデータベースビジネス_価格戦略 (2025/02)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://docs.google.com/document/d/15F5061ZBmbzMz0nnCqMsw6AuW_f8MLtxgUiV_30Vlq0/edit",
     "summary": "生成AIレポート/エッセンス/エッセンス企画/20250226_esse-senseデータベースビジネス_価格戦略.pages",
     "tags": [
       "esse-sense",
@@ -6231,7 +6231,7 @@ window.RESEARCH_DATA = [
     "title": "esse-senseデータベースビジネス_概論 (2025/02)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://docs.google.com/document/d/15F5061ZBmbzMz0nnCqMsw6AuW_f8MLtxgUiV_30Vlq0/edit",
     "summary": "生成AIレポート/エッセンス/エッセンス企画/20250226_esse-senseデータベースビジネス_概論.pages",
     "tags": [
       "esse-sense",
@@ -6245,7 +6245,7 @@ window.RESEARCH_DATA = [
     "title": "esse-senseデータベースビジネス総論 (2025/02)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250226_esse-senseデータベースビジネス総論.pdf",
     "summary": "生成AIレポート/エッセンス/エッセンス企画/20250226_esse-senseデータベースビジネス総論.pages",
     "tags": [
       "esse-sense",
@@ -6259,7 +6259,7 @@ window.RESEARCH_DATA = [
     "title": "esse-sense事業戦略 (2025/03)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=esse-sense事業プラン2026_20260321.pdf",
     "summary": "生成AIレポート/エッセンス/エッセンス企画/20250302_esse-sense事業戦略.pages",
     "tags": [
       "esse-sense",
@@ -6305,7 +6305,7 @@ window.RESEARCH_DATA = [
     "title": "エッセンス事業戦略まとめ (2025/03)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250302_エッセンス事業戦略まとめ（内部資料用３）.pdf",
     "summary": "生成AIレポート/エッセンス/エッセンス企画/20250302_エッセンス事業戦略まとめ.pages",
     "tags": [
       "経営",
@@ -6337,7 +6337,7 @@ window.RESEARCH_DATA = [
     "title": "エッセンス事業戦略まとめ（内部資料用2） (2025/03)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250302_エッセンス事業戦略まとめ（内部資料用2）.pdf",
     "summary": "生成AIレポート/エッセンス/エッセンス企画/20250302_エッセンス事業戦略まとめ（内部資料用2）.pages",
     "tags": [
       "経営",
@@ -6353,7 +6353,7 @@ window.RESEARCH_DATA = [
     "title": "エッセンス事業戦略まとめ（内部資料用） (2025/03)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250302_エッセンス事業戦略まとめ（内部資料用）.pdf",
     "summary": "生成AIレポート/エッセンス/エッセンス企画/20250302_エッセンス事業戦略まとめ（内部資料用）.pages",
     "tags": [
       "経営",
@@ -6369,7 +6369,7 @@ window.RESEARCH_DATA = [
     "title": "エッセンス事業戦略まとめ（内部資料用３） (2025/03)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250302_エッセンス事業戦略まとめ（内部資料用３）.pdf",
     "summary": "生成AIレポート/エッセンス/エッセンス企画/20250302_エッセンス事業戦略まとめ（内部資料用３）.pages",
     "tags": [
       "経営",
@@ -6385,7 +6385,7 @@ window.RESEARCH_DATA = [
     "title": "エッセンスサロン案内文案 (2025/03)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250303_エッセンスサロン案内文案.pdf",
     "summary": "生成AIレポート/エッセンス/エッセンス企画/20250303_エッセンスサロン案内文案.pages",
     "tags": [
       "AI",
@@ -6415,7 +6415,7 @@ window.RESEARCH_DATA = [
     "title": "エッセンス事業計画_AI協働 (2025/03)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250317_エッセンス事業計画_AI協働.pdf",
     "summary": "生成AIレポート/エッセンス/エッセンス企画/20250317_エッセンス事業計画_AI協働.pages",
     "tags": [
       "経営",
@@ -6430,7 +6430,7 @@ window.RESEARCH_DATA = [
     "title": "エッセンス社が描く「研究の民主化」とソーシャルイノベーション_3 (2025/03)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250319_エッセンス社が描く「研究の民主化」とソーシャルイノベーション_3.pdf",
     "summary": "生成AIレポート/エッセンス/エッセンス企画/20250319_エッセンス社が描く「研究の民主化」とソーシャルイノベーション_3.pages",
     "tags": [
       "学術",
@@ -6446,7 +6446,7 @@ window.RESEARCH_DATA = [
     "title": "CNRSにおけるバーチャルラボの形成・発展・現状と将来展望 (2025/03)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250320_CNRSにおけるバーチャルラボの形成・発展・現状と将来展望.pdf",
     "summary": "生成AIレポート/エッセンス/エッセンス企画/20250320_CNRSにおけるバーチャルラボの形成・発展・現状と将来展望.pages",
     "tags": [
       "AI",
@@ -6490,7 +6490,7 @@ window.RESEARCH_DATA = [
     "title": "エッセンスの物語 (2025/03)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250320_エッセンスの物語.pdf",
     "summary": "生成AIレポート/エッセンス/エッセンス企画/20250320_エッセンスの物語.pages",
     "tags": [
       "AI",
@@ -6579,7 +6579,7 @@ window.RESEARCH_DATA = [
     "title": "エッセンス社の特徴",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=エッセンス社の特徴.pdf",
     "summary": "生成AIレポート/エッセンス/エッセンス企画/エッセンス社の特徴.pages",
     "tags": [
       "AI",
@@ -6668,7 +6668,7 @@ window.RESEARCH_DATA = [
     "title": "2_株主総会_グループディスカッション全体 (2022/50)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=202250322_株主総会_グループディスカッション全体.pdf",
     "summary": "生成AIレポート/エッセンス/エッセンス企画/株主総会2025/202250322_株主総会_グループディスカッション全体.pages",
     "tags": [
       "経営",
@@ -6683,7 +6683,7 @@ window.RESEARCH_DATA = [
     "title": "2_株主総会_事業報告・決算決議 (2022/50)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=202250322_株主総会_事業報告・決算決議.pdf",
     "summary": "生成AIレポート/エッセンス/エッセンス企画/株主総会2025/202250322_株主総会_事業報告・決算決議.pages",
     "tags": [
       "経営",
@@ -6741,7 +6741,7 @@ window.RESEARCH_DATA = [
     "title": "エッセンス社が描く「研究の民主化」とソーシャルイノベーション (2025/03)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250319_エッセンス社が描く「研究の民主化」とソーシャルイノベーション_3.pdf",
     "summary": "生成AIレポート/エッセンス/議事録/20250319_エッセンス社が描く「研究の民主化」とソーシャルイノベーション.pages",
     "tags": [
       "学術",
@@ -6803,7 +6803,7 @@ window.RESEARCH_DATA = [
     "title": "Geoff Mulgan『Social Innovation- How Societies Find the Power to Change』 (2025/03)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250310_Geoff Mulgan『Social Innovation- How Societies Find the Power to Change』.pdf",
     "summary": "生成AIレポート/ソーシャルイノベーション/20250310_Geoff Mulgan『Social Innovation- How Societies Find the Power to Change』.pages",
     "tags": [
       "AI",
@@ -6818,7 +6818,7 @@ window.RESEARCH_DATA = [
     "title": "Geoff Mulganの研究成果に関する包括的レビュー (2025/03)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250310_Geoff Mulganの研究成果に関する包括的レビュー.pdf",
     "summary": "生成AIレポート/ソーシャルイノベーション/20250310_Geoff Mulganの研究成果に関する包括的レビュー.pages",
     "tags": [
       "研究",
@@ -6835,7 +6835,7 @@ window.RESEARCH_DATA = [
     "title": "社会イノベーションの概念的枠組みに関する包括的研究 (2025/03)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250310_社会イノベーションの概念的枠組みに関する包括的研究.pdf",
     "summary": "生成AIレポート/ソーシャルイノベーション/20250310_社会イノベーションの概念的枠組みに関する包括的研究.pages",
     "tags": [
       "研究",
@@ -6868,7 +6868,7 @@ window.RESEARCH_DATA = [
     "title": "9_論点抽出2（ソーシャルイノベーション） (2025/00)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=202500309_論点抽出2（ソーシャルイノベーション）.pdf",
     "summary": "生成AIレポート/ソーシャルイノベーション/ソーシャルイノベーション概論/202500309_論点抽出2（ソーシャルイノベーション）.pages",
     "tags": [
       "AI",
@@ -6883,7 +6883,7 @@ window.RESEARCH_DATA = [
     "title": "9_論点抽出（ソーシャルイノベーション） (2025/00)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=202500309_論点抽出（ソーシャルイノベーション）.pdf",
     "summary": "生成AIレポート/ソーシャルイノベーション/ソーシャルイノベーション概論/202500309_論点抽出（ソーシャルイノベーション）.pages",
     "tags": [
       "AI",
@@ -6898,7 +6898,7 @@ window.RESEARCH_DATA = [
     "title": "ソーシャル・イノベーションによる社会変革：理論的枠組みと欧米・アジアのケーススタディ (2025/03)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250309_ソーシャル・イノベーションによる社会変革：理論的枠組みと欧米・アジアのケーススタディ.pdf",
     "summary": "生成AIレポート/ソーシャルイノベーション/ソーシャルイノベーション概論/20250309_ソーシャル・イノベーションによる社会変革：理論的枠組みと欧米・アジアのケーススタディ.pages",
     "tags": [
       "AI",
@@ -6913,7 +6913,7 @@ window.RESEARCH_DATA = [
     "title": "ソーシャル・イノベーションの構造的アプローチ：10の問いに関する学術的考察 (2025/03)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250309_ソーシャル・イノベーションの構造的アプローチ：10の問いに関する学術的考察.pdf",
     "summary": "生成AIレポート/ソーシャルイノベーション/ソーシャルイノベーション概論/20250309_ソーシャル・イノベーションの構造的アプローチ：10の問いに関する学術的考察.pages",
     "tags": [
       "研究",
@@ -6930,7 +6930,7 @@ window.RESEARCH_DATA = [
     "title": "ソーシャル・イノベーションの構造的アプローチ：10の問いに関する学術的考察_2 (2025/03)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250309_ソーシャル・イノベーションの構造的アプローチ：10の問いに関する学術的考察_2.pdf",
     "summary": "生成AIレポート/ソーシャルイノベーション/ソーシャルイノベーション概論/20250309_ソーシャル・イノベーションの構造的アプローチ：10の問いに関する学術的考察_2.pages",
     "tags": [
       "研究",
@@ -6964,7 +6964,7 @@ window.RESEARCH_DATA = [
     "title": "2025030_ソーシャル・イノベーション：理論と実践に関する包括的レポート（深掘り＆知見収集）",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=2025030_ソーシャル・イノベーション：理論と実践に関する包括的レポート（深掘り＆知見収集）.pdf",
     "summary": "生成AIレポート/ソーシャルイノベーション/ソーシャルイノベーション概論/2025030_ソーシャル・イノベーション：理論と実践に関する包括的レポート（深掘り＆知見収集）.pages",
     "tags": [
       "AI",
@@ -6994,7 +6994,7 @@ window.RESEARCH_DATA = [
     "title": "ソーシャルイノベーションと奴隷制度 (2025/03)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250309_ソーシャルイノベーションと奴隷制度.pdf",
     "summary": "生成AIレポート/ソーシャルイノベーション/奴隷解放とソーシャルイノベーション/20250309_ソーシャルイノベーションと奴隷制度.pages",
     "tags": [
       "AI",
@@ -7113,7 +7113,7 @@ window.RESEARCH_DATA = [
     "title": "未来学のソーシャルイノベーションへの寄与 (2025/03)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250324_未来学のソーシャルイノベーションへの寄与.pdf",
     "summary": "生成AIレポート/ソーシャルイノベーションの歴史と背景/20250324_未来学のソーシャルイノベーションへの寄与.pages",
     "tags": [
       "AI",
@@ -7145,7 +7145,7 @@ window.RESEARCH_DATA = [
     "title": "欧米の高等教育におけるソーシャルイノベーション教育の歴史的変遷と展望 (2025/03)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250324_欧米の高等教育におけるソーシャルイノベーション教育の歴史的変遷と展望.pdf",
     "summary": "生成AIレポート/ソーシャルイノベーションの歴史と背景/20250324_欧米の高等教育におけるソーシャルイノベーション教育の歴史的変遷と展望.pages",
     "tags": [
       "教育",
@@ -7221,7 +7221,7 @@ window.RESEARCH_DATA = [
     "title": "古代から現代における知の制度化の歴史的変遷と社会イノベーション (2025/03)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250325_古代から現代における知の制度化の歴史的変遷と社会イノベーション.pdf",
     "summary": "生成AIレポート/ソーシャルイノベーションの歴史と背景/20250325_古代から現代における知の制度化の歴史的変遷と社会イノベーション.pages",
     "tags": [
       "ソーシャルイノベーションの歴史と背景",
@@ -7336,7 +7336,7 @@ window.RESEARCH_DATA = [
     "title": "ウェルビーイングとネガティヴ概念 (2025/02)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250218_ウェルビーイングとネガティヴ概念.pdf",
     "summary": "生成AIレポート/パナソニック/20250218_ウェルビーイングとネガティヴ概念.pdf",
     "tags": [
       "パナソニック",
@@ -7351,7 +7351,7 @@ window.RESEARCH_DATA = [
     "title": "畏敬・悲哀の美学と神経美学から見るウェルビーイングの最新考察 (2025/02)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250221_畏敬・悲哀の美学と神経美学から見るウェルビーイングの最新考察.pdf",
     "summary": "生成AIレポート/パナソニック/20250221_畏敬・悲哀の美学と神経美学から見るウェルビーイングの最新考察.pdf",
     "tags": [
       "パナソニック",
@@ -7366,7 +7366,7 @@ window.RESEARCH_DATA = [
     "title": "「分散的自己」と地域社会 (2025/02)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250227_「分散的自己」と地域社会.pdf",
     "summary": "生成AIレポート/パナソニック/20250227_「分散的自己」と地域社会.pdf",
     "tags": [
       "パナソニック",
@@ -7381,7 +7381,7 @@ window.RESEARCH_DATA = [
     "title": "多様な場づくりと個・共同体の共存がもたらすウェルビーイングに関するヒアリング準備レポート (2025/03)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250314_多様な場づくりと個・共同体の共存がもたらすウェルビーイングに関するヒアリング準備レポート.pdf",
     "summary": "生成AIレポート/パナソニック/20250314_多様な場づくりと個・共同体の共存がもたらすウェルビーイングに関するヒアリング準備レポート.pages",
     "tags": [
       "パナソニック",
@@ -7396,7 +7396,7 @@ window.RESEARCH_DATA = [
     "title": "多様な場づくりと個・共同体の共存がもたらすウェルビーイングに関するヒアリング準備レポート_2 (2025/03)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250314_多様な場づくりと個・共同体の共存がもたらすウェルビーイングに関するヒアリング準備レポート_2.pdf",
     "summary": "生成AIレポート/パナソニック/20250314_多様な場づくりと個・共同体の共存がもたらすウェルビーイングに関するヒアリング準備レポート_2.pages",
     "tags": [
       "パナソニック",
@@ -7411,7 +7411,7 @@ window.RESEARCH_DATA = [
     "title": "多様な場づくりと個・共同体の共存がもたらすウェルビーイングに関するヒアリング準備レポート_詳細 (2025/03)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250314_多様な場づくりと個・共同体の共存がもたらすウェルビーイングに関するヒアリング準備レポート_詳細.pdf",
     "summary": "生成AIレポート/パナソニック/20250314_多様な場づくりと個・共同体の共存がもたらすウェルビーイングに関するヒアリング準備レポート_詳細.pages",
     "tags": [
       "パナソニック",
@@ -7426,7 +7426,7 @@ window.RESEARCH_DATA = [
     "title": "屋久島における死生学とウェルビーイング： 在宅医療と森林セラピーがつなぐ新たな地域包括ケアのかたち (2025/03)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250314_屋久島における死生学とウェルビーイング： 在宅医療と森林セラピーがつなぐ新たな地域包括ケアのかたち_詳細.pdf",
     "summary": "生成AIレポート/パナソニック/20250314_屋久島における死生学とウェルビーイング： 在宅医療と森林セラピーがつなぐ新たな地域包括ケアのかたち.pages",
     "tags": [
       "パナソニック",
@@ -7441,7 +7441,7 @@ window.RESEARCH_DATA = [
     "title": "屋久島における死生学とウェルビーイング： 在宅医療と森林セラピーがつなぐ新たな地域包括ケアのかたち_2 (2025/03)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250314_屋久島における死生学とウェルビーイング： 在宅医療と森林セラピーがつなぐ新たな地域包括ケアのかたち_2.pdf",
     "summary": "生成AIレポート/パナソニック/20250314_屋久島における死生学とウェルビーイング： 在宅医療と森林セラピーがつなぐ新たな地域包括ケアのかたち_2.pages",
     "tags": [
       "パナソニック",
@@ -7456,7 +7456,7 @@ window.RESEARCH_DATA = [
     "title": "屋久島における死生学とウェルビーイング： 在宅医療と森林セラピーがつなぐ新たな地域包括ケアのかたち_詳細 (2025/03)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250314_屋久島における死生学とウェルビーイング： 在宅医療と森林セラピーがつなぐ新たな地域包括ケアのかたち_詳細.pdf",
     "summary": "生成AIレポート/パナソニック/20250314_屋久島における死生学とウェルビーイング： 在宅医療と森林セラピーがつなぐ新たな地域包括ケアのかたち_詳細.pages",
     "tags": [
       "パナソニック",
@@ -7471,7 +7471,7 @@ window.RESEARCH_DATA = [
     "title": "西村ヒアリング (2025/03)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250307_西村ヒアリング_2.pdf",
     "summary": "生成AIレポート/ヒアリング/20250307ヒアリング/20250307_西村ヒアリング.pages",
     "tags": [
       "AI",
@@ -7486,7 +7486,7 @@ window.RESEARCH_DATA = [
     "title": "西村ヒアリング_2 (2025/03)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250307_西村ヒアリング_2.pdf",
     "summary": "生成AIレポート/ヒアリング/20250307ヒアリング/20250307_西村ヒアリング_2.pdf",
     "tags": [
       "AI",
@@ -7516,7 +7516,7 @@ window.RESEARCH_DATA = [
     "title": "西村ヒアリング_採用 (2025/03)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250307_西村ヒアリング_採用.pdf",
     "summary": "生成AIレポート/ヒアリング/20250307ヒアリング/20250307_西村ヒアリング_採用.pages",
     "tags": [
       "AI",
@@ -7591,7 +7591,7 @@ window.RESEARCH_DATA = [
     "title": "玉木さん_シナリオプランニング (2025/03)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250327_玉木さん_シナリオプランニング.pdf",
     "summary": "生成AIレポート/ヒアリング/20250327_玉木さん_シナリオプランニング.pages",
     "tags": [
       "AI",
@@ -7621,7 +7621,7 @@ window.RESEARCH_DATA = [
     "title": "ミラツク未来庵事業の検討 (2025/03)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250310_ミラツク未来庵事業の検討.pdf",
     "summary": "生成AIレポート/ミラツク/20250310_ミラツク未来庵事業の検討.pages",
     "tags": [
       "AI",
@@ -7635,7 +7635,7 @@ window.RESEARCH_DATA = [
     "title": "ミラツクフォーラム2021 (2025/03)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250302ミラツクフォーラム2021.pdf",
     "summary": "生成AIレポート/ミラツク/ミラツクフォーラム/20250302ミラツクフォーラム2021.pages",
     "tags": [
       "フォーラム",
@@ -7649,7 +7649,7 @@ window.RESEARCH_DATA = [
     "title": "ミラツクフォーラム2022 (2025/03)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250302ミラツクフォーラム2022.pdf",
     "summary": "生成AIレポート/ミラツク/ミラツクフォーラム/20250302ミラツクフォーラム2022.pages",
     "tags": [
       "フォーラム",
@@ -7663,7 +7663,7 @@ window.RESEARCH_DATA = [
     "title": "ミラツクフォーラム2022_2 (2025/03)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250302ミラツクフォーラム2022_2.pdf",
     "summary": "生成AIレポート/ミラツク/ミラツクフォーラム/20250302ミラツクフォーラム2022_2.pages",
     "tags": [
       "フォーラム",
@@ -7677,7 +7677,7 @@ window.RESEARCH_DATA = [
     "title": "1 ミラツクフォーラム2021基調セッション「Next Decade ー未来を始めるー」_文字起こし",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=1 ミラツクフォーラム2021基調セッション「Next Decade ー未来を始めるー」_文字起こし.docx",
     "summary": "生成AIレポート/ミラツク/ミラツクフォーラム/原文/1 ミラツクフォーラム2021基調セッション「Next Decade ー未来を始めるー」_文字起こし.docx",
     "tags": [
       "フォーラム",
@@ -7691,7 +7691,7 @@ window.RESEARCH_DATA = [
     "title": "ミラツクフォーラム2023：基調セッション",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=ミラツクフォーラム2023：基調セッション.docx",
     "summary": "生成AIレポート/ミラツク/ミラツクフォーラム/原文/ミラツクフォーラム2023：基調セッション.docx",
     "tags": [
       "フォーラム",
@@ -7705,7 +7705,7 @@ window.RESEARCH_DATA = [
     "title": "ミラツクフォーラム2024：基調セッション",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=ミラツクフォーラム2024：基調セッション.docx",
     "summary": "生成AIレポート/ミラツク/ミラツクフォーラム/原文/ミラツクフォーラム2024：基調セッション.docx",
     "tags": [
       "フォーラム",
@@ -7719,7 +7719,7 @@ window.RESEARCH_DATA = [
     "title": "基調セッション_文字起こし_2022",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=基調セッション_文字起こし_2022.docx",
     "summary": "生成AIレポート/ミラツク/ミラツクフォーラム/原文/基調セッション_文字起こし_2022.docx",
     "tags": [
       "フォーラム",
@@ -7751,7 +7751,7 @@ window.RESEARCH_DATA = [
     "title": "つながりから考える新しい社会のかたち (2025/02)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250221_つながりから考える新しい社会のかたち.pdf",
     "summary": "生成AIレポート/ミラツク/ミラツク企画開発/20250221_つながりから考える新しい社会のかたち.pages",
     "tags": [
       "AI",
@@ -7765,7 +7765,7 @@ window.RESEARCH_DATA = [
     "title": "未来学の基礎論考――多元的未来観・批判的未来学・SINIC理論・ポストノーマル時代を中心に (2025/02)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250221_未来学の基礎論考――多元的未来観・批判的未来学・SINIC理論・ポストノーマル時代を中心に.pdf",
     "summary": "生成AIレポート/ミラツク/ミラツク企画開発/20250221_未来学の基礎論考――多元的未来観・批判的未来学・SINIC理論・ポストノーマル時代を中心に.pages",
     "tags": [
       "SINIC",
@@ -7779,7 +7779,7 @@ window.RESEARCH_DATA = [
     "title": "未来学全五回講座 (2025/02)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250221_未来学全五回講座.pdf",
     "summary": "生成AIレポート/ミラツク/ミラツク企画開発/20250221_未来学全五回講座.pages",
     "tags": [
       "AI",
@@ -7793,7 +7793,7 @@ window.RESEARCH_DATA = [
     "title": "未来学全五回講座_案内文 (2025/02)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250221_未来学全五回講座_案内文.pdf",
     "summary": "生成AIレポート/ミラツク/ミラツク企画開発/20250221_未来学全五回講座_案内文.pages",
     "tags": [
       "AI",
@@ -7821,7 +7821,7 @@ window.RESEARCH_DATA = [
     "title": "リビングラボの定義と発展 (2025/02)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250222_リビングラボの定義と発展.pdf",
     "summary": "生成AIレポート/ミラツク/ミラツク企画開発/20250222_リビングラボの定義と発展.pages",
     "tags": [
       "AI",
@@ -7835,7 +7835,7 @@ window.RESEARCH_DATA = [
     "title": "建築学の観点から見たオフィスデザインが働き手の能力発揮に与える影響 (2025/02)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250222_建築学の観点から見たオフィスデザインが働き手の能力発揮に与える影響_概要.pdf",
     "summary": "生成AIレポート/ミラツク/ミラツク企画開発/20250222_建築学の観点から見たオフィスデザインが働き手の能力発揮に与える影響.pages",
     "tags": [
       "AI",
@@ -7850,7 +7850,7 @@ window.RESEARCH_DATA = [
     "title": "心理学の歴史的変遷 (2025/02)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250222_心理学の歴史的変遷_概要編2.pdf",
     "summary": "生成AIレポート/ミラツク/ミラツク企画開発/20250222_心理学の歴史的変遷.pages",
     "tags": [
       "AI",
@@ -7864,7 +7864,7 @@ window.RESEARCH_DATA = [
     "title": "心理学の歴史的変遷_概要編 (2025/02)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250222_心理学の歴史的変遷_概要編2.pdf",
     "summary": "生成AIレポート/ミラツク/ミラツク企画開発/20250222_心理学の歴史的変遷_概要編.pages",
     "tags": [
       "AI",
@@ -7878,7 +7878,7 @@ window.RESEARCH_DATA = [
     "title": "心理学の歴史的変遷_概要編2 (2025/02)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250222_心理学の歴史的変遷_概要編2.pdf",
     "summary": "生成AIレポート/ミラツク/ミラツク企画開発/20250222_心理学の歴史的変遷_概要編2.pages",
     "tags": [
       "AI",
@@ -7892,7 +7892,7 @@ window.RESEARCH_DATA = [
     "title": "成人学習の哲学的基盤と現代的課題 (2025/02)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250222_成人学習の哲学的基盤と現代的課題.pdf",
     "summary": "生成AIレポート/ミラツク/ミラツク企画開発/20250222_成人学習の哲学的基盤と現代的課題.pages",
     "tags": [
       "AI",
@@ -7906,7 +7906,7 @@ window.RESEARCH_DATA = [
     "title": "未来学実践における情報獲得手法：理論と実践 (2025/02)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250222_未来学実践における情報獲得手法：理論と実践.pdf",
     "summary": "生成AIレポート/ミラツク/ミラツク企画開発/20250222_未来学実践における情報獲得手法：理論と実践.pages",
     "tags": [
       "AI",
@@ -7920,7 +7920,7 @@ window.RESEARCH_DATA = [
     "title": "未来学実践アドバンス講座：情報獲得の技法と個人ビジョン創造 (2025/02)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250222_未来学実践アドバンス講座：情報獲得の技法と個人ビジョン創造.pdf",
     "summary": "生成AIレポート/ミラツク/ミラツク企画開発/20250222_未来学実践アドバンス講座：情報獲得の技法と個人ビジョン創造.pages",
     "tags": [
       "AI",
@@ -7934,7 +7934,7 @@ window.RESEARCH_DATA = [
     "title": "講座設計に関する論考：学習理論の適用と海外ベンチマーク事例 (2025/02)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250222_講座設計に関する論考：学習理論の適用と海外ベンチマーク事例.pdf",
     "summary": "生成AIレポート/ミラツク/ミラツク企画開発/20250222_講座設計に関する論考：学習理論の適用と海外ベンチマーク事例.pages",
     "tags": [
       "AI",
@@ -7962,7 +7962,7 @@ window.RESEARCH_DATA = [
     "title": "シナリオプランニングと因果階層分析による北海道厚真町の食と農の2050年ビジョンと事業戦略構築に関する研究 (2025/03)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=シナリオプランニング & フォーサイト国際会議（過去3回）のセッション概要.pdf",
     "summary": "生成AIレポート/ミラツク/ミラツク企画開発/20250316_シナリオプランニングと因果階層分析による北海道厚真町の食と農の2050年ビジョンと事業戦略構築に関する研究.pages",
     "tags": [
       "経営",
@@ -7995,7 +7995,7 @@ window.RESEARCH_DATA = [
     "title": "1001クラブについて (2025/02)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250222_1001クラブについて.pdf",
     "summary": "生成AIレポート/ミラツク/ミラツク運営/20250222_1001クラブについて.pages",
     "tags": [
       "AI",
@@ -8009,7 +8009,7 @@ window.RESEARCH_DATA = [
     "title": "非営利組織における招待制有償メンバーシップの理論と実践 (2025/02)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250222_非営利組織における招待制有償メンバーシップの理論と実践.pdf",
     "summary": "生成AIレポート/ミラツク/ミラツク運営/20250222_非営利組織における招待制有償メンバーシップの理論と実践.pages",
     "tags": [
       "AI",
@@ -8023,7 +8023,7 @@ window.RESEARCH_DATA = [
     "title": "ロバート・B・テクストル概論3 (2025/02)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250223_ロバート・B・テクストル概論3.pdf",
     "summary": "生成AIレポート/ミラツク/ミラツク運営/20250223_ロバート・B・テクストル概論3.pdf",
     "tags": [
       "AI",
@@ -8054,7 +8054,7 @@ window.RESEARCH_DATA = [
     "title": "ミラツクの事業発展に資する未来洞察・ナレッジ共有・オープンイノベーション等のベンチマーク事例研究 (2025/03)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250312_ミラツクの事業発展に資する未来洞察・ナレッジ共有・オープンイノベーション等のベンチマーク事例研究.pdf",
     "summary": "生成AIレポート/ミラツク/ミラツク運営/20250312_ミラツクの事業発展に資する未来洞察・ナレッジ共有・オープンイノベーション等のベンチマーク事例研究.docx",
     "tags": [
       "学術",
@@ -8084,7 +8084,7 @@ window.RESEARCH_DATA = [
     "title": "未来洞察（コーポレート・フォーサイト）が企業業績に与える影響 (2025/03)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250312_未来洞察（コーポレート・フォーサイト）が企業業績に与える影響.pdf",
     "summary": "生成AIレポート/ミラツク/ミラツク運営/20250312_未来洞察（コーポレート・フォーサイト）が企業業績に与える影響.pages",
     "tags": [
       "経営",
@@ -8099,7 +8099,7 @@ window.RESEARCH_DATA = [
     "title": "未来洞察（コーポレート・フォーサイト）が企業業績に与える影響_表 (2025/03)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250312_未来洞察（コーポレート・フォーサイト）が企業業績に与える影響_表.pdf",
     "summary": "生成AIレポート/ミラツク/ミラツク運営/20250312_未来洞察（コーポレート・フォーサイト）が企業業績に与える影響_表.pages",
     "tags": [
       "経営",
@@ -8323,7 +8323,7 @@ window.RESEARCH_DATA = [
     "title": "未来予測一覧_アップデート",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=未来予測一覧_アップデート.pdf",
     "summary": "生成AIレポート/ミラツク/ミラツク運営/未来予測一覧_アップデート.pages",
     "tags": [
       "AI",
@@ -8365,7 +8365,7 @@ window.RESEARCH_DATA = [
     "title": "ファンダメンタルズ_GPTによる分析1 (2025/03)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250303_ファンダメンタルズ_GPTによる分析1.pdf",
     "summary": "生成AIレポート/ミラツク/リサーチ手法の開発/20250303_ファンダメンタルズ_GPTによる分析1.pages",
     "tags": [
       "AI",
@@ -8379,7 +8379,7 @@ window.RESEARCH_DATA = [
     "title": "プレゼン制作の自動化 (2025/03)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250310_プレゼン制作の自動化.pdf",
     "summary": "生成AIレポート/ミラツク/リサーチ手法の開発/20250310_プレゼン制作の自動化.pages",
     "tags": [
       "AI",
@@ -8393,7 +8393,7 @@ window.RESEARCH_DATA = [
     "title": "人類学の歴史的経緯と変遷 (2025/02)",
     "category": "人類学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250222_人類学の歴史的経緯と変遷.pdf",
     "summary": "生成AIレポート/ミラツク/講座開発/基礎資料/20250222_人類学の歴史的経緯と変遷.pages",
     "tags": [
       "AI",
@@ -8407,7 +8407,7 @@ window.RESEARCH_DATA = [
     "title": "哲学の歴史的変遷 (2025/02)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250222_哲学の歴史的変遷.pdf",
     "summary": "生成AIレポート/ミラツク/講座開発/基礎資料/20250222_哲学の歴史的変遷.pages",
     "tags": [
       "AI",
@@ -8421,7 +8421,7 @@ window.RESEARCH_DATA = [
     "title": "京都大学beyond2050_シナリオプランニング（6シンポジウム）_weakシグナルver (2025/03)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250326_京都大学beyond2050_シナリオプランニング（6シンポジウム）_weakシグナルver.pdf",
     "summary": "生成AIレポート/京都大学beyond2050/6シンポジウムまとめ/20250326_京都大学beyond2050_シナリオプランニング（6シンポジウム）_weakシグナルver.pages",
     "tags": [
       "京都大学",
@@ -8435,7 +8435,7 @@ window.RESEARCH_DATA = [
     "title": "京都大学beyond2050_因果階層分析（6シンポジウム） (2025/03)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250326_京都大学beyond2050_因果階層分析（6シンポジウム）.pdf",
     "summary": "生成AIレポート/京都大学beyond2050/6シンポジウムまとめ/20250326_京都大学beyond2050_因果階層分析（6シンポジウム）.pages",
     "tags": [
       "京都大学",
@@ -8449,7 +8449,7 @@ window.RESEARCH_DATA = [
     "title": "京都大学beyond2050_因果階層分析（6シンポジウム）_weakシグナルver (2025/03)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250326_京都大学beyond2050_因果階層分析（6シンポジウム）_weakシグナルver.pdf",
     "summary": "生成AIレポート/京都大学beyond2050/6シンポジウムまとめ/20250326_京都大学beyond2050_因果階層分析（6シンポジウム）_weakシグナルver.pages",
     "tags": [
       "京都大学",
@@ -8463,7 +8463,7 @@ window.RESEARCH_DATA = [
     "title": "京都大学beyond2050_弱いシグナル（6シンポジウム） (2025/03)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250326_京都大学beyond2050_弱いシグナル（6シンポジウム）.pdf",
     "summary": "生成AIレポート/京都大学beyond2050/6シンポジウムまとめ/20250326_京都大学beyond2050_弱いシグナル（6シンポジウム）.pages",
     "tags": [
       "京都大学",
@@ -8491,7 +8491,7 @@ window.RESEARCH_DATA = [
     "title": "京都大学beyond2050_未来洞察総合レポート (2025/03)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250326_京都大学beyond2050_未来洞察総合レポート_全資料.pdf",
     "summary": "生成AIレポート/京都大学beyond2050/6シンポジウムまとめ/20250326_京都大学beyond2050_未来洞察総合レポート.pages",
     "tags": [
       "京都大学",
@@ -8505,7 +8505,7 @@ window.RESEARCH_DATA = [
     "title": "京都大学beyond2050_未来洞察総合レポート_全資料 (2025/03)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250326_京都大学beyond2050_未来洞察総合レポート_全資料.pdf",
     "summary": "生成AIレポート/京都大学beyond2050/6シンポジウムまとめ/20250326_京都大学beyond2050_未来洞察総合レポート_全資料.pages",
     "tags": [
       "京都大学",
@@ -8519,7 +8519,7 @@ window.RESEARCH_DATA = [
     "title": "京都大学beyond2050_GTA (2025/03)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250314_京都大学beyond2050_GTA2_シナリオ.pdf",
     "summary": "生成AIレポート/京都大学beyond2050/サンプル/20250314_京都大学beyond2050_GTA.pages",
     "tags": [
       "京都大学",
@@ -8533,7 +8533,7 @@ window.RESEARCH_DATA = [
     "title": "京都大学beyond2050_GTA2 (2025/03)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250314_京都大学beyond2050_GTA2_シナリオ.pdf",
     "summary": "生成AIレポート/京都大学beyond2050/サンプル/20250314_京都大学beyond2050_GTA2.pages",
     "tags": [
       "京都大学",
@@ -8547,7 +8547,7 @@ window.RESEARCH_DATA = [
     "title": "京都大学beyond2050_GTA2_シナリオ (2025/03)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250314_京都大学beyond2050_GTA2_シナリオ.pdf",
     "summary": "生成AIレポート/京都大学beyond2050/サンプル/20250314_京都大学beyond2050_GTA2_シナリオ.pages",
     "tags": [
       "京都大学",
@@ -8561,7 +8561,7 @@ window.RESEARCH_DATA = [
     "title": "京都大学beyond2050_GTA2_シナリオ_バックキャスティング (2025/03)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250314_京都大学beyond2050_GTA2_シナリオ_バックキャスティング.pdf",
     "summary": "生成AIレポート/京都大学beyond2050/サンプル/20250314_京都大学beyond2050_GTA2_シナリオ_バックキャスティング.pages",
     "tags": [
       "京都大学",
@@ -8575,7 +8575,7 @@ window.RESEARCH_DATA = [
     "title": "京都大学beyond2050_GTA2_因果階層分析 (2025/03)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250314_京都大学beyond2050_GTA2_因果階層分析.pdf",
     "summary": "生成AIレポート/京都大学beyond2050/サンプル/20250314_京都大学beyond2050_GTA2_因果階層分析.pages",
     "tags": [
       "京都大学",
@@ -8589,7 +8589,7 @@ window.RESEARCH_DATA = [
     "title": "京都大学beyond2050_シナリオプランニング原案1 (2025/03)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250314_京都大学beyond2050_シナリオプランニング原案1.pdf",
     "summary": "生成AIレポート/京都大学beyond2050/サンプル/20250314_京都大学beyond2050_シナリオプランニング原案1.pages",
     "tags": [
       "京都大学",
@@ -8617,7 +8617,7 @@ window.RESEARCH_DATA = [
     "title": "広井先生最終講義 (2025/03)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250316_広井先生最終講義_問いと探求.pdf",
     "summary": "生成AIレポート/京都大学beyond2050/サンプル/20250316_広井先生最終講義.pages",
     "tags": [
       "京都大学",
@@ -8635,7 +8635,7 @@ window.RESEARCH_DATA = [
     "title": "広井先生最終講義_2 (2025/03)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250316_広井先生最終講義_2.pdf",
     "summary": "生成AIレポート/京都大学beyond2050/サンプル/20250316_広井先生最終講義_2.pages",
     "tags": [
       "京都大学",
@@ -8653,7 +8653,7 @@ window.RESEARCH_DATA = [
     "title": "広井先生最終講義_問いと探求 (2025/03)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250316_広井先生最終講義_問いと探求.pdf",
     "summary": "生成AIレポート/京都大学beyond2050/サンプル/20250316_広井先生最終講義_問いと探求.pages",
     "tags": [
       "京都大学",
@@ -8671,7 +8671,7 @@ window.RESEARCH_DATA = [
     "title": "北海道厚真町：2050年に向けた持続可能な地方自治戦略 (2025/03)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250317_北海道厚真町：2050年に向けた持続可能な地方自治戦略 .pdf",
     "summary": "生成AIレポート/京都大学beyond2050/サンプル/20250317_北海道厚真町：2050年に向けた持続可能な地方自治戦略 .pages",
     "tags": [
       "京都大学",
@@ -8707,7 +8707,7 @@ window.RESEARCH_DATA = [
     "title": "京都大学beyond2050_6シンポジウムGTAまとめ (2025/03)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250326_京都大学beyond2050_6シンポジウムGTAまとめ.pdf",
     "summary": "生成AIレポート/京都大学beyond2050/サンプル/20250326_京都大学beyond2050_6シンポジウムGTAまとめ.pages",
     "tags": [
       "京都大学",
@@ -8721,7 +8721,7 @@ window.RESEARCH_DATA = [
     "title": "プロローグイベント⑤（機械文字起こし） (2024/07)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20240719_プロローグイベント⑤（機械文字起こし）.docx",
     "summary": "生成AIレポート/京都大学beyond2050/元データ/20240719_プロローグイベント⑤（機械文字起こし）.docx",
     "tags": [
       "京都大学",
@@ -8739,7 +8739,7 @@ window.RESEARCH_DATA = [
     "title": "プロローグ初回_20231110文字起こし",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=プロローグ初回_20231110文字起こし.docx",
     "summary": "生成AIレポート/京都大学beyond2050/元データ/プロローグ初回_20231110文字起こし.docx",
     "tags": [
       "京都大学",
@@ -8757,7 +8757,7 @@ window.RESEARCH_DATA = [
     "title": "プロローグ第2節_20240126 文字起こし",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=プロローグ第2節_20240126 文字起こし.docx",
     "summary": "生成AIレポート/京都大学beyond2050/元データ/プロローグ第2節_20240126 文字起こし.docx",
     "tags": [
       "京都大学",
@@ -8775,7 +8775,7 @@ window.RESEARCH_DATA = [
     "title": "プロローグ第3節_20240327文字起こし",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=プロローグ第3節_20240327文字起こし.docx",
     "summary": "生成AIレポート/京都大学beyond2050/元データ/プロローグ第3節_20240327文字起こし.docx",
     "tags": [
       "京都大学",
@@ -8793,7 +8793,7 @@ window.RESEARCH_DATA = [
     "title": "プロローグ第4節_20240607文字起こし",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=プロローグ第4節_20240607文字起こし.docx",
     "summary": "生成AIレポート/京都大学beyond2050/元データ/プロローグ第4節_20240607文字起こし.docx",
     "tags": [
       "京都大学",
@@ -8811,7 +8811,7 @@ window.RESEARCH_DATA = [
     "title": "プロローグ第6節_20241009文字起こし",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=プロローグ第6節_20241009文字起こし.docx",
     "summary": "生成AIレポート/京都大学beyond2050/元データ/プロローグ第6節_20241009文字起こし.docx",
     "tags": [
       "京都大学",
@@ -8829,7 +8829,7 @@ window.RESEARCH_DATA = [
     "title": "世界の大学・研究機関発スタートアップ動向2024 (2025/02)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250228_世界の大学・研究機関発スタートアップ動向2024.pdf",
     "summary": "生成AIレポート/企業向けレポート/20250228_世界の大学・研究機関発スタートアップ動向2024.pages",
     "tags": [
       "企業向けレポート",
@@ -8879,7 +8879,7 @@ window.RESEARCH_DATA = [
     "title": "世界の学際研究動向2024 (2025/02)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250228_世界の学際研究動向2024.pdf",
     "summary": "生成AIレポート/企業向けレポート/20250228_世界の学際研究動向2024.pdf",
     "tags": [
       "企業向けレポート",
@@ -8896,7 +8896,7 @@ window.RESEARCH_DATA = [
     "title": "世界の産学連携動向2024 (2025/02)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250228_世界の産学連携動向2024.pdf",
     "summary": "生成AIレポート/企業向けレポート/20250228_世界の産学連携動向2024.pages",
     "tags": [
       "企業向けレポート",
@@ -8912,7 +8912,7 @@ window.RESEARCH_DATA = [
     "title": "大学初スタートアップ動向 (2025/02)",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250228_大学初スタートアップ動向.pdf",
     "summary": "生成AIレポート/企業向けレポート/20250228_大学初スタートアップ動向.pages",
     "tags": [
       "企業向けレポート",
@@ -8962,7 +8962,7 @@ window.RESEARCH_DATA = [
     "title": "研究動向2024 (2025/02)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250228_世界の学際研究動向2024.pdf",
     "summary": "生成AIレポート/企業向けレポート/20250228_研究動向2024.pages",
     "tags": [
       "企業向けレポート",
@@ -8979,7 +8979,7 @@ window.RESEARCH_DATA = [
     "title": "日本の研究発スタートアップ動向3 (2025/02)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250228_日本の研究発スタートアップ動向3.pdf",
     "summary": "生成AIレポート/企業向けレポート/候補/20250228_日本の研究発スタートアップ動向3.pdf",
     "tags": [
       "企業向けレポート",
@@ -9013,7 +9013,7 @@ window.RESEARCH_DATA = [
     "title": "京都大学藤原先生 (2025/02)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250227_京都大学藤原先生.docx",
     "summary": "生成AIレポート/取材準備/京都大学藤原先生/20250227_京都大学藤原先生.docx",
     "tags": [
       "京都大学",
@@ -9027,7 +9027,7 @@ window.RESEARCH_DATA = [
     "title": "京都大学藤原先生_暫定記事_20250227 (2025/02)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250227_京都大学藤原先生_暫定記事_20250227.pdf",
     "summary": "生成AIレポート/取材準備/京都大学藤原先生/20250227_京都大学藤原先生_暫定記事_20250227.pages",
     "tags": [
       "京都大学",
@@ -9041,7 +9041,7 @@ window.RESEARCH_DATA = [
     "title": "京都大学藤原先生_調査概要 (2025/02)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250227_京都大学藤原先生_調査概要.pdf",
     "summary": "生成AIレポート/取材準備/京都大学藤原先生/20250227_京都大学藤原先生_調査概要.docx",
     "tags": [
       "京都大学",
@@ -9055,7 +9055,7 @@ window.RESEARCH_DATA = [
     "title": "取材準備_京都大学前田先生",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=取材準備_京都大学前田先生.pdf",
     "summary": "生成AIレポート/取材準備/取材準備_京都大学前田先生.pages",
     "tags": [
       "京都大学",
@@ -9129,7 +9129,7 @@ window.RESEARCH_DATA = [
     "title": "meer技術評価_LCA (2025/03)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250312meer技術評価_LCA.pdf",
     "summary": "生成AIレポート/技術評価/meer/20250312meer技術評価_LCA.pages",
     "tags": [
       "AI",
@@ -9144,7 +9144,7 @@ window.RESEARCH_DATA = [
     "title": "meer技術評価_効果 (2025/03)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250312meer技術評価_効果.pdf",
     "summary": "生成AIレポート/技術評価/meer/20250312meer技術評価_効果.pages",
     "tags": [
       "AI",
@@ -9159,7 +9159,7 @@ window.RESEARCH_DATA = [
     "title": "meer技術評価_総合 (2025/03)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250312meer技術評価_総合.pdf",
     "summary": "生成AIレポート/技術評価/meer/20250312meer技術評価_総合.pages",
     "tags": [
       "AI",
@@ -9174,7 +9174,7 @@ window.RESEARCH_DATA = [
     "title": "meer技術評価_設置 (2025/03)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250312meer技術評価_設置.pdf",
     "summary": "生成AIレポート/技術評価/meer/20250312meer技術評価_設置.pages",
     "tags": [
       "AI",
@@ -9189,7 +9189,7 @@ window.RESEARCH_DATA = [
     "title": "未来の人類学：『The Anthropology of the Future』を中心とした主要テーマと理論的考察 (2025/02)",
     "category": "人類学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250222_未来の人類学：『The Anthropology of the Future』を中心とした主要テーマと理論的考察.pdf",
     "summary": "生成AIレポート/未来の人類学/20250222_未来の人類学：『The Anthropology of the Future』を中心とした主要テーマと理論的考察.pages",
     "tags": [
       "AI",
@@ -9204,7 +9204,7 @@ window.RESEARCH_DATA = [
     "title": "未来を描く民族誌：エスノグラフィーの視点からの未来学的アプローチ (2025/02)",
     "category": "人類学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250222_未来を描く民族誌：エスノグラフィーの視点からの未来学的アプローチ.pdf",
     "summary": "生成AIレポート/未来の人類学/20250222_未来を描く民族誌：エスノグラフィーの視点からの未来学的アプローチ.pages",
     "tags": [
       "AI",
@@ -9220,7 +9220,7 @@ window.RESEARCH_DATA = [
     "title": "未来研究と予測人類学の交差点――人類学的アプローチによる未来の探究 (2025/02)",
     "category": "人類学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20250222_未来研究と予測人類学の交差点――人類学的アプローチによる未来の探究.pdf",
     "summary": "生成AIレポート/未来の人類学/20250222_未来研究と予測人類学の交差点――人類学的アプローチによる未来の探究.pages",
     "tags": [
       "研究",
@@ -9799,7 +9799,7 @@ window.RESEARCH_DATA = [
     "title": "ゆっくりした時間の考察20250215",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=ゆっくりした時間の考察20250215.pdf",
     "summary": "生成AIレポート/未来の人類学/時間概念/ゆっくりした時間の考察20250215.pages",
     "tags": [
       "AI",
@@ -9815,7 +9815,7 @@ window.RESEARCH_DATA = [
     "title": "ゆっくりした時間の考察20250215_2nd",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=ゆっくりした時間の考察20250215.pdf",
     "summary": "生成AIレポート/未来の人類学/時間概念/ゆっくりした時間の考察20250215_2nd.pages",
     "tags": [
       "AI",
@@ -9831,7 +9831,7 @@ window.RESEARCH_DATA = [
     "title": "時間概念の変遷20250215",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=時間概念の変遷20250215.pdf",
     "summary": "生成AIレポート/未来の人類学/時間概念/時間概念の変遷20250215.pages",
     "tags": [
       "AI",
@@ -9847,7 +9847,7 @@ window.RESEARCH_DATA = [
     "title": "時間概念の考察20250215",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=時間概念の考察20250215.pdf",
     "summary": "生成AIレポート/未来の人類学/時間概念/時間概念の考察20250215.pages",
     "tags": [
       "AI",
@@ -9877,7 +9877,7 @@ window.RESEARCH_DATA = [
     "title": "APFグローバル会議",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=APFグローバル会議.pdf",
     "summary": "生成AIレポート/未来カンファレンス/APFグローバル会議.pages",
     "tags": [
       "未来カンファレンス",
@@ -9893,7 +9893,7 @@ window.RESEARCH_DATA = [
     "title": "Anticipation国際会議（直近3回）のセッションテーマと概要",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=Anticipation国際会議（直近3回）のセッションテーマと概要.pdf",
     "summary": "生成AIレポート/未来カンファレンス/Anticipation国際会議（直近3回）のセッションテーマと概要.pages",
     "tags": [
       "未来カンファレンス",
@@ -9909,7 +9909,7 @@ window.RESEARCH_DATA = [
     "title": "Brain Bar 2021～2023 年次イベント概要",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=Brain Bar 2021～2023 年次イベント概要.pdf",
     "summary": "生成AIレポート/未来カンファレンス/Brain Bar 2021～2023 年次イベント概要.pages",
     "tags": [
       "未来カンファレンス",
@@ -9925,7 +9925,7 @@ window.RESEARCH_DATA = [
     "title": "CIFS「The Summit」年次カンファレンス（直近3回）",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=CIFS「The Summit」年次カンファレンス（直近3回）.pdf",
     "summary": "生成AIレポート/未来カンファレンス/CIFS「The Summit」年次カンファレンス（直近3回）.pages",
     "tags": [
       "未来カンファレンス",
@@ -9941,7 +9941,7 @@ window.RESEARCH_DATA = [
     "title": "Congreso Futuro 直近3回のセッションテーマ一覧と概要 ",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=Congreso Futuro 直近3回のセッションテーマ一覧と概要 .pdf",
     "summary": "生成AIレポート/未来カンファレンス/Congreso Futuro 直近3回のセッションテーマ一覧と概要 .pages",
     "tags": [
       "未来カンファレンス",
@@ -9957,7 +9957,7 @@ window.RESEARCH_DATA = [
     "title": "Dubai Future Forum (2022～2024) セッション概要まとめ",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=Dubai Future Forum (2022～2024) セッション概要まとめ.pdf",
     "summary": "生成AIレポート/未来カンファレンス/Dubai Future Forum (2022～2024) セッション概要まとめ.pages",
     "tags": [
       "未来カンファレンス",
@@ -9990,7 +9990,7 @@ window.RESEARCH_DATA = [
     "title": "Future in Reviewカンファレンス：直近3回のセッション一覧と概要",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=Future in Reviewカンファレンス：直近3回のセッション一覧と概要.pdf",
     "summary": "生成AIレポート/未来カンファレンス/Future in Reviewカンファレンス：直近3回のセッション一覧と概要.pages",
     "tags": [
       "未来カンファレンス",
@@ -10006,7 +10006,7 @@ window.RESEARCH_DATA = [
     "title": "FutureFest（ロンドン）直近3回のイベント概要",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=FutureFest（ロンドン）直近3回のイベント概要.pdf",
     "summary": "生成AIレポート/未来カンファレンス/FutureFest（ロンドン）直近3回のイベント概要.pages",
     "tags": [
       "未来カンファレンス",
@@ -10022,7 +10022,7 @@ window.RESEARCH_DATA = [
     "title": "Futures Conference（フィンランド・トゥルク）",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=Futures Conference（フィンランド・トゥルク）.pdf",
     "summary": "生成AIレポート/未来カンファレンス/Futures Conference（フィンランド・トゥルク）.pages",
     "tags": [
       "未来カンファレンス",
@@ -10038,7 +10038,7 @@ window.RESEARCH_DATA = [
     "title": "Vision Weekend（過去3回分）のセッションテーマと概要",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=Vision Weekend（過去3回分）のセッションテーマと概要.pdf",
     "summary": "生成AIレポート/未来カンファレンス/Vision Weekend（過去3回分）のセッションテーマと概要.pages",
     "tags": [
       "未来カンファレンス",
@@ -10054,7 +10054,7 @@ window.RESEARCH_DATA = [
     "title": "WFSFカンファレンス調査",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=WFSFカンファレンス調査.pdf",
     "summary": "生成AIレポート/未来カンファレンス/WFSFカンファレンス調査.pages",
     "tags": [
       "未来カンファレンス",
@@ -10086,7 +10086,7 @@ window.RESEARCH_DATA = [
     "title": "イタリア未来研究所",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=イタリア未来研究所.pdf",
     "summary": "生成AIレポート/未来カンファレンス/イタリア未来研究所.pages",
     "tags": [
       "未来カンファレンス",
@@ -10104,7 +10104,7 @@ window.RESEARCH_DATA = [
     "title": "コペンハーゲン未来研究所（CIFS）の組織、方法論と国際的役割に関する包括的分析",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=コペンハーゲン未来研究所（CIFS）の組織、方法論と国際的役割に関する包括的分析.pdf",
     "summary": "生成AIレポート/未来カンファレンス/コペンハーゲン未来研究所（CIFS）の組織、方法論と国際的役割に関する包括的分析.pages",
     "tags": [
       "未来カンファレンス",
@@ -10122,7 +10122,7 @@ window.RESEARCH_DATA = [
     "title": "コペンハーゲン開催の未来志向カンファレンス「Future Tense」 ",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=コペンハーゲン開催の未来志向カンファレンス「Future Tense」 .pdf",
     "summary": "生成AIレポート/未来カンファレンス/コペンハーゲン開催の未来志向カンファレンス「Future Tense」 .pages",
     "tags": [
       "未来カンファレンス",
@@ -10138,7 +10138,7 @@ window.RESEARCH_DATA = [
     "title": "シナリオプランニング & フォーサイト国際会議（過去3回）のセッション概要",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=シナリオプランニング & フォーサイト国際会議（過去3回）のセッション概要.pdf",
     "summary": "生成AIレポート/未来カンファレンス/シナリオプランニング & フォーサイト国際会議（過去3回）のセッション概要.pages",
     "tags": [
       "未来カンファレンス",
@@ -10170,7 +10170,7 @@ window.RESEARCH_DATA = [
     "title": "地球未来研究のグローバル協働モデル：ミレニアム・プロジェクトの組織構造・目的・活動とその影響",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=地球未来研究のグローバル協働モデル：ミレニアム・プロジェクトの組織構造・目的・活動とその影響.pdf",
     "summary": "生成AIレポート/未来カンファレンス/地球未来研究のグローバル協働モデル：ミレニアム・プロジェクトの組織構造・目的・活動とその影響.pages",
     "tags": [
       "未来カンファレンス",
@@ -10203,7 +10203,7 @@ window.RESEARCH_DATA = [
     "title": "未来学：学際的展開の包括的概説 (2025/12)",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20251202_未来学：学際的展開の包括的概説.pdf",
     "summary": "生成AIレポート/未来学/20251202_未来学：学際的展開の包括的概説.pages",
     "tags": [
       "AI",
@@ -10217,7 +10217,7 @@ window.RESEARCH_DATA = [
     "title": "オシップ・K・フレヒトハイムの未来学研究20250216",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=オシップ・K・フレヒトハイムの未来学研究20250216.pdf",
     "summary": "生成AIレポート/未来学/オシップ・K・フレヒトハイムの未来学研究20250216.pages",
     "tags": [
       "AI",
@@ -10232,7 +10232,7 @@ window.RESEARCH_DATA = [
     "title": "ジアウディン・サルダーの未来学方法論20250216",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=ジアウディン・サルダーの未来学方法論20250216.pdf",
     "summary": "生成AIレポート/未来学/ジアウディン・サルダーの未来学方法論20250216.pages",
     "tags": [
       "AI",
@@ -10246,7 +10246,7 @@ window.RESEARCH_DATA = [
     "title": "ジム・データの未来学研究に関するレビュー20240216",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=ジム・データの未来学研究に関するレビュー20240216.pdf",
     "summary": "生成AIレポート/未来学/ジム・データの未来学研究に関するレビュー20240216.pages",
     "tags": [
       "AI",
@@ -10261,7 +10261,7 @@ window.RESEARCH_DATA = [
     "title": "フューチャー・リーダーシップ20250216",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=フューチャー・リーダーシップ20250216.pdf",
     "summary": "生成AIレポート/未来学/フューチャー・リーダーシップ20250216.pages",
     "tags": [
       "未来",
@@ -10275,7 +10275,7 @@ window.RESEARCH_DATA = [
     "title": "ユートピア概念の歴史的変遷20250216",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=ユートピア概念の歴史的変遷20250216.pdf",
     "summary": "生成AIレポート/未来学/ユートピア概念の歴史的変遷20250216.pages",
     "tags": [
       "未来学",
@@ -10290,7 +10290,7 @@ window.RESEARCH_DATA = [
     "title": "ロベルト・ユンクの未来学に関する研究20250216",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=ロベルト・ユンクの未来学に関する研究20250216.pdf",
     "summary": "生成AIレポート/未来学/ロベルト・ユンクの未来学に関する研究20250216.pages",
     "tags": [
       "AI",
@@ -10321,7 +10321,7 @@ window.RESEARCH_DATA = [
     "title": "因果階層分析（Causal Layered Analysis, CLA）の理論と応用20250216",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=因果階層分析（Causal Layered Analysis, CLA）の理論と応用20250216.pdf",
     "summary": "生成AIレポート/未来学/因果階層分析（Causal Layered Analysis, CLA）の理論と応用20250216.pages",
     "tags": [
       "研究",
@@ -10338,7 +10338,7 @@ window.RESEARCH_DATA = [
     "title": "未来13の手法202050215",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=未来13の手法202050215.pdf",
     "summary": "生成AIレポート/未来学/未来13の手法202050215.pages",
     "tags": [
       "未来学",
@@ -10353,7 +10353,7 @@ window.RESEARCH_DATA = [
     "title": "未来学とビジネス202050215",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=未来学とビジネス202050215.pdf",
     "summary": "生成AIレポート/未来学/未来学とビジネス202050215.pages",
     "tags": [
       "AI",
@@ -10367,7 +10367,7 @@ window.RESEARCH_DATA = [
     "title": "未来学と哲学、人類学の交差20250215",
     "category": "人類学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=未来学と哲学、人類学の交差20250215.pdf",
     "summary": "生成AIレポート/未来学/未来学と哲学、人類学の交差20250215.pages",
     "tags": [
       "未来学",
@@ -10382,7 +10382,7 @@ window.RESEARCH_DATA = [
     "title": "ミラツクフォーラム (2025/12)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://docs.google.com/spreadsheets/d/1VQxJvcanFdO-PQgK38bzM9RFUp6DxSJNMIOF7BTKbao/edit",
     "summary": "生成AIレポート/未来学/未来学の再興/20251223ミラツクフォーラム.pdf",
     "tags": [
       "AI",
@@ -10398,7 +10398,7 @@ window.RESEARCH_DATA = [
     "title": "ミラツクフォーラム2 (2025/12)",
     "category": "ソーシャルイノベーション",
     "status": "done",
-    "source": "",
+    "source": "https://docs.google.com/spreadsheets/d/1VQxJvcanFdO-PQgK38bzM9RFUp6DxSJNMIOF7BTKbao/edit",
     "summary": "生成AIレポート/未来学/未来学の再興/20251223ミラツクフォーラム2.pdf",
     "tags": [
       "AI",
@@ -10444,7 +10444,7 @@ window.RESEARCH_DATA = [
     "title": "未来学の発展と展望20250216",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=未来学の発展と展望20250216.pdf",
     "summary": "生成AIレポート/未来学/未来学の発展と展望20250216.pages",
     "tags": [
       "AI",
@@ -10458,7 +10458,7 @@ window.RESEARCH_DATA = [
     "title": "未来学レポート統合版202050215",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=未来学レポート統合版202050215.pdf",
     "summary": "生成AIレポート/未来学/未来学レポート統合版202050215.pages",
     "tags": [
       "AI",
@@ -10472,7 +10472,7 @@ window.RESEARCH_DATA = [
     "title": "未来学総合レポート202050215",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=未来学総合レポート202050215.pdf",
     "summary": "生成AIレポート/未来学/未来学総合レポート202050215.pages",
     "tags": [
       "AI",
@@ -10486,7 +10486,7 @@ window.RESEARCH_DATA = [
     "title": "高等教育における未来学の意義と課題20250216",
     "category": "未来学",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=高等教育における未来学の意義と課題20250216.pdf",
     "summary": "生成AIレポート/未来学/高等教育における未来学の意義と課題20250216.pages",
     "tags": [
       "教育",
@@ -10519,7 +10519,7 @@ window.RESEARCH_DATA = [
     "title": "研究者の環境課題_2",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=研究者の環境課題_2.pdf",
     "summary": "生成AIレポート/研究環境課題/研究者の環境課題_2.pages",
     "tags": [
       "研究",
@@ -10537,7 +10537,7 @@ window.RESEARCH_DATA = [
     "title": "研究者の環境課題_校正版",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=研究者の環境課題_校正版.pdf",
     "summary": "生成AIレポート/研究環境課題/研究者の環境課題_校正版.pages",
     "tags": [
       "研究",
@@ -10555,7 +10555,7 @@ window.RESEARCH_DATA = [
     "title": "研究者の環境課題_校正版_数値編",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=研究者の環境課題_校正版_数値編.pdf",
     "summary": "生成AIレポート/研究環境課題/研究者の環境課題_校正版_数値編.pages",
     "tags": [
       "研究",
@@ -10573,7 +10573,7 @@ window.RESEARCH_DATA = [
     "title": "ハンス・ヨナスの『責任という原理』：哲学的背景・責任倫理の革新と現代的意義 (2025/10)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20251011_ハンス・ヨナスの『責任という原理』：哲学的背景・責任倫理の革新と現代的意義.pdf",
     "summary": "生成AIレポート/観光/20251011_ハンス・ヨナスの『責任という原理』：哲学的背景・責任倫理の革新と現代的意義.pages",
     "tags": [
       "観光",
@@ -10588,7 +10588,7 @@ window.RESEARCH_DATA = [
     "title": "ラグジュアリー・ホスピタリティ業界におけるアマンリゾートの事業モデルと競争優位性 ― 学術的視点からの構造分析 (2025/10)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20251011_ラグジュアリー・ホスピタリティ業界におけるアマンリゾートの事業モデルと競争優位性 ― 学術的視点からの構造分析.pdf",
     "summary": "生成AIレポート/観光/20251011_ラグジュアリー・ホスピタリティ業界におけるアマンリゾートの事業モデルと競争優位性 ― 学術的視点からの構造分析.pages",
     "tags": [
       "学術",
@@ -10605,7 +10605,7 @@ window.RESEARCH_DATA = [
     "title": "リミタリアニズム：イングリッド・ロベインスの議論を中心とした充足に基づく正義論の包括的検討 (2025/10)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20251011_リミタリアニズム：イングリッド・ロベインスの議論を中心とした充足に基づく正義論の包括的検討.pdf",
     "summary": "生成AIレポート/観光/20251011_リミタリアニズム：イングリッド・ロベインスの議論を中心とした充足に基づく正義論の包括的検討.pages",
     "tags": [
       "観光",
@@ -10620,7 +10620,7 @@ window.RESEARCH_DATA = [
     "title": "原研哉『低空飛行』にみる観光の新しい価値観の提唱と意義 (2025/10)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20251011_原研哉『低空飛行』にみる観光の新しい価値観の提唱と意義.pdf",
     "summary": "生成AIレポート/観光/20251011_原研哉『低空飛行』にみる観光の新しい価値観の提唱と意義.pages",
     "tags": [
       "観光",
@@ -10635,7 +10635,7 @@ window.RESEARCH_DATA = [
     "title": "長期主義倫理学の哲学的基盤と現代的動向 (2025/10)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20251011_長期主義倫理学の哲学的基盤と現代的動向.pdf",
     "summary": "生成AIレポート/観光/20251011_長期主義倫理学の哲学的基盤と現代的動向.pages",
     "tags": [
       "観光",
@@ -10665,7 +10665,7 @@ window.RESEARCH_DATA = [
     "title": "公立はこだて未来大学と地域社会の協働によるまちづくり (2025/10)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20251012_公立はこだて未来大学と地域社会の協働によるまちづくり.pdf",
     "summary": "生成AIレポート/観光/20251012_公立はこだて未来大学と地域社会の協働によるまちづくり.pages",
     "tags": [
       "観光",
@@ -10680,7 +10680,7 @@ window.RESEARCH_DATA = [
     "title": "沖縄の地理的背景が育む生活文化と思想——宗教観・自然観・共同体意識・言語・芸能・民俗信仰の学際的考察 (2025/10)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20251012_沖縄の地理的背景が育む生活文化と思想——宗教観・自然観・共同体意識・言語・芸能・民俗信仰の学際的考察.pdf",
     "summary": "生成AIレポート/観光/20251012_沖縄の地理的背景が育む生活文化と思想——宗教観・自然観・共同体意識・言語・芸能・民俗信仰の学際的考察.pages",
     "tags": [
       "学術",
@@ -10697,7 +10697,7 @@ window.RESEARCH_DATA = [
     "title": "海外における大学キャンパスとまちづくりの協働 – 大学の地域貢献と都市再生に関する国際事例研究 (2025/10)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20251012_海外における大学キャンパスとまちづくりの協働 – 大学の地域貢献と都市再生に関する国際事例研究.pdf",
     "summary": "生成AIレポート/観光/20251012_海外における大学キャンパスとまちづくりの協働 – 大学の地域貢献と都市再生に関する国際事例研究.pages",
     "tags": [
       "学術",
@@ -10714,7 +10714,7 @@ window.RESEARCH_DATA = [
     "title": "科学研究と文化的背景：自然科学・工学における研究スタイルと社会文化の相互関係 (2025/10)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20251012_科学研究と文化的背景：自然科学・工学における研究スタイルと社会文化の相互関係.pdf",
     "summary": "生成AIレポート/観光/20251012_科学研究と文化的背景：自然科学・工学における研究スタイルと社会文化の相互関係.pages",
     "tags": [
       "学術",
@@ -10732,7 +10732,7 @@ window.RESEARCH_DATA = [
     "title": "COP30_freewll (2025/10)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20251028_COP30_freewll.pdf",
     "summary": "生成AIレポート/観光/20251028_COP30_freewll.pdf",
     "tags": [
       "観光",
@@ -10747,7 +10747,7 @@ window.RESEARCH_DATA = [
     "title": "バリ島における歴史・文化と自然の共生：神と自然観の視点から (2025/10)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20251012_バリ島における歴史・文化と自然の共生：神と自然観の視点から.pdf",
     "summary": "生成AIレポート/観光/バリ島/20251012_バリ島における歴史・文化と自然の共生：神と自然観の視点から.pages",
     "tags": [
       "観光",
@@ -10762,7 +10762,7 @@ window.RESEARCH_DATA = [
     "title": "バリ島・ジ・オベロイ・バリに見る自然共生型観光 (2025/10)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20251013_バリ島・ジ・オベロイ・バリに見る自然共生型観光.pdf",
     "summary": "生成AIレポート/観光/バリ島/20251013_バリ島・ジ・オベロイ・バリに見る自然共生型観光.pages",
     "tags": [
       "観光",
@@ -10777,7 +10777,7 @@ window.RESEARCH_DATA = [
     "title": "バリのスバック水利システムに関する総合的研究 (2025/11)",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20251101_バリのスバック水利システムに関する総合的研究.pdf",
     "summary": "生成AIレポート/観光/バリ島/20251101_バリのスバック水利システムに関する総合的研究.pages",
     "tags": [
       "学術",
@@ -10794,7 +10794,7 @@ window.RESEARCH_DATA = [
     "title": "バリ島におけるアグリフォレストリーの実践と意義 (2025/11)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20251101_バリ島におけるアグリフォレストリーの実践と意義.pdf",
     "summary": "生成AIレポート/観光/バリ島/20251101_バリ島におけるアグリフォレストリーの実践と意義.pages",
     "tags": [
       "観光",
@@ -10809,7 +10809,7 @@ window.RESEARCH_DATA = [
     "title": "バリ島における水の信仰とその比較文化的分析 (2025/11)",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=20251101_バリ島における水の信仰とその比較文化的分析.pdf",
     "summary": "生成AIレポート/観光/バリ島/20251101_バリ島における水の信仰とその比較文化的分析.pages",
     "tags": [
       "観光",
@@ -10839,7 +10839,7 @@ window.RESEARCH_DATA = [
     "title": "ウブド王家",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=ウブド王家.pdf",
     "summary": "生成AIレポート/観光/バリ島/ウブド王家.pages",
     "tags": [
       "観光",
@@ -10854,7 +10854,7 @@ window.RESEARCH_DATA = [
     "title": "バリ島における農業輸出と自給のバランス分析",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=バリ島における農業輸出と自給のバランス分析.pdf",
     "summary": "生成AIレポート/観光/バリ島/バリ島における農業輸出と自給のバランス分析.pages",
     "tags": [
       "観光",
@@ -10869,7 +10869,7 @@ window.RESEARCH_DATA = [
     "title": "バリ島の前近代的知恵と未来社会構築に向けたテクノロジー統合",
     "category": "テクノロジー",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=バリ島の前近代的知恵と未来社会構築に向けたテクノロジー統合.pdf",
     "summary": "生成AIレポート/観光/バリ島/バリ島の前近代的知恵と未来社会構築に向けたテクノロジー統合.pages",
     "tags": [
       "観光",
@@ -10884,7 +10884,7 @@ window.RESEARCH_DATA = [
     "title": "バリ島ウブド王族に関する総合的研究",
     "category": "学術・研究",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=バリ島ウブド王族に関する総合的研究.pdf",
     "summary": "生成AIレポート/観光/バリ島/バリ島ウブド王族に関する総合的研究.pages",
     "tags": [
       "学術",
@@ -10901,7 +10901,7 @@ window.RESEARCH_DATA = [
     "title": "京都大学徳地先生_森と社会の未来――森林から考える社会的共通資本",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=京都大学徳地先生_森と社会の未来――森林から考える社会的共通資本.pdf",
     "summary": "生成AIレポート/記事生成/京都大学徳地先生_森と社会の未来――森林から考える社会的共通資本.pages",
     "tags": [
       "京都大学",
@@ -10915,7 +10915,7 @@ window.RESEARCH_DATA = [
     "title": "京都大学近藤先生_社会的処方の可能性——医療と地域の新たな連携",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=京都大学近藤先生_社会的処方の可能性——医療と地域の新たな連携.pdf",
     "summary": "生成AIレポート/記事生成/京都大学近藤先生_社会的処方の可能性——医療と地域の新たな連携.pages",
     "tags": [
       "京都大学",
@@ -10929,7 +10929,7 @@ window.RESEARCH_DATA = [
     "title": "京都大学高橋先生_都市のコミュニティと社会的共通資本",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=京都大学高橋先生_都市のコミュニティと社会的共通資本_新版.pdf",
     "summary": "生成AIレポート/記事生成/京都大学高橋先生_都市のコミュニティと社会的共通資本.pages",
     "tags": [
       "京都大学",
@@ -10943,7 +10943,7 @@ window.RESEARCH_DATA = [
     "title": "京都大学高橋先生_都市のコミュニティと社会的共通資本_新版",
     "category": "ビジネス・経営",
     "status": "done",
-    "source": "",
+    "source": "https://drive.google.com/drive/search?q=京都大学高橋先生_都市のコミュニティと社会的共通資本_新版.pdf",
     "summary": "生成AIレポート/記事生成/京都大学高橋先生_都市のコミュニティと社会的共通資本_新版.pages",
     "tags": [
       "京都大学",
