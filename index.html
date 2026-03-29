@@ -621,31 +621,6 @@
   .empty-state .icon { font-size: 2.5rem; margin-bottom: 12px; }
   .empty-state p { font-size: 0.9rem; }
 
-  /* Similarity matrix heatmap */
-  .sim-matrix { border-collapse: collapse; font-size: 0.72rem; }
-  .sim-matrix th {
-    padding: 6px 4px;
-    font-weight: 600;
-    max-width: 100px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    color: var(--text-muted);
-  }
-  .sim-matrix th.row-label { text-align: right; padding-right: 10px; }
-  .sim-matrix th.col-label { writing-mode: vertical-lr; text-align: left; padding-bottom: 8px; transform: rotate(180deg); height: 90px; }
-  .sim-matrix td {
-    width: 36px; height: 32px;
-    text-align: center;
-    font-size: 0.65rem;
-    border: 1px solid rgba(255,255,255,0.6);
-    cursor: default;
-    position: relative;
-    transition: transform 0.1s;
-  }
-  .sim-matrix td:hover { transform: scale(1.15); z-index: 2; box-shadow: 0 0 6px rgba(0,0,0,0.2); }
-  .sim-matrix td.diagonal { background: var(--accent) !important; color: #fff; font-weight: 700; }
-
   .related-entries { margin-top: 16px; }
   .related-entry {
     display: flex; justify-content: space-between; align-items: center;
@@ -1020,7 +995,6 @@
     <button class="tab-btn" data-tab="research" onclick="switchTab('research')">Research</button>
     <button class="tab-btn" data-tab="graph" onclick="switchTab('graph')">Knowledge Graph</button>
     <button class="tab-btn" data-tab="analytics" onclick="switchTab('analytics')">Analytics</button>
-    <button class="tab-btn" data-tab="heatmap" onclick="switchTab('heatmap')">Similarity Matrix</button>
     <button class="tab-btn" data-tab="timeline" onclick="switchTab('timeline')">Timeline</button>
   </div>
 
@@ -1276,14 +1250,6 @@
         <h3>Network Metrics — 構造的重要度</h3>
         <div id="networkMetricsSummary"></div>
       </div>
-    </div>
-  </div>
-
-  <!-- ========== SIMILARITY MATRIX TAB ========== -->
-  <div class="tab-panel" id="tab-heatmap">
-    <div class="viz-panel">
-      <h3>Similarity Matrix (BM25 Cosine)</h3>
-      <div id="simMatrixContainer" style="overflow-x:auto;"></div>
     </div>
   </div>
 
@@ -3691,82 +3657,11 @@ function showNodeMetrics(node) {
   panel.classList.add('visible');
 }
 
-// ===== Similarity Matrix Tab =====
-function renderSimMatrix() {
-  const allData = loadData();
-  const container = document.getElementById('simMatrixContainer');
-  if (!container || allData.length < 2) {
-    if (container) container.innerHTML = '<p style="color:var(--text-muted);padding:20px;">Need at least 2 entries.</p>';
-    return;
-  }
-
-  // Limit to top 40 entries with highest connectivity to keep rendering fast
-  const matrix = getSimMatrix(allData);
-  const connScore = new Float64Array(allData.length);
-  matrix.forEach(({ i, j, sim }) => { connScore[i] += sim; connScore[j] += sim; });
-  const indices = Array.from({ length: allData.length }, (_, i) => i)
-    .sort((a, b) => connScore[b] - connScore[a])
-    .slice(0, 40);
-  const indexSet = new Set(indices);
-  const data = indices.map(i => allData[i]);
-  const idxMap = new Map(indices.map((orig, i) => [orig, i]));
-
-  if (allData.length > 40) {
-    container.innerHTML = `<p style="color:var(--text-muted);font-size:0.8rem;margin-bottom:12px;">Showing top 40 most connected entries out of ${allData.length}. Full matrix would be ${allData.length}×${allData.length} = ${(allData.length*allData.length).toLocaleString()} cells.</p>`;
-  } else {
-    container.innerHTML = '';
-  }
-
-  const n = data.length;
-  const grid = Array.from({ length: n }, () => new Float64Array(n));
-  for (let i = 0; i < n; i++) grid[i][i] = 1;
-  matrix.forEach(({ i, j, sim }) => {
-    const mi = idxMap.get(i), mj = idxMap.get(j);
-    if (mi !== undefined && mj !== undefined) { grid[mi][mj] = sim; grid[mj][mi] = sim; }
-  });
-
-  // Color scale: white (0) -> yellow (0.3) -> orange (0.6) -> red (1)
-  function simColor(v) {
-    if (v >= 1) return '#2d5a27';
-    const r = Math.round(255 * Math.min(1, v * 2.5));
-    const g = Math.round(255 * Math.max(0, 1 - v * 1.5));
-    const b = Math.round(80 * Math.max(0, 1 - v * 3));
-    return `rgb(${r},${g},${b})`;
-  }
-
-  function textColor(v) { return v > 0.5 ? '#fff' : '#333'; }
-
-  let html = '<table class="sim-matrix"><tr><th></th>';
-  // Column headers
-  data.forEach((d, i) => {
-    const short = d.title.length > 12 ? d.title.slice(0, 11) + '…' : d.title;
-    html += `<th class="col-label" title="${esc(d.title)}">${esc(short)}</th>`;
-  });
-  html += '</tr>';
-
-  // Rows
-  data.forEach((d, i) => {
-    const short = d.title.length > 14 ? d.title.slice(0, 13) + '…' : d.title;
-    html += `<tr><th class="row-label" title="${esc(d.title)}">${esc(short)}</th>`;
-    for (let j = 0; j < n; j++) {
-      const v = grid[i][j];
-      const cls = i === j ? ' class="diagonal"' : '';
-      const bg = i === j ? '' : `background:${simColor(v)};color:${textColor(v)}`;
-      const pct = i === j ? '---' : (v * 100).toFixed(0) + '%';
-      html += `<td${cls} style="${bg}" title="${esc(d.title)} × ${esc(data[j].title)}: ${(v*100).toFixed(1)}%">${pct}</td>`;
-    }
-    html += '</tr>';
-  });
-  html += '</table>';
-  container.insertAdjacentHTML('beforeend', html);
-}
-
 function renderAll() {
   if (currentTab === 'overview') renderOverview();
   else if (currentTab === 'research') renderResearchTab();
   else if (currentTab === 'graph') renderGraph();
   else if (currentTab === 'analytics') renderAnalytics();
-  else if (currentTab === 'heatmap') renderSimMatrix();
   else if (currentTab === 'timeline') renderTimeline();
 }
 
