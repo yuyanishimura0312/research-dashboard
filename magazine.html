@@ -89,6 +89,7 @@
 
 <!-- Article Reader Overlay -->
 <div class="reader-overlay" id="reader">
+  <div class="reader-progress" id="readerProgress"></div>
   <button class="reader-close" onclick="closeReader()">&#10005;</button>
   <div class="reader-header" id="readerHeader"></div>
   <div class="reader-body" id="readerBody"></div>
@@ -305,13 +306,62 @@ function getRelated(id, topN) {
   return scores.slice(0, topN);
 }
 
-// ===== Article Reader (enhanced editorial design) =====
+// ===== Article Reader =====
+function getGoogleDocsUrl(src) {
+  if (!src) return '';
+  const m = src.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  if (m) return `https://docs.google.com/document/d/${m[1]}/edit`;
+  return src;
+}
+
+function renderSummaryContent(raw) {
+  let html = '';
+  const hasNewlines = raw.includes('\n');
+
+  if (hasNewlines) {
+    const lines = raw.split(/\n+/).filter(Boolean);
+    let isFirst = true;
+    lines.forEach(line => {
+      const t = line.trim();
+      if (/^[■●▶【\[]/.test(t) || /^\d+[\.\)]\s/.test(t)) {
+        html += `<h2>${esc(t.replace(/^[■●▶【\[\]】\d+\.\)\s]+/, '') || t)}</h2>`;
+      } else if (/^[-・•]\s/.test(t) || /^\(\d+\)/.test(t)) {
+        html += `<div class="summary-item">${esc(t.replace(/^[-・•]\s*/, ''))}</div>`;
+      } else {
+        html += `<p${isFirst ? ' class="drop-cap reader-lead"' : ''}>${esc(t)}</p>`;
+        isFirst = false;
+      }
+    });
+  } else {
+    // Split sentences for readability
+    const sentences = raw.split(/(?<=[。．.！!？?])\s*/).filter(Boolean);
+    if (sentences.length <= 1) {
+      html += `<p class="drop-cap reader-lead">${esc(raw)}</p>`;
+    } else {
+      let para = '';
+      let isFirst = true;
+      sentences.forEach((s, i) => {
+        para += s;
+        if ((i + 1) % 2 === 0 || i === sentences.length - 1) {
+          html += `<p${isFirst ? ' class="drop-cap reader-lead"' : ''}>${esc(para)}</p>`;
+          isFirst = false;
+          para = '';
+        }
+      });
+    }
+  }
+  return html;
+}
+
 function openReader(id) {
   const d = DATA.find(x => x.id === id);
   if (!d) return;
   const s = d.status || 'investigating';
   const tags = (d.tags||[]).filter(t=>!EXCLUDED_TAGS.has(t));
+  const isGDocs = d.source && d.source.includes('docs.google.com');
+  const gdocsUrl = isGDocs ? getGoogleDocsUrl(d.source) : '';
 
+  // Header
   document.getElementById('readerHeader').innerHTML = `
     <div class="reader-cat">${esc(d.category||'')}</div>
     <h1 class="reader-title">${esc(d.title)}</h1>
@@ -323,54 +373,46 @@ function openReader(id) {
 
   let body = '';
 
-  if (d.summary) {
-    const raw = d.summary.trim();
-    const hasNewlines = raw.includes('\n');
+  // Info strip
+  body += `<div class="reader-info-strip">`;
+  if (d.category) body += `<div class="reader-info-item"><strong>${esc(d.category)}</strong></div>`;
+  body += `<div class="reader-info-item">${formatDate(d.createdAt)}</div>`;
+  body += `<div class="reader-info-item">${readTime(d.summary)} min read</div>`;
+  if (tags.length > 0) body += `<div class="reader-info-item">${tags.length} tags</div>`;
+  body += `</div>`;
 
-    if (hasNewlines) {
-      // Multi-line: parse structure
-      const lines = raw.split(/\n+/).filter(Boolean);
-      let isFirst = true;
-      lines.forEach(line => {
-        const t = line.trim();
-        if (/^[■●▶【\[]/.test(t) || /^\d+[\.\)]\s/.test(t)) {
-          body += `<h2>${esc(t.replace(/^[■●▶【\[\]】\d+\.\)\s]+/, '') || t)}</h2>`;
-        } else if (/^[-・•]\s/.test(t) || /^\(\d+\)/.test(t)) {
-          body += `<div class="summary-item">${esc(t.replace(/^[-・•]\s*/, ''))}</div>`;
-        } else {
-          body += `<p${isFirst ? ' class="drop-cap"' : ''}>${esc(t)}</p>`;
-          isFirst = false;
-        }
-      });
+  // Full-text CTA (top, for Google Docs)
+  if (isGDocs) {
+    body += `<div class="reader-fulltext-cta">
+      <div>
+        <div class="reader-fulltext-label">Full report available</div>
+        <a href="${esc(gdocsUrl)}" target="_blank">Open Full Report &#8594;</a>
+      </div>
+    </div>`;
+  }
+
+  // Main content
+  if (d.summary) {
+    body += renderSummaryContent(d.summary.trim());
+  }
+
+  // Full-text CTA (bottom, for sources)
+  if (d.source) {
+    if (isGDocs) {
+      body += `<div class="reader-fulltext-cta" style="margin-top:40px;">
+        <div>
+          <div class="reader-fulltext-label">Continue reading the full report</div>
+          <a href="${esc(gdocsUrl)}" target="_blank">Open in Google Docs &#8594;</a>
+        </div>
+      </div>`;
     } else {
-      // Single block of text — split into sentences for readability
-      const sentences = raw.split(/(?<=[。．.！!？?])\s*/).filter(Boolean);
-      if (sentences.length <= 2) {
-        body += `<p class="drop-cap">${esc(raw)}</p>`;
-      } else {
-        // Group sentences into paragraphs of 2-3
-        let para = '';
-        let isFirst = true;
-        sentences.forEach((s, i) => {
-          para += s;
-          if ((i + 1) % 2 === 0 || i === sentences.length - 1) {
-            body += `<p${isFirst ? ' class="drop-cap"' : ''}>${esc(para)}</p>`;
-            isFirst = false;
-            para = '';
-          }
-        });
-      }
+      body += `<div style="margin-top:24px;"><a class="reader-source" href="${esc(d.source)}" target="_blank">Source &#8594;</a></div>`;
     }
   }
 
   // Tags
   if (tags.length > 0) {
     body += `<div class="reader-tags">${tags.map(t => `<span class="reader-tag">${esc(t)}</span>`).join('')}</div>`;
-  }
-
-  // Source
-  if (d.source) {
-    body += `<a class="reader-source" href="${esc(d.source)}" target="_blank">Source &#8594;</a>`;
   }
 
   // Related (BM25)
@@ -396,10 +438,20 @@ function openReader(id) {
   document.getElementById('reader').classList.add('active');
   document.getElementById('reader').scrollTo(0, 0);
   document.body.style.overflow = 'hidden';
+
+  // Reader progress bar
+  const readerEl = document.getElementById('reader');
+  const progressEl = document.getElementById('readerProgress');
+  readerEl.onscroll = () => {
+    const scrollTop = readerEl.scrollTop;
+    const scrollHeight = readerEl.scrollHeight - readerEl.clientHeight;
+    progressEl.style.width = scrollHeight > 0 ? (scrollTop / scrollHeight * 100) + '%' : '0%';
+  };
 }
 
 function closeReader() {
   document.getElementById('reader').classList.remove('active');
+  document.getElementById('readerProgress').style.width = '0%';
   document.body.style.overflow = '';
 }
 
