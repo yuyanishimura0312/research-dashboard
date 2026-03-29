@@ -844,6 +844,17 @@
   .graph-controls .range-row { display: flex; align-items: center; gap: 6px; }
   .graph-controls .range-val { font-size: 0.72rem; color: var(--accent); font-weight: 700; min-width: 30px; }
 
+  .graph-search-input {
+    width: 140px; padding: 4px 8px; font-size: 0.72rem;
+    border: 1px solid var(--border); border-radius: 4px; outline: none;
+  }
+  .graph-search-input:focus { border-color: var(--accent); }
+  .graph-search-count { font-size: 0.68rem; color: var(--text-muted); }
+
+  .layout-btns { display: flex; gap: 3px; }
+  .layout-btns .btn-sm { padding: 3px 7px; font-size: 0.68rem; }
+  .layout-btns .btn-sm.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
   .sim-edge-label {
     font-size: 8px;
     fill: rgba(192, 57, 43, 0.6);
@@ -1108,6 +1119,20 @@
           <span class="range-val" id="focusHopsVal">2</span>
         </div>
         <button class="btn btn-sm" onclick="GRAPH.focusNode=null" style="font-size:0.68rem;">Clear Focus</button>
+        <label style="margin-top:4px;">Search</label>
+        <input type="text" class="graph-search-input" id="graphSearch" placeholder="ノード検索..." oninput="onGraphSearch(this.value)">
+        <span class="graph-search-count" id="graphSearchCount"></span>
+        <label style="margin-top:4px;">Max Edges/Node</label>
+        <div class="range-row">
+          <input type="range" id="maxEdgesPerNode" min="1" max="10" value="3" oninput="GRAPH.maxEdgesPerNode=parseInt(this.value);document.getElementById('maxEdgesVal').textContent=this.value">
+          <span class="range-val" id="maxEdgesVal">3</span>
+        </div>
+        <label style="margin-top:4px;">Layout</label>
+        <div class="layout-btns" id="layoutBtns">
+          <button class="btn btn-sm active" onclick="switchLayout('force')">Force</button>
+          <button class="btn btn-sm" onclick="switchLayout('radial')">Radial</button>
+          <button class="btn btn-sm" onclick="switchLayout('grid')">Grid</button>
+        </div>
       </div>
       <canvas id="graphCanvas" class="graph-canvas"></canvas>
       <div class="graph-legend" id="graphLegend">
@@ -1681,6 +1706,16 @@ const GRAPH = {
   dragNode: null, isPanning: false, panStart: null,
   hoveredNode: null, focusNode: null, focusHops: 2,
   animFrame: null, width: 0, height: 0,
+  // Cluster overview mode (zoomed out)
+  clusterData: [], clusterMode: false,
+  // Search state
+  searchQuery: '', searchMatches: new Set(),
+  // Edge density: max edges drawn per node
+  maxEdgesPerNode: 3,
+  // Layout mode: 'force', 'radial', 'grid'
+  layoutMode: 'force',
+  // FPS throttle: after warmup, run at low FPS to save CPU
+  warmupDone: false, isDragging: false, lastDrawTime: 0,
 };
 
 const NODE_COLORS = {
@@ -2521,6 +2556,124 @@ function graphReset() {
   GRAPH.offsetX = 0;
   GRAPH.offsetY = 0;
   rebuildAndRender();
+}
+
+// ===== Graph Search =====
+function onGraphSearch(query) {
+  GRAPH.searchQuery = query.trim().toLowerCase();
+  GRAPH.searchMatches.clear();
+  if (GRAPH.searchQuery) {
+    GRAPH.nodes.forEach((n, i) => {
+      if (n.label.toLowerCase().includes(GRAPH.searchQuery)) {
+        GRAPH.searchMatches.add(i);
+      }
+    });
+  }
+  const countEl = document.getElementById('graphSearchCount');
+  if (countEl) {
+    countEl.textContent = GRAPH.searchQuery ? `${GRAPH.searchMatches.size} hits` : '';
+  }
+}
+
+// ===== Layout Switcher =====
+function switchLayout(mode) {
+  GRAPH.layoutMode = mode;
+  // Update button active states
+  document.querySelectorAll('#layoutBtns .btn-sm').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.toLowerCase() === mode);
+  });
+
+  if (mode === 'force') {
+    rebuildAndRender();
+    return;
+  }
+
+  const { nodes, width, height } = GRAPH;
+  const cx = width / 2, cy = height / 2;
+  const commCount = (Math.max(...GRAPH.communities) + 1) || 1;
+
+  if (mode === 'radial') {
+    // Group nodes by community, arrange communities in a circle
+    const commGroups = {};
+    nodes.forEach((n, i) => {
+      const c = n.community || 0;
+      if (!commGroups[c]) commGroups[c] = [];
+      commGroups[c].push(i);
+    });
+    const commKeys = Object.keys(commGroups);
+    commKeys.forEach((c, ci) => {
+      const angle = (ci / commKeys.length) * Math.PI * 2;
+      const ringR = Math.min(width, height) * 0.3;
+      const groupCx = cx + Math.cos(angle) * ringR;
+      const groupCy = cy + Math.sin(angle) * ringR;
+      const members = commGroups[c];
+      members.forEach((ni, mi) => {
+        const subAngle = (mi / members.length) * Math.PI * 2;
+        const subR = 15 + members.length * 3;
+        nodes[ni].x = groupCx + Math.cos(subAngle) * subR;
+        nodes[ni].y = groupCy + Math.sin(subAngle) * subR;
+        nodes[ni].vx = 0; nodes[ni].vy = 0;
+      });
+    });
+  } else if (mode === 'grid') {
+    // Arrange by category in a grid
+    const catGroups = {};
+    nodes.forEach((n, i) => {
+      const cat = (n.type === 'research' && n.data?.category) ? n.data.category : n.type;
+      if (!catGroups[cat]) catGroups[cat] = [];
+      catGroups[cat].push(i);
+    });
+    const catKeys = Object.keys(catGroups);
+    const cols = Math.ceil(Math.sqrt(catKeys.length));
+    const cellW = width / (cols + 1);
+    const cellH = height / (Math.ceil(catKeys.length / cols) + 1);
+    catKeys.forEach((cat, ci) => {
+      const col = ci % cols;
+      const row = Math.floor(ci / cols);
+      const groupCx = cellW * (col + 1);
+      const groupCy = cellH * (row + 1);
+      const members = catGroups[cat];
+      const perRow = Math.ceil(Math.sqrt(members.length));
+      members.forEach((ni, mi) => {
+        const mr = Math.floor(mi / perRow);
+        const mc = mi % perRow;
+        nodes[ni].x = groupCx + (mc - perRow / 2) * 28;
+        nodes[ni].y = groupCy + (mr - perRow / 2) * 28;
+        nodes[ni].vx = 0; nodes[ni].vy = 0;
+      });
+    });
+  }
+  // Stop force simulation for non-force layouts
+  if (GRAPH.animFrame) cancelAnimationFrame(GRAPH.animFrame);
+  drawGraph();
+}
+
+// ===== Build Cluster Data (for zoomed-out overview) =====
+function buildClusterData() {
+  const { nodes, communities } = GRAPH;
+  if (!nodes.length) return;
+  const commMap = {};
+  nodes.forEach((n, i) => {
+    const c = communities[i] ?? 0;
+    if (!commMap[c]) commMap[c] = { id: c, nodes: [], catCounts: {}, cx: 0, cy: 0 };
+    commMap[c].nodes.push(i);
+    commMap[c].cx += n.x;
+    commMap[c].cy += n.y;
+    if (n.type === 'research' && n.data?.category) {
+      commMap[c].catCounts[n.data.category] = (commMap[c].catCounts[n.data.category] || 0) + 1;
+    }
+  });
+  GRAPH.clusterData = Object.values(commMap).map(cl => {
+    cl.cx /= cl.nodes.length;
+    cl.cy /= cl.nodes.length;
+    cl.count = cl.nodes.length;
+    // Dominant category name as label
+    const cats = Object.entries(cl.catCounts).sort((a, b) => b[1] - a[1]);
+    cl.label = cats.length > 0 ? cats[0][0] : `Cluster ${cl.id}`;
+    cl.color = COMMUNITY_PALETTE[cl.id % COMMUNITY_PALETTE.length];
+    cl.radius = 30 + Math.sqrt(cl.count) * 8;
+    return cl;
+  });
 }
 
 // Graph mouse interactions
