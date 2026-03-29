@@ -660,6 +660,18 @@
   .analytics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
   .analytics-full { margin-bottom: 16px; }
 
+  .mini-stat {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .mini-label { font-size: 0.7rem; color: var(--text-muted); }
+  .mini-value { font-size: 1.2rem; font-weight: 700; color: var(--accent); }
+
   .insight-card {
     padding: 14px 18px;
     border-left: 3px solid var(--accent);
@@ -1032,51 +1044,65 @@
 
   <!-- ========== ANALYTICS TAB ========== -->
   <div class="tab-panel" id="tab-analytics">
-    <!-- Auto Insights -->
+    <!-- インサイト -->
     <div class="viz-panel analytics-full">
-      <h3>Auto Insights</h3>
+      <h3>インサイト</h3>
       <div id="insightsContainer"></div>
     </div>
 
     <div class="analytics-grid">
-      <!-- Research Velocity -->
+      <!-- 全体サマリー -->
       <div class="viz-panel">
-        <h3>Research Velocity (past 6 months)</h3>
-        <div class="velocity-bar-row" id="velocityChart" style="margin-bottom:24px;"></div>
+        <h3>リサーチ概要</h3>
+        <div id="researchSummary"></div>
       </div>
 
-      <!-- Topic Radar -->
+      <!-- カテゴリ分布レーダー -->
       <div class="viz-panel">
-        <h3>Category Depth Radar</h3>
+        <h3>カテゴリ分布</h3>
         <svg id="radarChart" class="radar-svg" width="280" height="280"></svg>
       </div>
     </div>
 
     <div class="analytics-grid">
-      <!-- Global Keywords -->
+      <!-- ステータス進捗 -->
       <div class="viz-panel">
-        <h3>Key Terms (BM25 Extracted)</h3>
-        <div class="keyword-list" id="globalKeywords"></div>
+        <h3>ステータス進捗</h3>
+        <div id="statusProgress"></div>
       </div>
 
-      <!-- Bridge Analysis -->
+      <!-- 主要キーワード -->
       <div class="viz-panel">
-        <h3>Bridge Entries (Cross-Category)</h3>
-        <div id="bridgeAnalysis"></div>
+        <h3>主要キーワード</h3>
+        <div class="keyword-list" id="globalKeywords"></div>
       </div>
     </div>
 
     <div class="analytics-grid">
-      <!-- Research Gaps -->
+      <!-- 分野横断のつながり -->
       <div class="viz-panel">
-        <h3>Research Gaps &amp; Stale Topics</h3>
-        <div id="gapAnalysis"></div>
+        <h3>分野横断のつながり</h3>
+        <div id="bridgeAnalysis"></div>
       </div>
 
-      <!-- Cluster Summary -->
+      <!-- トピッククラスター -->
       <div class="viz-panel">
-        <h3>Topic Clusters</h3>
+        <h3>トピッククラスター</h3>
         <div id="clusterSummary"></div>
+      </div>
+    </div>
+
+    <div class="analytics-grid">
+      <!-- タグ分析 -->
+      <div class="viz-panel">
+        <h3>タグ利用状況</h3>
+        <div id="tagAnalysis"></div>
+      </div>
+
+      <!-- リサーチ推移 -->
+      <div class="viz-panel">
+        <h3>リサーチ推移</h3>
+        <div class="velocity-bar-row" id="velocityChart"></div>
       </div>
     </div>
   </div>
@@ -2547,11 +2573,13 @@ function renderAnalytics() {
   if (data.length === 0) return;
 
   renderInsights(data);
+  renderResearchSummary(data);
+  renderStatusProgress(data);
   renderVelocity(data);
   renderRadar(data);
   renderGlobalKeywords(data);
   renderBridgeAnalysis(data);
-  renderGapAnalysis(data);
+  renderTagAnalysis(data);
   renderClusterSummary(data);
 }
 
@@ -2559,26 +2587,26 @@ function renderInsights(data) {
   const insights = [];
   const now = new Date();
 
-  // 1. Most productive period
-  const monthCounts = {};
+  // 1. 最も活発な期間
+  const dayCounts = {};
   data.forEach(d => {
     const dd = new Date(d.createdAt);
-    const key = `${dd.getFullYear()}/${dd.getMonth()+1}`;
-    monthCounts[key] = (monthCounts[key] || 0) + 1;
+    const key = dd.toLocaleDateString('ja-JP');
+    dayCounts[key] = (dayCounts[key] || 0) + 1;
   });
-  const bestMonth = Object.entries(monthCounts).sort((a,b) => b[1]-a[1])[0];
-  if (bestMonth) insights.push({ type: 'PRODUCTIVITY', text: `Most active period: ${bestMonth[0]} with ${bestMonth[1]} entries.`, cls: 'success' });
+  const bestDay = Object.entries(dayCounts).sort((a,b) => b[1]-a[1])[0];
+  if (bestDay) insights.push({ type: '活動ピーク', text: `最も活発な日: ${bestDay[0]}（${bestDay[1]}件登録）`, cls: 'success' });
 
-  // 2. Category concentration
+  // 2. カテゴリ集中度
   const catCounts = {};
   data.forEach(d => { if (d.category) catCounts[d.category] = (catCounts[d.category] || 0) + 1; });
   const sorted = Object.entries(catCounts).sort((a,b) => b[1]-a[1]);
   if (sorted.length >= 2) {
     const topPct = Math.round(sorted[0][1] / data.length * 100);
-    if (topPct > 40) insights.push({ type: 'CONCENTRATION', text: `"${sorted[0][0]}" accounts for ${topPct}% of research. Consider diversifying or deepening adjacent areas.`, cls: 'warning' });
+    if (topPct > 40) insights.push({ type: '集中傾向', text: `「${sorted[0][0]}」がリサーチ全体の${topPct}%を占めています。他分野の深掘りも検討してみてください。`, cls: 'warning' });
   }
 
-  // 3. Stale topics
+  // 3. 停滞トピック
   const catLastDate = {};
   data.forEach(d => {
     if (!d.category) return;
@@ -2586,54 +2614,181 @@ function renderInsights(data) {
     if (!catLastDate[d.category] || dd > catLastDate[d.category]) catLastDate[d.category] = dd;
   });
   const stale = Object.entries(catLastDate).filter(([_, d]) => (now - d) > 60 * 86400000).map(([c]) => c);
-  if (stale.length > 0) insights.push({ type: 'STALE TOPICS', text: `No new entries in 60+ days: ${stale.join(', ')}. Consider revisiting or archiving.`, cls: 'warning' });
+  if (stale.length > 0) insights.push({ type: '停滞', text: `60日以上更新なし: ${stale.join(', ')}。再調査またはアーカイブを検討してください。`, cls: 'warning' });
 
-  // 4. High-similarity cluster
+  // 4. 類似度の高いペア
   const simMatrix = getSimMatrix(data);
   const highSim = simMatrix.filter(m => m.sim > 0.5);
   if (highSim.length > 0) {
     const pair = highSim.sort((a,b) => b.sim-a.sim)[0];
-    insights.push({ type: 'OVERLAP', text: `"${data[pair.i].title}" and "${data[pair.j].title}" are ${(pair.sim*100).toFixed(0)}% similar. Consider merging or differentiating.`, cls: 'info' });
+    insights.push({ type: '重複の可能性', text: `「${data[pair.i].title}」と「${data[pair.j].title}」の類似度が${(pair.sim*100).toFixed(0)}%。統合または差別化を検討してください。`, cls: 'info' });
   }
 
-  // 5. Completion rate trend
+  // 5. 完了率
   const done = data.filter(d => d.status === 'done').length;
   const inProgress = data.filter(d => (d.status || 'investigating') === 'investigating').length;
-  if (inProgress > done && inProgress > 2) insights.push({ type: 'WORKFLOW', text: `${inProgress} entries still in "investigating" vs ${done} completed. Consider processing backlog.`, cls: 'warning' });
+  const completionRate = Math.round(done / data.length * 100);
+  if (inProgress > done && inProgress > 2) {
+    insights.push({ type: 'ワークフロー', text: `調査中が${inProgress}件、完了が${done}件（完了率${completionRate}%）。未完了の整理を検討してください。`, cls: 'warning' });
+  } else if (done > 0) {
+    insights.push({ type: '完了率', text: `全${data.length}件中${done}件が完了（${completionRate}%）。`, cls: 'success' });
+  }
 
-  // 6. Tag diversity
+  // 6. タグ多様性
   const tagSet = new Set();
   data.forEach(d => (d.tags || []).forEach(t => tagSet.add(t)));
   const avgTags = data.reduce((s, d) => s + (d.tags || []).length, 0) / data.length;
-  if (avgTags < 2) insights.push({ type: 'TAGGING', text: `Average ${avgTags.toFixed(1)} tags per entry. More tags improve graph connectivity and discovery.`, cls: 'info' });
+  if (avgTags < 2) insights.push({ type: 'タグ付け', text: `1件あたり平均${avgTags.toFixed(1)}タグ。タグを増やすとナレッジグラフの接続性が向上します。`, cls: 'info' });
 
-  // 7. Cross-category connections
+  // 7. 分野横断の接続
   const crossCat = simMatrix.filter(m => m.sim > 0.3 && data[m.i].category && data[m.j].category && data[m.i].category !== data[m.j].category);
-  if (crossCat.length > 0) insights.push({ type: 'CROSS-POLLINATION', text: `${crossCat.length} cross-category semantic connections found. Interdisciplinary potential detected.`, cls: 'success' });
+  if (crossCat.length > 0) insights.push({ type: '分野横断', text: `カテゴリを横断する意味的な接続が${crossCat.length}件見つかりました。学際的な発展の可能性があります。`, cls: 'success' });
+
+  // 8. カテゴリ数
+  if (sorted.length > 0) insights.push({ type: '多様性', text: `${sorted.length}カテゴリ、${tagSet.size}種類のタグで構成。カバー範囲: ${sorted.map(([c]) => c).join('、')}`, cls: 'info' });
 
   document.getElementById('insightsContainer').innerHTML = insights.length > 0
     ? insights.map(i => `<div class="insight-card ${i.cls}"><div class="insight-type">${i.type}</div>${esc(i.text)}</div>`).join('')
-    : '<div style="color:var(--text-muted);padding:12px;">Add more entries to generate insights.</div>';
+    : '<div style="color:var(--text-muted);padding:12px;">エントリーを追加するとインサイトが生成されます。</div>';
+}
+
+function renderResearchSummary(data) {
+  const cats = {};
+  data.forEach(d => { if (d.category) cats[d.category] = (cats[d.category] || 0) + 1; });
+  const tagSet = new Set();
+  data.forEach(d => (d.tags || []).forEach(t => tagSet.add(t)));
+  const withSource = data.filter(d => d.source).length;
+  const dates = data.map(d => new Date(d.createdAt)).sort((a,b) => a-b);
+  const firstDate = dates.length > 0 ? dates[0].toLocaleDateString('ja-JP') : '-';
+  const lastDate = dates.length > 0 ? dates[dates.length-1].toLocaleDateString('ja-JP') : '-';
+
+  document.getElementById('researchSummary').innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div class="mini-stat"><span class="mini-label">総リサーチ数</span><span class="mini-value">${data.length}</span></div>
+      <div class="mini-stat"><span class="mini-label">カテゴリ数</span><span class="mini-value">${Object.keys(cats).length}</span></div>
+      <div class="mini-stat"><span class="mini-label">タグ種類</span><span class="mini-value">${tagSet.size}</span></div>
+      <div class="mini-stat"><span class="mini-label">ソース付き</span><span class="mini-value">${withSource}</span></div>
+      <div class="mini-stat"><span class="mini-label">開始日</span><span class="mini-value" style="font-size:0.85rem">${firstDate}</span></div>
+      <div class="mini-stat"><span class="mini-label">最終更新</span><span class="mini-value" style="font-size:0.85rem">${lastDate}</span></div>
+    </div>
+  `;
+}
+
+function renderStatusProgress(data) {
+  const statusCounts = { investigating: 0, reading: 0, organized: 0, done: 0 };
+  data.forEach(d => {
+    const s = d.status || 'investigating';
+    if (statusCounts[s] !== undefined) statusCounts[s]++;
+  });
+  const total = data.length || 1;
+
+  const statusInfo = [
+    { key: 'investigating', label: '調査中', color: 'var(--status-investigating)' },
+    { key: 'reading', label: '読書中', color: 'var(--status-reading)' },
+    { key: 'organized', label: '整理済', color: 'var(--status-organized)' },
+    { key: 'done', label: '完了', color: 'var(--status-done)' },
+  ];
+
+  document.getElementById('statusProgress').innerHTML = `
+    <div style="margin-bottom:16px;">
+      <div style="display:flex;height:24px;border-radius:6px;overflow:hidden;margin-bottom:8px;">
+        ${statusInfo.map(s => {
+          const pct = (statusCounts[s.key] / total * 100);
+          return pct > 0 ? `<div style="width:${pct}%;background:${s.color};transition:width 0.3s" title="${s.label}: ${statusCounts[s.key]}件"></div>` : '';
+        }).join('')}
+      </div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;">
+        ${statusInfo.map(s => `
+          <div style="display:flex;align-items:center;gap:4px;font-size:0.78rem;">
+            <div style="width:10px;height:10px;border-radius:2px;background:${s.color}"></div>
+            <span>${s.label}</span>
+            <strong>${statusCounts[s.key]}</strong>
+            <span style="color:var(--text-muted)">(${Math.round(statusCounts[s.key]/total*100)}%)</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+    <div style="font-size:0.8rem;color:var(--text-muted);">
+      完了率: <strong style="color:var(--accent)">${Math.round(statusCounts.done/total*100)}%</strong>
+      （${statusCounts.done}/${total}件）
+    </div>
+  `;
+}
+
+function renderTagAnalysis(data) {
+  const tagCounts = {};
+  data.forEach(d => (d.tags || []).forEach(t => { tagCounts[t] = (tagCounts[t] || 0) + 1; }));
+  const sorted = Object.entries(tagCounts).sort((a,b) => b[1]-a[1]);
+  const max = sorted.length > 0 ? sorted[0][1] : 1;
+
+  // 上位15タグ
+  const top = sorted.slice(0, 15);
+  // 1回だけ使用
+  const orphans = sorted.filter(([_,c]) => c === 1);
+
+  let html = '<div style="margin-bottom:12px;">';
+  top.forEach(([tag, count]) => {
+    const pct = (count / max * 100);
+    html += `<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;font-size:0.8rem;">
+      <span style="min-width:100px;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text-muted)">${esc(tag)}</span>
+      <div style="flex:1;background:var(--accent-light);border-radius:3px;height:16px;overflow:hidden;">
+        <div style="width:${pct}%;background:var(--accent);height:100%;border-radius:3px;min-width:4px;"></div>
+      </div>
+      <span style="min-width:24px;font-size:0.75rem;color:var(--text-muted)">${count}</span>
+    </div>`;
+  });
+  html += '</div>';
+
+  if (orphans.length > 0) {
+    html += `<div style="font-size:0.78rem;color:var(--text-muted);">
+      <strong>未接続タグ</strong>（1回のみ使用 / ${orphans.length}件）: ${orphans.slice(0, 10).map(([t]) => `<span class="tag">${esc(t)}</span>`).join(' ')}
+      ${orphans.length > 10 ? `<span>...他${orphans.length - 10}件</span>` : ''}
+    </div>`;
+  }
+
+  document.getElementById('tagAnalysis').innerHTML = html;
 }
 
 function renderVelocity(data) {
   const now = new Date();
-  const months = [];
-  for (let i = 5; i >= 0; i--) {
-    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-    months.push({ year: d.getFullYear(), month: d.getMonth(), label: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()] });
+
+  // Check date range of data
+  const dates = data.map(d => new Date(d.createdAt));
+  const minDate = new Date(Math.min(...dates));
+  const maxDate = new Date(Math.max(...dates));
+  const daySpan = Math.ceil((maxDate - minDate) / 86400000);
+
+  let bars = [];
+
+  if (daySpan <= 7) {
+    // Show last 7 days when data is concentrated
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i);
+      const dayStr = d.toLocaleDateString('ja-JP', { month: 'short', day: 'numeric' });
+      const count = data.filter(entry => {
+        const dd = new Date(entry.createdAt);
+        return dd.toDateString() === d.toDateString();
+      }).length;
+      bars.push({ label: dayStr, count });
+    }
+  } else {
+    // Show by month
+    const monthLabels = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+    for (let i = 5; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const count = data.filter(entry => {
+        const dd = new Date(entry.createdAt);
+        return dd.getFullYear() === d.getFullYear() && dd.getMonth() === d.getMonth();
+      }).length;
+      bars.push({ label: monthLabels[d.getMonth()], count });
+    }
   }
 
-  const counts = months.map(m => data.filter(d => {
-    const dd = new Date(d.createdAt);
-    return dd.getFullYear() === m.year && dd.getMonth() === m.month;
-  }).length);
-
-  const max = Math.max(...counts, 1);
-  document.getElementById('velocityChart').innerHTML = counts.map((c, i) =>
-    `<div class="velocity-bar" style="height:${Math.max(4, c / max * 90)}px;${c === 0 ? 'opacity:0.3;' : ''}">
-      <span class="vb-count">${c}</span>
-      <span class="vb-label">${months[i].label}</span>
+  const max = Math.max(...bars.map(b => b.count), 1);
+  document.getElementById('velocityChart').innerHTML = bars.map(b =>
+    `<div class="velocity-bar" style="height:${Math.max(4, b.count / max * 90)}px;${b.count === 0 ? 'opacity:0.3;' : ''}">
+      <span class="vb-count">${b.count}</span>
+      <span class="vb-label">${b.label}</span>
     </div>`
   ).join('');
 }
@@ -2746,54 +2901,16 @@ function renderBridgeAnalysis(data) {
           <div style="font-weight:600;">${esc(b.entry.title)}</div>
           <div class="bridge-cats">${b.cats.map(c => `<span class="tag">${esc(c)}</span>`).join('<span style="margin:0 2px;color:var(--text-muted)">↔</span>')}</div>
         </div>
-        <div class="bridge-score">${b.crossCount} links<br>${(b.score*100).toFixed(0)}% avg</div>
+        <div class="bridge-score">${b.crossCount}件接続<br>類似度${(b.score*100).toFixed(0)}%</div>
       </div>
     `).join('')
-    : '<div style="color:var(--text-muted);font-size:0.82rem;padding:12px;">No cross-category bridges yet.</div>';
+    : '<div style="color:var(--text-muted);font-size:0.82rem;padding:12px;">分野横断の接続はまだありません。</div>';
 }
 
-function renderGapAnalysis(data) {
-  const now = new Date();
-  const cats = {};
-  data.forEach(d => {
-    if (!d.category) return;
-    if (!cats[d.category]) cats[d.category] = { count: 0, lastDate: null, investigating: 0 };
-    cats[d.category].count++;
-    const dd = new Date(d.createdAt);
-    if (!cats[d.category].lastDate || dd > cats[d.category].lastDate) cats[d.category].lastDate = dd;
-    if ((d.status || 'investigating') === 'investigating') cats[d.category].investigating++;
-  });
-
-  const gaps = Object.entries(cats).map(([cat, info]) => {
-    const daysSince = Math.floor((now - info.lastDate) / 86400000);
-    return { cat, ...info, daysSince };
-  }).sort((a, b) => b.daysSince - a.daysSince);
-
-  // Also find tags used only once
-  const tagCounts = {};
-  data.forEach(d => (d.tags || []).forEach(t => { tagCounts[t] = (tagCounts[t] || 0) + 1; }));
-  const loneTags = Object.entries(tagCounts).filter(([_, c]) => c === 1).map(([t]) => t);
-
-  let html = '';
-  gaps.forEach(g => {
-    const isStale = g.daysSince > 30;
-    html += `<div class="gap-item ${isStale ? 'stale' : ''}">
-      <span class="gap-label">${esc(g.cat)} <span class="tag">${g.count} entries</span></span>
-      <span class="gap-meta">${g.daysSince}d ago${g.investigating > 0 ? ` · ${g.investigating} in progress` : ''}</span>
-    </div>`;
-  });
-
-  if (loneTags.length > 0) {
-    html += `<div style="margin-top:12px;font-size:0.78rem;color:var(--text-muted);">
-      <strong>Orphan tags</strong> (used once): ${loneTags.map(t => `<span class="tag">${esc(t)}</span>`).join(' ')}
-    </div>`;
-  }
-
-  document.getElementById('gapAnalysis').innerHTML = html || '<div style="color:var(--text-muted);font-size:0.82rem;padding:12px;">No gaps detected.</div>';
-}
+// renderGapAnalysis removed - replaced by renderTagAnalysis and renderStatusProgress
 
 function renderClusterSummary(data) {
-  if (data.length < 2) { document.getElementById('clusterSummary').innerHTML = '<div style="color:var(--text-muted);padding:12px;">Need more entries.</div>'; return; }
+  if (data.length < 2) { document.getElementById('clusterSummary').innerHTML = '<div style="color:var(--text-muted);padding:12px;">エントリーを増やすとクラスターが生成されます。</div>'; return; }
 
   // Use BM25 similarity to cluster
   const simMatrix = getSimMatrix(data);
@@ -2840,8 +2957,8 @@ function renderClusterSummary(data) {
     html += `<div style="margin-bottom:14px;">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
         <div style="width:10px;height:10px;border-radius:50%;background:${color}"></div>
-        <strong style="font-size:0.85rem;">Cluster ${ci + 1}</strong>
-        <span style="font-size:0.72rem;color:var(--text-muted);">${cluster.length} entries</span>
+        <strong style="font-size:0.85rem;">クラスター ${ci + 1}</strong>
+        <span style="font-size:0.72rem;color:var(--text-muted);">${cluster.length}件</span>
         ${topCat ? `<span class="tag">${esc(topCat[0])}</span>` : ''}
       </div>
       <div style="padding-left:18px;">
