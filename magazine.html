@@ -418,33 +418,25 @@ function openReader(id) {
   if (tags.length > 0) body += `<div class="reader-info-item">${tags.length} tags</div>`;
   body += `</div>`;
 
-  // Full-text CTA (top, for Google Docs)
-  if (isGDocs) {
-    body += `<div class="reader-fulltext-cta">
-      <div>
-        <div class="reader-fulltext-label">Full report available</div>
-        <a href="${esc(gdocsUrl)}" target="_blank">Open Full Report &#8594;</a>
-      </div>
-    </div>`;
-  }
-
-  // Main content
+  // Main content (summary)
   if (d.summary) {
     body += renderSummaryContent(d.summary.trim());
   }
 
-  // Full-text CTA (bottom, for sources)
-  if (d.source) {
-    if (isGDocs) {
-      body += `<div class="reader-fulltext-cta" style="margin-top:40px;">
-        <div>
-          <div class="reader-fulltext-label">Continue reading the full report</div>
-          <a href="${esc(gdocsUrl)}" target="_blank">Open in Google Docs &#8594;</a>
-        </div>
-      </div>`;
-    } else {
-      body += `<div style="margin-top:24px;"><a class="reader-source" href="${esc(d.source)}" target="_blank">Source &#8594;</a></div>`;
-    }
+  // Google Docs: embed full document inline
+  if (isGDocs) {
+    const previewUrl = gdocsUrl.replace(/\/edit.*$/, '/preview');
+    body += `<div style="margin:32px 0 16px;border-top:2px solid var(--accent);padding-top:24px;">
+      <h2 style="font-size:1.1rem;margin-bottom:12px;">全文</h2>
+      <div style="border:1px solid var(--border);border-radius:8px;overflow:hidden;background:#fff;">
+        <iframe src="${esc(previewUrl)}" style="width:100%;height:600px;border:none;" allowfullscreen></iframe>
+      </div>
+      <div style="margin-top:12px;text-align:right;">
+        <a href="${esc(gdocsUrl)}" target="_blank" style="color:var(--accent);font-size:0.85rem;">Google ドキュメントで開く &#8594;</a>
+      </div>
+    </div>`;
+  } else if (d.source) {
+    body += `<div style="margin-top:24px;"><a class="reader-source" href="${esc(d.source)}" target="_blank">ソースを開く &#8594;</a></div>`;
   }
 
   // Tags
