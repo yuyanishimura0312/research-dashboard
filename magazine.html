@@ -3,303 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Research Journal — Yuya Nishimura</title>
+<title>Future esse-sense</title>
+<meta name="description" content="Research journal exploring anthropology, technology, futures, and social innovation.">
 <script src="data.js"></script>
-<style>
-/* ===== Theme tokens (3-layer) ===== */
-:root {
-  --bg:          #ffffff;
-  --bg-alt:      #f7f7f5;
-  --bg-hero:     #1a1a1a;
-  --text:        #121212;
-  --text-muted:  #666666;
-  --text-light:  #999999;
-  --accent:      #567b47;
-  --accent-hover:#3d5a31;
-  --border:      #e2e2e2;
-  --card-shadow: 0 1px 4px rgba(0,0,0,0.06);
-
-  --font-headline: 'Georgia', 'Noto Serif JP', 'Times New Roman', serif;
-  --font-body:     'Hiragino Kaku Gothic ProN', 'Noto Sans JP', system-ui, sans-serif;
-  --font-mono:     'Menlo', 'Courier New', monospace;
-
-  --text-hero:   clamp(2.2rem, 2rem + 3vw, 4.5rem);
-  --text-h1:     clamp(1.6rem, 1.2rem + 2vw, 2.8rem);
-  --text-h2:     clamp(1.2rem, 1rem + 1vw, 1.8rem);
-  --text-h3:     clamp(1rem, 0.9rem + 0.5vw, 1.3rem);
-  --text-body:   clamp(0.95rem, 0.9rem + 0.2vw, 1.1rem);
-  --text-sm:     clamp(0.78rem, 0.75rem + 0.15vw, 0.88rem);
-  --text-xs:     clamp(0.68rem, 0.65rem + 0.1vw, 0.78rem);
-
-  --measure:     min(680px, 90vw);
-  --measure-wide:min(1100px, 94vw);
-}
-
-[data-theme="dark"] {
-  --bg:          #0a0a0a;
-  --bg-alt:      #141414;
-  --bg-hero:     #0a0a0a;
-  --text:        #e8e6e3;
-  --text-muted:  #9a9a9a;
-  --text-light:  #666;
-  --accent:      #8ab87a;
-  --accent-hover:#a5d395;
-  --border:      #2a2a2a;
-  --card-shadow: 0 1px 4px rgba(0,0,0,0.3);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  *, *::before, *::after { transition: background-color 0.3s, color 0.2s, border-color 0.3s, opacity 0.3s; }
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body { font-family: var(--font-body); background: var(--bg); color: var(--text); line-height: 1.7; }
-
-/* ===== Progress bar ===== */
-#progressBar {
-  position: fixed; top: 0; left: 0; height: 2px; width: 0%;
-  background: var(--accent); z-index: 1000;
-  animation: grow-progress linear;
-  animation-timeline: scroll(root block);
-}
-@keyframes grow-progress { from { width: 0%; } to { width: 100%; } }
-
-/* ===== Masthead ===== */
-.masthead {
-  position: sticky; top: 0; z-index: 100;
-  background: var(--bg); border-bottom: 1px solid var(--border);
-  padding: 0 24px;
-}
-.masthead-inner {
-  max-width: var(--measure-wide); margin: 0 auto;
-  display: flex; justify-content: space-between; align-items: center;
-  height: 48px;
-}
-.masthead-title {
-  font-family: var(--font-headline); font-size: 1.1rem; font-weight: 700;
-  letter-spacing: -0.02em; color: var(--text);
-}
-.masthead-nav { display: flex; gap: 20px; align-items: center; }
-.masthead-nav a {
-  font-size: var(--text-xs); color: var(--text-muted); text-decoration: none;
-  text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500;
-}
-.masthead-nav a:hover { color: var(--text); }
-.theme-toggle {
-  background: none; border: 1px solid var(--border); border-radius: 50%;
-  width: 30px; height: 30px; cursor: pointer; color: var(--text-muted);
-  display: flex; align-items: center; justify-content: center; font-size: 14px;
-}
-
-/* ===== Category bar ===== */
-.cat-bar {
-  border-bottom: 1px solid var(--border); background: var(--bg);
-  overflow-x: auto; -webkit-overflow-scrolling: touch;
-}
-.cat-bar-inner {
-  max-width: var(--measure-wide); margin: 0 auto; padding: 0 24px;
-  display: flex; gap: 0;
-}
-.cat-link {
-  padding: 10px 16px; font-size: var(--text-xs); color: var(--text-muted);
-  text-decoration: none; white-space: nowrap; border-bottom: 2px solid transparent;
-  font-weight: 500; letter-spacing: 0.03em;
-}
-.cat-link:hover, .cat-link.active { color: var(--text); border-bottom-color: var(--text); }
-
-/* ===== Hero ===== */
-.hero {
-  background: var(--bg-hero); color: #f0f0f0; padding: 60px 24px 50px;
-  border-bottom: 3px double var(--border);
-}
-.hero-inner { max-width: var(--measure-wide); margin: 0 auto; }
-.hero-label {
-  font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.12em;
-  color: var(--accent); font-weight: 600; margin-bottom: 14px;
-}
-.hero-title {
-  font-family: var(--font-headline); font-size: var(--text-hero);
-  font-weight: 700; line-height: 1.15; letter-spacing: -0.02em;
-  margin-bottom: 16px; max-width: 800px;
-}
-.hero-summary {
-  font-size: var(--text-body); line-height: 1.7; color: #c0c0c0;
-  max-width: 600px; margin-bottom: 20px;
-}
-.hero-meta { font-size: var(--text-xs); color: #888; }
-.hero-meta span { margin-right: 16px; }
-
-/* ===== Grid sections ===== */
-.section { max-width: var(--measure-wide); margin: 0 auto; padding: 40px 24px; }
-
-.section-header {
-  display: flex; justify-content: space-between; align-items: baseline;
-  border-bottom: 2px solid var(--text); padding-bottom: 8px; margin-bottom: 24px;
-}
-.section-title {
-  font-family: var(--font-headline); font-size: var(--text-h2);
-  font-weight: 700; letter-spacing: -0.01em;
-}
-.section-more {
-  font-size: var(--text-xs); color: var(--accent); text-decoration: none;
-  text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600;
-}
-
-/* NYT-style mixed grid */
-.nyt-grid {
-  display: grid;
-  grid-template-columns: 1fr 1px 1fr 1px 1fr;
-  gap: 0;
-}
-.nyt-grid .divider { background: var(--border); }
-
-.nyt-featured {
-  grid-column: 1 / 2; padding-right: 24px;
-}
-.nyt-stack {
-  grid-column: 3 / 4; padding: 0 24px;
-  display: flex; flex-direction: column; gap: 20px;
-}
-.nyt-sidebar {
-  grid-column: 5 / 6; padding-left: 24px;
-}
-
-/* Article cards */
-.article-card { cursor: pointer; }
-.article-card:hover .card-title { color: var(--accent); }
-
-.card-img {
-  width: 100%; aspect-ratio: 16/10; object-fit: cover;
-  border-radius: 2px; margin-bottom: 12px; background: var(--bg-alt);
-}
-.card-category {
-  font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.1em;
-  color: var(--accent); font-weight: 600; margin-bottom: 6px;
-}
-.card-title {
-  font-family: var(--font-headline); font-size: var(--text-h3);
-  font-weight: 700; line-height: 1.3; margin-bottom: 8px;
-  letter-spacing: -0.01em; transition: color 0.15s;
-}
-.card-title-lg { font-size: var(--text-h1); }
-.card-summary {
-  font-size: var(--text-sm); color: var(--text-muted); line-height: 1.6;
-  margin-bottom: 8px;
-  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
-}
-.card-meta {
-  font-size: var(--text-xs); color: var(--text-light);
-}
-.card-meta .status-dot {
-  display: inline-block; width: 7px; height: 7px; border-radius: 50%;
-  margin-right: 4px; vertical-align: middle;
-}
-.card-divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
-
-/* Compact card (sidebar/stack) */
-.card-compact .card-title { font-size: var(--text-h3); }
-.card-compact .card-summary { -webkit-line-clamp: 2; }
-
-/* ===== Article reader ===== */
-.reader-overlay {
-  display: none; position: fixed; inset: 0; z-index: 200;
-  background: var(--bg); overflow-y: auto;
-}
-.reader-overlay.active { display: block; }
-
-.reader-close {
-  position: fixed; top: 14px; right: 24px; z-index: 210;
-  background: var(--bg); border: 1px solid var(--border); border-radius: 50%;
-  width: 36px; height: 36px; font-size: 18px; cursor: pointer;
-  color: var(--text-muted); display: flex; align-items: center; justify-content: center;
-}
-.reader-close:hover { color: var(--text); }
-
-.reader-header {
-  max-width: var(--measure); margin: 0 auto; padding: 80px 24px 40px;
-  border-bottom: 1px solid var(--border);
-}
-.reader-cat {
-  font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.12em;
-  color: var(--accent); font-weight: 600; margin-bottom: 12px;
-}
-.reader-title {
-  font-family: var(--font-headline); font-size: var(--text-h1);
-  font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 16px;
-}
-.reader-meta { font-size: var(--text-sm); color: var(--text-muted); margin-bottom: 8px; }
-.reader-meta span { margin-right: 14px; }
-
-.reader-body {
-  max-width: var(--measure); margin: 0 auto; padding: 40px 24px 80px;
-}
-.reader-body p {
-  font-family: var(--font-headline); font-size: var(--text-body);
-  line-height: 1.85; margin-bottom: 1.4em;
-}
-.reader-body .tag-row { display: flex; gap: 6px; flex-wrap: wrap; margin: 24px 0; }
-.reader-body .tag-item {
-  background: var(--bg-alt); border: 1px solid var(--border);
-  padding: 4px 12px; border-radius: 20px; font-size: var(--text-xs); color: var(--text-muted);
-}
-
-/* Related in reader */
-.reader-related { border-top: 2px solid var(--text); padding-top: 24px; margin-top: 40px; }
-.reader-related h3 {
-  font-family: var(--font-headline); font-size: var(--text-h3);
-  font-weight: 700; margin-bottom: 16px;
-}
-.related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
-.related-card { cursor: pointer; }
-.related-card:hover .card-title { color: var(--accent); }
-.related-card .card-title { font-size: var(--text-sm); }
-.related-card .card-meta { margin-top: 4px; }
-
-/* ===== Topic grid ===== */
-.topic-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 12px;
-}
-.topic-tile {
-  background: var(--bg-alt); border: 1px solid var(--border); border-radius: 6px;
-  padding: 20px 16px; text-align: center; cursor: pointer; transition: all 0.15s;
-}
-.topic-tile:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--card-shadow); }
-.topic-count { font-size: 1.8rem; font-weight: 700; color: var(--accent); }
-.topic-name { font-size: var(--text-sm); color: var(--text-muted); margin-top: 4px; }
-
-/* ===== Footer ===== */
-.site-footer {
-  border-top: 3px double var(--border); background: var(--bg-alt);
-  padding: 40px 24px; margin-top: 60px;
-}
-.footer-inner {
-  max-width: var(--measure-wide); margin: 0 auto;
-  display: flex; justify-content: space-between; align-items: center;
-  flex-wrap: wrap; gap: 20px;
-}
-.footer-brand { font-family: var(--font-headline); font-size: 1rem; font-weight: 700; }
-.footer-links { display: flex; gap: 20px; }
-.footer-links a { font-size: var(--text-xs); color: var(--text-muted); text-decoration: none; }
-.footer-links a:hover { color: var(--text); }
-
-/* ===== Scroll animations ===== */
-.animate-in { opacity: 0; transform: translateY(1.5rem); transition: opacity 0.6s ease, transform 0.6s ease; }
-.animate-in.visible { opacity: 1; transform: translateY(0); }
-
-/* ===== Responsive ===== */
-@media (max-width: 768px) {
-  .nyt-grid { grid-template-columns: 1fr; gap: 24px; }
-  .nyt-grid .divider { display: none; }
-  .nyt-featured, .nyt-stack, .nyt-sidebar { padding: 0; grid-column: auto; }
-  .hero { padding: 40px 16px 36px; }
-  .section { padding: 28px 16px; }
-  .masthead-nav a:not(:first-child):not(:last-child) { display: none; }
-  .reader-header { padding: 60px 16px 30px; }
-  .reader-body { padding: 30px 16px 60px; }
-}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div id="progressBar"></div>
@@ -307,23 +14,33 @@ body { font-family: var(--font-body); background: var(--bg); color: var(--text);
 <!-- Masthead -->
 <header class="masthead">
   <div class="masthead-inner">
-    <div class="masthead-title">Research Journal</div>
+    <div class="masthead-brand">
+      <span class="brand-main">Future esse-sense</span>
+      <span class="brand-sub">Research Journal</span>
+    </div>
     <nav class="masthead-nav">
-      <a href="index.html">Dashboard</a>
-      <a href="#topics">Topics</a>
-      <a href="#latest">Latest</a>
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">☽</button>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#latest" class="hide-mobile">Latest</a>
+      <a href="#topics" class="hide-mobile">Topics</a>
+      <a href="index.html">Analytics</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">&#9790;</button>
     </nav>
   </div>
 </header>
 
 <!-- Category bar -->
-<nav class="cat-bar">
-  <div class="cat-bar-inner" id="catBar"></div>
-</nav>
+<nav class="cat-bar"><div class="cat-bar-inner" id="catBar"></div></nav>
 
 <!-- Hero -->
 <section class="hero" id="heroSection"></section>
+
+<!-- Dashboard strip -->
+<section class="dash-strip" id="dashboard">
+  <div class="dash-strip-inner">
+    <div class="dash-stats" id="dashStats"></div>
+    <div class="dash-status-row" id="dashStatus"></div>
+  </div>
+</section>
 
 <!-- Latest -->
 <section class="section" id="latest">
@@ -333,7 +50,7 @@ body { font-family: var(--font-body); background: var(--bg); color: var(--text);
   <div class="nyt-grid" id="latestGrid"></div>
 </section>
 
-<!-- By category sections -->
+<!-- Category sections -->
 <div id="categorySections"></div>
 
 <!-- Topics -->
@@ -347,18 +64,20 @@ body { font-family: var(--font-body); background: var(--bg); color: var(--text);
 <!-- Footer -->
 <footer class="site-footer">
   <div class="footer-inner">
-    <div class="footer-brand">Research Journal — Yuya Nishimura</div>
+    <div>
+      <div class="footer-brand">Future esse-sense</div>
+      <div class="footer-sub">Research Journal — Yuya Nishimura</div>
+    </div>
     <div class="footer-links">
-      <a href="index.html">Dashboard</a>
+      <a href="index.html">Analytics Dashboard</a>
       <a href="#topics">Topics</a>
-      <a href="#">About</a>
     </div>
   </div>
 </footer>
 
 <!-- Article Reader Overlay -->
 <div class="reader-overlay" id="reader">
-  <button class="reader-close" onclick="closeReader()">✕</button>
+  <button class="reader-close" onclick="closeReader()">&#10005;</button>
   <div class="reader-header" id="readerHeader"></div>
   <div class="reader-body" id="readerBody"></div>
 </div>
@@ -366,14 +85,17 @@ body { font-family: var(--font-body); background: var(--bg); color: var(--text);
 <script>
 const DATA = Array.isArray(window.RESEARCH_DATA) ? window.RESEARCH_DATA : [];
 const STATUS_COLORS = { investigating:'#e67e22', reading:'#3498db', organized:'#9b59b6', done:'#2d5a27' };
-const STATUS_LABELS = { investigating:'調査中', reading:'読了', organized:'整理済', done:'完了' };
+const STATUS_LABELS = { investigating:'Investigating', reading:'Reading', organized:'Organized', done:'Completed' };
 const EXCLUDED_TAGS = new Set(['Gemini','Google Drive']);
 let activeCategory = '';
 
 function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
-function formatDate(iso) { const d = new Date(iso); return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`; }
+function formatDate(iso) {
+  const d = new Date(iso);
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+}
 function readTime(text) { return Math.max(1, Math.round((text || '').length / 400)); }
-
 function getFiltered() {
   let d = [...DATA].sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
   if (activeCategory) d = d.filter(x => x.category === activeCategory);
@@ -391,68 +113,83 @@ function renderCatBar() {
       `<a class="cat-link ${activeCategory===c?'active':''}" href="#" onclick="filterCat('${c}');return false">${esc(c)}</a>`
     ).join('');
 }
-
 function filterCat(c) { activeCategory = c; renderAll(); window.scrollTo({top:0,behavior:'smooth'}); }
 
 // ===== Card HTML =====
 function cardHTML(d, opts={}) {
   const s = d.status || 'investigating';
-  const tags = (d.tags||[]).filter(t=>!EXCLUDED_TAGS.has(t));
   const cls = opts.compact ? 'article-card card-compact' : 'article-card';
   const titleCls = opts.large ? 'card-title card-title-lg' : 'card-title';
   return `
     <div class="${cls} animate-in" onclick="openReader('${d.id}')">
-      ${opts.large ? `<div style="height:6px;background:var(--accent);margin-bottom:16px;border-radius:2px;width:60px;"></div>` : ''}
+      ${opts.large ? '<div class="card-accent-bar"></div>' : ''}
       <div class="card-category">${esc(d.category||'')}</div>
       <div class="${titleCls}">${esc(d.title)}</div>
       ${d.summary && !opts.noSummary ? `<div class="card-summary">${esc(d.summary)}</div>` : ''}
       <div class="card-meta">
         <span class="status-dot" style="background:${STATUS_COLORS[s]}"></span>${STATUS_LABELS[s]}
         <span style="margin-left:12px">${formatDate(d.createdAt)}</span>
-        <span style="margin-left:12px">${readTime(d.summary)} min read</span>
+        <span style="margin-left:12px">${readTime(d.summary)} min</span>
       </div>
     </div>`;
 }
 
 // ===== Hero =====
 function renderHero() {
-  const featured = getFiltered().filter(d => d.status === 'done' && d.summary && d.summary.length > 80);
+  const featured = getFiltered().filter(d => d.status === 'done' && d.summary && d.summary.length > 100);
   const d = featured[0] || getFiltered()[0];
   if (!d) return;
-  const s = d.status || 'investigating';
   document.getElementById('heroSection').innerHTML = `
     <div class="hero-inner" style="cursor:pointer" onclick="openReader('${d.id}')">
       <div class="hero-label">${esc(d.category||'Research')}</div>
       <h1 class="hero-title">${esc(d.title)}</h1>
-      <p class="hero-summary">${esc((d.summary||'').slice(0, 200))}${(d.summary||'').length > 200 ? '...' : ''}</p>
+      <p class="hero-summary">${esc((d.summary||'').slice(0, 220))}${(d.summary||'').length > 220 ? '...' : ''}</p>
       <div class="hero-meta">
         <span>${formatDate(d.createdAt)}</span>
         <span>${readTime(d.summary)} min read</span>
-        <span>${STATUS_LABELS[s]}</span>
+        <span>${STATUS_LABELS[d.status||'investigating']}</span>
       </div>
     </div>`;
 }
 
-// ===== Latest grid (NYT-style) =====
+// ===== Dashboard strip =====
+function renderDashboard() {
+  const now = new Date();
+  const thisMonth = DATA.filter(d => { const dd = new Date(d.createdAt); return dd.getFullYear() === now.getFullYear() && dd.getMonth() === now.getMonth(); }).length;
+  const cats = new Set(DATA.map(d => d.category).filter(Boolean)).size;
+  const done = DATA.filter(d => d.status === 'done').length;
+  const pct = DATA.length > 0 ? Math.round(done / DATA.length * 100) : 0;
+
+  document.getElementById('dashStats').innerHTML = `
+    <div class="dash-stat"><div class="ds-value">${DATA.length}</div><div class="ds-label">Total Research</div></div>
+    <div class="dash-stat"><div class="ds-value">${thisMonth}</div><div class="ds-label">This Month</div></div>
+    <div class="dash-stat"><div class="ds-value">${cats}</div><div class="ds-label">Categories</div></div>
+    <div class="dash-stat"><div class="ds-value">${pct}%</div><div class="ds-label">Completed</div></div>
+  `;
+
+  const sc = { investigating:0, reading:0, organized:0, done:0 };
+  DATA.forEach(d => { sc[d.status||'investigating']++; });
+  document.getElementById('dashStatus').innerHTML = Object.entries(sc).map(([k,v]) =>
+    `<div class="dash-status-item" style="background:${STATUS_COLORS[k]}"><span class="ds-count">${v}</span><span class="ds-name">${STATUS_LABELS[k]}</span></div>`
+  ).join('');
+}
+
+// ===== Latest grid (NYT) =====
 function renderLatest() {
   const items = getFiltered().slice(activeCategory ? 0 : 1, 10);
   if (items.length < 3) {
     document.getElementById('latestGrid').innerHTML = items.map(d => cardHTML(d)).join('');
     return;
   }
-  const feat = items[0];
-  const stack = items.slice(1, 4);
-  const side = items.slice(4, 7);
-
   document.getElementById('latestGrid').innerHTML = `
-    <div class="nyt-featured">${cardHTML(feat, {large:true})}</div>
+    <div class="nyt-featured">${cardHTML(items[0], {large:true})}</div>
     <div class="divider"></div>
     <div class="nyt-stack">
-      ${stack.map((d,i) => cardHTML(d, {compact:true}) + (i < stack.length-1 ? '<hr class="card-divider">' : '')).join('')}
+      ${items.slice(1,4).map((d,i,a) => cardHTML(d, {compact:true}) + (i < a.length-1 ? '<hr class="card-divider">' : '')).join('')}
     </div>
     <div class="divider"></div>
     <div class="nyt-sidebar">
-      ${side.map((d,i) => cardHTML(d, {compact:true, noSummary:true}) + (i < side.length-1 ? '<hr class="card-divider">' : '')).join('')}
+      ${items.slice(4,7).map((d,i,a) => cardHTML(d, {compact:true, noSummary:true}) + (i < a.length-1 ? '<hr class="card-divider">' : '')).join('')}
     </div>`;
 }
 
@@ -461,15 +198,15 @@ function renderCategorySections() {
   if (activeCategory) { document.getElementById('categorySections').innerHTML = ''; return; }
   const cats = {};
   DATA.forEach(d => { if (d.category) cats[d.category] = (cats[d.category]||0)+1; });
-  const sorted = Object.entries(cats).sort((a,b) => b[1]-a[1]).slice(0, 4);
-
-  document.getElementById('categorySections').innerHTML = sorted.map(([cat]) => {
-    const items = DATA.filter(d => d.category === cat).sort((a,b) => new Date(b.createdAt)-new Date(a.createdAt)).slice(0, 4);
+  document.getElementById('categorySections').innerHTML = Object.entries(cats)
+    .sort((a,b) => b[1]-a[1]).slice(0, 4).map(([cat]) => {
+    const items = DATA.filter(d => d.category === cat)
+      .sort((a,b) => new Date(b.createdAt)-new Date(a.createdAt)).slice(0, 4);
     return `
       <section class="section" style="border-top:1px solid var(--border);">
         <div class="section-header">
           <h2 class="section-title">${esc(cat)}</h2>
-          <a class="section-more" href="#" onclick="filterCat('${cat}');return false">See all →</a>
+          <a class="section-more" href="#" onclick="filterCat('${cat}');return false">See all &#8594;</a>
         </div>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:24px;">
           ${items.map(d => cardHTML(d, {compact:true})).join('')}
@@ -478,7 +215,7 @@ function renderCategorySections() {
   }).join('');
 }
 
-// ===== Topics grid =====
+// ===== Topics =====
 function renderTopics() {
   const cats = {};
   DATA.forEach(d => { if (d.category) cats[d.category] = (cats[d.category]||0)+1; });
@@ -491,23 +228,21 @@ function renderTopics() {
       </div>`).join('');
 }
 
-// ===== BM25 related =====
+// ===== Related entries =====
 function getRelated(id, topN) {
   const idx = DATA.findIndex(d => d.id === id);
   if (idx < 0) return [];
-  // Simple tag overlap scoring
   const entry = DATA[idx];
   const eTags = new Set((entry.tags||[]).filter(t=>!EXCLUDED_TAGS.has(t)));
   return DATA.map((d, i) => {
     if (i === idx) return null;
-    const dTags = (d.tags||[]).filter(t=>!EXCLUDED_TAGS.has(t));
-    const overlap = dTags.filter(t => eTags.has(t)).length;
+    const overlap = (d.tags||[]).filter(t=>!EXCLUDED_TAGS.has(t)&&eTags.has(t)).length;
     const catMatch = d.category === entry.category ? 2 : 0;
     return { d, score: overlap + catMatch };
-  }).filter(x => x && x.score > 0).sort((a,b) => b.score - a.score).slice(0, topN);
+  }).filter(x => x && x.score > 0).sort((a,b) => b.score-a.score).slice(0, topN);
 }
 
-// ===== Reader =====
+// ===== Article Reader (enhanced editorial design) =====
 function openReader(id) {
   const d = DATA.find(x => x.id === id);
   if (!d) return;
@@ -523,28 +258,49 @@ function openReader(id) {
       <span><span class="status-dot" style="background:${STATUS_COLORS[s]}"></span>${STATUS_LABELS[s]}</span>
     </div>`;
 
-  let bodyHTML = '';
+  let body = '';
 
-  // Summary as paragraphs
   if (d.summary) {
-    const paragraphs = d.summary.split(/\n+/).filter(Boolean);
-    paragraphs.forEach(p => { bodyHTML += `<p>${esc(p)}</p>`; });
+    const lines = d.summary.split(/\n+/).filter(Boolean);
+    // Parse structured content
+    let isFirst = true;
+    lines.forEach(line => {
+      const trimmed = line.trim();
+      // Section headers (lines starting with ■ or 【 or [number])
+      if (/^[■●▶\[【]/.test(trimmed) || /^\d+[\.\)]\s/.test(trimmed)) {
+        const clean = trimmed.replace(/^[■●▶\[【\]】\d+\.\)\s]+/, '');
+        body += `<h2>${esc(clean || trimmed)}</h2>`;
+      }
+      // Bullet items (lines starting with - or ・ or ()
+      else if (/^[-・•]\s/.test(trimmed) || /^\(\d+\)/.test(trimmed)) {
+        body += `<div class="summary-item">${esc(trimmed.replace(/^[-・•]\s*/, ''))}</div>`;
+      }
+      // Pull quote (very short impactful lines)
+      else if (trimmed.length > 10 && trimmed.length < 80 && lines.length > 5 && lines.indexOf(line) === Math.floor(lines.length / 2)) {
+        body += `<div class="reader-pullquote">${esc(trimmed)}</div>`;
+      }
+      // Regular paragraph
+      else {
+        body += `<p${isFirst ? ' class="drop-cap"' : ''}>${esc(trimmed)}</p>`;
+        isFirst = false;
+      }
+    });
   }
 
   // Tags
   if (tags.length > 0) {
-    bodyHTML += `<div class="tag-row">${tags.map(t => `<span class="tag-item">${esc(t)}</span>`).join('')}</div>`;
+    body += `<div class="reader-tags">${tags.map(t => `<span class="reader-tag">${esc(t)}</span>`).join('')}</div>`;
   }
 
   // Source
   if (d.source) {
-    bodyHTML += `<p style="font-size:var(--text-sm);"><a href="${esc(d.source)}" target="_blank" style="color:var(--accent);">Source →</a></p>`;
+    body += `<a class="reader-source" href="${esc(d.source)}" target="_blank">Source &#8594;</a>`;
   }
 
   // Related
   const related = getRelated(id, 4);
   if (related.length > 0) {
-    bodyHTML += `<div class="reader-related">
+    body += `<div class="reader-related">
       <h3>Related Research</h3>
       <div class="related-grid">
         ${related.map(({d:r}) => `
@@ -557,7 +313,7 @@ function openReader(id) {
     </div>`;
   }
 
-  document.getElementById('readerBody').innerHTML = bodyHTML;
+  document.getElementById('readerBody').innerHTML = body;
   document.getElementById('reader').classList.add('active');
   document.getElementById('reader').scrollTo(0, 0);
   document.body.style.overflow = 'hidden';
@@ -570,17 +326,16 @@ function closeReader() {
 
 // ===== Dark mode =====
 function initTheme() {
-  const stored = localStorage.getItem('magazine-theme');
+  const stored = localStorage.getItem('fes-theme');
   const theme = stored || (window.matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
   document.documentElement.setAttribute('data-theme', theme);
-  document.getElementById('themeToggle').textContent = theme === 'dark' ? '☀' : '☽';
+  document.getElementById('themeToggle').innerHTML = theme === 'dark' ? '&#9788;' : '&#9790;';
 }
 document.getElementById('themeToggle').addEventListener('click', () => {
-  const current = document.documentElement.getAttribute('data-theme');
-  const next = current === 'dark' ? 'light' : 'dark';
+  const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', next);
-  localStorage.setItem('magazine-theme', next);
-  document.getElementById('themeToggle').textContent = next === 'dark' ? '☀' : '☽';
+  localStorage.setItem('fes-theme', next);
+  document.getElementById('themeToggle').innerHTML = next === 'dark' ? '&#9788;' : '&#9790;';
 });
 
 // ===== Scroll animations =====
@@ -594,10 +349,11 @@ function initScrollAnimations() {
 // ===== Keyboard =====
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeReader(); });
 
-// ===== Render all =====
+// ===== Render =====
 function renderAll() {
   renderCatBar();
   renderHero();
+  renderDashboard();
   renderLatest();
   renderCategorySections();
   renderTopics();
