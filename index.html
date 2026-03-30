@@ -1379,8 +1379,8 @@
   <div class="tab-panel" id="tab-research">
     <div class="toolbar">
       <div class="search-group">
-        <input type="text" class="search-box" id="searchBox" placeholder="タイトル・要約・タグで検索..." oninput="onSearchInput()" onkeydown="onSearchKeydown(event)">
-        <button class="semantic-toggle" id="semanticToggle" onclick="toggleSemanticMode()" title="AI意味検索：キーワード一致ではなく、意味的に近いリサーチを検索します">
+        <input type="text" class="search-box" id="searchBox" placeholder="自然文で検索してEnter（例：社会変革に関する事例）" oninput="onSearchInput()" onkeydown="onSearchKeydown(event)">
+        <button class="semantic-toggle active" id="semanticToggle" onclick="toggleSemanticMode()" title="AI意味検索：キーワード一致ではなく、意味的に近いリサーチを検索します">
           <span class="toggle-dot"></span>AI検索
         </button>
       </div>
@@ -1803,7 +1803,7 @@ function setView(view) {
 }
 
 // ===== Semantic Search =====
-let semanticMode = false;
+let semanticMode = true;
 let semanticModel = null;
 let semanticLoading = false;
 let semanticScores = null; // Map<id, score> from last search
@@ -1816,12 +1816,12 @@ function toggleSemanticMode() {
   const box = document.getElementById('searchBox');
   btn.classList.toggle('active', semanticMode);
   if (semanticMode) {
-    box.placeholder = 'AI検索: 自然文で入力してEnterキー...';
+    box.placeholder = '自然文で検索してEnter（例：社会変革に関する事例）';
     // If there is already a query, run semantic search
     if (box.value.trim()) runSemanticSearch(box.value.trim());
-    else setSemanticStatus('自然文で検索できます。例：「社会変革に関する事例」');
+    else setSemanticStatus('');
   } else {
-    box.placeholder = 'タイトル・要約・タグで検索...';
+    box.placeholder = 'キーワードで検索...';
     semanticScores = null;
     setSemanticStatus('');
     renderResearchTab();
