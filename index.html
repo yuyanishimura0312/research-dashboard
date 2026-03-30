@@ -1807,6 +1807,7 @@ let semanticMode = false;
 let semanticModel = null;
 let semanticLoading = false;
 let semanticScores = null; // Map<id, score> from last search
+let semanticThreshold = 0;
 let semanticSearchPending = false;
 
 function toggleSemanticMode() {
@@ -1902,10 +1903,14 @@ async function runSemanticSearch(query) {
     }
 
     semanticScores = scores;
-    const topScore = Math.max(...scores.values());
-    const threshold = Math.max(0.3, topScore * 0.5);
-    const matchCount = [...scores.values()].filter(s => s >= threshold).length;
-    setSemanticStatus(`${matchCount}件の関連リサーチが見つかりました（類似度 ${(threshold * 100).toFixed(0)}% 以上）`);
+    // Use relative ranking: show top results above the adaptive threshold
+    const sorted = [...scores.values()].sort((a, b) => b - a);
+    const topScore = sorted[0];
+    const p75 = sorted[Math.floor(sorted.length * 0.25)];
+    // Adaptive threshold: keep most relevant results
+    semanticThreshold = p75 + (topScore - p75) * 0.5;
+    const matchCount = sorted.filter(s => s >= semanticThreshold).length;
+    setSemanticStatus(`${matchCount}件の関連リサーチが見つかりました`);
     renderResearchTab();
   } catch (err) {
     console.error('Semantic search error:', err);
@@ -1925,10 +1930,8 @@ function getFilteredData() {
 
   // Semantic search mode: rank by vector similarity
   if (semanticMode && semanticScores && semanticScores.size > 0) {
-    const topScore = Math.max(...semanticScores.values());
-    const threshold = Math.max(0.3, topScore * 0.5);
-    // Filter by similarity threshold and sort by score descending
-    data = data.filter(d => (semanticScores.get(d.id) || 0) >= threshold);
+    // Filter by adaptive threshold and sort by score descending
+    data = data.filter(d => (semanticScores.get(d.id) || 0) >= semanticThreshold);
     data.sort((a, b) => (semanticScores.get(b.id) || 0) - (semanticScores.get(a.id) || 0));
     // Attach scores for display
     data.forEach(d => { d._semanticScore = semanticScores.get(d.id) || 0; });
