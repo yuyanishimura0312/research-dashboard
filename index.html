@@ -2556,30 +2556,91 @@ function renderOverview() {
 
   const suggestions = [];
 
-  // Helper: build context from existing entries in a category
+  // Helper: build rich context from existing entries
   function buildContext(cat) {
     const entries = (catEntries[cat] || []).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     const recentTitles = entries.slice(0, 5).map(e => e.title);
     const tagFreq = {};
     entries.forEach(e => (e.tags || []).filter(t => !NOISE_TAGS.has(t) && t !== 'AI' && t !== '生成AI').forEach(t => { tagFreq[t] = (tagFreq[t] || 0) + 1; }));
     const topTags = Object.entries(tagFreq).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([t]) => t);
-    return { recentTitles, topTags, total: entries.length };
+
+    // Extract key findings from summaries/content
+    const keyFindings = [];
+    entries.slice(0, 10).forEach(e => {
+      const text = e.content || e.summary || '';
+      if (text.length < 50) return;
+      // Extract sentences that contain analytical/factual claims
+      const sentences = text.split(/[。．]/).filter(s => s.trim().length > 30);
+      const important = sentences.filter(s =>
+        /\d+[%％万億兆件]|重要|明らか|示唆|発見|結論|課題|可能性|注目|特徴的|傾向|増加|減少|変化/.test(s)
+      );
+      if (important.length > 0) {
+        keyFindings.push({ title: e.title, finding: important[0].trim().slice(0, 120) });
+      }
+    });
+
+    // Find concepts/topics NOT yet deeply covered
+    const coveredConcepts = new Set();
+    entries.forEach(e => {
+      (e.tags || []).forEach(t => coveredConcepts.add(t.toLowerCase()));
+      const words = e.title.split(/[\s・\-—:：,、()（）]+/).filter(w => w.length >= 3);
+      words.forEach(w => coveredConcepts.add(w.toLowerCase()));
+    });
+
+    // Find adjacent categories that share tags — potential cross-pollination
+    const adjacentCats = [];
+    const catTagSet = new Set(topTags.map(t => t.toLowerCase()));
+    Object.entries(catEntries).forEach(([otherCat, otherEntries]) => {
+      if (otherCat === cat) return;
+      const otherTags = new Set();
+      otherEntries.forEach(e => (e.tags || []).forEach(t => otherTags.add(t.toLowerCase())));
+      const overlap = [...catTagSet].filter(t => otherTags.has(t));
+      if (overlap.length >= 2) adjacentCats.push({ cat: otherCat, shared: overlap });
+    });
+    adjacentCats.sort((a, b) => b.shared.length - a.shared.length);
+
+    return { recentTitles, topTags, total: entries.length, keyFindings, adjacentCats };
   }
 
-  // Helper: generate research instruction
+  // Helper: generate specific, grounded research instruction
   function buildInstruction(cat, ctx, reason) {
-    let inst = `「${cat}」について、以下の背景を踏まえた調査を行ってください。\n\n`;
-    inst += `【背景】\n`;
-    inst += `これまでに${ctx.total}件のリサーチを蓄積しています。`;
-    if (ctx.topTags.length > 0) inst += `主要テーマは${ctx.topTags.slice(0, 3).join('、')}です。`;
-    inst += `${reason}\n\n`;
-    inst += `【既存リサーチの例】\n`;
-    ctx.recentTitles.slice(0, 3).forEach(t => { inst += `- ${t}\n`; });
-    inst += `\n【調査の方向性】\n`;
-    inst += `- 上記の既存リサーチではカバーされていない最新の動向や事例を調査してください\n`;
-    inst += `- ${ctx.topTags.length > 0 ? ctx.topTags.slice(0, 2).join('と') + 'の交差点にある' : ''}新たな視点や論点を探索してください\n`;
-    inst += `- 学術文献・事例・実務の3層で情報を収集し、分析的なレポートを日本語で作成してください\n`;
-    inst += `- レポートは文章（地の文）で記述し、1500〜3000文字程度としてください`;
+    let inst = `「${cat}」について、既存リサーチの知見を踏まえた深化調査を行ってください。\n\n`;
+
+    inst += `【これまでの蓄積と主要知見】\n`;
+    inst += `${ctx.total}件のリサーチが蓄積されています。`;
+    if (ctx.topTags.length > 0) inst += `主要テーマ: ${ctx.topTags.join('、')}。\n`;
+    if (ctx.keyFindings.length > 0) {
+      inst += `\n既存リサーチから得られた重要な知見:\n`;
+      ctx.keyFindings.slice(0, 4).forEach(f => {
+        inst += `- 「${f.title}」より: ${f.finding}。\n`;
+      });
+    }
+
+    inst += `\n【調査の背景】\n${reason}\n`;
+
+    inst += `\n【具体的な調査テーマ】\n`;
+    // Generate specific research questions based on findings
+    if (ctx.keyFindings.length > 0) {
+      const f = ctx.keyFindings[0];
+      inst += `1. 「${f.finding.slice(0, 40)}...」という知見をさらに深掘りし、最新の研究・事例ではどのような展開が見られるかを調査\n`;
+    }
+    if (ctx.topTags.length >= 2) {
+      inst += `${ctx.keyFindings.length > 0 ? '2' : '1'}. ${ctx.topTags[0]}と${ctx.topTags[1]}の交差領域における未探索の論点を特定し、先行研究や実践事例を調査\n`;
+    }
+    if (ctx.adjacentCats.length > 0) {
+      const adj = ctx.adjacentCats[0];
+      inst += `${ctx.keyFindings.length > 0 ? '3' : '2'}. 「${adj.cat}」分野との接続点（${adj.shared.slice(0, 2).join('、')}）を探索し、分野横断的な知見を収集\n`;
+    }
+
+    inst += `\n【既存リサーチの例】\n`;
+    ctx.recentTitles.slice(0, 4).forEach(t => { inst += `- ${t}\n`; });
+
+    inst += `\n【レポート要件】\n`;
+    inst += `- 既存リサーチと重複しない新たな視点を提供すること\n`;
+    inst += `- 学術文献（論文・書籍）、事例（国内外の実践）、実務（ツール・フレームワーク）の3層で情報を収集し、具体的な数字やデータを含めること\n`;
+    inst += `- レポートは日本語で、文章（地の文）で記述し、10,000文字以上の本格的な調査レポートとすること\n`;
+    inst += `- 構成: エグゼクティブサマリー → 背景と問題設定 → 主要な調査結果（3〜5セクション） → 考察と示唆 → 今後の探究テーマの提案\n`;
+    inst += `- 今後さらに深掘りすべきテーマを具体的に3つ以上提案し、それぞれの探究の方向性と期待される知見を記述すること`;
     return inst;
   }
 
