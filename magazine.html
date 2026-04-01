@@ -33,7 +33,7 @@
       <a href="magazine.html" class="active">Magazine</a>
       <a href="index.html">Dashboard</a>
       <a href="#latest" class="hide-mobile">Latest</a>
-      <a href="#topics" class="hide-mobile">Topics</a>
+      <a href="#comments" class="hide-mobile">Comments</a>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">&#9790;</button>
     </nav>
   </div>
@@ -57,12 +57,12 @@
 <!-- Category sections -->
 <div id="categorySections"></div>
 
-<!-- Topics -->
-<section class="section" id="topics">
+<!-- Comments -->
+<section class="section" id="comments">
   <div class="section-header">
-    <h2 class="section-title">Topics</h2>
+    <h2 class="section-title">Recent Comments</h2>
   </div>
-  <div class="topic-grid" id="topicGrid"></div>
+  <div id="commentsFeed"></div>
 </section>
 
 <!-- Footer -->
@@ -74,7 +74,6 @@
     </div>
     <div class="footer-links">
       <a href="index.html">Analytics Dashboard</a>
-      <a href="#topics">Topics</a>
     </div>
   </div>
 </footer>
@@ -263,18 +262,127 @@ function renderCategorySections() {
   }).join('');
 }
 
-// ===== Topics =====
-function renderTopics() {
-  const cats = {};
-  const editorial = DATA.filter(d => !isMetaArticle(d) && hasReadableContent(d));
-  editorial.forEach(d => { if (d.category) cats[d.category] = (cats[d.category]||0)+1; });
-  document.getElementById('topicGrid').innerHTML = Object.entries(cats)
-    .sort((a,b) => b[1]-a[1])
-    .map(([c,n]) => `
-      <div class="topic-tile animate-in" onclick="filterCat('${c}')">
-        <div class="topic-count">${n}</div>
-        <div class="topic-name">${esc(c)}</div>
-      </div>`).join('');
+// ===== Comments System =====
+const COMMENTS_KEY = 'research_dashboard_comments';
+
+function getComments() {
+  try { return JSON.parse(localStorage.getItem(COMMENTS_KEY)) || {}; } catch { return {}; }
+}
+function saveComments(comments) {
+  localStorage.setItem(COMMENTS_KEY, JSON.stringify(comments));
+}
+function addComment(entryId, text, isAI = false) {
+  const comments = getComments();
+  if (!comments[entryId]) comments[entryId] = [];
+  comments[entryId].push({ text, createdAt: new Date().toISOString(), isAI });
+  saveComments(comments);
+}
+function getEntryComments(entryId) {
+  return (getComments()[entryId] || []).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+}
+
+function generateAIComment(entry) {
+  // Generate an analytical comment from the entry's content
+  const text = entry.content || entry.summary || '';
+  const title = entry.title || '';
+  const tags = (entry.tags || []).filter(t => !EXCLUDED_TAGS.has(t));
+  const cat = entry.category || '';
+
+  // Extract key sentences for insight generation
+  const sentences = text.split(/[。．.!！?？]/).filter(s => s.trim().length > 20);
+  const keyPhrases = sentences.slice(0, 3).map(s => s.trim()).filter(Boolean);
+
+  // Build analytical comment based on content analysis
+  const templates = [
+    () => `${cat}分野における「${title}」は、${tags.slice(0, 2).join('と')}の交差点に位置する重要なリサーチです。${keyPhrases[0] ? keyPhrases[0].slice(0, 80) + 'という知見が特に示唆に富んでいます。' : '今後の展開が注目されます。'}`,
+    () => `このリサーチは${tags.length}つのテーマ（${tags.slice(0, 3).join('、')}）を横断しており、${cat}の文脈で新たな視座を提供しています。${keyPhrases[1] ? '特に、' + keyPhrases[1].slice(0, 60) + 'という点は深掘りの価値があります。' : ''}`,
+    () => `「${title}」を読んで、${cat}の領域で${tags[0] || '新たなテーマ'}がどのように展開しうるかを再考する契機になりました。${keyPhrases[0] ? keyPhrases[0].slice(0, 70) + 'は、他のリサーチとの接続可能性を感じます。' : '継続的な追跡が望まれます。'}`,
+  ];
+
+  const idx = Math.abs(title.length + text.length) % templates.length;
+  return templates[idx]();
+}
+
+function renderCommentSection(entryId) {
+  const comments = getEntryComments(entryId);
+  let html = `<div style="border-top:1px solid var(--border);margin-top:36px;padding-top:28px;">`;
+  html += `<h3 style="font-family:var(--font-headline);font-size:var(--text-h3);font-weight:700;margin-bottom:20px;">Comments</h3>`;
+
+  // Comment input
+  html += `<div style="margin-bottom:24px;">
+    <textarea id="commentInput" placeholder="このリサーチへのコメントを書く..." style="width:100%;min-height:80px;padding:12px 16px;border:1px solid var(--border);border-radius:var(--radius,6px);font-family:inherit;font-size:var(--text-sm);resize:vertical;background:var(--bg);color:var(--text);line-height:1.7;"></textarea>
+    <div style="display:flex;gap:8px;margin-top:8px;">
+      <button onclick="submitComment('${entryId}')" style="padding:8px 20px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius,6px);cursor:pointer;font-size:var(--text-sm);font-weight:600;">投稿</button>
+      <button onclick="submitAIComment('${entryId}')" style="padding:8px 20px;background:var(--bg-alt,#FDF5EE);color:var(--accent);border:1px solid var(--accent);border-radius:var(--radius,6px);cursor:pointer;font-size:var(--text-sm);font-weight:600;">AI分析コメントを生成</button>
+    </div>
+  </div>`;
+
+  // Existing comments
+  if (comments.length > 0) {
+    html += comments.map(c => `
+      <div style="padding:14px 18px;border-left:3px solid ${c.isAI ? 'var(--accent-soft)' : 'var(--accent)'};background:var(--bg-alt,#FDF5EE);border-radius:0 var(--radius,6px) var(--radius,6px) 0;margin-bottom:10px;">
+        <div style="font-size:var(--text-xs);color:var(--text-muted);margin-bottom:6px;font-weight:600;">${c.isAI ? 'AI Analysis' : 'Comment'} / ${formatDate(c.createdAt)}</div>
+        <div style="font-size:var(--text-sm);line-height:1.75;">${esc(c.text)}</div>
+      </div>
+    `).join('');
+  }
+
+  html += `</div>`;
+  return html;
+}
+
+function submitComment(entryId) {
+  const input = document.getElementById('commentInput');
+  const text = (input?.value || '').trim();
+  if (!text) return;
+  addComment(entryId, text, false);
+  input.value = '';
+  // Re-render reader body comments
+  refreshReaderComments(entryId);
+  renderCommentsFeed();
+}
+
+function submitAIComment(entryId) {
+  const entry = DATA.find(d => d.id === entryId);
+  if (!entry) return;
+  const aiText = generateAIComment(entry);
+  addComment(entryId, aiText, true);
+  refreshReaderComments(entryId);
+  renderCommentsFeed();
+}
+
+function refreshReaderComments(entryId) {
+  const container = document.getElementById('readerCommentsSection');
+  if (container) container.innerHTML = renderCommentSection(entryId);
+}
+
+function renderCommentsFeed() {
+  const el = document.getElementById('commentsFeed');
+  if (!el) return;
+  const allComments = getComments();
+  const flat = [];
+  Object.entries(allComments).forEach(([entryId, comments]) => {
+    const entry = DATA.find(d => d.id === entryId);
+    if (!entry) return;
+    comments.forEach(c => flat.push({ ...c, entryId, entryTitle: entry.title, category: entry.category }));
+  });
+  flat.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+  if (flat.length === 0) {
+    el.innerHTML = '<div style="color:var(--text-muted);padding:20px 0;font-size:var(--text-sm);">まだコメントがありません。記事を読んでコメントを投稿してください。</div>';
+    return;
+  }
+
+  el.innerHTML = flat.slice(0, 12).map(c => `
+    <div class="animate-in" style="padding:18px 22px;border:1px solid var(--border);border-radius:var(--radius,6px);margin-bottom:12px;cursor:pointer;transition:box-shadow 0.15s ease-out;" onclick="openReader('${c.entryId}')" onmouseover="this.style.boxShadow='var(--card-shadow)'" onmouseout="this.style.boxShadow='none'">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <span style="font-size:var(--text-xs);font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.08em;">${esc(c.category || '')}</span>
+        <span style="font-size:var(--text-xs);color:var(--text-light);font-weight:500;">${c.isAI ? 'AI Analysis' : 'Comment'} / ${formatDate(c.createdAt)}</span>
+      </div>
+      <div style="font-size:var(--text-sm);font-weight:700;margin-bottom:6px;">${esc(c.entryTitle)}</div>
+      <div style="font-size:var(--text-sm);color:var(--text-muted);line-height:1.7;">${esc(c.text).slice(0, 200)}${c.text.length > 200 ? '...' : ''}</div>
+    </div>
+  `).join('');
 }
 
 // ===== BM25-based Related entries =====
@@ -480,6 +588,9 @@ function openReader(id) {
     body += `<div class="reader-tags">${tags.map(t => `<span class="reader-tag">${esc(t)}</span>`).join('')}</div>`;
   }
 
+  // Comments section
+  body += `<div id="readerCommentsSection">${renderCommentSection(id)}</div>`;
+
   // Related (BM25)
   const related = getRelated(id, 4);
   if (related.length > 0) {
@@ -542,6 +653,7 @@ function closeReader() {
   document.getElementById('reader').classList.remove('active');
   document.getElementById('readerProgress').style.width = '0%';
   document.body.style.overflow = '';
+  renderCommentsFeed();
 }
 
 // ===== Dark mode =====
@@ -575,7 +687,7 @@ function renderAll() {
   renderHero();
   renderLatest();
   renderCategorySections();
-  renderTopics();
+  renderCommentsFeed();
   requestAnimationFrame(initScrollAnimations);
 }
 
