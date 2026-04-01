@@ -165,7 +165,31 @@
   .btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); color: white; }
   .btn-danger { color: #DC2626; border-color: #FECACA; }
   .btn-danger:hover { background: #FEF2F2; }
+  .btn-share { color: #2563EB; border-color: #BFDBFE; }
+  .btn-share:hover { background: #EFF6FF; }
+  .btn-share.shared { color: #FFFFFF; background: #2563EB; border-color: #2563EB; }
+  .btn-share.shared:hover { background: #1D4ED8; }
   .btn-sm { padding: var(--space-xs) 10px; font-size: var(--text-xs); }
+  .badge-shared {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    background: #DBEAFE;
+    color: #1E40AF;
+    margin-left: 6px;
+  }
+  .badge-my-entry {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    background: var(--accent-light);
+    color: var(--accent);
+    margin-left: 6px;
+  }
 
   /* Layout */
   .container { max-width: 1120px; margin: 0 auto; padding: var(--space-xl) var(--space-lg); }
@@ -1658,8 +1682,9 @@
       <input type="text" id="formTags" placeholder="例: フィールドワーク, 民族誌, 都市">
     </div>
     <div class="modal-actions">
-      <div>
+      <div style="display:flex;gap:8px;">
         <button class="btn btn-danger" id="deleteBtn" onclick="deleteEntry()" style="display:none">削除</button>
+        <button class="btn btn-share" id="shareBtn" onclick="toggleShareFromModal()" style="display:none">共有</button>
       </div>
       <div class="modal-actions-right">
         <button class="btn" onclick="closeModal()">キャンセル</button>
@@ -1675,7 +1700,9 @@
     <h2 id="detailTitle"></h2>
     <div class="detail-content" id="detailContent"></div>
     <div class="modal-actions">
-      <div></div>
+      <div>
+        <button class="btn btn-share" id="detailShareBtn" style="display:none" onclick="">共有</button>
+      </div>
       <div class="modal-actions-right">
         <button class="btn" onclick="closeDetailModal()">閉じる</button>
         <button class="btn btn-primary" id="detailEditBtn" onclick="">編集</button>
@@ -1708,10 +1735,13 @@ auth.onAuthStateChanged(async (user) => {
     // Show user name
     const nameEl = document.getElementById('userDisplayName');
     if (nameEl) nameEl.textContent = userData.displayName || user.email;
-    // Load user bookmarks from Firestore
-    await loadBookmarksFromFirestore();
-    // Load user comments from Firestore
-    await loadCommentsFromFirestore();
+    // Load all user data from Firestore
+    await Promise.all([
+      loadBookmarksFromFirestore(),
+      loadCommentsFromFirestore(),
+      loadUserEntriesFromFirestore(),
+      loadSharedEntriesFromFirestore(),
+    ]);
     // Render the app
     initDarkMode();
     initTabFromHash();
@@ -1722,10 +1752,54 @@ auth.onAuthStateChanged(async (user) => {
   }
 });
 
-const STORAGE_KEY = 'research_dashboard_data';
 let activeTagFilter = '';
 let currentView = 'cards';
 let currentTab = 'overview';
+
+// === Per-user and shared entries (Firestore-backed) ===
+let _userEntries = [];   // entries created by this user
+let _sharedEntries = []; // entries shared by admin
+
+async function loadUserEntriesFromFirestore() {
+  try {
+    const snap = await db.collection('users').doc(currentUser.uid).collection('rd_entries').get();
+    _userEntries = snap.docs.map(doc => ({ ...doc.data(), id: doc.id, _source: 'user' }));
+  } catch (e) { console.error('Failed to load user entries:', e); _userEntries = []; }
+}
+
+async function loadSharedEntriesFromFirestore() {
+  try {
+    const snap = await db.collection('shared_research').get();
+    _sharedEntries = snap.docs.map(doc => ({ ...doc.data(), id: doc.id, _source: 'shared' }));
+  } catch (e) { console.error('Failed to load shared entries:', e); _sharedEntries = []; }
+}
+
+async function shareEntry(id) {
+  if (!userData || userData.role !== 'admin') return;
+  const data = loadData();
+  const entry = data.find(d => d.id === id);
+  if (!entry) return;
+  const { _source, ...cleanEntry } = entry;
+  cleanEntry.sharedBy = currentUser.uid;
+  cleanEntry.sharedAt = new Date().toISOString();
+  await db.collection('shared_research').doc(id).set(cleanEntry);
+  _sharedEntries = _sharedEntries.filter(e => e.id !== id);
+  _sharedEntries.push({ ...cleanEntry, id, _source: 'shared' });
+  _dataCacheDirty = true;
+  renderAll();
+}
+
+async function unshareEntry(id) {
+  if (!userData || userData.role !== 'admin') return;
+  await db.collection('shared_research').doc(id).delete();
+  _sharedEntries = _sharedEntries.filter(e => e.id !== id);
+  _dataCacheDirty = true;
+  renderAll();
+}
+
+function isShared(id) {
+  return _sharedEntries.some(e => e.id === id);
+}
 
 // === Bookmark functions (Firestore-backed) ===
 async function loadBookmarksFromFirestore() {
@@ -2250,26 +2324,26 @@ const STATUS_MAP = {
   done:          { label: '完了',   color: 'var(--status-done)' },
 };
 
-// ===== Data layer (cached to avoid repeated JSON parsing) =====
+// ===== Data layer: 3-tier merge (data.js + shared + user) =====
 let _dataCache = null;
 let _dataCacheDirty = true;
 
 function loadData() {
   if (!_dataCacheDirty && _dataCache) return _dataCache;
   const fileData = Array.isArray(window.RESEARCH_DATA) ? window.RESEARCH_DATA : [];
-  let localData;
-  try { localData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { localData = []; }
 
+  // Merge: file data (base) → shared entries → user entries (highest priority)
   const merged = new Map();
-  localData.forEach(e => merged.set(e.id, e));
-  fileData.forEach(e => merged.set(e.id, e));
+  fileData.forEach(e => merged.set(e.id, { ...e, _source: 'file' }));
+  _sharedEntries.forEach(e => merged.set(e.id, { ...e, _source: 'shared' }));
+  _userEntries.forEach(e => merged.set(e.id, { ...e, _source: 'user' }));
   _dataCache = Array.from(merged.values());
   _dataCacheDirty = false;
   return _dataCache;
 }
 
 function saveData(data) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  // Update cache only; individual save/delete handle Firestore writes
   _dataCache = data;
   _dataCacheDirty = false;
   cachedDataHash = ''; // invalidate similarity cache
@@ -3057,7 +3131,7 @@ function renderResearchTab() {
       <div class="card" onclick="openDetail('${d.id}')">
         <button class="btn-bookmark ${bmActive ? 'active' : ''}" data-id="${d.id}" onclick="toggleBookmark('${d.id}', event)">${bmActive ? '&#9733;' : '&#9734;'}</button>
         <div class="card-header">
-          <div>${d.category ? `<div class="card-category">${esc(d.category)}</div>` : ''}<div class="card-title">${esc(d.title)}${d._semanticScore ? `<span class="similarity-badge">${(d._semanticScore * 100).toFixed(0)}%</span>` : ''}</div></div>
+          <div>${d.category ? `<div class="card-category">${esc(d.category)}</div>` : ''}<div class="card-title">${esc(d.title)}${d._semanticScore ? `<span class="similarity-badge">${(d._semanticScore * 100).toFixed(0)}%</span>` : ''}${d._source === 'shared' ? '<span class="badge-shared">共有</span>' : ''}${d._source === 'user' ? '<span class="badge-my-entry">自分</span>' : ''}</div></div>
           ${statusBadgeHTML(d.status || 'investigating')}
         </div>
         ${d.source ? `<div class="card-source"><a href="${esc(d.source)}" target="_blank" onclick="event.stopPropagation()">${esc(safeHostname(d.source))}</a></div>` : ''}
@@ -5640,6 +5714,8 @@ function openAddModal() {
   document.getElementById('formSummary').value = '';
   document.getElementById('formTags').value = '';
   document.getElementById('deleteBtn').style.display = 'none';
+  const shareBtn = document.getElementById('shareBtn');
+  if (shareBtn) shareBtn.style.display = 'none';
   document.getElementById('editModal').classList.add('active');
   document.getElementById('formTitle').focus();
 }
@@ -5656,12 +5732,31 @@ function openEditModal(id) {
   document.getElementById('formSummary').value = entry.summary || '';
   document.getElementById('formTags').value = (entry.tags || []).join(', ');
   document.getElementById('deleteBtn').style.display = 'inline-block';
+  // Show share button for admin on user-owned entries
+  const shareBtn = document.getElementById('shareBtn');
+  if (shareBtn && userData && userData.role === 'admin') {
+    const shared = isShared(id);
+    shareBtn.style.display = 'inline-block';
+    shareBtn.textContent = shared ? '共有解除' : '共有';
+    shareBtn.className = shared ? 'btn btn-share shared' : 'btn btn-share';
+    shareBtn.dataset.entryId = id;
+  } else if (shareBtn) {
+    shareBtn.style.display = 'none';
+  }
   document.getElementById('editModal').classList.add('active');
 }
 
 function closeModal() { document.getElementById('editModal').classList.remove('active'); }
 
-function saveEntry() {
+async function toggleShareFromModal() {
+  const id = document.getElementById('editId').value;
+  if (!id) return;
+  if (isShared(id)) { await unshareEntry(id); }
+  else { await shareEntry(id); }
+  closeModal();
+}
+
+async function saveEntry() {
   const title = document.getElementById('formTitle').value.trim();
   if (!title) { alert('タイトルを入力してください'); return; }
 
@@ -5679,18 +5774,35 @@ function saveEntry() {
     updatedAt: new Date().toISOString(),
   };
 
-  if (id) { const idx = data.findIndex(d => d.id === id); if (idx >= 0) data[idx] = entry; }
-  else data.push(entry);
+  // Save to Firestore (user's own entries)
+  const { _source, ...cleanEntry } = entry;
+  await db.collection('users').doc(currentUser.uid).collection('rd_entries').doc(entry.id).set(cleanEntry);
 
-  saveData(data);
+  // Update local cache
+  const existingIdx = _userEntries.findIndex(e => e.id === entry.id);
+  if (existingIdx >= 0) { _userEntries[existingIdx] = { ...cleanEntry, _source: 'user' }; }
+  else { _userEntries.push({ ...cleanEntry, _source: 'user' }); }
+  _dataCacheDirty = true;
+
   closeModal();
   renderAll();
 }
 
-function deleteEntry() {
+async function deleteEntry() {
   const id = document.getElementById('editId').value;
   if (!id || !confirm('このリサーチを削除しますか？')) return;
-  saveData(loadData().filter(d => d.id !== id));
+
+  // Delete from Firestore
+  await db.collection('users').doc(currentUser.uid).collection('rd_entries').doc(id).delete();
+  _userEntries = _userEntries.filter(e => e.id !== id);
+
+  // If shared, also remove from shared
+  if (isShared(id) && userData.role === 'admin') {
+    await db.collection('shared_research').doc(id).delete();
+    _sharedEntries = _sharedEntries.filter(e => e.id !== id);
+  }
+
+  _dataCacheDirty = true;
   closeModal();
   closeDetailModal();
   renderAll();
@@ -5740,6 +5852,23 @@ function openDetail(id) {
 
   document.getElementById('detailTitle').textContent = entry.title;
   document.getElementById('detailEditBtn').onclick = () => { closeDetailModal(); openEditModal(id); };
+
+  // Show share button for admin
+  const detailShareBtn = document.getElementById('detailShareBtn');
+  if (detailShareBtn && userData && userData.role === 'admin' && entry._source === 'user') {
+    const shared = isShared(id);
+    detailShareBtn.style.display = 'inline-block';
+    detailShareBtn.textContent = shared ? '共有解除' : '他ユーザーに共有';
+    detailShareBtn.className = shared ? 'btn btn-share shared' : 'btn btn-share';
+    detailShareBtn.onclick = async () => {
+      if (isShared(id)) { await unshareEntry(id); }
+      else { await shareEntry(id); }
+      closeDetailModal();
+      setTimeout(() => openDetail(id), 100);
+    };
+  } else if (detailShareBtn) {
+    detailShareBtn.style.display = 'none';
+  }
 
   let html = '';
   html += `<div class="field-label">ステータス</div><div class="field-value">${statusBadgeHTML(entry.status || 'investigating')}</div>`;
