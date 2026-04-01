@@ -1811,19 +1811,19 @@ function executeResearchDirection(idx) {
   // Export queue to file for cron access
   exportResearchQueue();
 
-  // Copy slash command to clipboard for immediate execution
-  navigator.clipboard.writeText(cmd).then(() => {
+  // Copy slash command
+  selectAndCopy(cmd, null).then(ok => {
     const btn = event.target;
-    btn.innerHTML = 'クリップボードにコピーしました — Claude Codeに貼り付けて実行';
-    btn.style.background = 'var(--status-done)';
-    btn.disabled = true;
-  }).catch(() => {
-    // Fallback: show the command
-    const btn = event.target;
-    btn.innerHTML = `コピーできませんでした。手動で実行: <code style="background:var(--surface);padding:2px 8px;border-radius:3px;user-select:all;">${esc(cmd)}</code>`;
-    btn.style.background = 'var(--surface)';
-    btn.style.color = 'var(--text)';
-    btn.style.border = '1px solid var(--border)';
+    if (ok) {
+      btn.innerHTML = 'コピーしました — Claude Codeに貼り付けて実行';
+      btn.style.background = 'var(--status-done)';
+      btn.disabled = true;
+    } else {
+      prompt('以下をコピーしてClaude Codeに貼り付けてください:', cmd);
+      btn.innerHTML = '実行済み';
+      btn.style.background = 'var(--status-done)';
+      btn.disabled = true;
+    }
   });
 }
 
@@ -2818,16 +2818,36 @@ function renderOverview() {
   }
 }
 
+function selectAndCopy(text, textarea) {
+  // Try clipboard API first, then fall back to selecting the textarea
+  if (navigator.clipboard && window.isSecureContext) {
+    return navigator.clipboard.writeText(text).then(() => true).catch(() => false);
+  }
+  // Fallback: select textarea content so user can Cmd+C
+  if (textarea) {
+    textarea.focus();
+    textarea.select();
+    try { document.execCommand('copy'); return Promise.resolve(true); } catch { return Promise.resolve(false); }
+  }
+  return Promise.resolve(false);
+}
+
 function executeResearchFromHome(idx, theme) {
   const textarea = document.getElementById('sugInstruction' + idx);
   const instruction = textarea?.value || theme;
-  // Copy full instruction to clipboard
-  navigator.clipboard.writeText(instruction).then(() => {
+  selectAndCopy(instruction, textarea).then(ok => {
     const btn = event.target;
-    btn.textContent = 'クリップボードにコピーしました — Claude Codeに貼り付けて実行';
-    btn.style.background = 'var(--status-done)';
-    btn.disabled = true;
-  }).catch(() => { alert('指示をコピーできませんでした。テキストエリアから直接コピーしてください。'); });
+    if (ok) {
+      btn.textContent = 'コピーしました — Claude Codeに貼り付けて実行';
+      btn.style.background = 'var(--status-done)';
+      btn.disabled = true;
+    } else {
+      // Select the textarea so the user can manually copy
+      if (textarea) { textarea.focus(); textarea.select(); }
+      btn.textContent = 'テキストを選択しました — Cmd+Cでコピー';
+      btn.style.background = 'var(--status-reading)';
+    }
+  });
   // Save to executed
   const tasks = JSON.parse(localStorage.getItem('research_dashboard_pending_research') || '[]');
   tasks.push({ type: 'ホーム提案', text: instruction.slice(0, 200), topic: theme, assessment: '-', assessmentDetail: '', relatedCount: 0, createdAt: new Date().toISOString(), status: 'executed' });
@@ -2850,12 +2870,16 @@ function saveInstruction(idx, theme) {
 
 function copyResearchCommand(theme) {
   const cmd = `/research ${theme}`;
-  navigator.clipboard.writeText(cmd).then(() => {
+  selectAndCopy(cmd, null).then(ok => {
     const btn = event.target;
-    btn.textContent = 'コピーしました';
-    btn.style.background = 'var(--status-done)';
-    btn.disabled = true;
-  }).catch(() => { alert('コマンド: ' + cmd); });
+    if (ok) {
+      btn.textContent = 'コピーしました';
+      btn.style.background = 'var(--status-done)';
+      btn.disabled = true;
+    } else {
+      prompt('以下をコピーしてClaude Codeに貼り付けてください:', cmd);
+    }
+  });
   const tasks = JSON.parse(localStorage.getItem('research_dashboard_pending_research') || '[]');
   tasks.push({ type: 'ホーム提案', text: theme, topic: theme, assessment: '-', assessmentDetail: '', relatedCount: 0, createdAt: new Date().toISOString(), status: 'executed' });
   localStorage.setItem('research_dashboard_pending_research', JSON.stringify(tasks));
