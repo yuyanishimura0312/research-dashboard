@@ -3,35 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Future esse-sense — Dashboard</title>
+<title>Miratuku Research Dashboard</title>
 <script src="data.js?v=20260330"></script>
 <script src="embeddings.js?v=20260330"></script>
 <style>
   :root {
-    --bg: #f5f5f0;
+    --bg: #fffff0;
     --card: #ffffff;
-    --accent: #567b47;
-    --accent-light: #e8f0e7;
-    --text: #1a1a1a;
-    --text-muted: #6b6b6b;
-    --border: #e0ddd5;
-    --tag-bg: #eee8d5;
-    --shadow: 0 1px 3px rgba(0,0,0,0.08);
-    --status-investigating: #e67e22;
-    --status-reading: #3498db;
-    --status-organized: #9b59b6;
-    --status-done: #2d5a27;
+    --accent: #783c28;
+    --accent-light: #f0dcc8;
+    --accent-hover: #a0503c;
+    --accent-soft: #c87864;
+    --text: #3a2a20;
+    --text-muted: #8a7060;
+    --border: #e8d8c8;
+    --tag-bg: #f5ebe0;
+    --shadow: 0 1px 3px rgba(120,60,40,0.08);
+    --status-investigating: #c87864;
+    --status-reading: #5a8a9a;
+    --status-organized: #9b7a6b;
+    --status-done: #783c28;
   }
 
   [data-theme="dark"] {
-    --bg: #0d0d0d;
-    --card: #1a1a1a;
-    --accent: #8ab87a;
-    --accent-light: #1e2a1a;
-    --text: #e8e6e3;
-    --text-muted: #9a9a9a;
-    --border: #2a2a2a;
-    --tag-bg: #262620;
+    --bg: #1a1210;
+    --card: #2a2018;
+    --accent: #d3836f;
+    --accent-light: #3a2820;
+    --accent-hover: #c87864;
+    --accent-soft: #a0503c;
+    --text: #e8e0d8;
+    --text-muted: #a09080;
+    --border: #3a3028;
+    --tag-bg: #302820;
     --shadow: 0 1px 4px rgba(0,0,0,0.3);
   }
 
@@ -110,7 +114,7 @@
   .btn {
     padding: 7px 14px;
     border: 1px solid var(--border);
-    border-radius: 6px;
+    border-radius: 20px;
     background: var(--card);
     color: var(--text);
     font-size: 0.8rem;
@@ -119,8 +123,8 @@
   }
 
   .btn:hover { border-color: var(--accent); color: var(--accent); }
-  .btn-primary { background: var(--accent); color: white; border-color: var(--accent); }
-  .btn-primary:hover { opacity: 0.85; }
+  .btn-primary { background: var(--accent); color: white; border-color: var(--accent); border-radius: 20px; }
+  .btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
   .btn-danger { color: #c0392b; border-color: #e0b4ae; }
   .btn-danger:hover { background: #fdf0ee; }
   .btn-sm { padding: 4px 10px; font-size: 0.75rem; }
@@ -465,7 +469,7 @@
 
   .card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
 
-  .card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+  .card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; padding-right: 32px; }
 
   .card-category {
     font-size: 0.68rem;
@@ -562,6 +566,74 @@
     background: var(--accent);
     color: white;
   }
+
+  /* Bookmark button */
+  .btn-bookmark {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    font-size: 1rem;
+    color: var(--text-muted);
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    padding: 0;
+    line-height: 1;
+  }
+  .btn-bookmark:hover { color: var(--accent); border-color: var(--accent); background: var(--accent-light); }
+  .btn-bookmark.active { color: var(--accent); border-color: var(--accent); background: var(--accent-light); }
+
+  /* Category hierarchy */
+  .hierarchy-container { padding: 8px 0; }
+  .hierarchy-category {
+    margin-bottom: 16px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .hierarchy-cat-header {
+    padding: 14px 18px;
+    background: var(--accent-light);
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.15s;
+  }
+  .hierarchy-cat-header:hover { background: var(--tag-bg); }
+  .hierarchy-cat-header h3 { font-size: 0.95rem; font-weight: 600; color: var(--accent); margin: 0; }
+  .hierarchy-cat-count { font-size: 0.72rem; color: var(--text-muted); background: var(--card); padding: 2px 10px; border-radius: 12px; }
+  .hierarchy-clusters { padding: 0 18px 14px; }
+  .hierarchy-cluster {
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-left: 3px solid var(--accent-soft);
+    background: var(--bg);
+    border-radius: 0 8px 8px 0;
+  }
+  .hierarchy-cluster-label { font-size: 0.8rem; font-weight: 600; color: var(--text); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+  .hierarchy-cluster-tags { margin-bottom: 6px; }
+  .hierarchy-item { font-size: 0.8rem; color: var(--text-muted); padding: 3px 0; cursor: pointer; transition: color 0.15s; }
+  .hierarchy-item:hover { color: var(--accent); }
+  .hierarchy-cross-links { margin-top: 12px; padding: 10px 14px; background: var(--accent-light); border-radius: 8px; }
+  .hierarchy-cross-links h4 { font-size: 0.78rem; font-weight: 600; color: var(--accent); margin-bottom: 6px; }
+  .cross-link-item { font-size: 0.75rem; color: var(--text-muted); padding: 2px 0; }
+  .cross-link-arrow { color: var(--accent-soft); margin: 0 4px; }
+  .hierarchy-clusters.collapsed { display: none; }
+  .hierarchy-cat-header::after { content: ''; display: inline-block; width: 6px; height: 6px; border-right: 2px solid var(--text-muted); border-bottom: 2px solid var(--text-muted); transform: rotate(45deg); transition: transform 0.2s; margin-left: 8px; }
+  .hierarchy-clusters.collapsed ~ .hierarchy-cat-header::after,
+  .hierarchy-category:has(.hierarchy-clusters.collapsed) .hierarchy-cat-header::after { transform: rotate(-45deg); }
 
   /* Detail modal action buttons */
   .detail-actions {
@@ -812,8 +884,10 @@
     margin-bottom: 4px;
   }
   .insight-card.warning { border-left-color: var(--status-investigating); background: #fef5e7; }
-  .insight-card.success { border-left-color: var(--status-done); }
-  .insight-card.info { border-left-color: var(--status-reading); background: #eaf2f8; }
+  .insight-card.success { border-left-color: var(--status-done); background: #faf0e8; }
+  .insight-card.info { border-left-color: var(--status-reading); background: #f0ece8; }
+  .insight-card.trend { border-left-color: #a0503c; background: #fdf0e8; }
+  .insight-card.emerging { border-left-color: #c87864; background: #fef8f0; }
 
   .keyword-list { display: flex; gap: 6px; flex-wrap: wrap; }
   .keyword {
@@ -1232,7 +1306,7 @@
 
 <header class="masthead">
   <div class="masthead-inner">
-    <div class="masthead-brand">Future <em>esse-sense</em></div>
+    <div class="masthead-brand">Miratuku <em>Research</em></div>
     <nav class="masthead-nav">
       <a href="magazine.html">Magazine</a>
       <a href="index.html" class="active">Dashboard</a>
@@ -1250,9 +1324,9 @@
   <!-- Tab navigation -->
   <div class="tab-nav">
     <button class="tab-btn active" data-tab="overview" onclick="switchTab('overview')">ホーム</button>
-    <button class="tab-btn" data-tab="library" onclick="switchTab('library')">ライブラリ</button>
     <button class="tab-btn" data-tab="research" onclick="switchTab('research')">一覧</button>
-    <button class="tab-btn" data-tab="graph" onclick="switchTab('graph')">つながり</button>
+    <button class="tab-btn" data-tab="library" onclick="switchTab('library')">ライブラリ</button>
+    <button class="tab-btn" data-tab="graph" onclick="switchTab('graph')">構造</button>
     <button class="tab-btn" data-tab="analytics" onclick="switchTab('analytics')">分析</button>
     <button class="tab-btn" data-tab="timeline" onclick="switchTab('timeline')">時系列</button>
   </div>
@@ -1373,6 +1447,12 @@
       </div>
     </div>
 
+    <!-- Bookmark history -->
+    <div class="viz-panel" style="margin-bottom:20px;">
+      <h3>ブックマーク履歴</h3>
+      <div id="bookmarkHistory"></div>
+    </div>
+
   </div>
 
   <!-- ========== RESEARCH TAB ========== -->
@@ -1399,6 +1479,7 @@
         <option value="oldest">古い順</option>
         <option value="title">タイトル順</option>
       </select>
+      <button class="btn btn-sm" id="bookmarkFilterBtn" onclick="toggleBookmarkFilter()" style="white-space:nowrap;">&#9734; ブックマーク</button>
       <div class="view-toggle">
         <button class="active" data-view="cards" onclick="setView('cards')">カード</button>
         <button data-view="list" onclick="setView('list')">リスト</button>
@@ -1414,71 +1495,33 @@
     </div>
   </div>
 
-  <!-- ========== KNOWLEDGE GRAPH TAB ========== -->
+  <!-- ========== STRUCTURE (CATEGORY HIERARCHY) TAB ========== -->
   <div class="tab-panel" id="tab-graph">
-    <div class="graph-container">
-      <div class="graph-toolbar">
-        <button class="btn btn-sm" onclick="graphZoom(1.2)" title="拡大">+</button>
-        <button class="btn btn-sm" onclick="graphZoom(0.8)" title="縮小">-</button>
-        <button class="btn btn-sm" onclick="graphReset()" title="リセット">リセット</button>
+    <div style="margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <div>
+        <h2 style="font-size:1.1rem;font-weight:600;color:var(--accent);margin:0;">カテゴリ階層構造</h2>
+        <p style="font-size:0.78rem;color:var(--text-muted);margin:4px 0 0;">カテゴリ > クラスター > リサーチの階層で知識構造を俯瞰します</p>
       </div>
-      <div class="graph-controls">
-        <label>関連度</label>
-        <div class="range-row">
-          <input type="range" id="simThreshold" min="0" max="80" value="20" oninput="onSimThresholdChange()">
-          <span class="range-val" id="simThresholdVal">0.20</span>
-        </div>
-        <label style="margin-top:4px;">表示</label>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <label style="font-weight:400;font-size:0.72rem;display:flex;align-items:center;gap:3px;">
-            <input type="checkbox" id="showTags" checked onchange="rebuildAndRender()"> タグ
-          </label>
-          <label style="font-weight:400;font-size:0.72rem;display:flex;align-items:center;gap:3px;">
-            <input type="checkbox" id="showSim" checked onchange="rebuildAndRender()"> 類似関係
-          </label>
-        </div>
-        <label style="margin-top:4px;">探索の深さ</label>
-        <div class="range-row">
-          <input type="range" id="focusHops" min="1" max="4" value="2" oninput="GRAPH.focusHops=parseInt(this.value);document.getElementById('focusHopsVal').textContent=this.value">
-          <span class="range-val" id="focusHopsVal">2</span>
-        </div>
-        <button class="btn btn-sm" onclick="GRAPH.focusNode=null" style="font-size:0.68rem;">フォーカス解除</button>
-        <label style="margin-top:4px;">検索</label>
-        <input type="text" class="graph-search-input" id="graphSearch" placeholder="キーワードで絞り込み..." oninput="onGraphSearch(this.value)">
-        <span class="graph-search-count" id="graphSearchCount"></span>
-        <label style="margin-top:4px;">線の数</label>
-        <div class="range-row">
-          <input type="range" id="maxEdgesPerNode" min="1" max="10" value="3" oninput="GRAPH.maxEdgesPerNode=parseInt(this.value);document.getElementById('maxEdgesVal').textContent=this.value">
-          <span class="range-val" id="maxEdgesVal">3</span>
-        </div>
-        <label style="margin-top:4px;">カテゴリで絞り込み</label>
-        <div id="graphCatFilter" style="display:flex;flex-direction:column;gap:3px;max-height:160px;overflow-y:auto;font-size:0.72rem;"></div>
-        <label style="margin-top:4px;">配置</label>
-        <div class="layout-btns" id="layoutBtns">
-          <button class="btn btn-sm active" onclick="switchLayout('force')">自動</button>
-          <button class="btn btn-sm" onclick="switchLayout('radial')">放射</button>
-          <button class="btn btn-sm" onclick="switchLayout('grid')">整列</button>
-        </div>
-      </div>
-      <div class="metrics-panel" id="nodeMetricsPanel">
-        <h4 id="metricsNodeTitle">Node Metrics</h4>
-        <div id="metricsContent"></div>
-      </div>
-      <canvas id="graphCanvas" class="graph-canvas"></canvas>
-      <div class="graph-legend" id="graphLegend">
-        <div class="graph-legend-item"><div class="graph-legend-dot" style="background:#e67e22"></div>カテゴリ</div>
-        <div class="graph-legend-item"><div class="graph-legend-dot" style="background:#3498db"></div>タグ</div>
-        <div class="graph-legend-item"><div class="graph-legend-dot" style="background:rgba(192,57,43,0.6);border:1px dashed #c0392b"></div>類似度</div>
-        <span style="opacity:0.5">| クリック: フォーカス | ダブルクリック: 詳細を開く</span>
-      </div>
-      <div class="graph-tooltip" id="graphTooltip">
-        <div class="tt-type" id="ttType"></div>
-        <div class="tt-title" id="ttTitle"></div>
-        <div class="tt-detail" id="ttDetail"></div>
-        <div class="tt-tags" id="ttTags"></div>
-        <div class="tt-sim" id="ttSim"></div>
-      </div>
+      <input type="text" class="search-box" id="hierarchySearch" placeholder="構造内を検索..." oninput="renderHierarchy()" style="max-width:280px;">
     </div>
+    <div id="hierarchyContainer" class="hierarchy-container"></div>
+    <!-- Hidden canvas for graph data preservation -->
+    <canvas id="graphCanvas" class="graph-canvas" style="display:none;"></canvas>
+    <div id="graphCatFilter" style="display:none;"></div>
+    <div id="graphTooltip" style="display:none;"><div id="ttType"></div><div id="ttTitle"></div><div id="ttDetail"></div><div id="ttTags"></div><div id="ttSim"></div></div>
+    <div id="graphLegend" style="display:none;"></div>
+    <div id="nodeMetricsPanel" style="display:none;"><h4 id="metricsNodeTitle"></h4><div id="metricsContent"></div></div>
+    <span id="graphSearchCount" style="display:none;"></span>
+    <input type="range" id="simThreshold" style="display:none;" value="20">
+    <span id="simThresholdVal" style="display:none;"></span>
+    <input type="checkbox" id="showTags" checked style="display:none;">
+    <input type="checkbox" id="showSim" checked style="display:none;">
+    <input type="range" id="focusHops" style="display:none;" value="2">
+    <span id="focusHopsVal" style="display:none;"></span>
+    <input type="range" id="maxEdgesPerNode" style="display:none;" value="3">
+    <span id="maxEdgesVal" style="display:none;"></span>
+    <input type="text" id="graphSearch" style="display:none;">
+    <div id="layoutBtns" style="display:none;"></div>
   </div>
 
   <!-- ========== ANALYTICS TAB ========== -->
@@ -1669,9 +1712,51 @@
 
 <script>
 const STORAGE_KEY = 'research_dashboard_data';
+const BOOKMARK_KEY = 'research_dashboard_bookmarks';
 let activeTagFilter = '';
 let currentView = 'cards';
 let currentTab = 'overview';
+
+// Bookmark functions
+function getBookmarks() {
+  try { return JSON.parse(localStorage.getItem(BOOKMARK_KEY)) || {}; } catch { return {}; }
+}
+function isBookmarked(id) { return !!getBookmarks()[id]; }
+function toggleBookmark(id, event) {
+  if (event) { event.stopPropagation(); event.preventDefault(); }
+  const bm = getBookmarks();
+  if (bm[id]) { delete bm[id]; } else { bm[id] = { addedAt: new Date().toISOString() }; }
+  localStorage.setItem(BOOKMARK_KEY, JSON.stringify(bm));
+  // Update all bookmark buttons for this ID
+  document.querySelectorAll(`.btn-bookmark[data-id="${id}"]`).forEach(btn => {
+    btn.classList.toggle('active', !!bm[id]);
+    btn.innerHTML = bm[id] ? '&#9733;' : '&#9734;';
+  });
+  // Re-render bookmark history if visible
+  if (document.getElementById('bookmarkHistory')) renderBookmarkHistory();
+}
+function renderBookmarkHistory() {
+  const el = document.getElementById('bookmarkHistory');
+  if (!el) return;
+  const bm = getBookmarks();
+  const data = loadData();
+  const bmEntries = Object.entries(bm)
+    .map(([id, meta]) => ({ entry: data.find(d => d.id === id), ...meta }))
+    .filter(x => x.entry)
+    .sort((a, b) => new Date(b.addedAt) - new Date(a.addedAt));
+  if (bmEntries.length === 0) {
+    el.innerHTML = '<div style="color:var(--text-muted);font-size:0.82rem;padding:12px;">ブックマークはまだありません。</div>';
+    return;
+  }
+  el.innerHTML = bmEntries.map(({ entry: d, addedAt }) => `
+    <div class="list-item" onclick="openDetail('${d.id}')" style="display:flex;align-items:center;gap:8px;">
+      <button class="btn-bookmark active" data-id="${d.id}" onclick="toggleBookmark('${d.id}', event)" style="position:static;font-size:0.9rem;">&#9733;</button>
+      <span class="list-title" style="flex:1" title="${esc(d.title)}">${esc(d.title)}</span>
+      <span class="list-category">${esc(d.category || '')}</span>
+      <span class="list-date" style="font-size:0.68rem;color:var(--text-muted);">${formatDate(addedAt)}</span>
+    </div>
+  `).join('');
+}
 
 const STATUS_MAP = {
   investigating: { label: '調査中', color: 'var(--status-investigating)' },
@@ -1951,8 +2036,25 @@ function getFilteredData() {
   if (cat) data = data.filter(d => d.category === cat);
   if (status) data = data.filter(d => (d.status || 'investigating') === status);
   if (activeTagFilter) data = data.filter(d => (d.tags || []).includes(activeTagFilter));
+  if (bookmarkFilterActive) {
+    const bm = getBookmarks();
+    data = data.filter(d => bm[d.id]);
+  }
 
   return data;
+}
+
+let bookmarkFilterActive = false;
+function toggleBookmarkFilter() {
+  bookmarkFilterActive = !bookmarkFilterActive;
+  const btn = document.getElementById('bookmarkFilterBtn');
+  if (btn) {
+    btn.style.background = bookmarkFilterActive ? 'var(--accent)' : '';
+    btn.style.color = bookmarkFilterActive ? 'white' : '';
+    btn.style.borderColor = bookmarkFilterActive ? 'var(--accent)' : '';
+    btn.innerHTML = bookmarkFilterActive ? '&#9733; ブックマーク' : '&#9734; ブックマーク';
+  }
+  renderResearchTab();
 }
 
 // ===== Overview Tab =====
@@ -2005,6 +2107,9 @@ function renderOverview() {
 
   // Existing features
   renderRediscovery(data);
+
+  // Bookmark history
+  renderBookmarkHistory();
 }
 
 function renderHomeAnalysis(data) {
@@ -2159,8 +2264,10 @@ function renderResearchTab() {
 
   // Render card for a single entry
   function renderCard(d) {
+    const bmActive = isBookmarked(d.id);
     return `
       <div class="card" onclick="openDetail('${d.id}')">
+        <button class="btn-bookmark ${bmActive ? 'active' : ''}" data-id="${d.id}" onclick="toggleBookmark('${d.id}', event)">${bmActive ? '&#9733;' : '&#9734;'}</button>
         <div class="card-header">
           <div>${d.category ? `<div class="card-category">${esc(d.category)}</div>` : ''}<div class="card-title">${esc(d.title)}${d._semanticScore ? `<span class="similarity-badge">${(d._semanticScore * 100).toFixed(0)}%</span>` : ''}</div></div>
           ${statusBadgeHTML(d.status || 'investigating')}
@@ -3191,6 +3298,139 @@ function graphAnimLoop() {
 }
 
 let graphBuilt = false;
+function renderHierarchy() {
+  const container = document.getElementById('hierarchyContainer');
+  if (!container) return;
+  const data = loadData();
+  if (data.length === 0) { container.innerHTML = '<div style="color:var(--text-muted);padding:20px;">データがありません。</div>'; return; }
+
+  const searchQuery = (document.getElementById('hierarchySearch')?.value || '').toLowerCase();
+
+  // Build clusters using same algorithm as renderClusterSummary
+  const simMatrix = getSimMatrix(data);
+  const assigned = new Array(data.length).fill(-1);
+  let nextCluster = 0;
+  const pairs = [...simMatrix].sort((a, b) => b.sim - a.sim);
+  pairs.forEach(({ i, j, sim }) => {
+    if (sim < 0.15) return;
+    if (assigned[i] >= 0 && assigned[j] >= 0) return;
+    if (assigned[i] >= 0) assigned[j] = assigned[i];
+    else if (assigned[j] >= 0) assigned[i] = assigned[j];
+    else { assigned[i] = assigned[j] = nextCluster++; }
+  });
+  for (let i = 0; i < data.length; i++) { if (assigned[i] < 0) assigned[i] = nextCluster++; }
+
+  // Group by category, then by cluster within category
+  const catMap = {};
+  data.forEach((d, i) => {
+    const cat = d.category || '未分類';
+    if (!catMap[cat]) catMap[cat] = {};
+    const cl = assigned[i];
+    if (!catMap[cat][cl]) catMap[cat][cl] = [];
+    catMap[cat][cl].push(d);
+  });
+
+  // Find cross-category connections
+  const crossLinks = {};
+  simMatrix.filter(m => m.sim > 0.2).forEach(({ i, j, sim }) => {
+    const catA = data[i].category || '未分類';
+    const catB = data[j].category || '未分類';
+    if (catA !== catB) {
+      const key = [catA, catB].sort().join('|');
+      if (!crossLinks[key]) crossLinks[key] = [];
+      crossLinks[key].push({ a: data[i], b: data[j], sim });
+    }
+  });
+
+  // Sort categories by entry count
+  const sortedCats = Object.entries(catMap).sort((a, b) => {
+    const countA = Object.values(a[1]).reduce((s, arr) => s + arr.length, 0);
+    const countB = Object.values(b[1]).reduce((s, arr) => s + arr.length, 0);
+    return countB - countA;
+  });
+
+  let html = '';
+  let catIndex = 0;
+
+  sortedCats.forEach(([cat, clusters]) => {
+    const allEntries = Object.values(clusters).flat();
+    const catCount = allEntries.length;
+    const catColor = COMMUNITY_PALETTE[catIndex % COMMUNITY_PALETTE.length];
+    catIndex++;
+
+    // Filter by search
+    const matchesCat = !searchQuery || cat.toLowerCase().includes(searchQuery);
+    const matchingEntries = searchQuery ? allEntries.filter(d =>
+      d.title.toLowerCase().includes(searchQuery) ||
+      (d.tags || []).some(t => t.toLowerCase().includes(searchQuery))
+    ) : allEntries;
+    if (!matchesCat && matchingEntries.length === 0) return;
+
+    // Sort clusters by size
+    const sortedClusters = Object.entries(clusters)
+      .map(([clId, entries]) => ({ clId, entries }))
+      .filter(c => c.entries.length > 0)
+      .sort((a, b) => b.entries.length - a.entries.length);
+
+    // Extract cluster labels from top tags
+    const clusterHtml = sortedClusters.map((cl, ci) => {
+      const entries = searchQuery && !matchesCat
+        ? cl.entries.filter(d => d.title.toLowerCase().includes(searchQuery) || (d.tags || []).some(t => t.toLowerCase().includes(searchQuery)))
+        : cl.entries;
+      if (entries.length === 0) return '';
+
+      const tagFreq = {};
+      cl.entries.forEach(d => (d.tags || []).filter(t => !NOISE_TAGS.has(t)).forEach(t => { tagFreq[t] = (tagFreq[t] || 0) + 1; }));
+      const topTags = Object.entries(tagFreq).sort((a, b) => b[1] - a[1]).slice(0, 4).map(([t]) => t);
+      const clusterLabel = topTags.length > 0 ? topTags.slice(0, 2).join(' / ') : `グループ ${ci + 1}`;
+
+      return `<div class="hierarchy-cluster" style="border-left-color:${catColor};">
+        <div class="hierarchy-cluster-label">
+          <span>${esc(clusterLabel)}</span>
+          <span style="font-size:0.68rem;color:var(--text-muted);font-weight:400;">${entries.length}件</span>
+        </div>
+        ${topTags.length > 0 ? `<div class="hierarchy-cluster-tags">${topTags.map(t => `<span class="tag">${esc(t)}</span>`).join(' ')}</div>` : ''}
+        ${entries.map(d => `<div class="hierarchy-item" onclick="openDetail('${d.id}')">${esc(d.title)}<span style="font-size:0.68rem;color:var(--text-muted);margin-left:8px;">${formatDate(d.createdAt)}</span></div>`).join('')}
+      </div>`;
+    }).filter(Boolean).join('');
+
+    // Cross-category links for this category
+    const catCrossLinks = Object.entries(crossLinks).filter(([key]) => key.includes(cat));
+    let crossHtml = '';
+    if (catCrossLinks.length > 0) {
+      const links = [];
+      catCrossLinks.forEach(([key, pairs]) => {
+        const otherCat = key.split('|').find(c => c !== cat);
+        const topPairs = pairs.sort((a, b) => b.sim - a.sim).slice(0, 3);
+        topPairs.forEach(p => {
+          const thisEntry = p.a.category === cat ? p.a : p.b;
+          const otherEntry = p.a.category === cat ? p.b : p.a;
+          links.push({ thisEntry, otherEntry, otherCat, sim: p.sim });
+        });
+      });
+      if (links.length > 0) {
+        crossHtml = `<div class="hierarchy-cross-links">
+          <h4>他カテゴリとの接続</h4>
+          ${links.slice(0, 5).map(l => `<div class="cross-link-item">${esc(l.thisEntry.title)} <span class="cross-link-arrow">→</span> <span style="color:var(--accent);">${esc(l.otherCat)}</span>: ${esc(l.otherEntry.title)} <span style="font-size:0.65rem;opacity:0.6;">(${(l.sim*100).toFixed(0)}%)</span></div>`).join('')}
+        </div>`;
+      }
+    }
+
+    html += `<div class="hierarchy-category">
+      <div class="hierarchy-cat-header" onclick="this.parentElement.querySelector('.hierarchy-clusters').classList.toggle('collapsed')">
+        <h3><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${catColor};margin-right:8px;"></span>${esc(cat)}</h3>
+        <span class="hierarchy-cat-count">${catCount}件</span>
+      </div>
+      <div class="hierarchy-clusters">
+        ${clusterHtml}
+        ${crossHtml}
+      </div>
+    </div>`;
+  });
+
+  container.innerHTML = html || '<div style="color:var(--text-muted);padding:20px;">検索に一致する項目がありません。</div>';
+}
+
 function renderGraph() {
   initGraphCatFilter();
   const canvas = document.getElementById('graphCanvas');
@@ -3555,65 +3795,107 @@ function renderInsights(data, targetEl) {
   const insights = [];
   const now = new Date();
 
-  // 1. 最も活発な期間
-  const dayCounts = {};
-  data.forEach(d => {
-    const dd = new Date(d.createdAt);
-    const key = dd.toLocaleDateString('ja-JP');
-    dayCounts[key] = (dayCounts[key] || 0) + 1;
-  });
-  const bestDay = Object.entries(dayCounts).sort((a,b) => b[1]-a[1])[0];
-  if (bestDay) insights.push({ type: '活動ピーク', text: `最も活発な日: ${bestDay[0]}（${bestDay[1]}件登録）`, cls: 'success' });
+  // Time windows
+  const d30 = 30 * 86400000;
+  const d60 = 60 * 86400000;
+  const recent30 = data.filter(d => (now - new Date(d.createdAt)) < d30);
+  const prev30 = data.filter(d => { const age = now - new Date(d.createdAt); return age >= d30 && age < d60; });
 
-  // 2. カテゴリ集中度
-  const catCounts = {};
-  data.forEach(d => { if (d.category) catCounts[d.category] = (catCounts[d.category] || 0) + 1; });
-  const sorted = Object.entries(catCounts).sort((a,b) => b[1]-a[1]);
-  if (sorted.length >= 2) {
-    const topPct = Math.round(sorted[0][1] / data.length * 100);
-    if (topPct > 40) insights.push({ type: '集中傾向', text: `「${sorted[0][0]}」がリサーチ全体の${topPct}%を占めています。他分野の深掘りも検討してみてください。`, cls: 'warning' });
+  // === TREND ANALYSIS: Emerging themes in recent reports ===
+
+  // Category momentum: compare last 30 days vs prior 30 days
+  const catRecent = {}, catPrev = {};
+  recent30.forEach(d => { if (d.category) catRecent[d.category] = (catRecent[d.category] || 0) + 1; });
+  prev30.forEach(d => { if (d.category) catPrev[d.category] = (catPrev[d.category] || 0) + 1; });
+
+  const growingCats = Object.entries(catRecent)
+    .filter(([c, n]) => n > (catPrev[c] || 0))
+    .sort((a, b) => (b[1] - (catPrev[b[0]] || 0)) - (a[1] - (catPrev[a[0]] || 0)));
+  const decliningCats = Object.entries(catPrev)
+    .filter(([c, n]) => n > (catRecent[c] || 0))
+    .map(([c]) => c);
+
+  if (growingCats.length > 0) {
+    const names = growingCats.slice(0, 3).map(([c, n]) => `${c}（+${n - (catPrev[c] || 0)}件）`).join('、');
+    insights.push({ type: '成長トレンド', text: `直近30日間で勢いのある分野: ${names}。この方向でのリサーチを深めることで、新たな知見が得られる可能性があります。`, cls: 'emerging' });
+  }
+  if (decliningCats.length > 0) {
+    insights.push({ type: '関心の変化', text: `前月と比べて「${decliningCats.slice(0, 2).join('」「')}」の調査ペースが落ちています。意図的な焦点の移行か、再注目の契機を検討してみてください。`, cls: 'info' });
   }
 
-  // 3. 停滞トピック
+  // Emerging tags: new tags appearing only in recent 30 days
+  const recentTags = new Set();
+  const olderTags = new Set();
+  recent30.forEach(d => (d.tags || []).filter(t => !NOISE_TAGS.has(t)).forEach(t => recentTags.add(t)));
+  data.filter(d => (now - new Date(d.createdAt)) >= d30).forEach(d => (d.tags || []).filter(t => !NOISE_TAGS.has(t)).forEach(t => olderTags.add(t)));
+  const newTags = [...recentTags].filter(t => !olderTags.has(t));
+  if (newTags.length > 0) {
+    insights.push({ type: '新出キーワード', text: `最近30日で初めて登場したキーワード: ${newTags.slice(0, 5).join('、')}。新しい探究の方向性を示唆しています。`, cls: 'trend' });
+  }
+
+  // Tag frequency surge: tags with significantly more usage recently
+  const recentTagFreq = {}, olderTagFreq = {};
+  recent30.forEach(d => (d.tags || []).filter(t => !NOISE_TAGS.has(t)).forEach(t => { recentTagFreq[t] = (recentTagFreq[t] || 0) + 1; }));
+  prev30.forEach(d => (d.tags || []).filter(t => !NOISE_TAGS.has(t)).forEach(t => { olderTagFreq[t] = (olderTagFreq[t] || 0) + 1; }));
+  const surgingTags = Object.entries(recentTagFreq)
+    .filter(([t, n]) => n >= 3 && n > (olderTagFreq[t] || 0) * 2)
+    .sort((a, b) => b[1] - a[1]);
+  if (surgingTags.length > 0) {
+    insights.push({ type: '急上昇テーマ', text: `「${surgingTags.slice(0, 3).map(([t, n]) => t).join('」「')}」の出現頻度が急増しています。これらのテーマを中心に横断的なレビューを行うと、共通パターンが見えてくるかもしれません。`, cls: 'trend' });
+  }
+
+  // Cross-category convergence: recent reports bridging multiple categories
+  const simMatrix = getSimMatrix(data);
+  const recentIds = new Set(recent30.map(d => d.id));
+  const recentBridges = [];
+  data.forEach((d, i) => {
+    if (!recentIds.has(d.id) || !d.category) return;
+    const cross = simMatrix.filter(m => (m.i === i || m.j === i) && m.sim > 0.2)
+      .map(m => data[m.i === i ? m.j : m.i])
+      .filter(x => x.category && x.category !== d.category);
+    if (cross.length > 0) recentBridges.push({ entry: d, cats: [...new Set(cross.map(x => x.category))] });
+  });
+  if (recentBridges.length > 0) {
+    const example = recentBridges[0];
+    insights.push({ type: '分野融合の兆候', text: `「${example.entry.title}」が${example.cats.slice(0, 2).join('と')}を橋渡ししています。異分野間の知識統合が進みつつあり、学際的なフレームワーク構築の好機です。`, cls: 'emerging' });
+  }
+
+  // Forward-looking: research velocity and projection
+  if (recent30.length > 0) {
+    const monthlyRate = recent30.length;
+    const prevRate = prev30.length;
+    const trend = monthlyRate > prevRate ? '加速' : monthlyRate < prevRate ? '減速' : '安定';
+    insights.push({ type: 'リサーチペース', text: `直近30日: ${monthlyRate}件（前月: ${prevRate}件、${trend}傾向）。${trend === '加速' ? 'この勢いを活かし、関連する未探索テーマへの展開を推奨します。' : trend === '減速' ? '質の深掘りフェーズに移行するのも一つの戦略です。' : '安定したペースを維持しています。'}`, cls: trend === '加速' ? 'success' : 'info' });
+  }
+
+  // Stale topics — suggest revival
   const catLastDate = {};
   data.forEach(d => {
     if (!d.category) return;
     const dd = new Date(d.createdAt);
     if (!catLastDate[d.category] || dd > catLastDate[d.category]) catLastDate[d.category] = dd;
   });
-  const stale = Object.entries(catLastDate).filter(([_, d]) => (now - d) > 60 * 86400000).map(([c]) => c);
-  if (stale.length > 0) insights.push({ type: '停滞', text: `60日以上更新なし: ${stale.join(', ')}。再調査またはアーカイブを検討してください。`, cls: 'warning' });
+  const stale = Object.entries(catLastDate).filter(([_, d]) => (now - d) > d60).map(([c]) => c);
+  if (stale.length > 0) insights.push({ type: '再探索の提案', text: `「${stale.join('」「')}」は60日以上更新がありません。最新の動向を踏まえた再調査で新たな発見が期待できます。`, cls: 'warning' });
 
-  // 4. 類似度の高いペア
-  const simMatrix = getSimMatrix(data);
-  const highSim = simMatrix.filter(m => m.sim > 0.5);
-  if (highSim.length > 0) {
-    const pair = highSim.sort((a,b) => b.sim-a.sim)[0];
-    insights.push({ type: '重複の可能性', text: `「${data[pair.i].title}」と「${data[pair.j].title}」の類似度が${(pair.sim*100).toFixed(0)}%。統合または差別化を検討してください。`, cls: 'info' });
-  }
-
-  // 5. 完了率
+  // Completion rate as strategic signal
   const done = data.filter(d => d.status === 'done').length;
-  const inProgress = data.filter(d => (d.status || 'investigating') === 'investigating').length;
+  const investigating = data.filter(d => (d.status || 'investigating') === 'investigating').length;
   const completionRate = Math.round(done / data.length * 100);
-  if (inProgress > done && inProgress > 2) {
-    insights.push({ type: 'ワークフロー', text: `調査中が${inProgress}件、完了が${done}件（完了率${completionRate}%）。未完了の整理を検討してください。`, cls: 'warning' });
-  } else if (done > 0) {
-    insights.push({ type: '完了率', text: `全${data.length}件中${done}件が完了（${completionRate}%）。`, cls: 'success' });
+  if (investigating > 5 && investigating > done) {
+    insights.push({ type: '整理の推奨', text: `調査中が${investigating}件と多く（完了率${completionRate}%）、知見が分散している可能性があります。テーマ別に整理・統合することで、レポートの質を高められます。`, cls: 'warning' });
   }
 
-  // 6. タグ多様性
+  // Summary: coverage and diversity
+  const catCounts = {};
+  data.forEach(d => { if (d.category) catCounts[d.category] = (catCounts[d.category] || 0) + 1; });
+  const sorted = Object.entries(catCounts).sort((a,b) => b[1]-a[1]);
   const tagSet = new Set();
   data.forEach(d => (d.tags || []).forEach(t => tagSet.add(t)));
-  const avgTags = data.reduce((s, d) => s + (d.tags || []).length, 0) / data.length;
-  if (avgTags < 2) insights.push({ type: 'タグ付け', text: `1件あたり平均${avgTags.toFixed(1)}タグ。タグを増やすとナレッジグラフの接続性が向上します。`, cls: 'info' });
-
-  // 7. 分野横断の接続
-  const crossCat = simMatrix.filter(m => m.sim > 0.3 && data[m.i].category && data[m.j].category && data[m.i].category !== data[m.j].category);
-  if (crossCat.length > 0) insights.push({ type: '分野横断', text: `カテゴリを横断する意味的な接続が${crossCat.length}件見つかりました。学際的な発展の可能性があります。`, cls: 'success' });
-
-  // 8. カテゴリ数
-  if (sorted.length > 0) insights.push({ type: '多様性', text: `${sorted.length}カテゴリ、${tagSet.size}種類のタグで構成。カバー範囲: ${sorted.map(([c]) => c).join('、')}`, cls: 'info' });
+  if (sorted.length > 0) {
+    const topPct = Math.round(sorted[0][1] / data.length * 100);
+    insights.push({ type: '全体像', text: `${sorted.length}カテゴリ・${tagSet.size}タグで${data.length}件のリサーチを管理中。${topPct > 40 ? `「${sorted[0][0]}」が${topPct}%を占めており、バランスの多様化を検討する余地があります。` : '分野バランスは良好です。'}`, cls: 'info' });
+  }
 
   const el = targetEl || document.getElementById('insightsContainer');
   if (el) el.innerHTML = insights.length > 0
@@ -4458,7 +4740,7 @@ function toggleLibraryExpand(id) {
 function renderAll() {
   if (currentTab === 'overview') renderOverview();
   else if (currentTab === 'research') renderResearchTab();
-  else if (currentTab === 'graph') renderGraph();
+  else if (currentTab === 'graph') { renderHierarchy(); }
   else if (currentTab === 'analytics') renderAnalytics();
   else if (currentTab === 'library') renderLibrary();
   else if (currentTab === 'timeline') renderTimeline();
