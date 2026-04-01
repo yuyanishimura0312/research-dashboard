@@ -3329,6 +3329,111 @@ function graphAnimLoop() {
 }
 
 let graphBuilt = false;
+function classifyEntry(d) {
+  // Classify each entry into one of ~20 structural categories
+  // based on tags, title, and original category. Priority-ordered rules.
+  const tags = new Set((d.tags || []).map(t => t.toLowerCase()));
+  const title = (d.title || '').toLowerCase();
+  const cat = (d.category || '').toLowerCase();
+  const summary = (d.summary || '').toLowerCase();
+  const has = (...kws) => kws.some(k => tags.has(k.toLowerCase()) || title.includes(k.toLowerCase()));
+  const tagHas = (...kws) => kws.some(k => tags.has(k.toLowerCase()));
+
+  // 1. esse-sense — product-specific
+  if (has('esse-sense', 'エッセンス') && (has('記事', '戦略', '経営', 'EC', 'CRM') || cat.includes('ビジネス')))
+    return 'esse-sense・事業';
+
+  // 2. 京都大学 — institutional
+  if (tagHas('京都大学', '京都大学beyond2050'))
+    return '京都大学・連携プロジェクト';
+
+  // 3. フォーラム・対話・イベント
+  if (tagHas('フォーラム', 'カンファレンス', 'イベントレポート', '未来カンファレンス', 'イベント', 'ヒアリング', '取材準備'))
+    return 'フォーラム・対話・イベント';
+
+  // 4. 社会的共通資本
+  if (has('社会的共通資本'))
+    return '社会的共通資本';
+
+  // 5. 未来洞察・シナリオ
+  if (has('シナリオプランニング', 'CLA', 'PESTLE', '未来洞察', 'フォーサイト', 'SINIC', 'メタ分析', 'メタ解析'))
+    return '未来洞察・シナリオ';
+
+  // 6. 未来学・理論
+  if (cat.includes('未来学') || tagHas('未来学', '書籍要約') && !cat.includes('人類学'))
+    return '未来学・理論';
+
+  // 7. 未来の人類学
+  if (has('未来の人類学'))
+    return '未来の人類学';
+
+  // 8. 人類学
+  if (cat === '人類学' || (tagHas('人類学', 'エスノグラフィー', 'フィールドワーク', '身体性', '神話') && !cat.includes('テクノロジー')))
+    return '人類学';
+
+  // 9. デジタルツール・プラットフォーム
+  if (has('ツール', 'プラットフォーム', 'SaaS', 'membership', 'Stripe', 'ベンチマーク') &&
+      (cat.includes('ツール') || cat.includes('デジタル') || cat.includes('デザイン') || cat.includes('ベンチマーク') || has('比較', '調査ツール', 'リサーチツール')))
+    return 'デジタルツール・プラットフォーム';
+  if (has('MCP', 'Claude Code', 'ナレッジグラフ', 'リサーチダッシュボード', 'データ可視化'))
+    return 'デジタルツール・プラットフォーム';
+  if ((cat.includes('ツール調査') || cat.includes('デジタルツール') || cat.includes('デザイン調査') || cat.includes('ベンチマーク')))
+    return 'デジタルツール・プラットフォーム';
+
+  // 10. AI・生成AI
+  if (tagHas('ai秘書', 'ai') && (has('AI秘書', 'LLM', 'Claude', 'GPT') || title.includes('ai')))
+    if (cat.includes('ai') || title.match(/^ai|ai[活導秘]|生成ai/i))
+      return 'AI・生成AI';
+
+  // 11. コミュニティ・NPO
+  if (has('NPO', 'メンバーシップ', 'コミュニティ', '会員', '市民社会', '相互扶助'))
+    return 'コミュニティ・NPO';
+  if (cat.includes('npo') || cat.includes('市民'))
+    return 'コミュニティ・NPO';
+
+  // 12. 経営・組織・戦略
+  if (cat.includes('経営') || cat.includes('ビジネス') || cat.includes('事業戦略') || cat.includes('組織') || cat === 'market-research')
+    return '経営・組織・戦略';
+  if (tagHas('経営', '戦略', '事業戦略', '知的資本') && !cat.includes('ソーシャル'))
+    return '経営・組織・戦略';
+
+  // 13. 財団・ガバナンス
+  if (has('財団', 'ガバナンス') && !tagHas('京都大学'))
+    return '財団・ガバナンス';
+
+  // 14. 教育・カリキュラム
+  if (has('教育', 'カリキュラム', '大学院', 'プログラム調査'))
+    return '教育・人材育成';
+
+  // 15. 環境・サステナビリティ
+  if (has('環境', 'サステナビリティ', '気候変動', 'エネルギー'))
+    return '環境・サステナビリティ';
+
+  // 16. 観光・地域
+  if (has('観光', '地域', 'ウェルビーイング', 'パナソニック'))
+    return '観光・地域・ウェルビーイング';
+
+  // 17. 建築・都市
+  if (has('建築', '都市', 'インフォーマル'))
+    return '建築・都市';
+
+  // 18. ソーシャルイノベーション — remaining SI entries
+  if (cat.includes('ソーシャルイノベーション') || tagHas('ソーシャルイノベーション', 'ソーシャルイノベーションの歴史と背景'))
+    return 'ソーシャルイノベーション';
+
+  // 19. 学術研究 — remaining academic entries
+  if (cat.includes('学術') || tagHas('学術', '研究', '科学'))
+    return '学術研究・科学';
+
+  // 20. テクノロジー — remaining tech entries
+  if (cat.includes('テクノロジー'))
+    return 'テクノロジー・イノベーション';
+
+  // Fallback
+  if (cat === 'リサーチ') return 'ソーシャルイノベーション';
+  return d.category || '未分類';
+}
+
 function renderHierarchy() {
   const container = document.getElementById('hierarchyContainer');
   if (!container) return;
@@ -3337,124 +3442,74 @@ function renderHierarchy() {
 
   const searchQuery = (document.getElementById('hierarchySearch')?.value || '').toLowerCase();
 
-  // Build clusters using same algorithm as renderClusterSummary
-  const simMatrix = getSimMatrix(data);
-  const assigned = new Array(data.length).fill(-1);
-  let nextCluster = 0;
-  const pairs = [...simMatrix].sort((a, b) => b.sim - a.sim);
-  pairs.forEach(({ i, j, sim }) => {
-    if (sim < 0.15) return;
-    if (assigned[i] >= 0 && assigned[j] >= 0) return;
-    if (assigned[i] >= 0) assigned[j] = assigned[i];
-    else if (assigned[j] >= 0) assigned[i] = assigned[j];
-    else { assigned[i] = assigned[j] = nextCluster++; }
-  });
-  for (let i = 0; i < data.length; i++) { if (assigned[i] < 0) assigned[i] = nextCluster++; }
-
-  // Group by category, then by cluster within category
+  // Classify all entries into structural categories
   const catMap = {};
-  data.forEach((d, i) => {
-    const cat = d.category || '未分類';
-    if (!catMap[cat]) catMap[cat] = {};
-    const cl = assigned[i];
-    if (!catMap[cat][cl]) catMap[cat][cl] = [];
-    catMap[cat][cl].push(d);
+  data.forEach(d => {
+    const cat = classifyEntry(d);
+    if (!catMap[cat]) catMap[cat] = [];
+    catMap[cat].push(d);
   });
 
-  // Find cross-category connections
-  const crossLinks = {};
-  simMatrix.filter(m => m.sim > 0.2).forEach(({ i, j, sim }) => {
-    const catA = data[i].category || '未分類';
-    const catB = data[j].category || '未分類';
-    if (catA !== catB) {
-      const key = [catA, catB].sort().join('|');
-      if (!crossLinks[key]) crossLinks[key] = [];
-      crossLinks[key].push({ a: data[i], b: data[j], sim });
-    }
-  });
+  // Sort categories by count
+  const sortedCats = Object.entries(catMap).sort((a, b) => b[1].length - a[1].length);
 
-  // Sort categories by entry count
-  const sortedCats = Object.entries(catMap).sort((a, b) => {
-    const countA = Object.values(a[1]).reduce((s, arr) => s + arr.length, 0);
-    const countB = Object.values(b[1]).reduce((s, arr) => s + arr.length, 0);
-    return countB - countA;
-  });
+  // Summary stats
+  const totalEntries = data.length;
+  const catCount = sortedCats.length;
+  let summaryHtml = `<div style="display:flex;gap:var(--space-lg);margin-bottom:var(--space-xl);flex-wrap:wrap;">
+    <div style="font-size:var(--text-sm);color:var(--text-muted);">${catCount}カテゴリ / ${totalEntries}件のリサーチ</div>
+  </div>`;
 
-  let html = '';
+  let html = summaryHtml;
   let catIndex = 0;
 
-  sortedCats.forEach(([cat, clusters]) => {
-    const allEntries = Object.values(clusters).flat();
-    const catCount = allEntries.length;
+  sortedCats.forEach(([cat, entries]) => {
     const catColor = COMMUNITY_PALETTE[catIndex % COMMUNITY_PALETTE.length];
     catIndex++;
 
-    // Filter by search
+    // Search filter
     const matchesCat = !searchQuery || cat.toLowerCase().includes(searchQuery);
-    const matchingEntries = searchQuery ? allEntries.filter(d =>
-      d.title.toLowerCase().includes(searchQuery) ||
-      (d.tags || []).some(t => t.toLowerCase().includes(searchQuery))
-    ) : allEntries;
-    if (!matchesCat && matchingEntries.length === 0) return;
+    const filtered = searchQuery
+      ? entries.filter(d => matchesCat || d.title.toLowerCase().includes(searchQuery) || (d.tags || []).some(t => t.toLowerCase().includes(searchQuery)))
+      : entries;
+    if (filtered.length === 0) return;
 
-    // Sort clusters by size
-    const sortedClusters = Object.entries(clusters)
-      .map(([clId, entries]) => ({ clId, entries }))
-      .filter(c => c.entries.length > 0)
-      .sort((a, b) => b.entries.length - a.entries.length);
+    // Sub-group entries by top tags within this category
+    const tagFreq = {};
+    entries.forEach(d => (d.tags || []).filter(t => !NOISE_TAGS.has(t) && t !== 'AI' && t !== '生成AI' && t !== '学術' && t !== '研究').forEach(t => {
+      tagFreq[t] = (tagFreq[t] || 0) + 1;
+    }));
+    const topTags = Object.entries(tagFreq).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([t]) => t);
 
-    // Extract cluster labels from top tags
-    const clusterHtml = sortedClusters.map((cl, ci) => {
-      const entries = searchQuery && !matchesCat
-        ? cl.entries.filter(d => d.title.toLowerCase().includes(searchQuery) || (d.tags || []).some(t => t.toLowerCase().includes(searchQuery)))
-        : cl.entries;
-      if (entries.length === 0) return '';
+    // Sort entries by date (newest first), limit display
+    const sorted = [...filtered].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    const showAll = sorted.length <= 8;
+    const displayed = showAll ? sorted : sorted.slice(0, 5);
+    const remaining = sorted.length - displayed.length;
 
-      const tagFreq = {};
-      cl.entries.forEach(d => (d.tags || []).filter(t => !NOISE_TAGS.has(t)).forEach(t => { tagFreq[t] = (tagFreq[t] || 0) + 1; }));
-      const topTags = Object.entries(tagFreq).sort((a, b) => b[1] - a[1]).slice(0, 4).map(([t]) => t);
-      const clusterLabel = topTags.length > 0 ? topTags.slice(0, 2).join(' / ') : `グループ ${ci + 1}`;
+    const entriesHtml = displayed.map(d =>
+      `<div class="hierarchy-item" onclick="openDetail('${d.id}')">
+        <span>${esc(d.title)}</span>
+        <span style="font-size:var(--text-xs);color:var(--text-muted);margin-left:var(--space-sm);white-space:nowrap;">${formatDate(d.createdAt)}</span>
+      </div>`
+    ).join('');
 
-      return `<div class="hierarchy-cluster" style="border-left-color:${catColor};">
-        <div class="hierarchy-cluster-label">
-          <span>${esc(clusterLabel)}</span>
-          <span style="font-size:0.68rem;color:var(--text-muted);font-weight:400;">${entries.length}件</span>
-        </div>
-        ${topTags.length > 0 ? `<div class="hierarchy-cluster-tags">${topTags.map(t => `<span class="tag">${esc(t)}</span>`).join(' ')}</div>` : ''}
-        ${entries.map(d => `<div class="hierarchy-item" onclick="openDetail('${d.id}')">${esc(d.title)}<span style="font-size:0.68rem;color:var(--text-muted);margin-left:8px;">${formatDate(d.createdAt)}</span></div>`).join('')}
-      </div>`;
-    }).filter(Boolean).join('');
-
-    // Cross-category links for this category
-    const catCrossLinks = Object.entries(crossLinks).filter(([key]) => key.includes(cat));
-    let crossHtml = '';
-    if (catCrossLinks.length > 0) {
-      const links = [];
-      catCrossLinks.forEach(([key, pairs]) => {
-        const otherCat = key.split('|').find(c => c !== cat);
-        const topPairs = pairs.sort((a, b) => b.sim - a.sim).slice(0, 3);
-        topPairs.forEach(p => {
-          const thisEntry = p.a.category === cat ? p.a : p.b;
-          const otherEntry = p.a.category === cat ? p.b : p.a;
-          links.push({ thisEntry, otherEntry, otherCat, sim: p.sim });
-        });
-      });
-      if (links.length > 0) {
-        crossHtml = `<div class="hierarchy-cross-links">
-          <h4>他カテゴリとの接続</h4>
-          ${links.slice(0, 5).map(l => `<div class="cross-link-item">${esc(l.thisEntry.title)} <span class="cross-link-arrow">→</span> <span style="color:var(--accent);">${esc(l.otherCat)}</span>: ${esc(l.otherEntry.title)} <span style="font-size:0.65rem;opacity:0.6;">(${(l.sim*100).toFixed(0)}%)</span></div>`).join('')}
-        </div>`;
-      }
-    }
+    const moreHtml = remaining > 0
+      ? `<div class="hierarchy-item" style="color:var(--accent);font-weight:500;cursor:pointer;" onclick="this.parentElement.querySelectorAll('.hierarchy-hidden').forEach(e=>e.style.display='block');this.style.display='none'">+ 他${remaining}件を表示</div>
+         ${sorted.slice(5).map(d => `<div class="hierarchy-item hierarchy-hidden" style="display:none;" onclick="openDetail('${d.id}')"><span>${esc(d.title)}</span><span style="font-size:var(--text-xs);color:var(--text-muted);margin-left:var(--space-sm);white-space:nowrap;">${formatDate(d.createdAt)}</span></div>`).join('')}`
+      : '';
 
     html += `<div class="hierarchy-category">
       <div class="hierarchy-cat-header" onclick="this.parentElement.querySelector('.hierarchy-clusters').classList.toggle('collapsed')">
-        <h3><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${catColor};margin-right:8px;"></span>${esc(cat)}</h3>
-        <span class="hierarchy-cat-count">${catCount}件</span>
+        <h3><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${catColor};margin-right:10px;flex-shrink:0;"></span>${esc(cat)}</h3>
+        <div style="display:flex;align-items:center;gap:var(--space-sm);">
+          <span class="hierarchy-cat-count">${entries.length}件</span>
+        </div>
       </div>
       <div class="hierarchy-clusters">
-        ${clusterHtml}
-        ${crossHtml}
+        ${topTags.length > 0 ? `<div style="padding:var(--space-md) 0 var(--space-sm);display:flex;gap:var(--space-xs);flex-wrap:wrap;">${topTags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>` : ''}
+        ${entriesHtml}
+        ${moreHtml}
       </div>
     </div>`;
   });
