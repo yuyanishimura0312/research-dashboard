@@ -1375,6 +1375,7 @@
     <button class="tab-btn" data-tab="library" onclick="switchTab('library')">ライブラリ</button>
     <button class="tab-btn" data-tab="graph" onclick="switchTab('graph')">構造</button>
     <button class="tab-btn" data-tab="analytics" onclick="switchTab('analytics')">分析</button>
+    <button class="tab-btn" data-tab="comments" onclick="switchTab('comments')">コメント</button>
     <button class="tab-btn" data-tab="timeline" onclick="switchTab('timeline')">時系列</button>
   </div>
 
@@ -1660,6 +1661,42 @@
     <div class="library-topics" id="libraryTopics"></div>
   </div>
 
+  <!-- ========== COMMENTS TAB ========== -->
+  <div class="tab-panel" id="tab-comments">
+    <!-- Stats -->
+    <div class="stats" style="margin-bottom:var(--space-xl);">
+      <div class="stat-card"><div class="label">総コメント数</div><div class="value" id="cmtStatTotal">0</div></div>
+      <div class="stat-card"><div class="label">コメント対象記事</div><div class="value" id="cmtStatEntries">0</div></div>
+      <div class="stat-card"><div class="label">直近30日</div><div class="value" id="cmtStatRecent">0</div></div>
+      <div class="stat-card"><div class="label">カバー率</div><div class="value" id="cmtStatCoverage">0%</div></div>
+    </div>
+
+    <div class="viz-row">
+      <!-- Comment keywords -->
+      <div class="viz-panel">
+        <h3>コメントから抽出されたキーワード</h3>
+        <div id="cmtKeywords"></div>
+      </div>
+      <!-- Comment themes -->
+      <div class="viz-panel">
+        <h3>コメントが示す関心テーマ</h3>
+        <div id="cmtThemes"></div>
+      </div>
+    </div>
+
+    <!-- Research suggestions from comments -->
+    <div class="viz-panel" style="margin-bottom:var(--space-lg);">
+      <h3>コメントから見える調査提案</h3>
+      <div id="cmtSuggestions"></div>
+    </div>
+
+    <!-- All comments feed -->
+    <div class="viz-panel">
+      <h3>すべてのコメント</h3>
+      <div id="cmtAllFeed"></div>
+    </div>
+  </div>
+
   <!-- ========== TIMELINE TAB ========== -->
   <div class="tab-panel" id="tab-timeline">
     <div class="timeline" id="timelineContainer"></div>
@@ -1873,6 +1910,192 @@ function renderDashboardComments() {
   `).join('');
 }
 
+// ===== Comments Tab =====
+function renderCommentsTab() {
+  const allComments = getDashComments();
+  const data = loadData();
+  const now = new Date();
+  const d30 = 30 * 86400000;
+
+  // Flatten all comments with entry metadata
+  const flat = [];
+  Object.entries(allComments).forEach(([entryId, comments]) => {
+    const entry = data.find(d => d.id === entryId);
+    if (!entry) return;
+    comments.forEach(c => flat.push({
+      ...c, entryId, title: entry.title, category: entry.category,
+      tags: entry.tags || [], summary: entry.summary || ''
+    }));
+  });
+  flat.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+  const commentedEntryIds = new Set(Object.keys(allComments));
+  const recent30 = flat.filter(c => (now - new Date(c.createdAt)) < d30);
+
+  // Stats
+  const totalComments = flat.length;
+  const commentedEntries = commentedEntryIds.size;
+  const coverage = data.length > 0 ? Math.round(commentedEntries / data.length * 100) : 0;
+
+  document.getElementById('cmtStatTotal').textContent = totalComments;
+  document.getElementById('cmtStatEntries').textContent = commentedEntries;
+  document.getElementById('cmtStatRecent').textContent = recent30.length;
+  document.getElementById('cmtStatCoverage').textContent = coverage + '%';
+
+  // Keyword extraction from comments
+  const wordFreq = {};
+  const stopWords = new Set(['の','に','は','を','が','と','で','も','な','た','て','し','い','れ','さ','る','こと','ある','いる','する','この','それ','これ','その','から','まで','ため','など','よう','という','として','について','における','に関して']);
+  flat.forEach(c => {
+    const words = c.text.split(/[\s、。,.!？?・\-—:：;；()（）「」『』\[\]]+/).filter(w => w.length >= 2 && !stopWords.has(w));
+    words.forEach(w => { wordFreq[w] = (wordFreq[w] || 0) + 1; });
+  });
+  const topWords = Object.entries(wordFreq).sort((a, b) => b[1] - a[1]).slice(0, 20);
+
+  const kwEl = document.getElementById('cmtKeywords');
+  if (topWords.length > 0) {
+    kwEl.innerHTML = `<div style="display:flex;gap:var(--space-sm);flex-wrap:wrap;">${topWords.map(([w, n]) =>
+      `<span class="keyword">${esc(w)} <span class="kw-score">${n}</span></span>`
+    ).join('')}</div>`;
+  } else {
+    kwEl.innerHTML = '<div style="color:var(--text-muted);font-size:var(--text-sm);padding:12px 0;">コメントが蓄積されるとキーワードが表示されます。</div>';
+  }
+
+  // Theme analysis: which categories/topics get the most comments
+  const catCommentCount = {};
+  const tagCommentCount = {};
+  flat.forEach(c => {
+    if (c.category) catCommentCount[c.category] = (catCommentCount[c.category] || 0) + 1;
+    c.tags.filter(t => !NOISE_TAGS.has(t)).forEach(t => { tagCommentCount[t] = (tagCommentCount[t] || 0) + 1; });
+  });
+  const topCats = Object.entries(catCommentCount).sort((a, b) => b[1] - a[1]).slice(0, 8);
+  const topTags = Object.entries(tagCommentCount).sort((a, b) => b[1] - a[1]).slice(0, 10);
+
+  const thEl = document.getElementById('cmtThemes');
+  if (topCats.length > 0 || topTags.length > 0) {
+    let thHtml = '';
+    if (topCats.length > 0) {
+      thHtml += `<div style="margin-bottom:var(--space-md);"><div style="font-size:var(--text-xs);font-weight:700;color:var(--text-muted);margin-bottom:var(--space-sm);text-transform:uppercase;letter-spacing:0.06em;">カテゴリ別コメント数</div>`;
+      const maxCat = topCats[0][1];
+      thHtml += topCats.map(([cat, n]) => `
+        <div style="display:grid;grid-template-columns:100px 1fr 30px;align-items:center;gap:8px;margin-bottom:4px;font-size:var(--text-sm);">
+          <span style="text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text-muted);">${esc(cat)}</span>
+          <div style="background:var(--accent-light);border-radius:3px;height:18px;overflow:hidden;"><div style="height:100%;background:var(--accent);border-radius:3px;width:${Math.round(n/maxCat*100)}%;"></div></div>
+          <span style="font-size:var(--text-xs);color:var(--text-muted);">${n}</span>
+        </div>
+      `).join('');
+      thHtml += '</div>';
+    }
+    if (topTags.length > 0) {
+      thHtml += `<div style="font-size:var(--text-xs);font-weight:700;color:var(--text-muted);margin-bottom:var(--space-sm);text-transform:uppercase;letter-spacing:0.06em;">関連タグ</div>`;
+      thHtml += `<div style="display:flex;gap:var(--space-xs);flex-wrap:wrap;">${topTags.map(([t, n]) =>
+        `<span class="tag" style="cursor:default;">${esc(t)} (${n})</span>`
+      ).join('')}</div>`;
+    }
+    thEl.innerHTML = thHtml;
+  } else {
+    thEl.innerHTML = '<div style="color:var(--text-muted);font-size:var(--text-sm);padding:12px 0;">コメントが蓄積されるとテーマ分析が表示されます。</div>';
+  }
+
+  // Research suggestions based on comments
+  const sugEl = document.getElementById('cmtSuggestions');
+  if (flat.length > 0) {
+    // Find questions or topics in comments that could lead to new research
+    const suggestions = [];
+
+    // 1. Heavily commented entries — indicate strong interest
+    const entryCommentCounts = {};
+    flat.forEach(c => { entryCommentCounts[c.entryId] = (entryCommentCounts[c.entryId] || 0) + 1; });
+    const hotEntries = Object.entries(entryCommentCounts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 3)
+      .map(([id, n]) => ({ entry: data.find(d => d.id === id), count: n }))
+      .filter(x => x.entry);
+
+    if (hotEntries.length > 0) {
+      suggestions.push({
+        type: '注目リサーチ',
+        text: `「${hotEntries[0].entry.title}」に${hotEntries[0].count}件のコメントが集中しています。${hotEntries[0].entry.category ? hotEntries[0].entry.category + 'の分野で' : ''}このテーマを深掘りする追加リサーチが有効です。`,
+        entryId: hotEntries[0].entry.id
+      });
+    }
+
+    // 2. Comment keywords not covered by existing research tags
+    const allTags = new Set();
+    data.forEach(d => (d.tags || []).forEach(t => allTags.add(t.toLowerCase())));
+    const uncoveredWords = topWords
+      .filter(([w]) => !allTags.has(w.toLowerCase()) && w.length >= 3)
+      .slice(0, 5);
+    if (uncoveredWords.length > 0) {
+      suggestions.push({
+        type: '未探索キーワード',
+        text: `コメントに登場するが既存リサーチのタグにない語: ${uncoveredWords.map(([w, n]) => `「${w}」(${n}回)`).join('、')}。これらを起点にした新規調査を検討してください。`
+      });
+    }
+
+    // 3. Categories with comments but few entries — underexplored
+    const catEntryCount = {};
+    data.forEach(d => { if (d.category) catEntryCount[d.category] = (catEntryCount[d.category] || 0) + 1; });
+    const underexplored = topCats
+      .filter(([cat, cmtN]) => {
+        const entryN = catEntryCount[cat] || 0;
+        return cmtN >= 2 && entryN < 10;
+      })
+      .map(([cat, cmtN]) => cat);
+    if (underexplored.length > 0) {
+      suggestions.push({
+        type: '深掘り候補',
+        text: `「${underexplored.join('」「')}」はコメントが多いがリサーチ数が少ない分野です。関心に対してリサーチが不足している可能性があり、追加調査の優先度が高いと考えられます。`
+      });
+    }
+
+    // 4. Recent comments that contain question-like patterns
+    const questionComments = flat.filter(c =>
+      c.text.includes('？') || c.text.includes('?') || c.text.includes('どう') ||
+      c.text.includes('なぜ') || c.text.includes('どのように') || c.text.includes('検討')
+    ).slice(0, 3);
+    if (questionComments.length > 0) {
+      suggestions.push({
+        type: '問いかけ',
+        text: `以下のコメントに調査すべき問いが含まれています: 「${questionComments[0].text.slice(0, 80)}...」（${questionComments[0].title}）`,
+        entryId: questionComments[0].entryId
+      });
+    }
+
+    if (suggestions.length > 0) {
+      sugEl.innerHTML = suggestions.map(s => `
+        <div class="insight-card trend" style="cursor:${s.entryId ? 'pointer' : 'default'};" ${s.entryId ? `onclick="openDetail('${s.entryId}')"` : ''}>
+          <div class="insight-type">${s.type}</div>
+          ${esc(s.text)}
+        </div>
+      `).join('');
+    } else {
+      sugEl.innerHTML = '<div style="color:var(--text-muted);font-size:var(--text-sm);padding:12px 0;">コメントが蓄積されると調査提案が生成されます。</div>';
+    }
+  } else {
+    sugEl.innerHTML = '<div style="color:var(--text-muted);font-size:var(--text-sm);padding:12px 0;">コメントが蓄積されると調査提案が生成されます。</div>';
+  }
+
+  // All comments feed
+  const feedEl = document.getElementById('cmtAllFeed');
+  if (flat.length === 0) {
+    feedEl.innerHTML = '<div style="color:var(--text-muted);font-size:var(--text-sm);padding:12px 0;">コメントはまだありません。記事の詳細画面からコメントを投稿できます。</div>';
+  } else {
+    feedEl.innerHTML = flat.map((c, i) => `
+      <div style="padding:14px 18px;border-left:2px solid var(--accent);background:var(--surface);border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin-bottom:10px;cursor:pointer;" onclick="openDetail('${c.entryId}')">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <span style="font-size:var(--text-xs);font-weight:700;color:var(--accent);">${esc(c.category || '')}</span>
+          <div style="display:flex;align-items:center;gap:var(--space-sm);">
+            <span style="font-size:var(--text-xs);color:var(--text-muted);">${formatDate(c.createdAt)}</span>
+            <button onclick="event.stopPropagation();deleteDashComment('${c.entryId}',${allComments[c.entryId]?.indexOf(allComments[c.entryId]?.find(x=>x.createdAt===c.createdAt)) ?? i});renderCommentsTab();" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:var(--text-xs);">削除</button>
+          </div>
+        </div>
+        <div style="font-size:var(--text-sm);font-weight:700;margin-bottom:4px;">${esc(c.title)}</div>
+        <div style="font-size:var(--text-sm);color:var(--text-muted);line-height:1.7;">${esc(c.text)}</div>
+      </div>
+    `).join('');
+  }
+}
+
 const STATUS_MAP = {
   investigating: { label: '調査中', color: 'var(--status-investigating)' },
   reading:       { label: '読了',   color: 'var(--status-reading)' },
@@ -1984,14 +2207,14 @@ function switchTab(tab, pushHash) {
 // Restore tab from URL hash
 function initTabFromHash() {
   const hash = location.hash.replace('#', '');
-  const valid = ['overview','library','research','graph','analytics','timeline'];
+  const valid = ['overview','library','research','graph','analytics','comments','timeline'];
   if (hash && valid.includes(hash)) {
     switchTab(hash, false);
   }
 }
 window.addEventListener('hashchange', () => {
   const hash = location.hash.replace('#', '');
-  const valid = ['overview','library','research','graph','analytics','timeline'];
+  const valid = ['overview','library','research','graph','analytics','comments','timeline'];
   if (hash && valid.includes(hash) && hash !== currentTab) switchTab(hash, false);
 });
 
@@ -4915,6 +5138,7 @@ function renderAll() {
   else if (currentTab === 'research') renderResearchTab();
   else if (currentTab === 'graph') { renderHierarchy(); }
   else if (currentTab === 'analytics') renderAnalytics();
+  else if (currentTab === 'comments') renderCommentsTab();
   else if (currentTab === 'library') renderLibrary();
   else if (currentTab === 'timeline') renderTimeline();
 }
