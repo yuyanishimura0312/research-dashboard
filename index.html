@@ -2556,38 +2556,45 @@ function renderOverview() {
 
   const suggestions = [];
 
-  // Helper: build rich context from existing entries
+  // Helper: build rich context by analyzing research FLOW, not counts
   function buildContext(cat) {
-    const entries = (catEntries[cat] || []).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-    const recentTitles = entries.slice(0, 5).map(e => e.title);
+    const entries = (catEntries[cat] || []).sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)); // chronological
     const tagFreq = {};
     entries.forEach(e => (e.tags || []).filter(t => !NOISE_TAGS.has(t) && t !== 'AI' && t !== '生成AI').forEach(t => { tagFreq[t] = (tagFreq[t] || 0) + 1; }));
     const topTags = Object.entries(tagFreq).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([t]) => t);
 
-    // Extract key findings from summaries/content
+    // Analyze the trajectory: early → middle → recent phases
+    const third = Math.ceil(entries.length / 3);
+    const earlyEntries = entries.slice(0, third);
+    const midEntries = entries.slice(third, third * 2);
+    const lateEntries = entries.slice(third * 2);
+
+    function phaseTopics(phaseEntries) {
+      const tf = {};
+      phaseEntries.forEach(e => {
+        (e.tags || []).filter(t => !NOISE_TAGS.has(t) && t !== 'AI' && t !== '生成AI').forEach(t => { tf[t] = (tf[t] || 0) + 1; });
+      });
+      return Object.entries(tf).sort((a, b) => b[1] - a[1]).slice(0, 4).map(([t]) => t);
+    }
+    const earlyTopics = phaseTopics(earlyEntries);
+    const midTopics = phaseTopics(midEntries);
+    const lateTopics = phaseTopics(lateEntries);
+
+    // Extract key findings
     const keyFindings = [];
-    entries.slice(0, 10).forEach(e => {
+    [...lateEntries, ...midEntries].slice(0, 12).forEach(e => {
       const text = e.content || e.summary || '';
       if (text.length < 50) return;
-      // Extract sentences that contain analytical/factual claims
       const sentences = text.split(/[。．]/).filter(s => s.trim().length > 30);
       const important = sentences.filter(s =>
-        /\d+[%％万億兆件]|重要|明らか|示唆|発見|結論|課題|可能性|注目|特徴的|傾向|増加|減少|変化/.test(s)
+        /\d+[%％万億兆件]|重要|明らか|示唆|発見|結論|課題|可能性|注目|特徴的|傾向|増加|減少|変化|必要/.test(s)
       );
       if (important.length > 0) {
-        keyFindings.push({ title: e.title, finding: important[0].trim().slice(0, 120) });
+        keyFindings.push({ title: e.title, finding: important[0].trim().slice(0, 150) });
       }
     });
 
-    // Find concepts/topics NOT yet deeply covered
-    const coveredConcepts = new Set();
-    entries.forEach(e => {
-      (e.tags || []).forEach(t => coveredConcepts.add(t.toLowerCase()));
-      const words = e.title.split(/[\s・\-—:：,、()（）]+/).filter(w => w.length >= 3);
-      words.forEach(w => coveredConcepts.add(w.toLowerCase()));
-    });
-
-    // Find adjacent categories that share tags — potential cross-pollination
+    // Adjacent categories
     const adjacentCats = [];
     const catTagSet = new Set(topTags.map(t => t.toLowerCase()));
     Object.entries(catEntries).forEach(([otherCat, otherEntries]) => {
@@ -2599,91 +2606,122 @@ function renderOverview() {
     });
     adjacentCats.sort((a, b) => b.shared.length - a.shared.length);
 
-    return { recentTitles, topTags, total: entries.length, keyFindings, adjacentCats };
+    // Recent titles for reference
+    const recentTitles = entries.slice(-5).reverse().map(e => e.title);
+
+    return { recentTitles, topTags, total: entries.length, keyFindings, adjacentCats, earlyTopics, midTopics, lateTopics, lateEntries, earlyEntries };
   }
 
-  // Helper: generate specific, grounded research instruction
+  // Helper: generate a polished, ready-to-use research prompt
   function buildInstruction(cat, ctx, reason) {
-    let inst = `「${cat}」について、既存リサーチの知見を踏まえた深化調査を行ってください。\n\n`;
+    let p = '';
 
-    inst += `【これまでの蓄積と主要知見】\n`;
-    inst += `${ctx.total}件のリサーチが蓄積されています。`;
-    if (ctx.topTags.length > 0) inst += `主要テーマ: ${ctx.topTags.join('、')}。\n`;
+    // Describe the research flow as narrative
+    p += `これまでの「${cat}」に関するリサーチの流れを踏まえて、次のステップとなる調査を実施してください。\n\n`;
+
+    // Trajectory narrative
+    if (ctx.earlyTopics.length > 0 && ctx.lateTopics.length > 0) {
+      p += `これまでの探究は、`;
+      if (ctx.earlyTopics.length > 0) p += `初期には${ctx.earlyTopics.slice(0, 2).join('や')}を中心に展開し、`;
+      if (ctx.midTopics.length > 0 && ctx.midTopics[0] !== ctx.earlyTopics[0]) p += `その後${ctx.midTopics.slice(0, 2).join('・')}へと関心が広がり、`;
+      p += `直近では${ctx.lateTopics.slice(0, 2).join('と')}に焦点が移っています。`;
+      p += `${reason}\n\n`;
+    } else {
+      p += `${reason}\n\n`;
+    }
+
+    // Key findings that should inform next research
     if (ctx.keyFindings.length > 0) {
-      inst += `\n既存リサーチから得られた重要な知見:\n`;
-      ctx.keyFindings.slice(0, 4).forEach(f => {
-        inst += `- 「${f.title}」より: ${f.finding}。\n`;
+      p += `特に以下の知見が重要であり、これらを出発点として調査を深めてください。\n\n`;
+      ctx.keyFindings.slice(0, 3).forEach((f, i) => {
+        p += `${i + 1}. 「${f.title}」の調査で、${f.finding}ことが明らかになっています。この知見を踏まえ、最新の研究動向や実践事例における展開を調べてください。\n\n`;
       });
     }
 
-    inst += `\n【調査の背景】\n${reason}\n`;
-
-    inst += `\n【具体的な調査テーマ】\n`;
-    // Generate specific research questions based on findings
-    if (ctx.keyFindings.length > 0) {
-      const f = ctx.keyFindings[0];
-      inst += `1. 「${f.finding.slice(0, 40)}...」という知見をさらに深掘りし、最新の研究・事例ではどのような展開が見られるかを調査\n`;
-    }
-    if (ctx.topTags.length >= 2) {
-      inst += `${ctx.keyFindings.length > 0 ? '2' : '1'}. ${ctx.topTags[0]}と${ctx.topTags[1]}の交差領域における未探索の論点を特定し、先行研究や実践事例を調査\n`;
-    }
+    // Cross-pollination direction
     if (ctx.adjacentCats.length > 0) {
       const adj = ctx.adjacentCats[0];
-      inst += `${ctx.keyFindings.length > 0 ? '3' : '2'}. 「${adj.cat}」分野との接続点（${adj.shared.slice(0, 2).join('、')}）を探索し、分野横断的な知見を収集\n`;
+      p += `また、「${adj.cat}」分野と${adj.shared.slice(0, 2).join('・')}というテーマを共有しています。この分野横断的な視点からも新たな知見を探索してください。\n\n`;
     }
 
-    inst += `\n【既存リサーチの例】\n`;
-    ctx.recentTitles.slice(0, 4).forEach(t => { inst += `- ${t}\n`; });
+    // What specifically to investigate
+    p += `調査にあたっては、以下の点を重視してください。\n\n`;
+    p += `- 既存のリサーチ（${ctx.recentTitles.slice(0, 3).join('、')}など）で扱われていない新しい角度からの分析\n`;
+    if (ctx.lateTopics.length > 0) {
+      p += `- ${ctx.lateTopics[0]}に関する最新の学術研究、国際的な事例、政策動向\n`;
+    }
+    p += `- 具体的なデータや事例に基づいた実証的な議論\n`;
+    p += `- 今後さらに深掘りすべきテーマを3つ以上、具体的な探究の方向性とともに提案すること\n\n`;
 
-    inst += `\n【レポート要件】\n`;
-    inst += `- 既存リサーチと重複しない新たな視点を提供すること\n`;
-    inst += `- 学術文献（論文・書籍）、事例（国内外の実践）、実務（ツール・フレームワーク）の3層で情報を収集し、具体的な数字やデータを含めること\n`;
-    inst += `- レポートは日本語で、文章（地の文）で記述し、10,000文字以上の本格的な調査レポートとすること\n`;
-    inst += `- 構成: エグゼクティブサマリー → 背景と問題設定 → 主要な調査結果（3〜5セクション） → 考察と示唆 → 今後の探究テーマの提案\n`;
-    inst += `- 今後さらに深掘りすべきテーマを具体的に3つ以上提案し、それぞれの探究の方向性と期待される知見を記述すること`;
-    return inst;
+    p += `このリサーチは、人類学の視座を持つ研究者・コンサルタントが、ソーシャルイノベーションと未来洞察の実践に活用することを前提としています。学術的な厳密性と実務的な有用性の両方を備えた内容としてください。単なる情報の羅列ではなく、「なぜそれが重要なのか」「どのような構造的な変化が起きているのか」「実践者にとっての含意は何か」という問いに答える形で記述してください。\n\n`;
+    p += `レポートは日本語で10,000文字以上とし、文章（地の文）で記述してください。構成はエグゼクティブサマリー、背景と問題設定、調査結果（3〜5章）、考察と示唆、今後の探究テーマの提案としてください。`;
+
+    return p;
   }
 
-  // 1. Growing categories
+  // 1. Growing categories — describe the flow, not counts
   growing.slice(0, 2).forEach(([cat, n]) => {
     const ctx = buildContext(cat);
     const total = ctx.total;
-    const reasonText = `直近30日で${n}件が追加されており、前月比+${n - (prevCats[cat] || 0)}件と勢いがあります。この探究の流れを加速させるために、既存リサーチの延長線上にある未探索領域を特定する必要があります。`;
+    // Build flow-based background
+    let bg = `「${cat}」は現在もっとも探究が活発な領域です。`;
+    if (ctx.earlyTopics.length > 0 && ctx.lateTopics.length > 0 && ctx.earlyTopics[0] !== ctx.lateTopics[0]) {
+      bg += `当初は${ctx.earlyTopics.slice(0, 2).join('・')}を起点としていましたが、探究が進むにつれて${ctx.lateTopics.slice(0, 2).join('・')}へと関心が移行しています。`;
+    } else if (ctx.lateTopics.length > 0) {
+      bg += `${ctx.lateTopics.slice(0, 2).join('と')}を軸とした探究が継続的に深まっています。`;
+    }
+    if (ctx.keyFindings.length > 0) {
+      bg += `直近の調査では「${ctx.keyFindings[0].finding.slice(0, 60)}」といった知見が得られており、この方向でさらに踏み込んだ調査が求められます。`;
+    }
     const gapLevel = total < 20 ? '有望な空白地帯' : total < 50 ? '発展的探究' : '蓄積あり';
     const gapColor = total < 20 ? 'var(--status-done)' : total < 50 ? 'var(--status-reading)' : 'var(--text-muted)';
     suggestions.push({
-      theme: cat, background: reasonText, ctx,
-      instruction: savedInstructions[cat] || buildInstruction(cat, ctx, reasonText),
+      theme: cat, background: bg, ctx,
+      instruction: savedInstructions[cat] || buildInstruction(cat, ctx, bg),
       gapLevel, gapColor, total, priority: 'high'
     });
   });
 
-  // 2. Stale categories
+  // 2. Stale categories — describe what was explored and what's now needed
   Object.entries(catLastDate).filter(([c, d]) => (now - d) > 60 * 86400000 && (allCats[c] || 0) >= 5)
     .sort((a, b) => (allCats[b[0]] || 0) - (allCats[a[0]] || 0)).slice(0, 2)
     .forEach(([cat, lastDate]) => {
       if (suggestions.some(s => s.theme === cat)) return;
       const ctx = buildContext(cat);
       const days = Math.round((now - lastDate) / 86400000);
-      const reasonText = `${days}日間にわたり更新がありません。${ctx.total}件の蓄積がある重要な分野ですが、この間の社会的・技術的変化を反映したアップデートが必要です。`;
+      let bg = `「${cat}」の探究は${days}日前を最後に停滞しています。`;
+      if (ctx.lateTopics.length > 0) {
+        bg += `最後に取り組んでいたのは${ctx.lateTopics.slice(0, 2).join('・')}に関するテーマでした。`;
+      }
+      if (ctx.keyFindings.length > 0) {
+        bg += `当時の調査では「${ctx.keyFindings[0].finding.slice(0, 60)}」という知見が得られていますが、その後の展開を追えていません。`;
+      }
+      bg += `この間に社会や技術の状況は変化しており、最新の動向を反映した再調査が必要です。`;
       suggestions.push({
-        theme: cat, background: reasonText, ctx,
-        instruction: savedInstructions[cat] || buildInstruction(cat, ctx, reasonText),
+        theme: cat, background: bg, ctx,
+        instruction: savedInstructions[cat] || buildInstruction(cat, ctx, bg),
         gapLevel: '再調査', gapColor: 'var(--status-investigating)',
         total: ctx.total, priority: 'medium'
       });
     });
 
-  // 3. Small but active
+  // 3. Small but active — emerging trajectory
   Object.entries(allCats).filter(([c, n]) => n >= 3 && n <= 15 && recentCats[c] >= 1)
     .sort((a, b) => a[1] - b[1]).slice(0, 2)
     .forEach(([cat, total]) => {
       if (suggestions.some(s => s.theme === cat)) return;
       const ctx = buildContext(cat);
-      const reasonText = `まだ${total}件と蓄積が浅い段階ですが、直近でも追加があり関心が継続しています。基盤となるリサーチを充実させることで、今後の探究の土台を構築できます。`;
+      let bg = `「${cat}」は比較的新しい探究領域で、まだ初期段階にあります。`;
+      if (ctx.lateTopics.length > 0) {
+        bg += `${ctx.lateTopics.slice(0, 2).join('と')}を中心に探索が始まっており、`;
+      }
+      if (ctx.adjacentCats.length > 0) {
+        bg += `「${ctx.adjacentCats[0].cat}」とは${ctx.adjacentCats[0].shared.slice(0, 2).join('・')}というテーマを共有しています。`;
+      }
+      bg += `基盤となるリサーチを充実させることで、今後の探究の方向性を確立できる段階です。`;
       suggestions.push({
-        theme: cat, background: reasonText, ctx,
-        instruction: savedInstructions[cat] || buildInstruction(cat, ctx, reasonText),
+        theme: cat, background: bg, ctx,
+        instruction: savedInstructions[cat] || buildInstruction(cat, ctx, bg),
         gapLevel: '有望な空白地帯', gapColor: 'var(--status-done)',
         total, priority: 'high'
       });
