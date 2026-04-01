@@ -2537,70 +2537,121 @@ function renderOverview() {
   }
   ctxEl.innerHTML = ctxHtml;
 
-  // === Next research suggestions with gap analysis ===
+  // === Next research suggestions — detailed with background & instruction ===
   const sugEl = document.getElementById('homeResearchSuggestions');
   const allCats = {};
   data.forEach(d => { const c = classifyEntry(d); allCats[c] = (allCats[c] || 0) + 1; });
   const catLastDate = {};
+  const catEntries = {};
   data.forEach(d => {
     const c = classifyEntry(d);
     const dd = new Date(d.createdAt);
     if (!catLastDate[c] || dd > catLastDate[c]) catLastDate[c] = dd;
+    if (!catEntries[c]) catEntries[c] = [];
+    catEntries[c].push(d);
   });
+
+  // Load saved instructions
+  const savedInstructions = JSON.parse(localStorage.getItem('research_dashboard_saved_instructions') || '{}');
 
   const suggestions = [];
 
-  // 1. Growing categories — momentum to continue
+  // Helper: build context from existing entries in a category
+  function buildContext(cat) {
+    const entries = (catEntries[cat] || []).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    const recentTitles = entries.slice(0, 5).map(e => e.title);
+    const tagFreq = {};
+    entries.forEach(e => (e.tags || []).filter(t => !NOISE_TAGS.has(t) && t !== 'AI' && t !== '生成AI').forEach(t => { tagFreq[t] = (tagFreq[t] || 0) + 1; }));
+    const topTags = Object.entries(tagFreq).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([t]) => t);
+    return { recentTitles, topTags, total: entries.length };
+  }
+
+  // Helper: generate research instruction
+  function buildInstruction(cat, ctx, reason) {
+    let inst = `「${cat}」について、以下の背景を踏まえた調査を行ってください。\n\n`;
+    inst += `【背景】\n`;
+    inst += `これまでに${ctx.total}件のリサーチを蓄積しています。`;
+    if (ctx.topTags.length > 0) inst += `主要テーマは${ctx.topTags.slice(0, 3).join('、')}です。`;
+    inst += `${reason}\n\n`;
+    inst += `【既存リサーチの例】\n`;
+    ctx.recentTitles.slice(0, 3).forEach(t => { inst += `- ${t}\n`; });
+    inst += `\n【調査の方向性】\n`;
+    inst += `- 上記の既存リサーチではカバーされていない最新の動向や事例を調査してください\n`;
+    inst += `- ${ctx.topTags.length > 0 ? ctx.topTags.slice(0, 2).join('と') + 'の交差点にある' : ''}新たな視点や論点を探索してください\n`;
+    inst += `- 学術文献・事例・実務の3層で情報を収集し、分析的なレポートを日本語で作成してください\n`;
+    inst += `- レポートは文章（地の文）で記述し、1500〜3000文字程度としてください`;
+    return inst;
+  }
+
+  // 1. Growing categories
   growing.slice(0, 2).forEach(([cat, n]) => {
-    const total = allCats[cat] || 0;
-    const daysSinceLast = catLastDate[cat] ? Math.round((now - catLastDate[cat]) / 86400000) : 999;
+    const ctx = buildContext(cat);
+    const total = ctx.total;
+    const reasonText = `直近30日で${n}件が追加されており、前月比+${n - (prevCats[cat] || 0)}件と勢いがあります。この探究の流れを加速させるために、既存リサーチの延長線上にある未探索領域を特定する必要があります。`;
+    const gapLevel = total < 20 ? '有望な空白地帯' : total < 50 ? '発展的探究' : '蓄積あり';
+    const gapColor = total < 20 ? 'var(--status-done)' : total < 50 ? 'var(--status-reading)' : 'var(--text-muted)';
     suggestions.push({
-      theme: cat,
-      reason: `直近30日で${n}件追加（前月比+${n - (prevCats[cat] || 0)}件）。勢いのある分野。`,
-      gapLevel: total < 20 ? '有望な空白地帯' : total < 50 ? '発展的探究' : '蓄積あり',
-      gapColor: total < 20 ? 'var(--status-done)' : total < 50 ? 'var(--status-reading)' : 'var(--text-muted)',
-      total, daysSinceLast, priority: 'high'
+      theme: cat, background: reasonText, ctx,
+      instruction: savedInstructions[cat] || buildInstruction(cat, ctx, reasonText),
+      gapLevel, gapColor, total, priority: 'high'
     });
   });
 
-  // 2. Stale categories with some base — need refresh
+  // 2. Stale categories
   Object.entries(catLastDate).filter(([c, d]) => (now - d) > 60 * 86400000 && (allCats[c] || 0) >= 5)
     .sort((a, b) => (allCats[b[0]] || 0) - (allCats[a[0]] || 0)).slice(0, 2)
     .forEach(([cat, lastDate]) => {
+      if (suggestions.some(s => s.theme === cat)) return;
+      const ctx = buildContext(cat);
       const days = Math.round((now - lastDate) / 86400000);
+      const reasonText = `${days}日間にわたり更新がありません。${ctx.total}件の蓄積がある重要な分野ですが、この間の社会的・技術的変化を反映したアップデートが必要です。`;
       suggestions.push({
-        theme: cat,
-        reason: `${days}日間更新なし。${allCats[cat]}件の蓄積があり、最新動向の確認が有効。`,
+        theme: cat, background: reasonText, ctx,
+        instruction: savedInstructions[cat] || buildInstruction(cat, ctx, reasonText),
         gapLevel: '再調査', gapColor: 'var(--status-investigating)',
-        total: allCats[cat], daysSinceLast: days, priority: 'medium'
+        total: ctx.total, priority: 'medium'
       });
     });
 
-  // 3. Small but growing — emerging areas
+  // 3. Small but active
   Object.entries(allCats).filter(([c, n]) => n >= 3 && n <= 15 && recentCats[c] >= 1)
     .sort((a, b) => a[1] - b[1]).slice(0, 2)
     .forEach(([cat, total]) => {
       if (suggestions.some(s => s.theme === cat)) return;
+      const ctx = buildContext(cat);
+      const reasonText = `まだ${total}件と蓄積が浅い段階ですが、直近でも追加があり関心が継続しています。基盤となるリサーチを充実させることで、今後の探究の土台を構築できます。`;
       suggestions.push({
-        theme: cat,
-        reason: `まだ${total}件と少ないが最近も追加あり。基盤構築段階の有望テーマ。`,
+        theme: cat, background: reasonText, ctx,
+        instruction: savedInstructions[cat] || buildInstruction(cat, ctx, reasonText),
         gapLevel: '有望な空白地帯', gapColor: 'var(--status-done)',
-        total, daysSinceLast: 0, priority: 'high'
+        total, priority: 'high'
       });
     });
 
   if (suggestions.length > 0) {
     sugEl.innerHTML = suggestions.map((s, i) => `
-      <div style="padding:18px 22px;border:1px solid var(--border);border-radius:var(--radius-lg);margin-bottom:14px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
+      <div style="padding:22px 26px;border:1px solid var(--border);border-radius:var(--radius-lg);margin-bottom:20px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
           <div style="display:flex;align-items:center;gap:var(--space-sm);">
-            <span style="font-size:var(--text-base);font-weight:700;color:var(--text);">${esc(s.theme)}</span>
-            <span style="font-size:var(--text-xs);padding:2px 10px;border-radius:var(--radius-sm);background:${s.gapColor};color:#fff;font-weight:600;">${s.gapLevel}</span>
+            <span style="font-size:var(--text-lg);font-weight:700;color:var(--text);">${esc(s.theme)}</span>
+            <span style="font-size:var(--text-xs);padding:3px 12px;border-radius:var(--radius-sm);background:${s.gapColor};color:#fff;font-weight:600;">${s.gapLevel}</span>
           </div>
-          <span style="font-size:var(--text-xs);color:var(--text-muted);">既存${s.total}件</span>
+          <span style="font-size:var(--text-sm);color:var(--text-muted);font-weight:600;">既存 ${s.total}件</span>
         </div>
-        <div style="font-size:var(--text-sm);line-height:1.75;color:var(--text-muted);margin-bottom:12px;">${esc(s.reason)}</div>
-        <button onclick="copyResearchCommand('${esc(s.theme)}')" style="padding:8px 20px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-md);cursor:pointer;font-size:var(--text-sm);font-weight:600;">このテーマでリサーチを実行</button>
+
+        <div style="font-size:var(--text-base);line-height:1.8;margin-bottom:16px;color:var(--text);">${esc(s.background)}</div>
+
+        ${s.ctx.topTags.length > 0 ? `<div style="margin-bottom:16px;display:flex;gap:var(--space-xs);flex-wrap:wrap;">${s.ctx.topTags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>` : ''}
+
+        <div style="margin-bottom:16px;">
+          <div style="font-size:var(--text-xs);font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">調査指示案（編集可能）</div>
+          <textarea id="sugInstruction${i}" style="width:100%;min-height:160px;padding:14px 16px;border:1px solid var(--border);border-radius:var(--radius-md);font-family:inherit;font-size:var(--text-sm);resize:vertical;background:var(--surface);color:var(--text);line-height:1.7;">${esc(s.instruction)}</textarea>
+        </div>
+
+        <div style="display:flex;gap:var(--space-sm);flex-wrap:wrap;">
+          <button onclick="executeResearchFromHome(${i},'${esc(s.theme)}')" style="padding:10px 24px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-md);cursor:pointer;font-size:var(--text-sm);font-weight:600;">この指示でリサーチを実行</button>
+          <button onclick="saveInstruction(${i},'${esc(s.theme)}')" style="padding:10px 24px;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:var(--radius-md);cursor:pointer;font-size:var(--text-sm);font-weight:600;">指示を保存</button>
+        </div>
       </div>
     `).join('');
   } else {
@@ -2668,15 +2719,44 @@ function renderOverview() {
   }
 }
 
+function executeResearchFromHome(idx, theme) {
+  const textarea = document.getElementById('sugInstruction' + idx);
+  const instruction = textarea?.value || theme;
+  // Copy full instruction to clipboard
+  navigator.clipboard.writeText(instruction).then(() => {
+    const btn = event.target;
+    btn.textContent = 'クリップボードにコピーしました — Claude Codeに貼り付けて実行';
+    btn.style.background = 'var(--status-done)';
+    btn.disabled = true;
+  }).catch(() => { alert('指示をコピーできませんでした。テキストエリアから直接コピーしてください。'); });
+  // Save to executed
+  const tasks = JSON.parse(localStorage.getItem('research_dashboard_pending_research') || '[]');
+  tasks.push({ type: 'ホーム提案', text: instruction.slice(0, 200), topic: theme, assessment: '-', assessmentDetail: '', relatedCount: 0, createdAt: new Date().toISOString(), status: 'executed' });
+  localStorage.setItem('research_dashboard_pending_research', JSON.stringify(tasks));
+}
+
+function saveInstruction(idx, theme) {
+  const textarea = document.getElementById('sugInstruction' + idx);
+  if (!textarea) return;
+  const saved = JSON.parse(localStorage.getItem('research_dashboard_saved_instructions') || '{}');
+  saved[theme] = textarea.value;
+  localStorage.setItem('research_dashboard_saved_instructions', JSON.stringify(saved));
+  const btn = event.target;
+  btn.textContent = '保存しました';
+  btn.style.background = 'var(--status-done)';
+  btn.style.color = '#fff';
+  btn.style.borderColor = 'var(--status-done)';
+  setTimeout(() => { btn.textContent = '指示を保存'; btn.style.background = ''; btn.style.color = ''; btn.style.borderColor = ''; }, 2000);
+}
+
 function copyResearchCommand(theme) {
   const cmd = `/research ${theme}`;
   navigator.clipboard.writeText(cmd).then(() => {
     const btn = event.target;
-    btn.textContent = 'コピーしました — Claude Codeに貼り付けて実行';
+    btn.textContent = 'コピーしました';
     btn.style.background = 'var(--status-done)';
     btn.disabled = true;
   }).catch(() => { alert('コマンド: ' + cmd); });
-  // Save to executed
   const tasks = JSON.parse(localStorage.getItem('research_dashboard_pending_research') || '[]');
   tasks.push({ type: 'ホーム提案', text: theme, topic: theme, assessment: '-', assessmentDetail: '', relatedCount: 0, createdAt: new Date().toISOString(), status: 'executed' });
   localStorage.setItem('research_dashboard_pending_research', JSON.stringify(tasks));
