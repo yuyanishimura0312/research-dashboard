@@ -1671,23 +1671,17 @@
       <div class="stat-card"><div class="label">カバー率</div><div class="value" id="cmtStatCoverage">0%</div></div>
     </div>
 
-    <div class="viz-row">
-      <!-- Comment keywords -->
-      <div class="viz-panel">
-        <h3>コメントから抽出されたキーワード</h3>
-        <div id="cmtKeywords"></div>
-      </div>
-      <!-- Comment themes -->
-      <div class="viz-panel">
-        <h3>コメントが示す関心テーマ</h3>
-        <div id="cmtThemes"></div>
-      </div>
+    <!-- Needs extracted from comments -->
+    <div class="viz-panel" style="margin-bottom:var(--space-lg);">
+      <h3>コメントから読み取れるニーズ</h3>
+      <div id="cmtNeeds"></div>
     </div>
 
-    <!-- Research suggestions from comments -->
+    <!-- New research directions -->
     <div class="viz-panel" style="margin-bottom:var(--space-lg);">
-      <h3>コメントから見える調査提案</h3>
-      <div id="cmtSuggestions"></div>
+      <h3>コメントから見える新規リサーチ方針</h3>
+      <p style="font-size:var(--text-sm);color:var(--text-muted);margin-bottom:var(--space-md);line-height:1.7;">コメントの文脈から導出されたリサーチ方針です。既存リサーチとの関連性と空白度を評価し、調査の優先度を判定しています。</p>
+      <div id="cmtDirections"></div>
     </div>
 
     <!-- All comments feed -->
@@ -1910,6 +1904,36 @@ function renderDashboardComments() {
   `).join('');
 }
 
+let _researchDirections = [];
+function executeResearchDirection(idx) {
+  const d = _researchDirections[idx];
+  if (!d) return;
+  // Build research prompt and save as pending research task
+  const tasks = JSON.parse(localStorage.getItem('research_dashboard_pending_research') || '[]');
+  tasks.push({
+    type: d.type,
+    text: d.text,
+    assessment: d.assessment,
+    assessmentDetail: d.assessmentDetail,
+    relatedCount: d.relatedCount,
+    createdAt: new Date().toISOString(),
+    status: 'pending'
+  });
+  localStorage.setItem('research_dashboard_pending_research', JSON.stringify(tasks));
+
+  // Copy to clipboard for immediate use
+  const prompt = `以下のテーマについてリサーチを実行してください:\n\n【方針】${d.type}\n【内容】${d.text}\n【評価】${d.assessment}: ${d.assessmentDetail}\n【関連リサーチ数】${d.relatedCount}件`;
+  navigator.clipboard.writeText(prompt).then(() => {
+    const btn = event.target;
+    btn.textContent = 'リサーチキューに追加しました';
+    btn.style.background = 'var(--status-done)';
+    btn.disabled = true;
+    setTimeout(() => { btn.textContent = '追加済み'; }, 2000);
+  }).catch(() => {
+    alert('リサーチキューに追加しました。');
+  });
+}
+
 // ===== Comments Tab =====
 function renderCommentsTab() {
   const allComments = getDashComments();
@@ -1942,134 +1966,245 @@ function renderCommentsTab() {
   document.getElementById('cmtStatRecent').textContent = recent30.length;
   document.getElementById('cmtStatCoverage').textContent = coverage + '%';
 
-  // Keyword extraction from comments
-  const wordFreq = {};
-  const stopWords = new Set(['の','に','は','を','が','と','で','も','な','た','て','し','い','れ','さ','る','こと','ある','いる','する','この','それ','これ','その','から','まで','ため','など','よう','という','として','について','における','に関して']);
-  flat.forEach(c => {
-    const words = c.text.split(/[\s、。,.!？?・\-—:：;；()（）「」『』\[\]]+/).filter(w => w.length >= 2 && !stopWords.has(w));
-    words.forEach(w => { wordFreq[w] = (wordFreq[w] || 0) + 1; });
-  });
-  const topWords = Object.entries(wordFreq).sort((a, b) => b[1] - a[1]).slice(0, 20);
-
-  const kwEl = document.getElementById('cmtKeywords');
-  if (topWords.length > 0) {
-    kwEl.innerHTML = `<div style="display:flex;gap:var(--space-sm);flex-wrap:wrap;">${topWords.map(([w, n]) =>
-      `<span class="keyword">${esc(w)} <span class="kw-score">${n}</span></span>`
-    ).join('')}</div>`;
-  } else {
-    kwEl.innerHTML = '<div style="color:var(--text-muted);font-size:var(--text-sm);padding:12px 0;">コメントが蓄積されるとキーワードが表示されます。</div>';
-  }
-
-  // Theme analysis: which categories/topics get the most comments
-  const catCommentCount = {};
-  const tagCommentCount = {};
-  flat.forEach(c => {
-    if (c.category) catCommentCount[c.category] = (catCommentCount[c.category] || 0) + 1;
-    c.tags.filter(t => !NOISE_TAGS.has(t)).forEach(t => { tagCommentCount[t] = (tagCommentCount[t] || 0) + 1; });
-  });
-  const topCats = Object.entries(catCommentCount).sort((a, b) => b[1] - a[1]).slice(0, 8);
-  const topTags = Object.entries(tagCommentCount).sort((a, b) => b[1] - a[1]).slice(0, 10);
-
-  const thEl = document.getElementById('cmtThemes');
-  if (topCats.length > 0 || topTags.length > 0) {
-    let thHtml = '';
-    if (topCats.length > 0) {
-      thHtml += `<div style="margin-bottom:var(--space-md);"><div style="font-size:var(--text-xs);font-weight:700;color:var(--text-muted);margin-bottom:var(--space-sm);text-transform:uppercase;letter-spacing:0.06em;">カテゴリ別コメント数</div>`;
-      const maxCat = topCats[0][1];
-      thHtml += topCats.map(([cat, n]) => `
-        <div style="display:grid;grid-template-columns:100px 1fr 30px;align-items:center;gap:8px;margin-bottom:4px;font-size:var(--text-sm);">
-          <span style="text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text-muted);">${esc(cat)}</span>
-          <div style="background:var(--accent-light);border-radius:3px;height:18px;overflow:hidden;"><div style="height:100%;background:var(--accent);border-radius:3px;width:${Math.round(n/maxCat*100)}%;"></div></div>
-          <span style="font-size:var(--text-xs);color:var(--text-muted);">${n}</span>
-        </div>
-      `).join('');
-      thHtml += '</div>';
-    }
-    if (topTags.length > 0) {
-      thHtml += `<div style="font-size:var(--text-xs);font-weight:700;color:var(--text-muted);margin-bottom:var(--space-sm);text-transform:uppercase;letter-spacing:0.06em;">関連タグ</div>`;
-      thHtml += `<div style="display:flex;gap:var(--space-xs);flex-wrap:wrap;">${topTags.map(([t, n]) =>
-        `<span class="tag" style="cursor:default;">${esc(t)} (${n})</span>`
-      ).join('')}</div>`;
-    }
-    thEl.innerHTML = thHtml;
-  } else {
-    thEl.innerHTML = '<div style="color:var(--text-muted);font-size:var(--text-sm);padding:12px 0;">コメントが蓄積されるとテーマ分析が表示されます。</div>';
-  }
-
-  // Research suggestions based on comments
-  const sugEl = document.getElementById('cmtSuggestions');
+  // ===== Needs extraction: understand context, not keywords =====
+  const needsEl = document.getElementById('cmtNeeds');
   if (flat.length > 0) {
-    // Find questions or topics in comments that could lead to new research
-    const suggestions = [];
+    // Group comments by entry and analyze what users are interested in
+    const entryGroups = {};
+    flat.forEach(c => {
+      if (!entryGroups[c.entryId]) entryGroups[c.entryId] = { title: c.title, category: c.category, tags: c.tags, comments: [] };
+      entryGroups[c.entryId].comments.push(c.text);
+    });
 
-    // 1. Heavily commented entries — indicate strong interest
-    const entryCommentCounts = {};
-    flat.forEach(c => { entryCommentCounts[c.entryId] = (entryCommentCounts[c.entryId] || 0) + 1; });
-    const hotEntries = Object.entries(entryCommentCounts)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 3)
-      .map(([id, n]) => ({ entry: data.find(d => d.id === id), count: n }))
-      .filter(x => x.entry);
+    const needs = [];
+    Object.entries(entryGroups).forEach(([entryId, group]) => {
+      const allText = group.comments.join(' ');
+      const entry = data.find(d => d.id === entryId);
+      const relatedTags = group.tags.filter(t => !NOISE_TAGS.has(t)).slice(0, 3);
 
-    if (hotEntries.length > 0) {
-      suggestions.push({
-        type: '注目リサーチ',
-        text: `「${hotEntries[0].entry.title}」に${hotEntries[0].count}件のコメントが集中しています。${hotEntries[0].entry.category ? hotEntries[0].entry.category + 'の分野で' : ''}このテーマを深掘りする追加リサーチが有効です。`,
-        entryId: hotEntries[0].entry.id
-      });
-    }
+      // Detect intent patterns in comments
+      const patterns = [
+        { match: /深掘り|詳し|もっと|さらに|追加|続き/,  intent: '深掘りへの関心', icon: 'info' },
+        { match: /比較|他の|別の|違い|対照|ベンチマーク/,  intent: '比較・対照の要求', icon: 'info' },
+        { match: /実践|具体|事例|応用|活用|実装|導入/,    intent: '実践・応用への関心', icon: 'trend' },
+        { match: /課題|問題|リスク|懸念|限界|批判/,      intent: '課題・リスクの指摘', icon: 'warning' },
+        { match: /可能性|展望|将来|今後|発展|方向/,      intent: '将来展望への関心', icon: 'emerging' },
+        { match: /接続|関連|横断|統合|融合|架橋/,        intent: '分野横断への関心', icon: 'success' },
+        { match: /？|\?|どう|なぜ|どのよう|何が/,         intent: '問いかけ・疑問', icon: 'info' },
+      ];
 
-    // 2. Comment keywords not covered by existing research tags
-    const allTags = new Set();
-    data.forEach(d => (d.tags || []).forEach(t => allTags.add(t.toLowerCase())));
-    const uncoveredWords = topWords
-      .filter(([w]) => !allTags.has(w.toLowerCase()) && w.length >= 3)
-      .slice(0, 5);
-    if (uncoveredWords.length > 0) {
-      suggestions.push({
-        type: '未探索キーワード',
-        text: `コメントに登場するが既存リサーチのタグにない語: ${uncoveredWords.map(([w, n]) => `「${w}」(${n}回)`).join('、')}。これらを起点にした新規調査を検討してください。`
-      });
-    }
+      const detectedIntents = patterns.filter(p => p.match.test(allText));
+      if (detectedIntents.length > 0) {
+        // Summarize the need contextually
+        const primaryIntent = detectedIntents[0];
+        const commentPreview = group.comments[0].slice(0, 100);
+        needs.push({
+          entryId,
+          title: group.title,
+          category: group.category,
+          intent: primaryIntent.intent,
+          cls: primaryIntent.icon,
+          tags: relatedTags,
+          commentCount: group.comments.length,
+          summary: `「${group.title}」に対して${primaryIntent.intent}が見られます。${group.comments.length > 1 ? group.comments.length + '件のコメントが寄せられており、' : ''}${relatedTags.length > 0 ? relatedTags.join('・') + 'の文脈で' : ''}このテーマへの継続的な関心を示しています。`,
+          quote: commentPreview
+        });
+      } else if (group.comments.length >= 1) {
+        // Even without pattern match, having comments = interest signal
+        needs.push({
+          entryId,
+          title: group.title,
+          category: group.category,
+          intent: 'リサーチへの関心',
+          cls: 'info',
+          tags: relatedTags,
+          commentCount: group.comments.length,
+          summary: `「${group.title}」（${group.category || ''}）にコメントが寄せられています。${relatedTags.length > 0 ? relatedTags.join('・') + 'に関連する' : 'この'}テーマへの関心が確認されます。`,
+          quote: group.comments[0].slice(0, 100)
+        });
+      }
+    });
 
-    // 3. Categories with comments but few entries — underexplored
-    const catEntryCount = {};
-    data.forEach(d => { if (d.category) catEntryCount[d.category] = (catEntryCount[d.category] || 0) + 1; });
-    const underexplored = topCats
-      .filter(([cat, cmtN]) => {
-        const entryN = catEntryCount[cat] || 0;
-        return cmtN >= 2 && entryN < 10;
-      })
-      .map(([cat, cmtN]) => cat);
-    if (underexplored.length > 0) {
-      suggestions.push({
-        type: '深掘り候補',
-        text: `「${underexplored.join('」「')}」はコメントが多いがリサーチ数が少ない分野です。関心に対してリサーチが不足している可能性があり、追加調査の優先度が高いと考えられます。`
-      });
-    }
+    needs.sort((a, b) => b.commentCount - a.commentCount);
 
-    // 4. Recent comments that contain question-like patterns
-    const questionComments = flat.filter(c =>
-      c.text.includes('？') || c.text.includes('?') || c.text.includes('どう') ||
-      c.text.includes('なぜ') || c.text.includes('どのように') || c.text.includes('検討')
-    ).slice(0, 3);
-    if (questionComments.length > 0) {
-      suggestions.push({
-        type: '問いかけ',
-        text: `以下のコメントに調査すべき問いが含まれています: 「${questionComments[0].text.slice(0, 80)}...」（${questionComments[0].title}）`,
-        entryId: questionComments[0].entryId
-      });
-    }
-
-    if (suggestions.length > 0) {
-      sugEl.innerHTML = suggestions.map(s => `
-        <div class="insight-card trend" style="cursor:${s.entryId ? 'pointer' : 'default'};" ${s.entryId ? `onclick="openDetail('${s.entryId}')"` : ''}>
-          <div class="insight-type">${s.type}</div>
-          ${esc(s.text)}
+    if (needs.length > 0) {
+      needsEl.innerHTML = needs.map(n => `
+        <div class="insight-card ${n.cls}" style="cursor:pointer;margin-bottom:12px;" onclick="openDetail('${n.entryId}')">
+          <div class="insight-type">${esc(n.intent)}</div>
+          <div style="font-size:var(--text-base);line-height:1.75;margin-bottom:8px;">${esc(n.summary)}</div>
+          <div style="font-size:var(--text-sm);color:var(--text-muted);font-style:italic;border-top:1px solid var(--border);padding-top:8px;margin-top:4px;">「${esc(n.quote)}${n.quote.length >= 100 ? '...' : ''}」</div>
+          ${n.tags.length > 0 ? `<div style="margin-top:8px;display:flex;gap:var(--space-xs);flex-wrap:wrap;">${n.tags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>` : ''}
         </div>
       `).join('');
     } else {
-      sugEl.innerHTML = '<div style="color:var(--text-muted);font-size:var(--text-sm);padding:12px 0;">コメントが蓄積されると調査提案が生成されます。</div>';
+      needsEl.innerHTML = '<div style="color:var(--text-muted);font-size:var(--text-sm);padding:12px 0;">コメントが蓄積されるとニーズ分析が表示されます。</div>';
+    }
+  } else {
+    needsEl.innerHTML = '<div style="color:var(--text-muted);font-size:var(--text-sm);padding:12px 0;">コメントが蓄積されるとニーズ分析が表示されます。</div>';
+  }
+
+  // ===== New research directions derived from comments =====
+  const dirEl = document.getElementById('cmtDirections');
+  if (flat.length > 0) {
+    const directions = [];
+
+    // Aggregate metadata from commented entries
+    const commentedEntryIds = new Set(Object.keys(getDashComments()));
+    const commentedEntries = data.filter(d => commentedEntryIds.has(d.id));
+    const entryCommentCounts = {};
+    flat.forEach(c => { entryCommentCounts[c.entryId] = (entryCommentCounts[c.entryId] || 0) + 1; });
+
+    // 1. Cross-category interest: comments span multiple categories
+    const catCommentCount = {};
+    flat.forEach(c => { if (c.category) catCommentCount[c.category] = (catCommentCount[c.category] || 0) + 1; });
+    const activeCats = Object.entries(catCommentCount).filter(([_, n]) => n >= 1).map(([c]) => c);
+    if (activeCats.length >= 2) {
+      // Find tag overlap between commented entries in different categories
+      const catTags = {};
+      commentedEntries.forEach(d => {
+        if (!d.category) return;
+        if (!catTags[d.category]) catTags[d.category] = new Set();
+        (d.tags || []).filter(t => !NOISE_TAGS.has(t)).forEach(t => catTags[d.category].add(t));
+      });
+      const pairs = [];
+      const cats = Object.keys(catTags);
+      for (let i = 0; i < cats.length; i++) {
+        for (let j = i + 1; j < cats.length; j++) {
+          const overlap = [...catTags[cats[i]]].filter(t => catTags[cats[j]].has(t));
+          if (overlap.length > 0) pairs.push({ a: cats[i], b: cats[j], shared: overlap });
+        }
+      }
+      if (pairs.length > 0) {
+        const top = pairs.sort((a, b) => b.shared.length - a.shared.length)[0];
+        directions.push({
+          type: '分野横断リサーチ',
+          text: `コメントが「${top.a}」と「${top.b}」の両分野に寄せられており、共通テーマとして${top.shared.slice(0, 3).join('・')}が浮上しています。これらを横断する統合的なリサーチが新たな知見をもたらす可能性があります。`,
+          priority: 'high'
+        });
+      }
+    }
+
+    // 2. High-interest topics: most commented entries point to research gaps
+    const hotEntries = Object.entries(entryCommentCounts)
+      .sort((a, b) => b[1] - a[1]).slice(0, 3)
+      .map(([id, n]) => ({ entry: data.find(d => d.id === id), count: n }))
+      .filter(x => x.entry);
+    if (hotEntries.length > 0) {
+      const hot = hotEntries[0];
+      const hotTags = (hot.entry.tags || []).filter(t => !NOISE_TAGS.has(t)).slice(0, 3);
+      // Check how many related entries exist
+      const relatedCount = data.filter(d => d.id !== hot.entry.id && d.category === hot.entry.category).length;
+      directions.push({
+        type: '重点テーマの深化',
+        text: `「${hot.entry.title}」は${hot.count}件のコメントが集まっており、最も関心の高いリサーチです。${hot.entry.category}分野には${relatedCount}件の関連リサーチがありますが、${hotTags.length > 0 ? hotTags.join('・') + 'の観点から' : ''}さらに掘り下げた調査を推奨します。具体的には、最新の動向調査や事例分析が有効です。`,
+        priority: 'high'
+      });
+    }
+
+    // 3. Question-driven research: extract questions from comments
+    const questions = flat.filter(c =>
+      c.text.includes('？') || c.text.includes('?') || /どう|なぜ|どのよう|何が|いかに/.test(c.text)
+    );
+    if (questions.length > 0) {
+      const q = questions[0];
+      directions.push({
+        type: '問いに基づく調査',
+        text: `「${q.title}」へのコメントに探究すべき問いが含まれています。この問いを起点に、関連する学術文献や事例の調査を行うことで、リサーチの質を高められます。`,
+        quote: q.text.slice(0, 120),
+        entryId: q.entryId,
+        priority: 'medium'
+      });
+    }
+
+    // 4. Underexplored areas: topics with comments but sparse research coverage
+    const catEntryCount = {};
+    data.forEach(d => { if (d.category) catEntryCount[d.category] = (catEntryCount[d.category] || 0) + 1; });
+    const underexplored = Object.entries(catCommentCount)
+      .filter(([cat, cmtN]) => cmtN >= 1 && (catEntryCount[cat] || 0) < 15)
+      .sort((a, b) => b[1] - a[1]);
+    if (underexplored.length > 0) {
+      directions.push({
+        type: '未開拓領域の探索',
+        text: `${underexplored.map(([c]) => `「${c}」`).join('・')}はコメントによる関心が確認されていますが、既存リサーチの蓄積が十分ではありません。基礎的な文献調査やベンチマーク分析から始めることで、新たなリサーチ領域を開拓できます。`,
+        priority: 'medium'
+      });
+    }
+
+    // 5. Practical application demand
+    const practicalComments = flat.filter(c =>
+      /実践|具体|事例|応用|活用|実装|導入|ツール|方法/.test(c.text)
+    );
+    if (practicalComments.length > 0) {
+      const cats = [...new Set(practicalComments.map(c => c.category).filter(Boolean))];
+      directions.push({
+        type: '実践知の構築',
+        text: `${cats.length > 0 ? cats.slice(0, 2).join('・') + 'の分野で' : ''}実践・応用に関するコメントが見られます。理論的なリサーチを実務に接続するために、具体的なケーススタディや導入事例の調査が求められています。`,
+        priority: 'medium'
+      });
+    }
+
+    if (directions.length > 0) {
+      // Enrich each direction with existing research relevance assessment
+      directions.forEach(d => {
+        // Find related existing research by checking tag/title overlap
+        const dirKeywords = d.text.split(/[\s、。,.!？?・\-—:：;；()（）「」『』\[\]]+/).filter(w => w.length >= 3);
+        const related = data.filter(entry => {
+          const entryText = [entry.title, entry.category, ...(entry.tags || [])].join(' ').toLowerCase();
+          const matchCount = dirKeywords.filter(k => entryText.includes(k.toLowerCase())).length;
+          return matchCount >= 2;
+        });
+        d.relatedCount = related.length;
+        d.relatedSample = related.slice(0, 3).map(r => r.title);
+
+        // Assess: related entries exist but topic has gaps = worth researching
+        if (d.relatedCount === 0) {
+          d.assessment = '完全な空白領域';
+          d.assessmentDetail = '既存リサーチに関連するものが見当たりません。基礎調査から始める必要がありますが、まったく新しい知見が得られる可能性があります。';
+          d.assessmentLevel = 'new';
+        } else if (d.relatedCount <= 5) {
+          d.assessment = '有望な空白地帯';
+          d.assessmentDetail = `関連リサーチが${d.relatedCount}件あり基盤は存在しますが、カバレッジが薄く深掘りの余地が大きい領域です。既存の知見を足がかりに効率的な調査が可能です。`;
+          d.assessmentLevel = 'promising';
+        } else if (d.relatedCount <= 15) {
+          d.assessment = '発展的探究';
+          d.assessmentDetail = `${d.relatedCount}件の関連リサーチがあり、一定の蓄積があります。既存の知見を統合・発展させる方向での調査が効果的です。`;
+          d.assessmentLevel = 'expand';
+        } else {
+          d.assessment = '蓄積あり・視点転換';
+          d.assessmentDetail = `${d.relatedCount}件の関連リサーチが既に存在します。新たな切り口や未検証の仮説に焦点を当てた調査が有効です。`;
+          d.assessmentLevel = 'pivot';
+        }
+      });
+
+      // Sort by assessment level (promising > new > expand > pivot) then priority
+      const levelOrder = { promising: 0, 'new': 1, expand: 2, pivot: 3 };
+      directions.sort((a, b) => (levelOrder[a.assessmentLevel] || 2) - (levelOrder[b.assessmentLevel] || 2));
+      _researchDirections = directions;
+
+      dirEl.innerHTML = directions.map((d, i) => {
+        const levelColors = { promising: 'var(--status-done)', 'new': 'var(--status-investigating)', expand: 'var(--status-reading)', pivot: 'var(--text-muted)' };
+        const levelColor = levelColors[d.assessmentLevel] || 'var(--text-muted)';
+        return `
+        <div style="padding:20px 24px;border:1px solid var(--border);border-radius:var(--radius-lg);margin-bottom:16px;background:var(--card);">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+            <div style="display:flex;align-items:center;gap:var(--space-sm);">
+              <span style="font-size:var(--text-xs);font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.06em;">${esc(d.type)}</span>
+              <span style="font-size:var(--text-xs);padding:2px 10px;border-radius:var(--radius-sm);background:${levelColor};color:#fff;font-weight:600;">${esc(d.assessment)}</span>
+            </div>
+            <span style="font-size:var(--text-xs);color:var(--text-muted);font-weight:500;">関連リサーチ: ${d.relatedCount}件</span>
+          </div>
+          <div style="font-size:var(--text-base);line-height:1.75;color:var(--text);margin-bottom:12px;">${esc(d.text)}</div>
+          ${d.quote ? `<div style="padding:10px 16px;background:var(--surface);border-radius:var(--radius-sm);font-size:var(--text-sm);color:var(--text-muted);font-style:italic;margin-bottom:12px;">「${esc(d.quote)}${d.quote.length >= 120 ? '...' : ''}」</div>` : ''}
+          <div style="padding:12px 16px;background:var(--surface);border-radius:var(--radius-sm);margin-bottom:14px;">
+            <div style="font-size:var(--text-xs);font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;">既存リサーチとの関係</div>
+            <div style="font-size:var(--text-sm);line-height:1.7;color:var(--text);">${esc(d.assessmentDetail)}</div>
+            ${d.relatedSample.length > 0 ? `<div style="margin-top:8px;font-size:var(--text-xs);color:var(--text-muted);">関連: ${d.relatedSample.map(t => '「' + esc(t.slice(0, 30)) + (t.length > 30 ? '...' : '') + '」').join('、')}</div>` : ''}
+          </div>
+          <button onclick="executeResearchDirection(${i})" style="padding:8px 20px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-md);cursor:pointer;font-size:var(--text-sm);font-weight:600;">このテーマでリサーチを実行</button>
+        </div>`;
+      }).join('');
+    } else {
+      dirEl.innerHTML = '<div style="color:var(--text-muted);font-size:var(--text-sm);padding:12px 0;">コメントが蓄積されるとリサーチ方針が生成されます。</div>';
     }
   } else {
     sugEl.innerHTML = '<div style="color:var(--text-muted);font-size:var(--text-sm);padding:12px 0;">コメントが蓄積されると調査提案が生成されます。</div>';
