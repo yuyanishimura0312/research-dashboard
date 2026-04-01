@@ -129,6 +129,14 @@ a { color: inherit; }
 }
 .masthead-nav a:hover { color: var(--text); }
 .masthead-nav a.active { color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 2px; }
+.masthead-nav a.switch-view {
+  padding: 5px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-weight: 600;
+  transition: all 0.15s ease-out;
+}
+.masthead-nav a.switch-view:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
 .theme-toggle {
   background: none; border: 1px solid var(--border); border-radius: var(--radius);
   width: 32px; height: 32px; cursor: pointer; color: var(--text-muted);

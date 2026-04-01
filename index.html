@@ -121,7 +121,14 @@
     font-weight: 600;
   }
   .masthead-nav a:hover { color: var(--text); }
-  .masthead-nav a.active { color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 2px; }
+  .masthead-nav a.switch-view {
+    padding: 5px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    transition: all 0.15s ease-out;
+  }
+  .masthead-nav a.switch-view:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
   .masthead-nav .theme-btn {
     background: none;
     border: 1px solid var(--border);
@@ -1349,8 +1356,7 @@
   <div class="masthead-inner">
     <div class="masthead-brand">Mira Tuku <em>Research</em></div>
     <nav class="masthead-nav">
-      <a href="magazine.html">Magazine</a>
-      <a href="index.html" class="active">Dashboard</a>
+      <a href="magazine.html" class="switch-view">Magazine</a>
       <button class="theme-btn" id="themeToggle" onclick="toggleDarkMode()">&#9790;</button>
       <button class="btn btn-sm" onclick="exportData()">Export</button>
       <button class="btn btn-sm" onclick="document.getElementById('importFile').click()">Import</button>
