@@ -190,6 +190,24 @@
     color: var(--accent);
     margin-left: 6px;
   }
+  .btn-share-toggle {
+    padding: 3px 10px;
+    border-radius: var(--radius-md);
+    font-size: 0.72rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid #BFDBFE;
+    background: #FFFFFF;
+    color: #6B7280;
+    transition: all 0.15s ease-out;
+  }
+  .btn-share-toggle:hover { background: #EFF6FF; color: #2563EB; border-color: #93C5FD; }
+  .btn-share-toggle.on {
+    background: #2563EB;
+    color: #FFFFFF;
+    border-color: #2563EB;
+  }
+  .btn-share-toggle.on:hover { background: #1D4ED8; }
 
   /* Layout */
   .container { max-width: 1120px; margin: 0 auto; padding: var(--space-xl) var(--space-lg); }
@@ -2332,10 +2350,17 @@ function loadData() {
   if (!_dataCacheDirty && _dataCache) return _dataCache;
   const fileData = Array.isArray(window.RESEARCH_DATA) ? window.RESEARCH_DATA : [];
 
-  // Merge: file data (base) → shared entries → user entries (highest priority)
   const merged = new Map();
-  fileData.forEach(e => merged.set(e.id, { ...e, _source: 'file' }));
-  _sharedEntries.forEach(e => merged.set(e.id, { ...e, _source: 'shared' }));
+  const isAdmin = userData && userData.role === 'admin';
+
+  if (isAdmin) {
+    // Admin sees everything: file data + shared + own entries
+    fileData.forEach(e => merged.set(e.id, { ...e, _source: 'file' }));
+    _sharedEntries.forEach(e => merged.set(e.id, { ...e, _source: 'shared' }));
+  } else {
+    // Regular users only see: shared entries (selected by admin) + own entries
+    _sharedEntries.forEach(e => merged.set(e.id, { ...e, _source: 'shared' }));
+  }
   _userEntries.forEach(e => merged.set(e.id, { ...e, _source: 'user' }));
   _dataCache = Array.from(merged.values());
   _dataCacheDirty = false;
@@ -3143,6 +3168,7 @@ function renderResearchTab() {
         <div class="card-actions" onclick="event.stopPropagation()">
           <button class="btn-action" onclick="downloadReportMd('${d.id}')" title="Markdownでダウンロード">&#11015; DL</button>
           ${d.content ? `<button class="btn-action btn-open" onclick="event.stopPropagation();openDetail('${d.id}')" title="内容を表示">&#9654; 開く</button>` : d.source ? `<a class="btn-action btn-open" href="${esc(getGoogleDocsUrl(d.source))}" target="_blank" title="開く">&#9654; 開く</a>` : `<button class="btn-action btn-open" onclick="openNewGoogleDoc('${d.id}')" title="Google Docsで開く">&#9654; 開く</button>`}
+          ${userData && userData.role === 'admin' ? `<button class="btn-share-toggle ${isShared(d.id) ? 'on' : ''}" onclick="event.stopPropagation();toggleShareCard('${d.id}', this)" title="${isShared(d.id) ? '共有を解除' : '全ユーザーに共有'}">${isShared(d.id) ? '共有中' : '共有'}</button>` : ''}
         </div>
       </div>`;
   }
@@ -5754,6 +5780,45 @@ async function toggleShareFromModal() {
   if (isShared(id)) { await unshareEntry(id); }
   else { await shareEntry(id); }
   closeModal();
+}
+
+async function toggleShareCard(id, btn) {
+  if (!userData || userData.role !== 'admin') return;
+  btn.disabled = true;
+  if (isShared(id)) {
+    await unshareEntryQuiet(id);
+    btn.textContent = '共有';
+    btn.className = 'btn-share-toggle';
+    btn.title = '全ユーザーに共有';
+  } else {
+    await shareEntryQuiet(id);
+    btn.textContent = '共有中';
+    btn.className = 'btn-share-toggle on';
+    btn.title = '共有を解除';
+  }
+  btn.disabled = false;
+}
+
+// Quiet versions: update Firestore without re-rendering the full page
+async function shareEntryQuiet(id) {
+  if (!userData || userData.role !== 'admin') return;
+  const data = loadData();
+  const entry = data.find(d => d.id === id);
+  if (!entry) return;
+  const { _source, _semanticScore, ...cleanEntry } = entry;
+  cleanEntry.sharedBy = currentUser.uid;
+  cleanEntry.sharedAt = new Date().toISOString();
+  await db.collection('shared_research').doc(id).set(cleanEntry);
+  _sharedEntries = _sharedEntries.filter(e => e.id !== id);
+  _sharedEntries.push({ ...cleanEntry, id, _source: 'shared' });
+  _dataCacheDirty = true;
+}
+
+async function unshareEntryQuiet(id) {
+  if (!userData || userData.role !== 'admin') return;
+  await db.collection('shared_research').doc(id).delete();
+  _sharedEntries = _sharedEntries.filter(e => e.id !== id);
+  _dataCacheDirty = true;
 }
 
 async function saveEntry() {
