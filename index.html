@@ -1382,129 +1382,37 @@
   <!-- ========== OVERVIEW TAB ========== -->
   <div class="tab-panel active" id="tab-overview">
 
-    <!-- ===== 上段：メディア ===== -->
-    <div class="home-section-label">リサーチメディア</div>
-
-    <!-- Stats -->
-    <div class="stats">
-      <div class="stat-card">
-        <div class="label">リサーチ総数</div>
-        <div class="value" id="statTotal">0</div>
-      </div>
-      <div class="stat-card">
-        <div class="label">カテゴリ</div>
-        <div class="value" id="statCategories">0</div>
-      </div>
-      <div class="stat-card">
-        <div class="label">今月</div>
-        <div class="value" id="statThisMonth">0</div>
-        <div class="sub" id="statMonthDelta"></div>
-      </div>
-      <div class="stat-card">
-        <div class="label">タグ数</div>
-        <div class="value" id="statTags">0</div>
-      </div>
-      <div class="stat-card">
-        <div class="label">完了率</div>
-        <div class="value" id="statCompletion">-</div>
-      </div>
+    <!-- Stats (minimal) -->
+    <div class="stats" style="margin-bottom:var(--space-xl);">
+      <div class="stat-card"><div class="label">リサーチ総数</div><div class="value" id="statTotal">0</div></div>
+      <div class="stat-card"><div class="label">カテゴリ</div><div class="value" id="statCategories">0</div></div>
+      <div class="stat-card"><div class="label">今月</div><div class="value" id="statThisMonth">0</div><div class="sub" id="statMonthDelta"></div></div>
+      <div class="stat-card"><div class="label">完了率</div><div class="value" id="statCompletion">-</div></div>
     </div>
 
-    <!-- Recent + Category side by side -->
-    <div class="viz-row">
-      <div class="viz-panel" style="flex:2;">
-        <h3>最近のリサーチ</h3>
-        <div class="list-view" id="recentList"></div>
-      </div>
-      <div class="viz-panel" style="flex:1;">
-        <h3>カテゴリ</h3>
-        <div class="cat-bar-list" id="catChart"></div>
-        <div style="margin-top:16px;">
-          <h3 style="font-size:0.85rem;font-weight:600;margin-bottom:10px;color:var(--text-muted);">ステータス</h3>
-          <div class="status-pipeline" id="statusPipeline"></div>
-        </div>
-      </div>
+    <!-- Research context analysis -->
+    <div class="viz-panel" style="margin-bottom:var(--space-lg);">
+      <h3>リサーチの文脈分析</h3>
+      <div id="homeContextAnalysis"></div>
     </div>
 
-    <!-- Tag cloud -->
-    <div class="viz-panel" style="margin-bottom: 20px;">
-      <h3>タグ</h3>
-      <div class="tag-cloud" id="tagCloud"></div>
+    <!-- Next research suggestions -->
+    <div class="viz-panel" style="margin-bottom:var(--space-lg);">
+      <h3>次に調査すべきテーマ</h3>
+      <p style="font-size:var(--text-sm);color:var(--text-muted);margin-bottom:var(--space-md);line-height:1.7;">リサーチの流れと空白地帯の分析に基づく提案です。</p>
+      <div id="homeResearchSuggestions"></div>
     </div>
 
-    <!-- ===== 下段：分析 ===== -->
-    <div class="home-section-label" style="margin-top:8px;">分析</div>
-
-    <!-- Insights -->
-    <div class="viz-panel" style="margin-bottom:16px;">
-      <h3>インサイト</h3>
-      <div id="homeInsights"></div>
+    <!-- Research action results -->
+    <div class="viz-panel" style="margin-bottom:var(--space-lg);">
+      <h3>リサーチ実行の記録</h3>
+      <div id="homeExecutedResearch"></div>
     </div>
 
-    <div class="viz-row">
-      <!-- Activity heatmap -->
-      <div class="viz-panel">
-        <h3>活動（直近6ヶ月）</h3>
-        <div class="heatmap-months" id="heatmapMonths"></div>
-        <div class="heatmap-wrap">
-          <div class="heatmap" id="heatmapGrid"></div>
-        </div>
-        <div class="heatmap-legend">
-          Less
-          <div class="heatmap-cell"></div>
-          <div class="heatmap-cell" data-level="1"></div>
-          <div class="heatmap-cell" data-level="2"></div>
-          <div class="heatmap-cell" data-level="3"></div>
-          <div class="heatmap-cell" data-level="4"></div>
-          More
-        </div>
-      </div>
-
-      <!-- Radar -->
-      <div class="viz-panel">
-        <h3>カテゴリ分布</h3>
-        <svg id="homeRadarChart" class="radar-svg" width="280" height="280"></svg>
-      </div>
-    </div>
-
-    <div class="viz-row">
-      <!-- Keywords -->
-      <div class="viz-panel">
-        <h3>主要キーワード</h3>
-        <div class="keyword-list" id="homeKeywords"></div>
-      </div>
-
-      <!-- Research velocity -->
-      <div class="viz-panel">
-        <h3>リサーチ推移</h3>
-        <div class="velocity-bar-row" id="homeVelocity" style="margin-bottom:24px;"></div>
-      </div>
-    </div>
-
-    <div class="viz-row">
-      <!-- Cross-category bridges -->
-      <div class="viz-panel">
-        <h3>分野横断のつながり</h3>
-        <div id="homeBridges"></div>
-      </div>
-
-      <!-- Rediscovery -->
-      <div class="viz-panel">
-        <h3>再発見すべきリサーチ</h3>
-        <div id="rediscoveryPanel"></div>
-      </div>
-    </div>
-
-    <!-- Bookmark history -->
-    <div class="viz-panel" style="margin-bottom:20px;">
-      <h3>ブックマーク履歴</h3>
-      <div id="bookmarkHistory"></div>
-    </div>
-
-    <!-- Recent Comments -->
-    <div class="viz-panel" style="margin-bottom:20px;">
-      <h3>コメント</h3>
-      <div id="dashboardComments"></div>
+    <!-- Comment-driven research proposals -->
+    <div class="viz-panel" style="margin-bottom:var(--space-lg);">
+      <h3>コメントからのリサーチ提案</h3>
+      <div id="homeCommentProposals"></div>
     </div>
 
   </div>
@@ -1580,68 +1488,37 @@
 
   <!-- ========== ANALYTICS TAB ========== -->
   <div class="tab-panel" id="tab-analytics">
-    <!-- インサイト -->
-    <div class="viz-panel analytics-full">
-      <h3>インサイト</h3>
+    <!-- Hidden elements for legacy function compatibility -->
+    <div style="display:none;">
       <div id="insightsContainer"></div>
+      <div id="researchSummary"></div>
+      <svg id="radarChart" width="0" height="0"></svg>
+      <div id="statusProgress"></div>
+      <div id="globalKeywords"></div>
+      <div id="bridgeAnalysis"></div>
+      <div id="clusterSummary"></div>
+      <div id="tagAnalysis"></div>
+      <div id="velocityChart"></div>
     </div>
 
-    <div class="analytics-grid">
-      <!-- 全体サマリー -->
-      <div class="viz-panel">
-        <h3>リサーチ概要</h3>
-        <div id="researchSummary"></div>
-      </div>
-
-      <!-- カテゴリ分布レーダー -->
-      <div class="viz-panel">
-        <h3>カテゴリ分布</h3>
-        <svg id="radarChart" class="radar-svg" width="280" height="280"></svg>
-      </div>
+    <!-- Analytical report -->
+    <div class="viz-panel" style="margin-bottom:var(--space-lg);">
+      <h3>リサーチ全体の概観</h3>
+      <div id="analyticsOverview"></div>
     </div>
 
-    <div class="analytics-grid">
-      <!-- ステータス進捗 -->
-      <div class="viz-panel">
-        <h3>ステータス進捗</h3>
-        <div id="statusProgress"></div>
-      </div>
-
-      <!-- 主要キーワード -->
-      <div class="viz-panel">
-        <h3>主要キーワード</h3>
-        <div class="keyword-list" id="globalKeywords"></div>
-      </div>
+    <!-- Category-by-category analysis -->
+    <div class="viz-panel" style="margin-bottom:var(--space-lg);">
+      <h3>カテゴリ別の関心と文脈</h3>
+      <p style="font-size:var(--text-sm);color:var(--text-muted);margin-bottom:var(--space-lg);line-height:1.7;">20のカテゴリそれぞれについて、どのような関心が集まり、どのような文脈が形成されているかを分析します。</p>
+      <div id="analyticsByCategory"></div>
     </div>
 
-    <div class="analytics-grid">
-      <!-- 分野横断のつながり -->
-      <div class="viz-panel">
-        <h3>分野横断のつながり</h3>
-        <div id="bridgeAnalysis"></div>
-      </div>
-
-      <!-- トピッククラスター -->
-      <div class="viz-panel">
-        <h3>トピッククラスター</h3>
-        <div id="clusterSummary"></div>
-      </div>
+    <!-- Cross-cutting themes -->
+    <div class="viz-panel">
+      <h3>分野横断の探究テーマ</h3>
+      <div id="analyticsCrossThemes"></div>
     </div>
-
-    <div class="analytics-grid">
-      <!-- タグ分析 -->
-      <div class="viz-panel">
-        <h3>タグ利用状況</h3>
-        <div id="tagAnalysis"></div>
-      </div>
-
-      <!-- リサーチ推移 -->
-      <div class="viz-panel">
-        <h3>リサーチ推移</h3>
-        <div class="velocity-bar-row" id="velocityChart"></div>
-      </div>
-    </div>
-
   </div>
 
   <!-- ========== LIBRARY TAB ========== -->
@@ -2603,109 +2480,206 @@ function toggleBookmarkFilter() {
 // ===== Overview Tab =====
 function renderOverview() {
   const data = loadData();
+  const now = new Date();
+  const d30 = 30 * 86400000;
 
   // Stats
   document.getElementById('statTotal').textContent = data.length;
   document.getElementById('statCategories').textContent = getAllCategories().length;
-  document.getElementById('statTags').textContent = getAllTags().length;
-
-  const now = new Date();
   const thisMonth = data.filter(d => { const dd = new Date(d.createdAt); return dd.getFullYear() === now.getFullYear() && dd.getMonth() === now.getMonth(); }).length;
   const lastMonth = data.filter(d => { const dd = new Date(d.createdAt); const lm = new Date(now.getFullYear(), now.getMonth() - 1); return dd.getFullYear() === lm.getFullYear() && dd.getMonth() === lm.getMonth(); }).length;
   document.getElementById('statThisMonth').textContent = thisMonth;
   const delta = thisMonth - lastMonth;
-  document.getElementById('statMonthDelta').textContent = delta > 0 ? `+${delta} vs last month` : delta < 0 ? `${delta} vs last month` : '';
-
+  document.getElementById('statMonthDelta').textContent = delta > 0 ? `+${delta}` : delta < 0 ? `${delta}` : '';
   const doneCount = data.filter(d => d.status === 'done').length;
   document.getElementById('statCompletion').textContent = data.length > 0 ? Math.round(doneCount / data.length * 100) + '%' : '-';
 
-  // Status pipeline
-  const statusCounts = { investigating: 0, reading: 0, organized: 0, done: 0 };
-  data.forEach(d => { const s = d.status || 'investigating'; statusCounts[s] = (statusCounts[s] || 0) + 1; });
-  document.getElementById('statusPipeline').innerHTML = Object.entries(STATUS_MAP).map(([key, val]) =>
-    `<div class="status-stage ${key}"><span class="stage-count">${statusCounts[key]}</span><span class="stage-label">${val.label}</span></div>`
-  ).join('');
+  // === Context analysis: understand research flow and trajectory ===
+  const ctxEl = document.getElementById('homeContextAnalysis');
+  const recent30 = data.filter(d => (now - new Date(d.createdAt)) < d30);
+  const prev30 = data.filter(d => { const age = now - new Date(d.createdAt); return age >= d30 && age < d30 * 2; });
 
-  // Heatmap
-  renderHeatmap(data);
+  // Categorize recent research using classifyEntry
+  const recentCats = {};
+  recent30.forEach(d => { const c = classifyEntry(d); recentCats[c] = (recentCats[c] || 0) + 1; });
+  const prevCats = {};
+  prev30.forEach(d => { const c = classifyEntry(d); prevCats[c] = (prevCats[c] || 0) + 1; });
 
-  // Category chart
-  renderCategoryChart(data);
+  const growing = Object.entries(recentCats).filter(([c, n]) => n > (prevCats[c] || 0)).sort((a, b) => b[1] - a[1]);
+  const declining = Object.entries(prevCats).filter(([c, n]) => n > (recentCats[c] || 0));
 
-  // Tag cloud
-  renderTagCloud();
+  let ctxHtml = '';
+  // Narrative context
+  if (recent30.length > 0) {
+    const topRecent = Object.entries(recentCats).sort((a, b) => b[1] - a[1]).slice(0, 3);
+    ctxHtml += `<div style="font-size:var(--text-base);line-height:1.85;margin-bottom:var(--space-lg);">`;
+    ctxHtml += `直近30日間で${recent30.length}件のリサーチが追加されました。`;
+    if (topRecent.length > 0) {
+      ctxHtml += `現在の探究は<strong>${topRecent.map(([c, n]) => c).join('</strong>、<strong>')}</strong>を中心に展開しています。`;
+    }
+    if (growing.length > 0) {
+      ctxHtml += `前月と比較すると、<strong>${growing.slice(0, 2).map(([c]) => c).join('</strong>と<strong>')}</strong>への関心が高まっており、`;
+    }
+    if (declining.length > 0) {
+      ctxHtml += `一方で<strong>${declining.slice(0, 2).map(([c]) => c).join('</strong>と<strong>')}</strong>は探究のペースが落ちています。`;
+    }
 
-  // Recent list (8 entries)
-  const recent = [...data].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 8);
-  document.getElementById('recentList').innerHTML = recent.map(d => `
-    <div class="list-item" onclick="openDetail('${d.id}')">
-      <span class="list-status" style="background:${(STATUS_MAP[d.status || 'investigating']).color}">${(STATUS_MAP[d.status || 'investigating']).label}</span>
-      <span class="list-title" title="${esc(d.title)}">${esc(d.title)}</span>
-      <span class="list-date">${esc(d.category || '')} · ${formatDate(d.createdAt)}</span>
-    </div>
-  `).join('') || '<div style="color:var(--text-muted);font-size:0.85rem;padding:16px;">まだエントリがありません。</div>';
+    // Cross-cutting themes
+    const recentTags = {};
+    recent30.forEach(d => (d.tags || []).filter(t => !NOISE_TAGS.has(t) && t !== 'AI' && t !== '生成AI').forEach(t => { recentTags[t] = (recentTags[t] || 0) + 1; }));
+    const hotTags = Object.entries(recentTags).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([t]) => t);
+    if (hotTags.length > 0) {
+      ctxHtml += `分野を横断するキーワードとして${hotTags.map(t => '「' + t + '」').join('、')}が浮上しており、これらが今後の探究の結節点になる可能性があります。`;
+    }
+    ctxHtml += `</div>`;
+  } else {
+    ctxHtml += '<div style="color:var(--text-muted);font-size:var(--text-sm);">データが蓄積されると文脈分析が表示されます。</div>';
+  }
+  ctxEl.innerHTML = ctxHtml;
 
-  // Analysis section on home
-  renderHomeAnalysis(data);
+  // === Next research suggestions with gap analysis ===
+  const sugEl = document.getElementById('homeResearchSuggestions');
+  const allCats = {};
+  data.forEach(d => { const c = classifyEntry(d); allCats[c] = (allCats[c] || 0) + 1; });
+  const catLastDate = {};
+  data.forEach(d => {
+    const c = classifyEntry(d);
+    const dd = new Date(d.createdAt);
+    if (!catLastDate[c] || dd > catLastDate[c]) catLastDate[c] = dd;
+  });
 
-  // Existing features
-  renderRediscovery(data);
+  const suggestions = [];
 
-  // Bookmark history
-  renderBookmarkHistory();
+  // 1. Growing categories — momentum to continue
+  growing.slice(0, 2).forEach(([cat, n]) => {
+    const total = allCats[cat] || 0;
+    const daysSinceLast = catLastDate[cat] ? Math.round((now - catLastDate[cat]) / 86400000) : 999;
+    suggestions.push({
+      theme: cat,
+      reason: `直近30日で${n}件追加（前月比+${n - (prevCats[cat] || 0)}件）。勢いのある分野。`,
+      gapLevel: total < 20 ? '有望な空白地帯' : total < 50 ? '発展的探究' : '蓄積あり',
+      gapColor: total < 20 ? 'var(--status-done)' : total < 50 ? 'var(--status-reading)' : 'var(--text-muted)',
+      total, daysSinceLast, priority: 'high'
+    });
+  });
 
-  // Comments feed on dashboard
-  renderDashboardComments();
+  // 2. Stale categories with some base — need refresh
+  Object.entries(catLastDate).filter(([c, d]) => (now - d) > 60 * 86400000 && (allCats[c] || 0) >= 5)
+    .sort((a, b) => (allCats[b[0]] || 0) - (allCats[a[0]] || 0)).slice(0, 2)
+    .forEach(([cat, lastDate]) => {
+      const days = Math.round((now - lastDate) / 86400000);
+      suggestions.push({
+        theme: cat,
+        reason: `${days}日間更新なし。${allCats[cat]}件の蓄積があり、最新動向の確認が有効。`,
+        gapLevel: '再調査', gapColor: 'var(--status-investigating)',
+        total: allCats[cat], daysSinceLast: days, priority: 'medium'
+      });
+    });
+
+  // 3. Small but growing — emerging areas
+  Object.entries(allCats).filter(([c, n]) => n >= 3 && n <= 15 && recentCats[c] >= 1)
+    .sort((a, b) => a[1] - b[1]).slice(0, 2)
+    .forEach(([cat, total]) => {
+      if (suggestions.some(s => s.theme === cat)) return;
+      suggestions.push({
+        theme: cat,
+        reason: `まだ${total}件と少ないが最近も追加あり。基盤構築段階の有望テーマ。`,
+        gapLevel: '有望な空白地帯', gapColor: 'var(--status-done)',
+        total, daysSinceLast: 0, priority: 'high'
+      });
+    });
+
+  if (suggestions.length > 0) {
+    sugEl.innerHTML = suggestions.map((s, i) => `
+      <div style="padding:18px 22px;border:1px solid var(--border);border-radius:var(--radius-lg);margin-bottom:14px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
+          <div style="display:flex;align-items:center;gap:var(--space-sm);">
+            <span style="font-size:var(--text-base);font-weight:700;color:var(--text);">${esc(s.theme)}</span>
+            <span style="font-size:var(--text-xs);padding:2px 10px;border-radius:var(--radius-sm);background:${s.gapColor};color:#fff;font-weight:600;">${s.gapLevel}</span>
+          </div>
+          <span style="font-size:var(--text-xs);color:var(--text-muted);">既存${s.total}件</span>
+        </div>
+        <div style="font-size:var(--text-sm);line-height:1.75;color:var(--text-muted);margin-bottom:12px;">${esc(s.reason)}</div>
+        <button onclick="copyResearchCommand('${esc(s.theme)}')" style="padding:8px 20px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-md);cursor:pointer;font-size:var(--text-sm);font-weight:600;">このテーマでリサーチを実行</button>
+      </div>
+    `).join('');
+  } else {
+    sugEl.innerHTML = '<div style="color:var(--text-muted);font-size:var(--text-sm);">データが蓄積されると提案が表示されます。</div>';
+  }
+
+  // === Executed research results ===
+  const execEl = document.getElementById('homeExecutedResearch');
+  const allTasks = JSON.parse(localStorage.getItem('research_dashboard_pending_research') || '[]');
+  const executed = allTasks.filter(t => t.status === 'executed').sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  if (executed.length > 0) {
+    execEl.innerHTML = executed.slice(0, 5).map(t => `
+      <div style="display:flex;align-items:center;gap:var(--space-md);padding:10px 0;border-bottom:1px solid var(--accent-light);">
+        <span style="font-size:var(--text-xs);padding:2px 10px;border-radius:var(--radius-sm);background:var(--status-done);color:#fff;font-weight:600;white-space:nowrap;">実行済み</span>
+        <span style="font-size:var(--text-sm);font-weight:600;flex:1;">${esc(t.topic || t.text?.slice(0, 60) || '')}</span>
+        <span style="font-size:var(--text-xs);color:var(--text-muted);white-space:nowrap;">${formatDate(t.createdAt)}</span>
+      </div>
+    `).join('');
+  } else {
+    execEl.innerHTML = '<div style="color:var(--text-muted);font-size:var(--text-sm);">リサーチを実行するとここに記録されます。</div>';
+  }
+
+  // === Comment-driven research proposals ===
+  const cpEl = document.getElementById('homeCommentProposals');
+  const comments = getDashComments();
+  const commentFlat = [];
+  Object.entries(comments).forEach(([entryId, cmts]) => {
+    const entry = data.find(d => d.id === entryId);
+    if (!entry) return;
+    cmts.forEach(c => commentFlat.push({ ...c, entryId, title: entry.title, category: entry.category, tags: entry.tags || [] }));
+  });
+
+  if (commentFlat.length > 0) {
+    // Group by entry, find research needs
+    const entryGroups = {};
+    commentFlat.forEach(c => {
+      if (!entryGroups[c.entryId]) entryGroups[c.entryId] = { title: c.title, category: c.category, tags: c.tags, comments: [] };
+      entryGroups[c.entryId].comments.push(c);
+    });
+
+    let cpHtml = '';
+    Object.entries(entryGroups).forEach(([entryId, group]) => {
+      const allText = group.comments.map(c => c.text).join(' ');
+      const hasResearchNeed = /深掘り|もっと|さらに|比較|事例|実践|課題|可能性|どう|なぜ|検討/.test(allText);
+      if (!hasResearchNeed && group.comments.length < 2) return;
+
+      const isExecuted = executed.some(t => t.topic?.includes(group.title.slice(0, 20)));
+
+      cpHtml += `
+        <div style="padding:14px 18px;border-left:3px solid var(--accent);background:var(--surface);border-radius:0 var(--radius-md) var(--radius-md) 0;margin-bottom:12px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+            <span style="font-size:var(--text-sm);font-weight:700;">${esc(group.title)}</span>
+            ${isExecuted
+              ? '<span style="font-size:var(--text-xs);padding:2px 10px;border-radius:var(--radius-sm);background:var(--status-done);color:#fff;font-weight:600;">対応済み</span>'
+              : `<button onclick="copyResearchCommand('${esc(group.title).slice(0, 40)}')" style="padding:4px 14px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);cursor:pointer;font-size:var(--text-xs);font-weight:600;">調査実行</button>`
+            }
+          </div>
+          <div style="font-size:var(--text-sm);color:var(--text-muted);line-height:1.7;">${group.comments.length}件のコメント（${esc(group.category || '')}）</div>
+          <div style="font-size:var(--text-sm);color:var(--text-muted);margin-top:6px;font-style:italic;">「${esc(group.comments[0].text.slice(0, 100))}${group.comments[0].text.length > 100 ? '...' : ''}」</div>
+        </div>`;
+    });
+    cpEl.innerHTML = cpHtml || '<div style="color:var(--text-muted);font-size:var(--text-sm);">調査提案につながるコメントはまだありません。</div>';
+  } else {
+    cpEl.innerHTML = '<div style="color:var(--text-muted);font-size:var(--text-sm);">コメントが蓄積されると提案が表示されます。</div>';
+  }
 }
 
-function renderHomeAnalysis(data) {
-  // Insights
-  renderInsights(data, document.getElementById('homeInsights'));
-
-  // Radar — reuse renderRadar but target homeRadarChart
-  const origRadar = document.getElementById('radarChart');
-  const homeRadar = document.getElementById('homeRadarChart');
-  if (homeRadar) {
-    // Temporarily swap ID so renderRadar writes to home element
-    if (origRadar) origRadar.id = '_radarChart';
-    homeRadar.id = 'radarChart';
-    renderRadar(data);
-    homeRadar.id = 'homeRadarChart';
-    if (origRadar) origRadar.id = 'radarChart';
-  }
-
-  // Keywords
-  const origKw = document.getElementById('globalKeywords');
-  const homeKw = document.getElementById('homeKeywords');
-  if (homeKw) {
-    if (origKw) origKw.id = '_globalKeywords';
-    homeKw.id = 'globalKeywords';
-    renderGlobalKeywords(data);
-    homeKw.id = 'homeKeywords';
-    if (origKw) origKw.id = 'globalKeywords';
-  }
-
-  // Velocity
-  const origVel = document.getElementById('velocityChart');
-  const homeVel = document.getElementById('homeVelocity');
-  if (homeVel) {
-    if (origVel) origVel.id = '_velocityChart';
-    homeVel.id = 'velocityChart';
-    renderVelocity(data);
-    homeVel.id = 'homeVelocity';
-    if (origVel) origVel.id = 'velocityChart';
-  }
-
-  // Bridges
-  const origBridge = document.getElementById('bridgeAnalysis');
-  const homeBridge = document.getElementById('homeBridges');
-  if (homeBridge) {
-    if (origBridge) origBridge.id = '_bridgeAnalysis';
-    homeBridge.id = 'bridgeAnalysis';
-    renderBridgeAnalysis(data);
-    homeBridge.id = 'homeBridges';
-    if (origBridge) origBridge.id = 'bridgeAnalysis';
-  }
+function copyResearchCommand(theme) {
+  const cmd = `/research ${theme}`;
+  navigator.clipboard.writeText(cmd).then(() => {
+    const btn = event.target;
+    btn.textContent = 'コピーしました — Claude Codeに貼り付けて実行';
+    btn.style.background = 'var(--status-done)';
+    btn.disabled = true;
+  }).catch(() => { alert('コマンド: ' + cmd); });
+  // Save to executed
+  const tasks = JSON.parse(localStorage.getItem('research_dashboard_pending_research') || '[]');
+  tasks.push({ type: 'ホーム提案', text: theme, topic: theme, assessment: '-', assessmentDetail: '', relatedCount: 0, createdAt: new Date().toISOString(), status: 'executed' });
+  localStorage.setItem('research_dashboard_pending_research', JSON.stringify(tasks));
 }
 
 function renderHeatmap(data) {
@@ -4380,16 +4354,118 @@ function setupGraphEvents() {
 function renderAnalytics() {
   const data = loadData();
   if (data.length === 0) return;
+  const now = new Date();
+  const d30 = 30 * 86400000;
 
-  renderInsights(data);
-  renderResearchSummary(data);
-  renderStatusProgress(data);
-  renderVelocity(data);
-  renderRadar(data);
-  renderGlobalKeywords(data);
-  renderBridgeAnalysis(data);
-  renderTagAnalysis(data);
-  renderClusterSummary(data);
+  // === Overview ===
+  const ovEl = document.getElementById('analyticsOverview');
+  const catMap = {};
+  data.forEach(d => { const c = classifyEntry(d); catMap[c] = (catMap[c] || 0) + 1; });
+  const sortedCats = Object.entries(catMap).sort((a, b) => b[1] - a[1]);
+  const total = data.length;
+  const recent30 = data.filter(d => (now - new Date(d.createdAt)) < d30).length;
+
+  let ovHtml = `<div style="font-size:var(--text-base);line-height:1.85;margin-bottom:var(--space-lg);">`;
+  ovHtml += `全${total}件のリサーチは${sortedCats.length}カテゴリに分類されています。`;
+  ovHtml += `直近30日間で${recent30}件が追加されました。`;
+  const top3 = sortedCats.slice(0, 3);
+  const top3pct = top3.reduce((s, [_, n]) => s + n, 0);
+  ovHtml += `上位3カテゴリ（${top3.map(([c]) => c).join('、')}）が全体の${Math.round(top3pct / total * 100)}%を占めており、探究の重心が明確です。`;
+  const smallCats = sortedCats.filter(([_, n]) => n <= 10);
+  if (smallCats.length > 0) {
+    ovHtml += `一方、${smallCats.length}カテゴリは10件以下と蓄積が浅く、今後の拡充または統合の検討が考えられます。`;
+  }
+  ovHtml += `</div>`;
+  ovEl.innerHTML = ovHtml;
+
+  // === Category-by-category analysis ===
+  const catEl = document.getElementById('analyticsByCategory');
+  let catHtml = '';
+  sortedCats.forEach(([cat, count], ci) => {
+    const entries = data.filter(d => classifyEntry(d) === cat);
+    const recentEntries = entries.filter(d => (now - new Date(d.createdAt)) < d30);
+    const oldestDate = entries.reduce((min, e) => { const d = new Date(e.createdAt); return d < min ? d : min; }, new Date());
+    const newestDate = entries.reduce((max, e) => { const d = new Date(e.createdAt); return d > max ? d : max; }, new Date(0));
+    const spanDays = Math.round((newestDate - oldestDate) / 86400000);
+
+    // Top tags
+    const tagFreq = {};
+    entries.forEach(e => (e.tags || []).filter(t => !NOISE_TAGS.has(t) && t !== 'AI' && t !== '生成AI' && t !== '学術' && t !== '研究').forEach(t => { tagFreq[t] = (tagFreq[t] || 0) + 1; }));
+    const topTags = Object.entries(tagFreq).sort((a, b) => b[1] - a[1]).slice(0, 6);
+
+    // Activity assessment
+    let activity = '';
+    if (recentEntries.length >= 5) activity = '非常に活発';
+    else if (recentEntries.length >= 2) activity = '活発';
+    else if (recentEntries.length >= 1) activity = '継続中';
+    else if ((now - newestDate) < 60 * 86400000) activity = '低調';
+    else activity = '停滞';
+
+    const actColor = { '非常に活発': 'var(--status-done)', '活発': 'var(--status-reading)', '継続中': 'var(--accent-soft)', '低調': 'var(--status-investigating)', '停滞': 'var(--text-muted)' };
+
+    // Narrative
+    let narrative = `${count}件のリサーチが蓄積されており、`;
+    if (spanDays > 180) narrative += `${Math.round(spanDays / 30)}ヶ月にわたる継続的な探究が行われています。`;
+    else if (spanDays > 30) narrative += `直近${Math.round(spanDays / 30)}ヶ月間の集中的な調査です。`;
+    else narrative += `比較的新しいテーマです。`;
+
+    if (topTags.length >= 3) {
+      narrative += `主要な関心は${topTags.slice(0, 3).map(([t]) => '「' + t + '」').join('、')}に集中しており、`;
+      if (topTags.length >= 5) narrative += `${topTags.slice(3, 5).map(([t]) => '「' + t + '」').join('や')}との関連も見られます。`;
+      else narrative += `この方向での深化が進んでいます。`;
+    }
+
+    const color = COMMUNITY_PALETTE[ci % COMMUNITY_PALETTE.length];
+    catHtml += `
+      <div style="padding:20px 24px;border:1px solid var(--border);border-radius:var(--radius-lg);margin-bottom:14px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+          <div style="display:flex;align-items:center;gap:var(--space-sm);">
+            <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${color};"></span>
+            <span style="font-size:var(--text-lg);font-weight:700;">${esc(cat)}</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:var(--space-sm);">
+            <span style="font-size:var(--text-xs);padding:3px 10px;border-radius:var(--radius-sm);background:${actColor[activity]};color:#fff;font-weight:600;">${activity}</span>
+            <span style="font-size:var(--text-sm);color:var(--text-muted);font-weight:600;">${count}件</span>
+          </div>
+        </div>
+        <div style="font-size:var(--text-base);line-height:1.8;margin-bottom:12px;">${esc(narrative)}</div>
+        ${topTags.length > 0 ? `<div style="display:flex;gap:var(--space-xs);flex-wrap:wrap;">${topTags.map(([t, n]) => `<span class="tag">${esc(t)} (${n})</span>`).join('')}</div>` : ''}
+      </div>`;
+  });
+  catEl.innerHTML = catHtml;
+
+  // === Cross-cutting themes ===
+  const crossEl = document.getElementById('analyticsCrossThemes');
+  // Find tags that appear across multiple structural categories
+  const tagCats = {};
+  data.forEach(d => {
+    const cat = classifyEntry(d);
+    (d.tags || []).filter(t => !NOISE_TAGS.has(t) && t !== 'AI' && t !== '生成AI' && t !== '学術' && t !== '研究').forEach(t => {
+      if (!tagCats[t]) tagCats[t] = new Set();
+      tagCats[t].add(cat);
+    });
+  });
+  const crossTags = Object.entries(tagCats)
+    .filter(([_, cats]) => cats.size >= 3)
+    .map(([tag, cats]) => ({ tag, catCount: cats.size, cats: [...cats] }))
+    .sort((a, b) => b.catCount - a.catCount)
+    .slice(0, 8);
+
+  if (crossTags.length > 0) {
+    let crossHtml = `<div style="font-size:var(--text-base);line-height:1.85;margin-bottom:var(--space-lg);">`;
+    crossHtml += `複数のカテゴリにまたがるテーマとして、${crossTags.slice(0, 3).map(t => '「' + t.tag + '」（' + t.catCount + '分野）').join('、')}が特に広範な接続性を持っています。`;
+    crossHtml += `これらは個別の分野を超えた統合的な探究の候補であり、分野横断的なレポートの作成が有効です。`;
+    crossHtml += `</div>`;
+    crossHtml += crossTags.map(t => `
+      <div style="padding:12px 18px;border-left:3px solid var(--accent);background:var(--surface);border-radius:0 var(--radius-md) var(--radius-md) 0;margin-bottom:10px;">
+        <div style="font-size:var(--text-sm);font-weight:700;margin-bottom:6px;">${esc(t.tag)} — ${t.catCount}カテゴリに出現</div>
+        <div style="font-size:var(--text-xs);color:var(--text-muted);">${t.cats.join('、')}</div>
+      </div>
+    `).join('');
+    crossEl.innerHTML = crossHtml;
+  } else {
+    crossEl.innerHTML = '<div style="color:var(--text-muted);font-size:var(--text-sm);">データが蓄積されると分野横断分析が表示されます。</div>';
+  }
 }
 
 function renderInsights(data, targetEl) {
@@ -5116,101 +5192,38 @@ let libraryFocusTopic = null;
 let libraryExpandedEntries = new Set();
 
 function buildLibraryTopics(data) {
-  // Auto-cluster using BM25 similarity + agglomerative grouping
-  const simMatrix = getSimMatrix(data);
-
-  // Group by highest similarity (greedy agglomerative with threshold)
-  const assigned = new Array(data.length).fill(-1);
-  let nextCluster = 0;
-  const MIN_SIM = 0.12;
-
-  // Sort pairs by similarity descending
-  const pairs = [...simMatrix].filter(p => p.sim >= MIN_SIM).sort((a, b) => b.sim - a.sim);
-
-  pairs.forEach(({ i, j }) => {
-    if (assigned[i] >= 0 && assigned[j] >= 0) {
-      // Merge smaller cluster into larger
-      if (assigned[i] !== assigned[j]) {
-        const ci = assigned[i], cj = assigned[j];
-        const sizeI = assigned.filter(a => a === ci).length;
-        const sizeJ = assigned.filter(a => a === cj).length;
-        const target = sizeI >= sizeJ ? ci : cj;
-        const source = target === ci ? cj : ci;
-        for (let k = 0; k < assigned.length; k++) {
-          if (assigned[k] === source) assigned[k] = target;
-        }
-      }
-    } else if (assigned[i] >= 0) assigned[j] = assigned[i];
-    else if (assigned[j] >= 0) assigned[i] = assigned[j];
-    else { assigned[i] = assigned[j] = nextCluster++; }
+  // Use the 20-category structural classification
+  const catMap = {};
+  data.forEach(d => {
+    const cat = classifyEntry(d);
+    if (!catMap[cat]) catMap[cat] = [];
+    catMap[cat].push(d);
   });
 
-  // Assign singletons
-  for (let i = 0; i < data.length; i++) {
-    if (assigned[i] < 0) assigned[i] = nextCluster++;
-  }
+  let colorIdx = 0;
+  return Object.entries(catMap).map(([cat, entries]) => {
+    // Top tags for keywords
+    const tagFreq = {};
+    entries.forEach(e => (e.tags || []).filter(t => !NOISE_TAGS.has(t) && t !== 'AI' && t !== '生成AI').forEach(t => { tagFreq[t] = (tagFreq[t] || 0) + 1; }));
+    const topTags = Object.entries(tagFreq).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([t]) => t);
 
-  // Build topic groups
-  const topicMap = {};
-  data.forEach((d, i) => {
-    const c = assigned[i];
-    if (!topicMap[c]) topicMap[c] = [];
-    topicMap[c].push(d);
-  });
+    // Original category breakdown
+    const origCatFreq = {};
+    entries.forEach(e => { if (e.category) origCatFreq[e.category] = (origCatFreq[e.category] || 0) + 1; });
+    const catList = Object.entries(origCatFreq).sort((a, b) => b[1] - a[1]).map(([c, n]) => `${c}(${n})`).join(', ');
 
-  // Generate topic metadata
-  const topics = Object.values(topicMap).map(entries => {
-    // Extract top keywords for auto-naming
-    const textBag = entries.map(e =>
-      [e.title, e.title, e.category, ...(e.tags || [])].join(' ')
-    ).join(' ');
-
-    const words = textBag.split(/[\s,、。．・\-—:：;；()（）\[\]「」『』]+/)
-      .filter(w => w.length >= 2 && !NOISE_TAGS.has(w));
-    const freq = {};
-    words.forEach(w => { freq[w] = (freq[w] || 0) + 1; });
-
-    // Remove words that appear in most topics (too generic)
-    const topWords = Object.entries(freq)
-      .sort((a, b) => b[1] - a[1])
-      .filter(([w]) => w.length >= 2)
-      .slice(0, 5)
-      .map(([w]) => w);
-
-    // Dominant category
-    const catFreq = {};
-    entries.forEach(e => {
-      if (e.category) catFreq[e.category] = (catFreq[e.category] || 0) + 1;
-    });
-    const domCat = Object.entries(catFreq).sort((a, b) => b[1] - a[1])[0];
-
-    // Auto-generated topic name: top 2-3 keywords
-    const label = topWords.slice(0, 3).join(' / ');
-
-    // Most recent date
-    const latestDate = entries.reduce((max, e) => {
-      const d = new Date(e.createdAt);
-      return d > max ? d : max;
-    }, new Date(0));
-
-    // Description: what this cluster is about
-    const catList = Object.entries(catFreq).sort((a, b) => b[1] - a[1])
-      .map(([c, n]) => `${c}(${n})`).join(', ');
+    const latestDate = entries.reduce((max, e) => { const d = new Date(e.createdAt); return d > max ? d : max; }, new Date(0));
+    const color = COMMUNITY_PALETTE[colorIdx++ % COMMUNITY_PALETTE.length];
 
     return {
-      label,
+      label: cat,
       entries: entries.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
-      keywords: topWords,
-      dominantCategory: domCat ? domCat[0] : '',
+      keywords: topTags,
+      dominantCategory: Object.entries(origCatFreq).sort((a, b) => b[1] - a[1])[0]?.[0] || '',
       categoryBreakdown: catList,
-      latestDate,
-      color: COMMUNITY_PALETTE[Object.keys(topicMap).indexOf(
-        Object.keys(topicMap).find(k => topicMap[k] === entries)
-      ) % COMMUNITY_PALETTE.length],
+      latestDate, color
     };
   });
-
-  return topics;
 }
 
 function renderLibrary() {
