@@ -1684,6 +1684,12 @@
       <div id="cmtDirections"></div>
     </div>
 
+    <!-- Executed research from comments -->
+    <div class="viz-panel" style="margin-bottom:var(--space-lg);">
+      <h3>コメント起点の実行済みリサーチ</h3>
+      <div id="cmtExecuted"></div>
+    </div>
+
     <!-- All comments feed -->
     <div class="viz-panel">
       <h3>すべてのコメント</h3>
@@ -1908,30 +1914,62 @@ let _researchDirections = [];
 function executeResearchDirection(idx) {
   const d = _researchDirections[idx];
   if (!d) return;
-  // Build research prompt and save as pending research task
+
+  // Build a /research command that Claude Code can execute directly
+  const topic = d.text.replace(/[「」]/g, '').split('。')[0].trim();
+  const cmd = `/research ${topic}`;
+
+  // Save to executed research list
   const tasks = JSON.parse(localStorage.getItem('research_dashboard_pending_research') || '[]');
   tasks.push({
-    type: d.type,
-    text: d.text,
-    assessment: d.assessment,
-    assessmentDetail: d.assessmentDetail,
+    type: d.type, text: d.text, topic,
+    assessment: d.assessment, assessmentDetail: d.assessmentDetail,
     relatedCount: d.relatedCount,
-    createdAt: new Date().toISOString(),
-    status: 'pending'
+    createdAt: new Date().toISOString(), status: 'executed'
   });
   localStorage.setItem('research_dashboard_pending_research', JSON.stringify(tasks));
+  // Mark this direction as executed in the current session
+  d._executed = true;
 
-  // Copy to clipboard for immediate use
-  const prompt = `以下のテーマについてリサーチを実行してください:\n\n【方針】${d.type}\n【内容】${d.text}\n【評価】${d.assessment}: ${d.assessmentDetail}\n【関連リサーチ数】${d.relatedCount}件`;
-  navigator.clipboard.writeText(prompt).then(() => {
+  // Export queue to file for cron access
+  exportResearchQueue();
+
+  // Copy slash command to clipboard for immediate execution
+  navigator.clipboard.writeText(cmd).then(() => {
     const btn = event.target;
-    btn.textContent = 'リサーチキューに追加しました';
+    btn.innerHTML = 'クリップボードにコピーしました — Claude Codeに貼り付けて実行';
     btn.style.background = 'var(--status-done)';
     btn.disabled = true;
-    setTimeout(() => { btn.textContent = '追加済み'; }, 2000);
   }).catch(() => {
-    alert('リサーチキューに追加しました。');
+    // Fallback: show the command
+    const btn = event.target;
+    btn.innerHTML = `コピーできませんでした。手動で実行: <code style="background:var(--surface);padding:2px 8px;border-radius:3px;user-select:all;">${esc(cmd)}</code>`;
+    btn.style.background = 'var(--surface)';
+    btn.style.color = 'var(--text)';
+    btn.style.border = '1px solid var(--border)';
   });
+}
+
+function removeExecutedTask(createdAt) {
+  const tasks = JSON.parse(localStorage.getItem('research_dashboard_pending_research') || '[]');
+  const filtered = tasks.filter(t => t.createdAt !== createdAt);
+  localStorage.setItem('research_dashboard_pending_research', JSON.stringify(filtered));
+  renderCommentsTab();
+}
+
+function exportResearchQueue() {
+  // Export pending research queue + comments to a downloadable JSON
+  const queue = JSON.parse(localStorage.getItem('research_dashboard_pending_research') || '[]');
+  const comments = getDashComments();
+  const exportData = { queue, comments, exportedAt: new Date().toISOString() };
+  const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'research-queue.json';
+  // Auto-download to project directory
+  a.click();
+  URL.revokeObjectURL(url);
 }
 
 // ===== Comments Tab =====
@@ -2179,6 +2217,12 @@ function renderCommentsTab() {
       // Sort by assessment level (promising > new > expand > pivot) then priority
       const levelOrder = { promising: 0, 'new': 1, expand: 2, pivot: 3 };
       directions.sort((a, b) => (levelOrder[a.assessmentLevel] || 2) - (levelOrder[b.assessmentLevel] || 2));
+      // Check if already executed
+      const executedTopics = new Set(allTasks.filter(t => t.status === 'executed').map(t => t.topic));
+      directions.forEach(d => {
+        const topic = d.text.replace(/[「」]/g, '').split('。')[0].trim();
+        if (executedTopics.has(topic)) d._executed = true;
+      });
       _researchDirections = directions;
 
       dirEl.innerHTML = directions.map((d, i) => {
@@ -2200,7 +2244,10 @@ function renderCommentsTab() {
             <div style="font-size:var(--text-sm);line-height:1.7;color:var(--text);">${esc(d.assessmentDetail)}</div>
             ${d.relatedSample.length > 0 ? `<div style="margin-top:8px;font-size:var(--text-xs);color:var(--text-muted);">関連: ${d.relatedSample.map(t => '「' + esc(t.slice(0, 30)) + (t.length > 30 ? '...' : '') + '」').join('、')}</div>` : ''}
           </div>
-          <button onclick="executeResearchDirection(${i})" style="padding:8px 20px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-md);cursor:pointer;font-size:var(--text-sm);font-weight:600;">このテーマでリサーチを実行</button>
+          ${d._executed
+            ? `<span style="padding:8px 20px;background:var(--status-done);color:#fff;border-radius:var(--radius-md);font-size:var(--text-sm);font-weight:600;display:inline-block;">実行済み</span>`
+            : `<button onclick="executeResearchDirection(${i});renderCommentsTab();" style="padding:8px 20px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-md);cursor:pointer;font-size:var(--text-sm);font-weight:600;">このテーマでリサーチを実行</button>`
+          }
         </div>`;
       }).join('');
     } else {
@@ -2208,6 +2255,29 @@ function renderCommentsTab() {
     }
   } else {
     sugEl.innerHTML = '<div style="color:var(--text-muted);font-size:var(--text-sm);padding:12px 0;">コメントが蓄積されると調査提案が生成されます。</div>';
+  }
+
+  // Executed research list
+  const execEl = document.getElementById('cmtExecuted');
+  const allTasks = JSON.parse(localStorage.getItem('research_dashboard_pending_research') || '[]');
+  const executed = allTasks.filter(t => t.status === 'executed').sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  if (executed.length > 0) {
+    execEl.innerHTML = executed.map(t => `
+      <div style="padding:14px 18px;border:1px solid var(--border);border-radius:var(--radius-md);margin-bottom:10px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+        <div style="flex:1;">
+          <div style="display:flex;align-items:center;gap:var(--space-sm);margin-bottom:6px;">
+            <span style="font-size:var(--text-xs);padding:2px 10px;border-radius:var(--radius-sm);background:var(--status-done);color:#fff;font-weight:600;">実行済み</span>
+            <span style="font-size:var(--text-xs);font-weight:700;color:var(--accent);text-transform:uppercase;">${esc(t.type)}</span>
+            <span style="font-size:var(--text-xs);color:var(--text-muted);">${formatDate(t.createdAt)}</span>
+          </div>
+          <div style="font-size:var(--text-sm);line-height:1.7;color:var(--text);">${esc(t.topic || t.text.slice(0, 100))}</div>
+          <div style="font-size:var(--text-xs);color:var(--text-muted);margin-top:4px;">${esc(t.assessment)} / 関連${t.relatedCount}件</div>
+        </div>
+        <button onclick="removeExecutedTask('${t.createdAt}')" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:var(--text-xs);white-space:nowrap;">削除</button>
+      </div>
+    `).join('');
+  } else {
+    execEl.innerHTML = '<div style="color:var(--text-muted);font-size:var(--text-sm);padding:12px 0;">実行済みのリサーチはまだありません。</div>';
   }
 
   // All comments feed
