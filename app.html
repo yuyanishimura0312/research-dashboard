@@ -1759,6 +1759,8 @@ auth.onAuthStateChanged(async (user) => {
       loadCommentsFromFirestore(),
       loadUserEntriesFromFirestore(),
       loadSharedEntriesFromFirestore(),
+      loadResearchTasksFromFirestore(),
+      loadSavedInstructionsFromFirestore(),
     ]);
     // Render the app
     initDarkMode();
@@ -1818,6 +1820,35 @@ async function unshareEntry(id) {
 function isShared(id) {
   return _sharedEntries.some(e => e.id === id);
 }
+
+// === Research tasks & saved instructions (Firestore-backed) ===
+let _researchTasks = [];
+let _savedInstructions = {};
+
+async function loadResearchTasksFromFirestore() {
+  try {
+    const doc = await db.collection('users').doc(currentUser.uid).collection('rd_settings').doc('researchTasks').get();
+    _researchTasks = doc.exists ? (doc.data().tasks || []) : [];
+  } catch (e) { console.error('Failed to load research tasks:', e); _researchTasks = []; }
+}
+
+async function saveResearchTasks() {
+  await db.collection('users').doc(currentUser.uid).collection('rd_settings').doc('researchTasks').set({ tasks: _researchTasks });
+}
+
+async function loadSavedInstructionsFromFirestore() {
+  try {
+    const doc = await db.collection('users').doc(currentUser.uid).collection('rd_settings').doc('savedInstructions').get();
+    _savedInstructions = doc.exists ? (doc.data().instructions || {}) : {};
+  } catch (e) { console.error('Failed to load saved instructions:', e); _savedInstructions = {}; }
+}
+
+async function saveSavedInstructions() {
+  await db.collection('users').doc(currentUser.uid).collection('rd_settings').doc('savedInstructions').set({ instructions: _savedInstructions });
+}
+
+function getResearchTasks() { return _researchTasks; }
+function getSavedInstructions() { return _savedInstructions; }
 
 // === Bookmark functions (Firestore-backed) ===
 async function loadBookmarksFromFirestore() {
@@ -1954,14 +1985,13 @@ function executeResearchDirection(idx) {
   const cmd = `/research ${topic}`;
 
   // Save to executed research list
-  const tasks = JSON.parse(localStorage.getItem('research_dashboard_pending_research') || '[]');
-  tasks.push({
+  _researchTasks.push({
     type: d.type, text: d.text, topic,
     assessment: d.assessment, assessmentDetail: d.assessmentDetail,
     relatedCount: d.relatedCount,
     createdAt: new Date().toISOString(), status: 'executed'
   });
-  localStorage.setItem('research_dashboard_pending_research', JSON.stringify(tasks));
+  saveResearchTasks();
   // Mark this direction as executed in the current session
   d._executed = true;
 
@@ -1985,15 +2015,14 @@ function executeResearchDirection(idx) {
 }
 
 function removeExecutedTask(createdAt) {
-  const tasks = JSON.parse(localStorage.getItem('research_dashboard_pending_research') || '[]');
-  const filtered = tasks.filter(t => t.createdAt !== createdAt);
-  localStorage.setItem('research_dashboard_pending_research', JSON.stringify(filtered));
+  _researchTasks = _researchTasks.filter(t => t.createdAt !== createdAt);
+  saveResearchTasks();
   renderCommentsTab();
 }
 
 function exportResearchQueue() {
   // Export pending research queue + comments to a downloadable JSON
-  const queue = JSON.parse(localStorage.getItem('research_dashboard_pending_research') || '[]');
+  const queue = getResearchTasks();
   const comments = getDashComments();
   const exportData = { queue, comments, exportedAt: new Date().toISOString() };
   const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
@@ -2293,7 +2322,7 @@ function renderCommentsTab() {
 
   // Executed research list
   const execEl = document.getElementById('cmtExecuted');
-  const allTasks = JSON.parse(localStorage.getItem('research_dashboard_pending_research') || '[]');
+  const allTasks = getResearchTasks();
   const executed = allTasks.filter(t => t.status === 'executed').sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   if (executed.length > 0) {
     execEl.innerHTML = executed.map(t => `
@@ -2716,7 +2745,7 @@ function renderOverview() {
   });
 
   // Load saved instructions
-  const savedInstructions = JSON.parse(localStorage.getItem('research_dashboard_saved_instructions') || '{}');
+  const savedInstructions = getSavedInstructions();
 
   const suggestions = [];
 
@@ -2923,7 +2952,7 @@ function renderOverview() {
 
   // === Executed research results ===
   const execEl = document.getElementById('homeExecutedResearch');
-  const allTasks = JSON.parse(localStorage.getItem('research_dashboard_pending_research') || '[]');
+  const allTasks = getResearchTasks();
   const executed = allTasks.filter(t => t.status === 'executed').sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   if (executed.length > 0) {
     execEl.innerHTML = executed.slice(0, 5).map(t => `
@@ -3013,17 +3042,15 @@ function executeResearchFromHome(idx, theme) {
     }
   });
   // Save to executed
-  const tasks = JSON.parse(localStorage.getItem('research_dashboard_pending_research') || '[]');
-  tasks.push({ type: 'ホーム提案', text: instruction.slice(0, 200), topic: theme, assessment: '-', assessmentDetail: '', relatedCount: 0, createdAt: new Date().toISOString(), status: 'executed' });
-  localStorage.setItem('research_dashboard_pending_research', JSON.stringify(tasks));
+  _researchTasks.push({ type: 'ホーム提案', text: instruction.slice(0, 200), topic: theme, assessment: '-', assessmentDetail: '', relatedCount: 0, createdAt: new Date().toISOString(), status: 'executed' });
+  saveResearchTasks();
 }
 
 function saveInstruction(idx, theme) {
   const textarea = document.getElementById('sugInstruction' + idx);
   if (!textarea) return;
-  const saved = JSON.parse(localStorage.getItem('research_dashboard_saved_instructions') || '{}');
-  saved[theme] = textarea.value;
-  localStorage.setItem('research_dashboard_saved_instructions', JSON.stringify(saved));
+  _savedInstructions[theme] = textarea.value;
+  saveSavedInstructions();
   const btn = event.target;
   btn.textContent = '保存しました';
   btn.style.background = 'var(--status-done)';
@@ -3044,9 +3071,8 @@ function copyResearchCommand(theme) {
       prompt('以下をコピーしてClaude Codeに貼り付けてください:', cmd);
     }
   });
-  const tasks = JSON.parse(localStorage.getItem('research_dashboard_pending_research') || '[]');
-  tasks.push({ type: 'ホーム提案', text: theme, topic: theme, assessment: '-', assessmentDetail: '', relatedCount: 0, createdAt: new Date().toISOString(), status: 'executed' });
-  localStorage.setItem('research_dashboard_pending_research', JSON.stringify(tasks));
+  _researchTasks.push({ type: 'ホーム提案', text: theme, topic: theme, assessment: '-', assessmentDetail: '', relatedCount: 0, createdAt: new Date().toISOString(), status: 'executed' });
+  saveResearchTasks();
 }
 
 function renderHeatmap(data) {
