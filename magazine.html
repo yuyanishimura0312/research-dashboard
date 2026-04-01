@@ -45,13 +45,6 @@
 <!-- Hero -->
 <section class="hero" id="heroSection"></section>
 
-<!-- Dashboard strip -->
-<section class="dash-strip" id="dashboard">
-  <div class="dash-strip-inner">
-    <div class="dash-stats" id="dashStats"></div>
-    <div class="dash-status-row" id="dashStatus"></div>
-  </div>
-</section>
 
 <!-- Latest -->
 <section class="section" id="latest">
@@ -580,7 +573,6 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeReader(
 function renderAll() {
   renderCatBar();
   renderHero();
-  renderDashboard();
   renderLatest();
   renderCategorySections();
   renderTopics();
