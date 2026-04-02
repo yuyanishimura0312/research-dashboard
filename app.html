@@ -2954,12 +2954,33 @@ function renderOverview() {
       ctxHtml += `一方で<strong>${declining.slice(0, 2).map(([c]) => c).join('</strong>と<strong>')}</strong>は探究のペースが落ちています。`;
     }
 
-    // Cross-cutting themes
+    // Cross-cutting themes — use deep keywords from digests if available
     const recentTags = {};
-    recent30.forEach(d => (d.tags || []).filter(t => !NOISE_TAGS.has(t) && t !== 'AI' && t !== '生成AI').forEach(t => { recentTags[t] = (recentTags[t] || 0) + 1; }));
-    const hotTags = Object.entries(recentTags).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([t]) => t);
-    if (hotTags.length > 0) {
-      ctxHtml += `分野を横断するキーワードとして${hotTags.map(t => '「' + t + '」').join('、')}が浮上しており、これらが今後の探究の結節点になる可能性があります。`;
+    const recentDeepKw = {};
+    recent30.forEach(d => {
+      (d.tags || []).filter(t => !NOISE_TAGS.has(t) && t !== 'AI' && t !== '生成AI').forEach(t => { recentTags[t] = (recentTags[t] || 0) + 1; });
+      if (d.digest && d.digest.deep_keywords) {
+        d.digest.deep_keywords.forEach(k => { recentDeepKw[k] = (recentDeepKw[k] || 0) + 1; });
+      }
+    });
+    // Prefer deep keywords if enough digests exist
+    const hasDigests = recent30.filter(d => d.digest).length > recent30.length * 0.3;
+    const hotKeywords = hasDigests
+      ? Object.entries(recentDeepKw).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([t]) => t)
+      : Object.entries(recentTags).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([t]) => t);
+    if (hotKeywords.length > 0) {
+      ctxHtml += `分野を横断する${hasDigests ? '本質的な概念' : 'キーワード'}として${hotKeywords.map(t => '「' + t + '」').join('、')}が浮上しており、これらが今後の探究の結節点になる可能性があります。`;
+    }
+
+    // Surface digest-based structural insights
+    const recentInsights = recent30.filter(d => d.digest?.structure).slice(0, 3);
+    if (recentInsights.length > 0) {
+      ctxHtml += `</div><div style="font-size:var(--text-sm);line-height:1.8;margin-top:var(--space-md);">`;
+      ctxHtml += `<strong>直近のリサーチから得られた構造的理解:</strong><ul style="margin-top:8px;padding-left:20px;">`;
+      recentInsights.forEach(d => {
+        ctxHtml += `<li style="margin-bottom:6px;"><strong>${esc(d.title.slice(0, 40))}</strong>: ${esc(d.digest.structure.slice(0, 200))}</li>`;
+      });
+      ctxHtml += `</ul>`;
     }
     ctxHtml += `</div>`;
   } else {
@@ -3010,9 +3031,25 @@ function renderOverview() {
     const midTopics = phaseTopics(midEntries);
     const lateTopics = phaseTopics(lateEntries);
 
-    // Extract key findings
+    // Extract key findings — prefer digest-based insights over regex matching
     const keyFindings = [];
+    const openQuestions = [];
+    const deepKeywords = new Set();
     [...lateEntries, ...midEntries].slice(0, 12).forEach(e => {
+      // Use digest if available (deep content understanding)
+      if (e.digest) {
+        if (e.digest.core_insight) {
+          keyFindings.push({ title: e.title, finding: e.digest.core_insight.slice(0, 200), isDigest: true });
+        }
+        if (e.digest.open_questions) {
+          e.digest.open_questions.forEach(q => openQuestions.push({ title: e.title, question: q }));
+        }
+        if (e.digest.deep_keywords) {
+          e.digest.deep_keywords.forEach(k => deepKeywords.add(k));
+        }
+        return;
+      }
+      // Fallback: regex-based extraction for entries without digest
       const text = e.content || e.summary || '';
       if (text.length < 50) return;
       const sentences = text.split(/[。．]/).filter(s => s.trim().length > 30);
@@ -3020,7 +3057,7 @@ function renderOverview() {
         /\d+[%％万億兆件]|重要|明らか|示唆|発見|結論|課題|可能性|注目|特徴的|傾向|増加|減少|変化|必要/.test(s)
       );
       if (important.length > 0) {
-        keyFindings.push({ title: e.title, finding: important[0].trim().slice(0, 150) });
+        keyFindings.push({ title: e.title, finding: important[0].trim().slice(0, 150), isDigest: false });
       }
     });
 
@@ -3039,7 +3076,7 @@ function renderOverview() {
     // Recent titles for reference
     const recentTitles = entries.slice(-5).reverse().map(e => e.title);
 
-    return { recentTitles, topTags, total: entries.length, keyFindings, adjacentCats, earlyTopics, midTopics, lateTopics, lateEntries, earlyEntries };
+    return { recentTitles, topTags, total: entries.length, keyFindings, openQuestions, deepKeywords: [...deepKeywords], adjacentCats, earlyTopics, midTopics, lateTopics, lateEntries, earlyEntries };
   }
 
   // Helper: generate a polished, ready-to-use research prompt
@@ -3064,8 +3101,21 @@ function renderOverview() {
     if (ctx.keyFindings.length > 0) {
       p += `特に以下の知見が重要であり、これらを出発点として調査を深めてください。\n\n`;
       ctx.keyFindings.slice(0, 3).forEach((f, i) => {
-        p += `${i + 1}. 「${f.title}」の調査で、${f.finding}ことが明らかになっています。この知見を踏まえ、最新の研究動向や実践事例における展開を調べてください。\n\n`;
+        if (f.isDigest) {
+          p += `${i + 1}. 「${f.title}」の核心的洞察: ${f.finding}\nこの洞察を踏まえ、最新の研究動向や実践事例における展開を調べてください。\n\n`;
+        } else {
+          p += `${i + 1}. 「${f.title}」の調査で、${f.finding}ことが明らかになっています。この知見を踏まえ、最新の研究動向や実践事例における展開を調べてください。\n\n`;
+        }
       });
+    }
+
+    // Open questions from digests
+    if (ctx.openQuestions && ctx.openQuestions.length > 0) {
+      p += `また、これまでの調査を通じて以下の未解決の問いが浮上しています。これらにも可能な範囲で応答してください。\n\n`;
+      ctx.openQuestions.slice(0, 3).forEach((q, i) => {
+        p += `- ${q.question}\n`;
+      });
+      p += `\n`;
     }
 
     // Cross-pollination direction
@@ -3240,6 +3290,13 @@ function renderOverview() {
           </div>
           <div style="font-size:var(--text-sm);color:var(--text-muted);line-height:1.7;">${group.comments.length}件のコメント（${esc(group.category || '')}）</div>
           <div style="font-size:var(--text-sm);color:var(--text-muted);margin-top:6px;font-style:italic;">「${esc(group.comments[0].text.slice(0, 100))}${group.comments[0].text.length > 100 ? '...' : ''}」</div>
+          ${(() => {
+            const e = data.find(d => d.id === entryId);
+            if (e?.digest?.implications) {
+              return `<div style="font-size:var(--text-xs);color:var(--accent);margin-top:8px;padding:8px 12px;background:var(--accent-light);border-radius:var(--radius-sm);line-height:1.6;">実践的含意: ${esc(e.digest.implications.slice(0, 150))}</div>`;
+            }
+            return '';
+          })()}
         </div>`;
     });
     cpEl.innerHTML = cpHtml || '<div style="color:var(--text-muted);font-size:var(--text-sm);">調査提案につながるコメントはまだありません。</div>';

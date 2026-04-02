@@ -116,3 +116,10 @@ if [ -f "$EMBED_SCRIPT" ]; then
   echo "Regenerating embeddings..."
   python3 "$EMBED_SCRIPT"
 fi
+
+# Generate content digest for new entry
+DIGEST_SCRIPT="$SCRIPT_DIR/generate_digests.py"
+if [ -f "$DIGEST_SCRIPT" ]; then
+  echo "Generating content digest for new entry..."
+  python3 "$DIGEST_SCRIPT" --limit 5 2>&1 || true
+fi
