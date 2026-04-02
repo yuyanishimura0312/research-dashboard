@@ -1964,6 +1964,12 @@ auth.onAuthStateChanged(async (user) => {
       return;
     }
     userData = doc.data();
+    // Auto-promote owner account to admin
+    const ADMIN_EMAILS = ['nishimura@emerging-future.org'];
+    if (ADMIN_EMAILS.includes(user.email) && userData.role !== 'admin') {
+      userData.role = 'admin';
+      db.collection('users').doc(user.uid).update({ role: 'admin' });
+    }
     db.collection('users').doc(user.uid).update({ lastLogin: firebase.firestore.FieldValue.serverTimestamp() });
     // Show admin link for admins
     const adminLink = document.getElementById('adminLink');
