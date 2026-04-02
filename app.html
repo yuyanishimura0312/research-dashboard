@@ -2717,7 +2717,10 @@ window.addEventListener('hashchange', () => {
   const legacyMap = { 'graph': 'library', 'analytics': 'overview', 'timeline': 'research' };
   const mapped = legacyMap[hash] || hash;
   const valid = ['overview','library','research','comments'];
-  if (mapped && valid.includes(mapped) && mapped !== currentTab) switchTab(mapped, false);
+  if (mapped && valid.includes(mapped) && mapped !== currentTab) {
+    switchTab(mapped, false);
+    if (hash === 'timeline') setView('timeline');
+  }
 });
 
 // ===== View toggle =====
