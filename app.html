@@ -137,13 +137,132 @@
     background: none;
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    width: 32px; height: 32px;
+    width: 36px; height: 36px;
     cursor: pointer;
     color: var(--text-muted);
     display: flex; align-items: center; justify-content: center;
-    font-size: 14px;
+    font-size: 16px;
   }
   .masthead-nav .theme-btn:hover { border-color: var(--text-muted); }
+
+  /* Hamburger menu button - hidden on desktop */
+  .hamburger-btn {
+    display: none;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    width: 44px; height: 44px;
+    cursor: pointer;
+    color: var(--text-muted);
+    align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .hamburger-btn:hover { border-color: var(--accent); color: var(--text); }
+
+  /* Mobile menu overlay */
+  .mobile-menu-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 199;
+  }
+  .mobile-menu-overlay.active { display: block; }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0; right: 0;
+    width: 280px; height: 100%;
+    background: var(--card);
+    border-left: 1px solid var(--border);
+    z-index: 200;
+    padding: 20px;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform 0.25s ease-out;
+  }
+  .mobile-menu.active { display: flex; transform: translateX(0); }
+  .mobile-menu-close {
+    align-self: flex-end;
+    background: none; border: none;
+    font-size: 24px; cursor: pointer;
+    color: var(--text-muted);
+    width: 44px; height: 44px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .mobile-menu-close:hover { color: var(--text); }
+  .mobile-menu .menu-item {
+    display: flex; align-items: center;
+    padding: 14px 16px;
+    border: none; background: none;
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+    text-decoration: none;
+    min-height: 48px;
+  }
+  .mobile-menu .menu-item:hover { background: var(--accent-light); color: var(--accent); }
+  .mobile-menu .menu-divider {
+    height: 1px; background: var(--border); margin: 8px 0;
+  }
+  .mobile-menu .menu-user {
+    padding: 14px 16px;
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  /* Toast notification system */
+  .toast-container {
+    position: fixed;
+    bottom: 24px; right: 24px;
+    z-index: 300;
+    display: flex; flex-direction: column-reverse;
+    gap: 8px;
+    pointer-events: none;
+  }
+  .toast {
+    pointer-events: auto;
+    padding: 14px 20px;
+    border-radius: var(--radius-lg);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    max-width: 380px;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: toast-in 0.3s ease-out forwards;
+  }
+  .toast.toast-out {
+    animation: toast-out 0.25s ease-in forwards;
+  }
+  .toast-success {
+    background: var(--accent);
+    color: #fff;
+  }
+  .toast-error {
+    background: #DC2626;
+    color: #fff;
+  }
+  .toast-info {
+    background: var(--card);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  @keyframes toast-in {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes toast-out {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(12px); }
+  }
 
   /* Legacy compat */
   .header-actions { display: flex; gap: var(--space-sm); align-items: center; }
@@ -662,10 +781,10 @@
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
-    width: 28px;
-    height: 28px;
+    width: 36px;
+    height: 36px;
     cursor: pointer;
-    font-size: 0.875rem;
+    font-size: 1rem;
     color: var(--text-muted);
     transition: all 0.15s ease-out;
     display: flex;
@@ -1204,18 +1323,29 @@
     header { padding: 10px 14px; flex-direction: column; gap: 8px; align-items: stretch; }
     header h1 { font-size: 1rem; text-align: center; }
     .header-actions { justify-content: center; flex-wrap: wrap; gap: 6px; }
-    .header-actions .btn { font-size: 0.7rem; padding: 5px 10px; }
+    .header-actions .btn { font-size: 0.75rem; padding: 10px 14px; min-height: 44px; }
     .container { padding: 12px 10px; }
+
+    /* Hamburger menu: show button, hide desktop nav items */
+    .hamburger-btn { display: flex; }
+    .masthead-nav .nav-desktop { display: none; }
+    .masthead-nav .btn-primary { display: none; }
+    .masthead-nav #userDisplayName { display: none; }
 
     /* Stats */
     .stats { gap: 6px; }
     .stat-card { padding: 8px 12px; min-width: 80px; }
     .stat-card .value { font-size: 1.1rem; }
-    .stat-card .label { font-size: 0.65rem; }
+    .stat-card .label { font-size: 0.75rem; }
 
-    /* Tabs */
-    .tab-nav { overflow-x: auto; -webkit-overflow-scrolling: touch; white-space: nowrap; }
-    .tab-btn { padding: 8px 14px; font-size: 0.78rem; flex-shrink: 0; }
+    /* Tabs - improved touch targets */
+    .tab-nav { overflow-x: auto; -webkit-overflow-scrolling: touch; white-space: nowrap; position: relative; }
+    .tab-nav::after {
+      content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 32px;
+      background: linear-gradient(to right, transparent, var(--bg));
+      pointer-events: none;
+    }
+    .tab-btn { padding: 12px 16px; font-size: 0.82rem; flex-shrink: 0; min-height: 44px; }
 
     /* Viz */
     .viz-row { grid-template-columns: 1fr; gap: 10px; }
@@ -1226,48 +1356,49 @@
     .status-stage { min-width: 70px; flex: 1 1 45%; padding: 8px 6px; }
     .status-stage .stage-count { font-size: 1.1rem; }
 
-    /* Cards */
+    /* Cards - improved touch targets */
     .cards { grid-template-columns: 1fr; gap: 10px; }
     .card { padding: 14px; }
     .card-title { font-size: 0.92rem; }
-    .card-summary { font-size: 0.78rem; -webkit-line-clamp: 2; }
-    .card-actions { gap: 4px; }
-    .card-actions .btn-action { font-size: 0.68rem; padding: 5px 8px; }
+    .card-summary { font-size: 0.82rem; -webkit-line-clamp: 2; }
+    .card-actions { gap: 6px; }
+    .card-actions .btn-action { font-size: 0.75rem; padding: 10px 12px; min-height: 44px; }
 
     /* List view */
-    .list-item { grid-template-columns: auto 1fr auto; padding: 10px 12px; gap: 10px; }
+    .list-item { grid-template-columns: auto 1fr auto; padding: 12px 14px; gap: 10px; min-height: 48px; }
     .list-item .list-category, .list-item .list-tags { display: none; }
-    .list-item .list-title { font-size: 0.82rem; }
+    .list-item .list-title { font-size: 0.85rem; }
 
     /* Timeline */
     .timeline { padding-left: 24px; }
-    .timeline-item { padding: 10px 14px; }
+    .timeline-item { padding: 12px 14px; min-height: 48px; }
     .timeline-item .tl-header { flex-direction: column; gap: 2px; }
     .timeline-item .tl-title { font-size: 0.88rem; }
 
     /* Toolbar */
     .toolbar { flex-direction: column; gap: 8px; }
-    .search-box { min-width: 100%; }
-    .filter-select { min-width: 100%; }
+    .search-box { min-width: 100%; min-height: 44px; }
+    .filter-select { min-width: 100%; min-height: 44px; }
     .view-toggle { align-self: flex-start; }
+    .view-toggle button { min-height: 44px; padding: 10px 14px; }
 
     /* Tag cloud */
-    .tag-cloud { gap: 4px; }
-    .tag-cloud .tag { font-size: 0.65rem; }
+    .tag-cloud { gap: 6px; }
+    .tag-cloud .tag { font-size: 0.75rem; min-height: 36px; display: inline-flex; align-items: center; }
 
     /* Modal */
     .modal-overlay { padding: 20px 8px; }
     .modal { padding: 16px; max-width: 100%; }
     .modal h2 { font-size: 0.95rem; }
     .form-row { grid-template-columns: 1fr; }
-    .form-group input, .form-group textarea, .form-group select { font-size: 0.82rem; }
+    .form-group input, .form-group textarea, .form-group select { font-size: 0.85rem; min-height: 44px; }
     .modal-actions { flex-direction: column; gap: 8px; }
     .modal-actions-right { justify-content: stretch; }
-    .modal-actions-right .btn { flex: 1; text-align: center; }
+    .modal-actions-right .btn { flex: 1; text-align: center; min-height: 44px; }
 
     /* Detail modal */
     .detail-actions { flex-direction: column; gap: 6px; }
-    .detail-actions .btn-action { justify-content: center; }
+    .detail-actions .btn-action { justify-content: center; min-height: 44px; }
 
     /* Graph */
     .graph-controls { position: relative; top: auto; left: auto; margin-bottom: 10px; flex-direction: row; flex-wrap: wrap; }
@@ -1277,6 +1408,10 @@
     /* Heatmap */
     .heatmap { grid-template-rows: repeat(7, 12px); grid-auto-columns: 12px; }
     .heatmap-cell { width: 10px; height: 10px; }
+
+    /* Toast on mobile */
+    .toast-container { bottom: 16px; right: 16px; left: 16px; }
+    .toast { max-width: 100%; }
   }
 
   /* Small mobile */
@@ -1284,7 +1419,7 @@
     header h1 { font-size: 0.9rem; }
     .stat-card { min-width: 70px; padding: 6px 8px; }
     .stat-card .value { font-size: 1rem; }
-    .tab-btn { padding: 6px 10px; font-size: 0.72rem; }
+    .tab-btn { padding: 10px 12px; font-size: 0.78rem; min-height: 44px; }
     .card { padding: 12px; }
     .card-title { font-size: 0.85rem; }
   }
@@ -1402,18 +1537,44 @@
   <div class="masthead-inner">
     <div class="masthead-brand">Mira Tuku <em>Research</em></div>
     <nav class="masthead-nav">
-      <a href="magazine.html" class="switch-view">Magazine</a>
-      <button class="theme-btn" id="themeToggle" onclick="toggleDarkMode()">&#9790;</button>
-      <button class="btn btn-sm" onclick="exportData()">Export</button>
-      <button class="btn btn-sm" onclick="document.getElementById('importFile').click()">Import</button>
-      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+      <span class="nav-desktop">
+        <a href="magazine.html" class="switch-view">Magazine</a>
+      </span>
+      <button class="theme-btn" id="themeToggle" onclick="toggleDarkMode()" aria-label="ダークモード切替">&#9790;</button>
+      <span class="nav-desktop">
+        <button class="btn btn-sm" onclick="exportData()">Export</button>
+        <button class="btn btn-sm" onclick="document.getElementById('importFile').click()">Import</button>
+        <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+      </span>
       <button class="btn btn-primary" onclick="openAddModal()">+ 新規追加</button>
-      <a href="admin.html" id="adminLink" class="btn btn-sm" style="display:none">管理</a>
-      <span id="userDisplayName" style="font-size:var(--text-xs);color:var(--text-muted);"></span>
-      <button class="btn btn-sm" onclick="auth.signOut().then(()=>location.href='index.html')">ログアウト</button>
+      <span class="nav-desktop">
+        <a href="admin.html" id="adminLink" class="btn btn-sm" style="display:none">管理</a>
+        <span id="userDisplayName" style="font-size:var(--text-xs);color:var(--text-muted);"></span>
+        <button class="btn btn-sm" onclick="auth.signOut().then(()=>location.href='index.html')">ログアウト</button>
+      </span>
+      <button class="hamburger-btn" onclick="openMobileMenu()" aria-label="メニューを開く">&#9776;</button>
     </nav>
   </div>
 </header>
+
+<!-- Mobile menu -->
+<div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="closeMobileMenu()"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-menu-close" onclick="closeMobileMenu()" aria-label="メニューを閉じる">&#10005;</button>
+  <div class="menu-user" id="mobileUserName"></div>
+  <div class="menu-divider"></div>
+  <button class="menu-item" onclick="openAddModal();closeMobileMenu()">+ 新規追加</button>
+  <a href="magazine.html" class="menu-item">Magazine</a>
+  <div class="menu-divider"></div>
+  <button class="menu-item" onclick="exportData();closeMobileMenu()">Export</button>
+  <button class="menu-item" onclick="document.getElementById('importFile').click();closeMobileMenu()">Import</button>
+  <a href="admin.html" id="adminLinkMobile" class="menu-item" style="display:none">管理</a>
+  <div class="menu-divider"></div>
+  <button class="menu-item" onclick="auth.signOut().then(()=>location.href='index.html')">ログアウト</button>
+</div>
+
+<!-- Toast container -->
+<div class="toast-container" id="toastContainer"></div>
 
 <div class="container">
 
@@ -5849,54 +6010,76 @@ async function unshareEntryQuiet(id) {
 
 async function saveEntry() {
   const title = document.getElementById('formTitle').value.trim();
-  if (!title) { alert('タイトルを入力してください'); return; }
+  if (!title) { showToast('タイトルを入力してください', 'error'); return; }
 
-  const id = document.getElementById('editId').value;
-  const data = loadData();
-  const entry = {
-    id: id || generateId(),
-    title,
-    category: document.getElementById('formCategory').value.trim(),
-    status: document.getElementById('formStatus').value,
-    source: document.getElementById('formSource').value.trim(),
-    summary: document.getElementById('formSummary').value.trim(),
-    tags: document.getElementById('formTags').value.split(',').map(t => t.trim()).filter(Boolean),
-    createdAt: id ? (data.find(d => d.id === id)?.createdAt || new Date().toISOString()) : new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  };
+  const saveBtn = document.querySelector('.modal-actions-right .btn-primary');
+  if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = '保存中...'; }
 
-  // Save to Firestore (user's own entries)
-  const { _source, ...cleanEntry } = entry;
-  await db.collection('users').doc(currentUser.uid).collection('rd_entries').doc(entry.id).set(cleanEntry);
+  try {
+    const id = document.getElementById('editId').value;
+    const data = loadData();
+    const entry = {
+      id: id || generateId(),
+      title,
+      category: document.getElementById('formCategory').value.trim(),
+      status: document.getElementById('formStatus').value,
+      source: document.getElementById('formSource').value.trim(),
+      summary: document.getElementById('formSummary').value.trim(),
+      tags: document.getElementById('formTags').value.split(',').map(t => t.trim()).filter(Boolean),
+      createdAt: id ? (data.find(d => d.id === id)?.createdAt || new Date().toISOString()) : new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
 
-  // Update local cache
-  const existingIdx = _userEntries.findIndex(e => e.id === entry.id);
-  if (existingIdx >= 0) { _userEntries[existingIdx] = { ...cleanEntry, _source: 'user' }; }
-  else { _userEntries.push({ ...cleanEntry, _source: 'user' }); }
-  _dataCacheDirty = true;
+    // Save to Firestore (user's own entries)
+    const { _source, ...cleanEntry } = entry;
+    await db.collection('users').doc(currentUser.uid).collection('rd_entries').doc(entry.id).set(cleanEntry);
 
-  closeModal();
-  renderAll();
+    // Update local cache
+    const existingIdx = _userEntries.findIndex(e => e.id === entry.id);
+    if (existingIdx >= 0) { _userEntries[existingIdx] = { ...cleanEntry, _source: 'user' }; }
+    else { _userEntries.push({ ...cleanEntry, _source: 'user' }); }
+    _dataCacheDirty = true;
+
+    closeModal();
+    renderAll();
+    showToast('保存しました', 'success');
+  } catch (e) {
+    console.error('Save error:', e);
+    showToast('保存に失敗しました', 'error');
+  } finally {
+    if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = '保存'; }
+  }
 }
 
 async function deleteEntry() {
   const id = document.getElementById('editId').value;
   if (!id || !confirm('このリサーチを削除しますか？')) return;
 
-  // Delete from Firestore
-  await db.collection('users').doc(currentUser.uid).collection('rd_entries').doc(id).delete();
-  _userEntries = _userEntries.filter(e => e.id !== id);
+  const deleteBtn = document.getElementById('deleteBtn');
+  if (deleteBtn) { deleteBtn.disabled = true; deleteBtn.textContent = '削除中...'; }
 
-  // If shared, also remove from shared
-  if (isShared(id) && userData.role === 'admin') {
-    await db.collection('shared_research').doc(id).delete();
-    _sharedEntries = _sharedEntries.filter(e => e.id !== id);
+  try {
+    // Delete from Firestore
+    await db.collection('users').doc(currentUser.uid).collection('rd_entries').doc(id).delete();
+    _userEntries = _userEntries.filter(e => e.id !== id);
+
+    // If shared, also remove from shared
+    if (isShared(id) && userData.role === 'admin') {
+      await db.collection('shared_research').doc(id).delete();
+      _sharedEntries = _sharedEntries.filter(e => e.id !== id);
+    }
+
+    _dataCacheDirty = true;
+    closeModal();
+    closeDetailModal();
+    renderAll();
+    showToast('削除しました', 'success');
+  } catch (e) {
+    console.error('Delete error:', e);
+    showToast('削除に失敗しました', 'error');
+  } finally {
+    if (deleteBtn) { deleteBtn.disabled = false; deleteBtn.textContent = '削除'; }
   }
-
-  _dataCacheDirty = true;
-  closeModal();
-  closeDetailModal();
-  renderAll();
 }
 
 // Detail modal
@@ -6226,8 +6409,8 @@ function importData(event) {
       imported.forEach(item => { if (!ids.has(item.id)) { existing.push(item); added++; } });
       saveData(existing);
       renderAll();
-      alert(`${imported.length}件中 ${added}件を追加しました`);
-    } catch { alert('JSONファイルの読み込みに失敗しました'); }
+      showToast(`${imported.length}件中 ${added}件を追加しました`, 'success');
+    } catch { showToast('JSONファイルの読み込みに失敗しました', 'error'); }
   };
   reader.readAsText(file);
   event.target.value = '';
@@ -6381,7 +6564,7 @@ async function processBulkUpload() {
   saveData(data);
   renderAll();
   closeBulkUpload();
-  alert(`${added}件のファイルを登録しました`);
+  showToast(`${added}件のファイルを登録しました`, 'success');
   bulkFilesQueue = [];
 }
 
@@ -6392,7 +6575,7 @@ document.getElementById('detailModal').addEventListener('click', e => { if (e.ta
 
 // Keyboard shortcuts
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeModal(); closeDetailModal(); closeBulkUpload(); }
+  if (e.key === 'Escape') { closeModal(); closeDetailModal(); closeBulkUpload(); closeMobileMenu(); }
   if (e.key === 'n' && !e.ctrlKey && !e.metaKey && document.activeElement === document.body) openAddModal();
 });
 
@@ -6411,6 +6594,42 @@ function toggleDarkMode() {
   const btn = document.getElementById('themeToggle');
   if (btn) btn.innerHTML = next === 'dark' ? '&#9788;' : '&#9790;';
 }
+// === Mobile menu ===
+function openMobileMenu() {
+  document.getElementById('mobileMenu').classList.add('active');
+  document.getElementById('mobileMenuOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  // Sync user name
+  const name = document.getElementById('userDisplayName')?.textContent;
+  const el = document.getElementById('mobileUserName');
+  if (el) el.textContent = name || '';
+  // Sync admin link visibility
+  const adminDesktop = document.getElementById('adminLink');
+  const adminMobile = document.getElementById('adminLinkMobile');
+  if (adminDesktop && adminMobile) {
+    adminMobile.style.display = adminDesktop.style.display;
+  }
+}
+function closeMobileMenu() {
+  document.getElementById('mobileMenu').classList.remove('active');
+  document.getElementById('mobileMenuOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// === Toast notification system ===
+function showToast(message, type = 'info', duration = 3000) {
+  const container = document.getElementById('toastContainer');
+  if (!container) return;
+  const toast = document.createElement('div');
+  toast.className = `toast toast-${type}`;
+  toast.textContent = message;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.classList.add('toast-out');
+    toast.addEventListener('animationend', () => toast.remove());
+  }, duration);
+}
+
 // Init is called from auth.onAuthStateChanged after login verification
 </script>
 </body>
