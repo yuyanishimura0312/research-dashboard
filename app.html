@@ -61,6 +61,16 @@
     --status-organized: #B09A88;
     --status-done: #DC8766;
   }
+  /* Dark mode overrides for share buttons */
+  [data-theme="dark"] .btn-share { color: #DC8766; border-color: #3E3028; }
+  [data-theme="dark"] .btn-share:hover { background: #3A2A20; }
+  [data-theme="dark"] .btn-share.shared { color: #fff; background: #B07256; border-color: #B07256; }
+  [data-theme="dark"] .btn-share-toggle { background: var(--card); color: var(--text-muted); border-color: var(--border); }
+  [data-theme="dark"] .btn-share-toggle:hover { background: var(--surface); color: var(--accent); }
+  [data-theme="dark"] .btn-share-toggle.on { background: var(--accent); border-color: var(--accent); }
+  [data-theme="dark"] .badge-shared { background: #3A2A20; color: #DC8766; }
+  [data-theme="dark"] .btn-danger { color: #E8944E; border-color: #3E3028; }
+  [data-theme="dark"] .btn-danger:hover { background: #2E241C; }
 
   @media (prefers-reduced-motion: no-preference) {
     *, *::before, *::after { transition: background-color 0.2s ease-out, color 0.15s ease-out, border-color 0.2s ease-out, box-shadow 0.2s ease-out; }
@@ -144,6 +154,23 @@
     font-size: 16px;
   }
   .masthead-nav .theme-btn:hover { border-color: var(--text-muted); }
+
+  /* Skip navigation */
+  .skip-link {
+    position: absolute;
+    top: -100px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    z-index: 1000;
+    text-decoration: none;
+    transition: top 0.2s;
+  }
+  .skip-link:focus { top: 0; }
 
   /* Hamburger menu button - hidden on desktop */
   .hamburger-btn {
@@ -1021,7 +1048,7 @@
     border-radius: 8px;
     overflow: hidden;
     margin: 8px 0 16px;
-    background: #fff;
+    background: var(--card);
   }
   .gdoc-embed {
     width: 100%;
@@ -1202,7 +1229,7 @@
   .rediscovery-item .rd-ago { font-size: 0.72rem; color: var(--accent); font-weight: 600; }
 
   /* Network metrics panel */
-  .metrics-panel { position: absolute; top: 50px; left: 12px; background: rgba(255,255,255,0.95); border-radius: 8px; padding: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); z-index: 11; font-size: 0.72rem; max-width: 200px; display: none; }
+  .metrics-panel { position: absolute; top: 50px; left: 12px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); z-index: 11; font-size: 0.72rem; max-width: 200px; display: none; }
   .metrics-panel.visible { display: block; }
   .metrics-panel h4 { font-size: 0.75rem; margin-bottom: 8px; color: var(--accent); }
   .metric-row { display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px solid #f0ede5; }
@@ -1240,7 +1267,8 @@
     gap: 14px;
     font-size: 0.7rem;
     color: var(--text-muted);
-    background: rgba(255,255,255,0.9);
+    background: var(--card);
+    border: 1px solid var(--border);
     padding: 8px 12px;
     border-radius: 6px;
     z-index: 10;
@@ -1277,10 +1305,11 @@
     flex-direction: column;
     gap: 8px;
     z-index: 10;
-    background: rgba(255,255,255,0.92);
+    background: var(--card);
+    border: 1px solid var(--border);
     padding: 10px 14px;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   }
 
   .graph-controls label { font-size: 0.72rem; color: var(--text-muted); font-weight: 600; }
@@ -1533,6 +1562,7 @@
 </head>
 <body>
 
+<a href="#main-content" class="skip-link">メインコンテンツへスキップ</a>
 <header class="masthead">
   <div class="masthead-inner">
     <div class="masthead-brand">Mira Tuku <em>Research</em></div>
@@ -1576,21 +1606,21 @@
 <!-- Toast container -->
 <div class="toast-container" id="toastContainer"></div>
 
-<div class="container">
+<main class="container" id="main-content">
 
   <!-- Tab navigation -->
-  <div class="tab-nav">
-    <button class="tab-btn active" data-tab="overview" onclick="switchTab('overview')">ホーム</button>
-    <button class="tab-btn" data-tab="research" onclick="switchTab('research')">一覧</button>
-    <button class="tab-btn" data-tab="library" onclick="switchTab('library')">ライブラリ</button>
-    <button class="tab-btn" data-tab="graph" onclick="switchTab('graph')">構造</button>
-    <button class="tab-btn" data-tab="analytics" onclick="switchTab('analytics')">分析</button>
-    <button class="tab-btn" data-tab="comments" onclick="switchTab('comments')">コメント</button>
-    <button class="tab-btn" data-tab="timeline" onclick="switchTab('timeline')">時系列</button>
+  <div class="tab-nav" role="tablist" aria-label="ダッシュボードナビゲーション">
+    <button class="tab-btn active" data-tab="overview" onclick="switchTab('overview')" role="tab" aria-selected="true" aria-controls="tab-overview" id="tab-btn-overview">ホーム</button>
+    <button class="tab-btn" data-tab="research" onclick="switchTab('research')" role="tab" aria-selected="false" aria-controls="tab-research" id="tab-btn-research">一覧</button>
+    <button class="tab-btn" data-tab="library" onclick="switchTab('library')" role="tab" aria-selected="false" aria-controls="tab-library" id="tab-btn-library">ライブラリ</button>
+    <button class="tab-btn" data-tab="graph" onclick="switchTab('graph')" role="tab" aria-selected="false" aria-controls="tab-graph" id="tab-btn-graph">構造</button>
+    <button class="tab-btn" data-tab="analytics" onclick="switchTab('analytics')" role="tab" aria-selected="false" aria-controls="tab-analytics" id="tab-btn-analytics">分析</button>
+    <button class="tab-btn" data-tab="comments" onclick="switchTab('comments')" role="tab" aria-selected="false" aria-controls="tab-comments" id="tab-btn-comments">コメント</button>
+    <button class="tab-btn" data-tab="timeline" onclick="switchTab('timeline')" role="tab" aria-selected="false" aria-controls="tab-timeline" id="tab-btn-timeline">時系列</button>
   </div>
 
   <!-- ========== OVERVIEW TAB ========== -->
-  <div class="tab-panel active" id="tab-overview">
+  <div class="tab-panel active" id="tab-overview" role="tabpanel" aria-labelledby="tab-btn-overview">
 
     <!-- Stats (minimal) -->
     <div class="stats" style="margin-bottom:var(--space-xl);">
@@ -1628,10 +1658,10 @@
   </div>
 
   <!-- ========== RESEARCH TAB ========== -->
-  <div class="tab-panel" id="tab-research">
+  <div class="tab-panel" id="tab-research" role="tabpanel" aria-labelledby="tab-btn-research">
     <div class="toolbar">
       <div class="search-group">
-        <input type="text" class="search-box" id="searchBox" placeholder="自然文で検索してEnter（例：社会変革に関する事例）" oninput="onSearchInput()" onkeydown="onSearchKeydown(event)">
+        <input type="search" class="search-box" id="searchBox" aria-label="リサーチを検索" placeholder="自然文で検索してEnter（例：社会変革に関する事例）" oninput="onSearchInput()" onkeydown="onSearchKeydown(event)">
         <button class="semantic-toggle active" id="semanticToggle" onclick="toggleSemanticMode()" title="AI意味検索：キーワード一致ではなく、意味的に近いリサーチを検索します">
           <span class="toggle-dot"></span>AI検索
         </button>
@@ -1668,7 +1698,7 @@
   </div>
 
   <!-- ========== STRUCTURE (CATEGORY HIERARCHY) TAB ========== -->
-  <div class="tab-panel" id="tab-graph">
+  <div class="tab-panel" id="tab-graph" role="tabpanel" aria-labelledby="tab-btn-graph">
     <div style="margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
       <div>
         <h2 style="font-size:1.1rem;font-weight:600;color:var(--accent);margin:0;">カテゴリ階層構造</h2>
@@ -1697,7 +1727,7 @@
   </div>
 
   <!-- ========== ANALYTICS TAB ========== -->
-  <div class="tab-panel" id="tab-analytics">
+  <div class="tab-panel" id="tab-analytics" role="tabpanel" aria-labelledby="tab-btn-analytics">
     <!-- Hidden elements for legacy function compatibility -->
     <div style="display:none;">
       <div id="insightsContainer"></div>
@@ -1732,7 +1762,7 @@
   </div>
 
   <!-- ========== LIBRARY TAB ========== -->
-  <div class="tab-panel" id="tab-library">
+  <div class="tab-panel" id="tab-library" role="tabpanel" aria-labelledby="tab-btn-library">
     <div class="library-header">
       <div class="library-stats" id="libraryStats"></div>
       <div class="library-controls">
@@ -1749,7 +1779,7 @@
   </div>
 
   <!-- ========== COMMENTS TAB ========== -->
-  <div class="tab-panel" id="tab-comments">
+  <div class="tab-panel" id="tab-comments" role="tabpanel" aria-labelledby="tab-btn-comments">
     <!-- Stats -->
     <div class="stats" style="margin-bottom:var(--space-xl);">
       <div class="stat-card"><div class="label">総コメント数</div><div class="value" id="cmtStatTotal">0</div></div>
@@ -1785,14 +1815,14 @@
   </div>
 
   <!-- ========== TIMELINE TAB ========== -->
-  <div class="tab-panel" id="tab-timeline">
+  <div class="tab-panel" id="tab-timeline" role="tabpanel" aria-labelledby="tab-btn-timeline">
     <div class="timeline" id="timelineContainer"></div>
   </div>
 
-</div>
+</main>
 
 <!-- Bulk Upload Modal -->
-<div class="modal-overlay" id="bulkUploadModal">
+<div class="modal-overlay" id="bulkUploadModal" role="dialog" aria-modal="true" aria-label="ファイル一括アップロード">
   <div class="modal" style="max-width:640px">
     <h2>ファイル一括アップロード</h2>
     <p style="color:var(--text-muted);font-size:0.8rem;margin-bottom:14px">複数ファイルをまとめてリサーチに登録できます。対応: .md .txt .csv .json .html .pdf(テキスト抽出)</p>
@@ -1824,7 +1854,7 @@
 </div>
 
 <!-- Add/Edit Modal -->
-<div class="modal-overlay" id="editModal">
+<div class="modal-overlay" id="editModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
   <div class="modal">
     <h2 id="modalTitle">新規リサーチを追加</h2>
     <input type="hidden" id="editId">
@@ -1874,7 +1904,7 @@
 </div>
 
 <!-- Detail Modal -->
-<div class="modal-overlay" id="detailModal">
+<div class="modal-overlay" id="detailModal" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
   <div class="modal">
     <h2 id="detailTitle"></h2>
     <div class="detail-content" id="detailContent"></div>
@@ -2634,7 +2664,11 @@ function getGoogleDocsPreviewUrl(source) {
 // ===== Tab navigation =====
 function switchTab(tab, pushHash) {
   currentTab = tab;
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    const isActive = b.dataset.tab === tab;
+    b.classList.toggle('active', isActive);
+    b.setAttribute('aria-selected', isActive ? 'true' : 'false');
+  });
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === `tab-${tab}`));
   if (pushHash !== false) history.replaceState(null, '', '#' + tab);
   renderAll();
