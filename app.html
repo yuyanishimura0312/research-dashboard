@@ -27,10 +27,10 @@
     --tag-bg: #F0E4D8;
     --shadow: 0 1px 3px rgba(122,64,51,0.1);
     --shadow-md: 0 4px 16px rgba(122,64,51,0.12);
-    /* Status — warm, muted tones aligned with CI */
+    /* Status — warm, muted tones aligned with CI (WCAG AA contrast on white) */
     --status-investigating: #CE6F3C;
-    --status-reading: #7A8B6E;
-    --status-organized: #96725E;
+    --status-reading: #5C7A4E;
+    --status-organized: #7A5A48;
     --status-done: #7A4033;
     /* Spacing (8px grid) */
     --space-xs: 4px; --space-sm: 8px; --space-md: 16px;
@@ -5964,6 +5964,7 @@ function openAddModal() {
   const shareBtn = document.getElementById('shareBtn');
   if (shareBtn) shareBtn.style.display = 'none';
   document.getElementById('editModal').classList.add('active');
+  lockBodyScroll();
   document.getElementById('formTitle').focus();
 }
 
@@ -5991,9 +5992,13 @@ function openEditModal(id) {
     shareBtn.style.display = 'none';
   }
   document.getElementById('editModal').classList.add('active');
+  lockBodyScroll();
 }
 
-function closeModal() { document.getElementById('editModal').classList.remove('active'); }
+function closeModal() {
+  document.getElementById('editModal').classList.remove('active');
+  unlockBodyScroll();
+}
 
 async function toggleShareFromModal() {
   const id = document.getElementById('editId').value;
@@ -6282,6 +6287,7 @@ function openDetail(id) {
 
   document.getElementById('detailContent').innerHTML = html;
   document.getElementById('detailModal').classList.add('active');
+  lockBodyScroll();
 
   // Feature 1: Draw mini graph after DOM update
   if (related.length > 0) {
@@ -6289,7 +6295,10 @@ function openDetail(id) {
   }
 }
 
-function closeDetailModal() { document.getElementById('detailModal').classList.remove('active'); }
+function closeDetailModal() {
+  document.getElementById('detailModal').classList.remove('active');
+  unlockBodyScroll();
+}
 
 function toggleFullText() {
   const wrap = document.getElementById('fullTextWrap');
@@ -6461,10 +6470,12 @@ function openBulkUpload() {
   document.getElementById('bulkProgress').style.display = 'none';
   document.getElementById('bulkSubmitBtn').disabled = true;
   document.getElementById('bulkUploadModal').classList.add('active');
+  lockBodyScroll();
 }
 
 function closeBulkUpload() {
   document.getElementById('bulkUploadModal').classList.remove('active');
+  unlockBodyScroll();
 }
 
 // Drag & drop + click
@@ -6628,6 +6639,33 @@ function toggleDarkMode() {
   const btn = document.getElementById('themeToggle');
   if (btn) btn.innerHTML = next === 'dark' ? '&#9788;' : '&#9790;';
 }
+// === Body scroll lock for modals ===
+let _scrollLockCount = 0;
+function lockBodyScroll() {
+  _scrollLockCount++;
+  if (_scrollLockCount === 1) document.body.style.overflow = 'hidden';
+}
+function unlockBodyScroll() {
+  _scrollLockCount = Math.max(0, _scrollLockCount - 1);
+  if (_scrollLockCount === 0) document.body.style.overflow = '';
+}
+
+// === Focus trap for modals ===
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Tab') return;
+  const activeModal = document.querySelector('.modal-overlay.active .modal');
+  if (!activeModal) return;
+  const focusable = activeModal.querySelectorAll('button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])');
+  if (focusable.length === 0) return;
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (e.shiftKey) {
+    if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+  } else {
+    if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+});
+
 // === Mobile menu ===
 function openMobileMenu() {
   document.getElementById('mobileMenu').classList.add('active');
