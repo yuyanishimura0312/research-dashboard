@@ -1613,10 +1613,7 @@
     <button class="tab-btn active" data-tab="overview" onclick="switchTab('overview')" role="tab" aria-selected="true" aria-controls="tab-overview" id="tab-btn-overview">ホーム</button>
     <button class="tab-btn" data-tab="research" onclick="switchTab('research')" role="tab" aria-selected="false" aria-controls="tab-research" id="tab-btn-research">一覧</button>
     <button class="tab-btn" data-tab="library" onclick="switchTab('library')" role="tab" aria-selected="false" aria-controls="tab-library" id="tab-btn-library">ライブラリ</button>
-    <button class="tab-btn" data-tab="graph" onclick="switchTab('graph')" role="tab" aria-selected="false" aria-controls="tab-graph" id="tab-btn-graph">構造</button>
-    <button class="tab-btn" data-tab="analytics" onclick="switchTab('analytics')" role="tab" aria-selected="false" aria-controls="tab-analytics" id="tab-btn-analytics">分析</button>
     <button class="tab-btn" data-tab="comments" onclick="switchTab('comments')" role="tab" aria-selected="false" aria-controls="tab-comments" id="tab-btn-comments">コメント</button>
-    <button class="tab-btn" data-tab="timeline" onclick="switchTab('timeline')" role="tab" aria-selected="false" aria-controls="tab-timeline" id="tab-btn-timeline">時系列</button>
   </div>
 
   <!-- ========== OVERVIEW TAB ========== -->
@@ -1655,6 +1652,24 @@
       <div id="homeCommentProposals"></div>
     </div>
 
+    <!-- Analytics section (integrated from former analytics tab) -->
+    <div class="home-section-label" style="margin-top:var(--space-2xl);">分析</div>
+
+    <div class="viz-panel" style="margin-bottom:var(--space-lg);">
+      <h3>リサーチ全体の概観</h3>
+      <div id="homeAnalyticsOverview"></div>
+    </div>
+
+    <div class="viz-panel" style="margin-bottom:var(--space-lg);">
+      <h3>カテゴリ別の関心と文脈</h3>
+      <div id="homeAnalyticsByCategory"></div>
+    </div>
+
+    <div class="viz-panel">
+      <h3>分野横断の探究テーマ</h3>
+      <div id="homeAnalyticsCrossThemes"></div>
+    </div>
+
   </div>
 
   <!-- ========== RESEARCH TAB ========== -->
@@ -1685,12 +1700,16 @@
       <div class="view-toggle">
         <button class="active" data-view="cards" onclick="setView('cards')">カード</button>
         <button data-view="list" onclick="setView('list')">リスト</button>
+        <button data-view="timeline" onclick="setView('timeline')">時系列</button>
       </div>
     </div>
 
     <div class="semantic-status" id="semanticStatus"></div>
     <div id="researchCards" class="cards"></div>
     <div id="researchList" class="list-view" style="display:none"></div>
+    <div id="researchTimeline" style="display:none">
+      <div class="timeline" id="inlineTimelineContainer"></div>
+    </div>
     <div class="empty-state" id="emptyState" style="display:none">
       <div class="icon">&#128218;</div>
       <p>リサーチが見つかりません。</p>
@@ -1776,6 +1795,13 @@
     </div>
     <div class="library-topic-map" id="libraryTopicMap"></div>
     <div class="library-topics" id="libraryTopics"></div>
+
+    <!-- Hierarchy structure (integrated from former structure tab) -->
+    <div class="home-section-label" style="margin-top:var(--space-2xl);">カテゴリ階層構造</div>
+    <div style="margin-bottom:12px;">
+      <input type="text" class="search-box" id="libraryHierarchySearch" placeholder="構造内を検索..." oninput="renderHierarchyInLibrary()" style="max-width:280px;">
+    </div>
+    <div id="libraryHierarchyContainer" class="hierarchy-container"></div>
   </div>
 
   <!-- ========== COMMENTS TAB ========== -->
@@ -2677,22 +2703,35 @@ function switchTab(tab, pushHash) {
 // Restore tab from URL hash
 function initTabFromHash() {
   const hash = location.hash.replace('#', '');
-  const valid = ['overview','library','research','graph','analytics','comments','timeline'];
-  if (hash && valid.includes(hash)) {
-    switchTab(hash, false);
+  // Redirect legacy tabs to their new homes
+  const legacyMap = { 'graph': 'library', 'analytics': 'overview', 'timeline': 'research' };
+  const mapped = legacyMap[hash] || hash;
+  const valid = ['overview','library','research','comments'];
+  if (mapped && valid.includes(mapped)) {
+    switchTab(mapped, false);
+    if (hash === 'timeline') setView('timeline');
   }
 }
 window.addEventListener('hashchange', () => {
   const hash = location.hash.replace('#', '');
-  const valid = ['overview','library','research','graph','analytics','comments','timeline'];
-  if (hash && valid.includes(hash) && hash !== currentTab) switchTab(hash, false);
+  const legacyMap = { 'graph': 'library', 'analytics': 'overview', 'timeline': 'research' };
+  const mapped = legacyMap[hash] || hash;
+  const valid = ['overview','library','research','comments'];
+  if (mapped && valid.includes(mapped) && mapped !== currentTab) switchTab(mapped, false);
 });
 
 // ===== View toggle =====
 function setView(view) {
   currentView = view;
   document.querySelectorAll('.view-toggle button').forEach(b => b.classList.toggle('active', b.dataset.view === view));
-  renderResearchTab();
+  const cards = document.getElementById('researchCards');
+  const list = document.getElementById('researchList');
+  const tl = document.getElementById('researchTimeline');
+  if (cards) cards.style.display = view === 'cards' ? '' : 'none';
+  if (list) list.style.display = view === 'list' ? '' : 'none';
+  if (tl) tl.style.display = view === 'timeline' ? '' : 'none';
+  if (view === 'timeline') renderInlineTimeline();
+  else renderResearchTab();
 }
 
 // ===== Semantic Search =====
@@ -3348,6 +3387,9 @@ function toggleTagFilter(tag) {
 
 // ===== Research Tab =====
 function renderResearchTab() {
+  // If timeline view is active, don't render cards/list
+  if (currentView === 'timeline') return;
+
   const data = getFilteredData();
   const cardsEl = document.getElementById('researchCards');
   const listEl = document.getElementById('researchList');
@@ -3481,6 +3523,40 @@ function renderTimeline() {
     `;
   });
 
+  container.innerHTML = html;
+}
+
+// Inline timeline within research tab
+function renderInlineTimeline() {
+  const data = [...loadData()].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  const container = document.getElementById('inlineTimelineContainer');
+  if (!container) return;
+  if (data.length === 0) {
+    container.innerHTML = '<div class="empty-state"><p>タイムラインに表示するエントリがありません。</p></div>';
+    return;
+  }
+  // Reuse the same rendering logic as renderTimeline
+  let html = '';
+  let lastMonth = '';
+  data.forEach(d => {
+    const date = new Date(d.createdAt);
+    const monthKey = `${date.getFullYear()}年${date.getMonth() + 1}月`;
+    if (monthKey !== lastMonth) {
+      if (lastMonth) html += '</div>';
+      html += `<div class="date-group"><div class="date-group-header">${monthKey}</div>`;
+      lastMonth = monthKey;
+    }
+    const statusColors = { investigating: 'var(--status-investigating)', reading: 'var(--status-reading)', organized: 'var(--status-organized)', done: 'var(--status-done)' };
+    html += `
+      <div class="timeline-item" onclick="openDetail('${d.id}')">
+        <div class="tl-header">
+          <span class="tl-title">${esc(d.title)}</span>
+          <span style="font-size:var(--text-xs);padding:2px 8px;border-radius:var(--radius-sm);background:${statusColors[d.status] || 'var(--border)'};color:#fff;white-space:nowrap;">${d.status || '-'}</span>
+        </div>
+        <div style="font-size:var(--text-xs);color:var(--text-muted);margin-top:4px;">${esc(d.category || '')} | ${formatDate(d.createdAt)}</div>
+      </div>`;
+  });
+  if (lastMonth) html += '</div>';
   container.innerHTML = html;
 }
 
@@ -5057,6 +5133,43 @@ function renderAnalytics() {
   }
 }
 
+// Render analytics content into the home tab
+function renderAnalyticsInHome() {
+  const data = loadData();
+  if (data.length === 0) return;
+  // Reuse the same logic as renderAnalytics but target home elements
+  const ovEl = document.getElementById('homeAnalyticsOverview');
+  const catEl = document.getElementById('homeAnalyticsByCategory');
+  const crossEl = document.getElementById('homeAnalyticsCrossThemes');
+  // Copy from the analytics tab containers if they've been rendered
+  const srcOv = document.getElementById('analyticsOverview');
+  const srcCat = document.getElementById('analyticsByCategory');
+  const srcCross = document.getElementById('analyticsCrossThemes');
+  // First render the analytics tab (hidden) to populate source elements
+  renderAnalytics();
+  if (ovEl && srcOv) ovEl.innerHTML = srcOv.innerHTML;
+  if (catEl && srcCat) catEl.innerHTML = srcCat.innerHTML;
+  if (crossEl && srcCross) crossEl.innerHTML = srcCross.innerHTML;
+}
+
+// Render hierarchy into library tab
+function renderHierarchyInLibrary() {
+  const container = document.getElementById('libraryHierarchyContainer');
+  if (!container) return;
+  const data = loadData();
+  if (data.length === 0) { container.innerHTML = '<div style="color:var(--text-muted);padding:20px;">データがありません。</div>'; return; }
+  // Sync search value from library to original input
+  const libSearch = document.getElementById('libraryHierarchySearch');
+  const origSearch = document.getElementById('hierarchySearch');
+  if (libSearch && origSearch) origSearch.value = libSearch.value;
+  // Render the original hierarchy, then copy content
+  const origContainer = document.getElementById('hierarchyContainer');
+  if (origContainer) {
+    renderHierarchy();
+    container.innerHTML = origContainer.innerHTML;
+  }
+}
+
 function renderInsights(data, targetEl) {
   const insights = [];
   const now = new Date();
@@ -5941,12 +6054,16 @@ function toggleLibraryExpand(id) {
 }
 
 function renderAll() {
-  if (currentTab === 'overview') renderOverview();
-  else if (currentTab === 'research') renderResearchTab();
+  if (currentTab === 'overview') { renderOverview(); renderAnalyticsInHome(); }
+  else if (currentTab === 'research') {
+    renderResearchTab();
+    if (currentView === 'timeline') renderInlineTimeline();
+  }
+  else if (currentTab === 'comments') renderCommentsTab();
+  else if (currentTab === 'library') { renderLibrary(); renderHierarchyInLibrary(); }
+  // Legacy tab support (hidden but render functions still work)
   else if (currentTab === 'graph') { renderHierarchy(); }
   else if (currentTab === 'analytics') renderAnalytics();
-  else if (currentTab === 'comments') renderCommentsTab();
-  else if (currentTab === 'library') renderLibrary();
   else if (currentTab === 'timeline') renderTimeline();
 }
 
