@@ -2602,11 +2602,10 @@ let _dataCacheDirty = true;
 
 function loadData() {
   if (!_dataCacheDirty && _dataCache) return _dataCache;
-  const fileData = Array.isArray(window.RESEARCH_DATA) ? window.RESEARCH_DATA : [];
+  const fileData = Array.isArray(typeof RESEARCH_DATA !== 'undefined' ? RESEARCH_DATA : null) ? RESEARCH_DATA : [];
 
   const merged = new Map();
   const isAdmin = userData && userData.role === 'admin';
-  console.log('[loadData] fileData:', fileData.length, 'isAdmin:', isAdmin, 'userData:', userData?.role, 'shared:', _sharedEntries.length, 'user:', _userEntries.length);
 
   if (isAdmin) {
     // Admin sees everything: file data + shared + own entries
