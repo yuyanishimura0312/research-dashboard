@@ -12,6 +12,7 @@
 <script src="js/firebase-config.js"></script>
 <script src="data.js?v=20260403"></script>
 <script src="embeddings.js?v=20260330"></script>
+<script src="analysis.js?v=20260403"></script>
 <style>
   :root {
     /* Miratuku CI colors — earth tone palette */
@@ -1628,6 +1629,12 @@
       <div class="stat-card"><div class="label">完了率</div><div class="value" id="statCompletion">-</div></div>
     </div>
 
+    <!-- AI Agent status -->
+    <div id="aiAgentStatus" style="display:none;margin-bottom:var(--space-md);padding:10px 16px;background:var(--accent-light);border-radius:var(--radius-md);font-size:var(--text-xs);color:var(--text-muted);display:flex;align-items:center;gap:8px;">
+      <span style="width:8px;height:8px;border-radius:50%;background:var(--status-done);display:inline-block;"></span>
+      <span id="aiAgentStatusText"></span>
+    </div>
+
     <!-- Research context analysis -->
     <div class="viz-panel" style="margin-bottom:var(--space-lg);">
       <h3>リサーチの文脈分析</h3>
@@ -1651,6 +1658,12 @@
     <div class="viz-panel" style="margin-bottom:var(--space-lg);">
       <h3>コメントからのリサーチ提案</h3>
       <div id="homeCommentProposals"></div>
+    </div>
+
+    <!-- AI Key Insights -->
+    <div class="viz-panel" id="homeKeyInsights" style="margin-bottom:var(--space-lg);display:none;">
+      <h3>知識構造の深層分析</h3>
+      <div id="homeKeyInsightsContent"></div>
     </div>
 
     <!-- Analytics section (integrated from former analytics tab) -->
@@ -2932,7 +2945,7 @@ function renderOverview() {
   const doneCount = data.filter(d => d.status === 'done').length;
   document.getElementById('statCompletion').textContent = data.length > 0 ? Math.round(doneCount / data.length * 100) + '%' : '-';
 
-  // === Context analysis: understand research flow and trajectory ===
+  // === Context analysis: AI-generated or algorithmic fallback ===
   const ctxEl = document.getElementById('homeContextAnalysis');
   const recent30 = data.filter(d => (now - new Date(d.createdAt)) < d30);
   const prev30 = data.filter(d => { const age = now - new Date(d.createdAt); return age >= d30 && age < d30 * 2; });
@@ -2942,61 +2955,121 @@ function renderOverview() {
   recent30.forEach(d => { const c = classifyEntry(d); recentCats[c] = (recentCats[c] || 0) + 1; });
   const prevCats = {};
   prev30.forEach(d => { const c = classifyEntry(d); prevCats[c] = (prevCats[c] || 0) + 1; });
-
   const growing = Object.entries(recentCats).filter(([c, n]) => n > (prevCats[c] || 0)).sort((a, b) => b[1] - a[1]);
-  const declining = Object.entries(prevCats).filter(([c, n]) => n > (recentCats[c] || 0));
+
+  const analysis = typeof RESEARCH_ANALYSIS !== 'undefined' ? RESEARCH_ANALYSIS : null;
+
+  // AI Agent status indicator
+  const agentStatusEl = document.getElementById('aiAgentStatus');
+  const agentStatusText = document.getElementById('aiAgentStatusText');
+  if (analysis && analysis.generated_at) {
+    const genDate = new Date(analysis.generated_at);
+    const daysAgo = Math.round((now - genDate) / 86400000);
+    const freshness = daysAgo <= 7 ? '最新' : daysAgo <= 14 ? '更新推奨' : '要更新';
+    agentStatusText.textContent = `AI Analysis Agent — ${analysis.entry_count}件を分析（${formatDate(analysis.generated_at)}生成・${freshness}）`;
+    agentStatusEl.style.display = 'flex';
+  }
 
   let ctxHtml = '';
-  // Narrative context
-  if (recent30.length > 0) {
-    const topRecent = Object.entries(recentCats).sort((a, b) => b[1] - a[1]).slice(0, 3);
+
+  if (data.length < 10) {
+    // New user: show feature introduction
+    ctxHtml = `<div style="padding:20px;background:var(--accent-light);border-radius:var(--radius-md);line-height:1.85;">
+      <strong style="font-size:var(--text-base);">AI Analysis Agent</strong>
+      <p style="margin-top:8px;font-size:var(--text-sm);color:var(--text-muted);">リサーチが10件以上蓄積されると、AIがあなたのリサーチ全体を横断的に読み込み、文脈分析・構造的洞察・次の探究提案を自動生成します。</p>
+      <p style="margin-top:4px;font-size:var(--text-sm);color:var(--text-muted);">現在 ${data.length} 件 / 10件で有効化</p>
+      <div style="margin-top:8px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;">
+        <div style="height:100%;width:${Math.min(data.length / 10 * 100, 100)}%;background:var(--accent);border-radius:2px;"></div>
+      </div>
+    </div>`;
+  } else if (analysis && analysis.context_analysis) {
+    // AI-generated analysis
+    const ctx = analysis.context_analysis;
     ctxHtml += `<div style="font-size:var(--text-base);line-height:1.85;margin-bottom:var(--space-lg);">`;
-    ctxHtml += `直近30日間で${recent30.length}件のリサーチが追加されました。`;
-    if (topRecent.length > 0) {
-      ctxHtml += `現在の探究は<strong>${topRecent.map(([c, n]) => c).join('</strong>、<strong>')}</strong>を中心に展開しています。`;
-    }
-    if (growing.length > 0) {
-      ctxHtml += `前月と比較すると、<strong>${growing.slice(0, 2).map(([c]) => c).join('</strong>と<strong>')}</strong>への関心が高まっており、`;
-    }
-    if (declining.length > 0) {
-      ctxHtml += `一方で<strong>${declining.slice(0, 2).map(([c]) => c).join('</strong>と<strong>')}</strong>は探究のペースが落ちています。`;
-    }
-
-    // Cross-cutting themes — use deep keywords from digests if available
-    const recentTags = {};
-    const recentDeepKw = {};
-    recent30.forEach(d => {
-      (d.tags || []).filter(t => !NOISE_TAGS.has(t) && t !== 'AI' && t !== '生成AI').forEach(t => { recentTags[t] = (recentTags[t] || 0) + 1; });
-      if (d.digest && d.digest.deep_keywords) {
-        d.digest.deep_keywords.forEach(k => { recentDeepKw[k] = (recentDeepKw[k] || 0) + 1; });
-      }
-    });
-    // Prefer deep keywords if enough digests exist
-    const hasDigests = recent30.filter(d => d.digest).length > recent30.length * 0.3;
-    const hotKeywords = hasDigests
-      ? Object.entries(recentDeepKw).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([t]) => t)
-      : Object.entries(recentTags).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([t]) => t);
-    if (hotKeywords.length > 0) {
-      ctxHtml += `分野を横断する${hasDigests ? '本質的な概念' : 'キーワード'}として${hotKeywords.map(t => '「' + t + '」').join('、')}が浮上しており、これらが今後の探究の結節点になる可能性があります。`;
-    }
-
-    // Surface digest-based structural insights
-    const recentInsights = recent30.filter(d => d.digest?.structure).slice(0, 3);
-    if (recentInsights.length > 0) {
-      ctxHtml += `</div><div style="font-size:var(--text-sm);line-height:1.8;margin-top:var(--space-md);">`;
-      ctxHtml += `<strong>直近のリサーチから得られた構造的理解:</strong><ul style="margin-top:8px;padding-left:20px;">`;
-      recentInsights.forEach(d => {
-        ctxHtml += `<li style="margin-bottom:6px;"><strong>${esc(d.title.slice(0, 40))}</strong>: ${esc(d.digest.structure.slice(0, 200))}</li>`;
-      });
-      ctxHtml += `</ul>`;
-    }
+    ctxHtml += ctx.narrative || '';
     ctxHtml += `</div>`;
+
+    if (ctx.research_trajectory) {
+      ctxHtml += `<div style="font-size:var(--text-base);line-height:1.85;margin-bottom:var(--space-lg);padding:16px 20px;background:var(--accent-light);border-radius:var(--radius-md);">`;
+      ctxHtml += `<strong>探究の軌跡:</strong> ${ctx.research_trajectory}`;
+      ctxHtml += `</div>`;
+    }
+
+    if (ctx.cross_cutting_themes && ctx.cross_cutting_themes.length > 0) {
+      ctxHtml += `<div style="margin-bottom:var(--space-lg);">`;
+      ctxHtml += `<strong style="font-size:var(--text-sm);color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;">横断テーマ</strong>`;
+      ctxHtml += `<div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;">`;
+      ctx.cross_cutting_themes.forEach(t => {
+        ctxHtml += `<div style="flex:1;min-width:200px;padding:12px 16px;border:1px solid var(--border);border-radius:var(--radius-md);">
+          <div style="font-weight:700;font-size:var(--text-sm);margin-bottom:4px;">${esc(t.theme)}</div>
+          <div style="font-size:var(--text-xs);color:var(--text-muted);line-height:1.6;">${esc(t.description || '')}</div>
+        </div>`;
+      });
+      ctxHtml += `</div></div>`;
+    }
+
+    if (ctx.structural_insights && ctx.structural_insights.length > 0) {
+      ctxHtml += `<div style="font-size:var(--text-sm);line-height:1.8;">`;
+      ctxHtml += `<strong>構造的洞察:</strong><ul style="margin-top:8px;padding-left:20px;">`;
+      ctx.structural_insights.forEach(i => {
+        ctxHtml += `<li style="margin-bottom:8px;"><strong>${esc(i.title)}</strong>: ${esc(i.insight)}</li>`;
+      });
+      ctxHtml += `</ul></div>`;
+    }
+
+    // Supplement with live recent stats
+    if (recent30.length > 0) {
+      ctxHtml += `<div style="margin-top:var(--space-md);padding-top:var(--space-md);border-top:1px solid var(--border);font-size:var(--text-sm);color:var(--text-muted);line-height:1.7;">`;
+      ctxHtml += `直近30日間: ${recent30.length}件追加`;
+      if (growing.length > 0) {
+        ctxHtml += ` — 注力領域: ${growing.slice(0, 3).map(([c]) => c).join('、')}`;
+      }
+      ctxHtml += `</div>`;
+    }
   } else {
-    ctxHtml += '<div style="color:var(--text-muted);font-size:var(--text-sm);">データが蓄積されると文脈分析が表示されます。</div>';
+    // Fallback: algorithmic analysis (original logic)
+    const declining = Object.entries(prevCats).filter(([c, n]) => n > (recentCats[c] || 0));
+    if (recent30.length > 0) {
+      const topRecent = Object.entries(recentCats).sort((a, b) => b[1] - a[1]).slice(0, 3);
+      ctxHtml += `<div style="font-size:var(--text-base);line-height:1.85;margin-bottom:var(--space-lg);">`;
+      ctxHtml += `直近30日間で${recent30.length}件のリサーチが追加されました。`;
+      if (topRecent.length > 0) {
+        ctxHtml += `現在の探究は<strong>${topRecent.map(([c, n]) => c).join('</strong>、<strong>')}</strong>を中心に展開しています。`;
+      }
+      if (growing.length > 0) {
+        ctxHtml += `前月と比較すると、<strong>${growing.slice(0, 2).map(([c]) => c).join('</strong>と<strong>')}</strong>への関心が高まっており、`;
+      }
+      if (declining.length > 0) {
+        ctxHtml += `一方で<strong>${declining.slice(0, 2).map(([c]) => c).join('</strong>と<strong>')}</strong>は探究のペースが落ちています。`;
+      }
+      const recentTags = {};
+      const recentDeepKw = {};
+      recent30.forEach(d => {
+        (d.tags || []).filter(t => !NOISE_TAGS.has(t) && t !== 'AI' && t !== '生成AI').forEach(t => { recentTags[t] = (recentTags[t] || 0) + 1; });
+        if (d.digest && d.digest.deep_keywords) { d.digest.deep_keywords.forEach(k => { recentDeepKw[k] = (recentDeepKw[k] || 0) + 1; }); }
+      });
+      const hasDigests = recent30.filter(d => d.digest).length > recent30.length * 0.3;
+      const hotKeywords = hasDigests
+        ? Object.entries(recentDeepKw).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([t]) => t)
+        : Object.entries(recentTags).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([t]) => t);
+      if (hotKeywords.length > 0) {
+        ctxHtml += `分野を横断する${hasDigests ? '本質的な概念' : 'キーワード'}として${hotKeywords.map(t => '「' + t + '」').join('、')}が浮上しており、これらが今後の探究の結節点になる可能性があります。`;
+      }
+      const recentInsights = recent30.filter(d => d.digest?.structure).slice(0, 3);
+      if (recentInsights.length > 0) {
+        ctxHtml += `</div><div style="font-size:var(--text-sm);line-height:1.8;margin-top:var(--space-md);">`;
+        ctxHtml += `<strong>直近のリサーチから得られた構造的理解:</strong><ul style="margin-top:8px;padding-left:20px;">`;
+        recentInsights.forEach(d => { ctxHtml += `<li style="margin-bottom:6px;"><strong>${esc(d.title.slice(0, 40))}</strong>: ${esc(d.digest.structure.slice(0, 200))}</li>`; });
+        ctxHtml += `</ul>`;
+      }
+      ctxHtml += `</div>`;
+    } else {
+      ctxHtml += '<div style="color:var(--text-muted);font-size:var(--text-sm);">データが蓄積されると文脈分析が表示されます。</div>';
+    }
   }
   ctxEl.innerHTML = ctxHtml;
 
-  // === Next research suggestions — detailed with background & instruction ===
+  // === Next research suggestions — AI-generated or algorithmic fallback ===
   const sugEl = document.getElementById('homeResearchSuggestions');
   const allCats = {};
   data.forEach(d => { const c = classifyEntry(d); allCats[c] = (allCats[c] || 0) + 1; });
@@ -3017,203 +3090,153 @@ function renderOverview() {
 
   // Helper: build rich context by analyzing research FLOW, not counts
   function buildContext(cat) {
-    const entries = (catEntries[cat] || []).sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)); // chronological
+    const entries = (catEntries[cat] || []).sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
     const tagFreq = {};
     entries.forEach(e => (e.tags || []).filter(t => !NOISE_TAGS.has(t) && t !== 'AI' && t !== '生成AI').forEach(t => { tagFreq[t] = (tagFreq[t] || 0) + 1; }));
     const topTags = Object.entries(tagFreq).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([t]) => t);
-
-    // Analyze the trajectory: early → middle → recent phases
     const third = Math.ceil(entries.length / 3);
     const earlyEntries = entries.slice(0, third);
-    const midEntries = entries.slice(third, third * 2);
     const lateEntries = entries.slice(third * 2);
-
-    function phaseTopics(phaseEntries) {
-      const tf = {};
-      phaseEntries.forEach(e => {
-        (e.tags || []).filter(t => !NOISE_TAGS.has(t) && t !== 'AI' && t !== '生成AI').forEach(t => { tf[t] = (tf[t] || 0) + 1; });
-      });
-      return Object.entries(tf).sort((a, b) => b[1] - a[1]).slice(0, 4).map(([t]) => t);
-    }
+    function phaseTopics(pe) { const tf = {}; pe.forEach(e => { (e.tags || []).filter(t => !NOISE_TAGS.has(t) && t !== 'AI' && t !== '生成AI').forEach(t => { tf[t] = (tf[t] || 0) + 1; }); }); return Object.entries(tf).sort((a, b) => b[1] - a[1]).slice(0, 4).map(([t]) => t); }
     const earlyTopics = phaseTopics(earlyEntries);
-    const midTopics = phaseTopics(midEntries);
+    const midTopics = phaseTopics(entries.slice(third, third * 2));
     const lateTopics = phaseTopics(lateEntries);
-
-    // Extract key findings — prefer digest-based insights over regex matching
-    const keyFindings = [];
-    const openQuestions = [];
-    const deepKeywords = new Set();
-    [...lateEntries, ...midEntries].slice(0, 12).forEach(e => {
-      // Use digest if available (deep content understanding)
+    const keyFindings = []; const openQuestions = []; const deepKeywords = new Set();
+    [...lateEntries, ...entries.slice(third, third * 2)].slice(0, 12).forEach(e => {
       if (e.digest) {
-        if (e.digest.core_insight) {
-          keyFindings.push({ title: e.title, finding: e.digest.core_insight.slice(0, 200), isDigest: true });
-        }
-        if (e.digest.open_questions) {
-          e.digest.open_questions.forEach(q => openQuestions.push({ title: e.title, question: q }));
-        }
-        if (e.digest.deep_keywords) {
-          e.digest.deep_keywords.forEach(k => deepKeywords.add(k));
-        }
+        if (e.digest.core_insight) keyFindings.push({ title: e.title, finding: e.digest.core_insight.slice(0, 200), isDigest: true });
+        if (e.digest.open_questions) e.digest.open_questions.forEach(q => openQuestions.push({ title: e.title, question: q }));
+        if (e.digest.deep_keywords) e.digest.deep_keywords.forEach(k => deepKeywords.add(k));
         return;
       }
-      // Fallback: regex-based extraction for entries without digest
       const text = e.content || e.summary || '';
       if (text.length < 50) return;
       const sentences = text.split(/[。．]/).filter(s => s.trim().length > 30);
-      const important = sentences.filter(s =>
-        /\d+[%％万億兆件]|重要|明らか|示唆|発見|結論|課題|可能性|注目|特徴的|傾向|増加|減少|変化|必要/.test(s)
-      );
-      if (important.length > 0) {
-        keyFindings.push({ title: e.title, finding: important[0].trim().slice(0, 150), isDigest: false });
-      }
+      const important = sentences.filter(s => /\d+[%％万億兆件]|重要|明らか|示唆|発見|結論|課題|可能性|注目|特徴的|傾向|増加|減少|変化|必要/.test(s));
+      if (important.length > 0) keyFindings.push({ title: e.title, finding: important[0].trim().slice(0, 150), isDigest: false });
     });
-
-    // Adjacent categories
     const adjacentCats = [];
     const catTagSet = new Set(topTags.map(t => t.toLowerCase()));
     Object.entries(catEntries).forEach(([otherCat, otherEntries]) => {
       if (otherCat === cat) return;
-      const otherTags = new Set();
-      otherEntries.forEach(e => (e.tags || []).forEach(t => otherTags.add(t.toLowerCase())));
+      const otherTags = new Set(); otherEntries.forEach(e => (e.tags || []).forEach(t => otherTags.add(t.toLowerCase())));
       const overlap = [...catTagSet].filter(t => otherTags.has(t));
       if (overlap.length >= 2) adjacentCats.push({ cat: otherCat, shared: overlap });
     });
     adjacentCats.sort((a, b) => b.shared.length - a.shared.length);
-
-    // Recent titles for reference
     const recentTitles = entries.slice(-5).reverse().map(e => e.title);
-
     return { recentTitles, topTags, total: entries.length, keyFindings, openQuestions, deepKeywords: [...deepKeywords], adjacentCats, earlyTopics, midTopics, lateTopics, lateEntries, earlyEntries };
   }
 
   // Helper: generate a polished, ready-to-use research prompt
   function buildInstruction(cat, ctx, reason) {
-    let p = '';
-
-    // Describe the research flow as narrative
-    p += `これまでの「${cat}」に関するリサーチの流れを踏まえて、次のステップとなる調査を実施してください。\n\n`;
-
-    // Trajectory narrative
+    let p = `これまでの「${cat}」に関するリサーチの流れを踏まえて、次のステップとなる調査を実施してください。\n\n`;
     if (ctx.earlyTopics.length > 0 && ctx.lateTopics.length > 0) {
       p += `これまでの探究は、`;
       if (ctx.earlyTopics.length > 0) p += `初期には${ctx.earlyTopics.slice(0, 2).join('や')}を中心に展開し、`;
       if (ctx.midTopics.length > 0 && ctx.midTopics[0] !== ctx.earlyTopics[0]) p += `その後${ctx.midTopics.slice(0, 2).join('・')}へと関心が広がり、`;
-      p += `直近では${ctx.lateTopics.slice(0, 2).join('と')}に焦点が移っています。`;
-      p += `${reason}\n\n`;
-    } else {
-      p += `${reason}\n\n`;
-    }
-
-    // Key findings that should inform next research
+      p += `直近では${ctx.lateTopics.slice(0, 2).join('と')}に焦点が移っています。${reason}\n\n`;
+    } else { p += `${reason}\n\n`; }
     if (ctx.keyFindings.length > 0) {
       p += `特に以下の知見が重要であり、これらを出発点として調査を深めてください。\n\n`;
       ctx.keyFindings.slice(0, 3).forEach((f, i) => {
-        if (f.isDigest) {
-          p += `${i + 1}. 「${f.title}」の核心的洞察: ${f.finding}\nこの洞察を踏まえ、最新の研究動向や実践事例における展開を調べてください。\n\n`;
-        } else {
-          p += `${i + 1}. 「${f.title}」の調査で、${f.finding}ことが明らかになっています。この知見を踏まえ、最新の研究動向や実践事例における展開を調べてください。\n\n`;
-        }
+        p += f.isDigest
+          ? `${i + 1}. 「${f.title}」の核心的洞察: ${f.finding}\nこの洞察を踏まえ、最新の研究動向や実践事例における展開を調べてください。\n\n`
+          : `${i + 1}. 「${f.title}」の調査で、${f.finding}ことが明らかになっています。この知見を踏まえ、最新の研究動向や実践事例における展開を調べてください。\n\n`;
       });
     }
-
-    // Open questions from digests
     if (ctx.openQuestions && ctx.openQuestions.length > 0) {
       p += `また、これまでの調査を通じて以下の未解決の問いが浮上しています。これらにも可能な範囲で応答してください。\n\n`;
-      ctx.openQuestions.slice(0, 3).forEach((q, i) => {
-        p += `- ${q.question}\n`;
-      });
-      p += `\n`;
+      ctx.openQuestions.slice(0, 3).forEach(q => { p += `- ${q.question}\n`; }); p += `\n`;
     }
-
-    // Cross-pollination direction
     if (ctx.adjacentCats.length > 0) {
       const adj = ctx.adjacentCats[0];
       p += `また、「${adj.cat}」分野と${adj.shared.slice(0, 2).join('・')}というテーマを共有しています。この分野横断的な視点からも新たな知見を探索してください。\n\n`;
     }
-
-    // What specifically to investigate
     p += `調査にあたっては、以下の点を重視してください。\n\n`;
     p += `- 既存のリサーチ（${ctx.recentTitles.slice(0, 3).join('、')}など）で扱われていない新しい角度からの分析\n`;
-    if (ctx.lateTopics.length > 0) {
-      p += `- ${ctx.lateTopics[0]}に関する最新の学術研究、国際的な事例、政策動向\n`;
-    }
+    if (ctx.lateTopics.length > 0) p += `- ${ctx.lateTopics[0]}に関する最新の学術研究、国際的な事例、政策動向\n`;
     p += `- 具体的なデータや事例に基づいた実証的な議論\n`;
     p += `- 今後さらに深掘りすべきテーマを3つ以上、具体的な探究の方向性とともに提案すること\n\n`;
-
     p += `このリサーチは、人類学の視座を持つ研究者・コンサルタントが、ソーシャルイノベーションと未来洞察の実践に活用することを前提としています。学術的な厳密性と実務的な有用性の両方を備えた内容としてください。単なる情報の羅列ではなく、「なぜそれが重要なのか」「どのような構造的な変化が起きているのか」「実践者にとっての含意は何か」という問いに答える形で記述してください。\n\n`;
     p += `レポートは日本語で10,000文字以上とし、文章（地の文）で記述してください。構成はエグゼクティブサマリー、背景と問題設定、調査結果（3〜5章）、考察と示唆、今後の探究テーマの提案としてください。`;
-
     return p;
   }
 
-  // 1. Growing categories — describe the flow, not counts
-  growing.slice(0, 2).forEach(([cat, n]) => {
-    const ctx = buildContext(cat);
-    const total = ctx.total;
-    // Build flow-based background
-    let bg = `「${cat}」は現在もっとも探究が活発な領域です。`;
-    if (ctx.earlyTopics.length > 0 && ctx.lateTopics.length > 0 && ctx.earlyTopics[0] !== ctx.lateTopics[0]) {
-      bg += `当初は${ctx.earlyTopics.slice(0, 2).join('・')}を起点としていましたが、探究が進むにつれて${ctx.lateTopics.slice(0, 2).join('・')}へと関心が移行しています。`;
-    } else if (ctx.lateTopics.length > 0) {
-      bg += `${ctx.lateTopics.slice(0, 2).join('と')}を軸とした探究が継続的に深まっています。`;
-    }
-    if (ctx.keyFindings.length > 0) {
-      bg += `直近の調査では「${ctx.keyFindings[0].finding.slice(0, 60)}」といった知見が得られており、この方向でさらに踏み込んだ調査が求められます。`;
-    }
-    const gapLevel = total < 20 ? '有望な空白地帯' : total < 50 ? '発展的探究' : '蓄積あり';
-    const gapColor = total < 20 ? 'var(--status-done)' : total < 50 ? 'var(--status-reading)' : 'var(--text-muted)';
-    suggestions.push({
-      theme: cat, background: bg, ctx,
-      instruction: savedInstructions[cat] || buildInstruction(cat, ctx, bg),
-      gapLevel, gapColor, total, priority: 'high'
-    });
-  });
+  // Use AI-generated suggestions if available, otherwise algorithmic fallback
+  if (analysis && analysis.research_suggestions && analysis.research_suggestions.length > 0) {
+    // AI-generated suggestions
+    analysis.research_suggestions.forEach(s => {
+      const cat = s.theme;
+      const ctx = catEntries[cat] ? buildContext(cat) : { recentTitles: [], topTags: [], total: s.entry_count || 0, keyFindings: [], openQuestions: [], deepKeywords: [], adjacentCats: [], earlyTopics: [], midTopics: [], lateTopics: [], lateEntries: [], earlyEntries: [] };
+      const gapColorMap = { '有望な空白地帯': 'var(--status-done)', '発展的探究': 'var(--status-reading)', '再調査': 'var(--status-investigating)', '蓄積あり': 'var(--text-muted)' };
 
-  // 2. Stale categories — describe what was explored and what's now needed
-  Object.entries(catLastDate).filter(([c, d]) => (now - d) > 60 * 86400000 && (allCats[c] || 0) >= 5)
-    .sort((a, b) => (allCats[b[0]] || 0) - (allCats[a[0]] || 0)).slice(0, 2)
-    .forEach(([cat, lastDate]) => {
-      if (suggestions.some(s => s.theme === cat)) return;
-      const ctx = buildContext(cat);
-      const days = Math.round((now - lastDate) / 86400000);
-      let bg = `「${cat}」の探究は${days}日前を最後に停滞しています。`;
-      if (ctx.lateTopics.length > 0) {
-        bg += `最後に取り組んでいたのは${ctx.lateTopics.slice(0, 2).join('・')}に関するテーマでした。`;
+      // Build instruction from AI rationale + key questions + algorithmic context
+      let aiInstruction = `これまでの「${cat}」に関するリサーチの流れを踏まえて、次のステップとなる調査を実施してください。\n\n`;
+      aiInstruction += `背景: ${s.background}\n\n`;
+      aiInstruction += `調査の方向性: ${s.rationale || ''}\n\n`;
+      if (s.key_questions && s.key_questions.length > 0) {
+        aiInstruction += `特に以下の問いに応答する形で調査してください:\n`;
+        s.key_questions.forEach(q => { aiInstruction += `- ${q}\n`; });
+        aiInstruction += `\n`;
       }
-      if (ctx.keyFindings.length > 0) {
-        bg += `当時の調査では「${ctx.keyFindings[0].finding.slice(0, 60)}」という知見が得られていますが、その後の展開を追えていません。`;
+      if (s.connections && s.connections.length > 0) {
+        aiInstruction += `関連領域（${s.connections.join('、')}）との接点も探索してください。\n\n`;
       }
-      bg += `この間に社会や技術の状況は変化しており、最新の動向を反映した再調査が必要です。`;
+      // Add standard research format instructions
+      aiInstruction += `このリサーチは、人類学の視座を持つ研究者・コンサルタントが、ソーシャルイノベーションと未来洞察の実践に活用することを前提としています。学術的な厳密性と実務的な有用性の両方を備えた内容としてください。\n\n`;
+      aiInstruction += `レポートは日本語で10,000文字以上とし、文章（地の文）で記述してください。構成はエグゼクティブサマリー、背景と問題設定、調査結果（3〜5章）、考察と示唆、今後の探究テーマの提案としてください。`;
+
       suggestions.push({
-        theme: cat, background: bg, ctx,
-        instruction: savedInstructions[cat] || buildInstruction(cat, ctx, bg),
-        gapLevel: '再調査', gapColor: 'var(--status-investigating)',
-        total: ctx.total, priority: 'medium'
+        theme: cat,
+        background: s.background,
+        ctx,
+        instruction: savedInstructions[cat] || aiInstruction,
+        gapLevel: s.gap_level || '発展的探究',
+        gapColor: gapColorMap[s.gap_level] || 'var(--status-reading)',
+        total: s.entry_count || ctx.total,
+        priority: s.priority || 'medium',
+        keyQuestions: s.key_questions || [],
+        connections: s.connections || [],
       });
     });
-
-  // 3. Small but active — emerging trajectory
-  Object.entries(allCats).filter(([c, n]) => n >= 3 && n <= 15 && recentCats[c] >= 1)
-    .sort((a, b) => a[1] - b[1]).slice(0, 2)
-    .forEach(([cat, total]) => {
-      if (suggestions.some(s => s.theme === cat)) return;
+  } else {
+    // Algorithmic fallback
+    growing.slice(0, 2).forEach(([cat, n]) => {
       const ctx = buildContext(cat);
-      let bg = `「${cat}」は比較的新しい探究領域で、まだ初期段階にあります。`;
-      if (ctx.lateTopics.length > 0) {
-        bg += `${ctx.lateTopics.slice(0, 2).join('と')}を中心に探索が始まっており、`;
-      }
-      if (ctx.adjacentCats.length > 0) {
-        bg += `「${ctx.adjacentCats[0].cat}」とは${ctx.adjacentCats[0].shared.slice(0, 2).join('・')}というテーマを共有しています。`;
-      }
-      bg += `基盤となるリサーチを充実させることで、今後の探究の方向性を確立できる段階です。`;
-      suggestions.push({
-        theme: cat, background: bg, ctx,
-        instruction: savedInstructions[cat] || buildInstruction(cat, ctx, bg),
-        gapLevel: '有望な空白地帯', gapColor: 'var(--status-done)',
-        total, priority: 'high'
-      });
+      let bg = `「${cat}」は現在もっとも探究が活発な領域です。`;
+      if (ctx.earlyTopics.length > 0 && ctx.lateTopics.length > 0 && ctx.earlyTopics[0] !== ctx.lateTopics[0]) {
+        bg += `当初は${ctx.earlyTopics.slice(0, 2).join('・')}を起点としていましたが、探究が進むにつれて${ctx.lateTopics.slice(0, 2).join('・')}へと関心が移行しています。`;
+      } else if (ctx.lateTopics.length > 0) { bg += `${ctx.lateTopics.slice(0, 2).join('と')}を軸とした探究が継続的に深まっています。`; }
+      if (ctx.keyFindings.length > 0) { bg += `直近の調査では「${ctx.keyFindings[0].finding.slice(0, 60)}」といった知見が得られており、この方向でさらに踏み込んだ調査が求められます。`; }
+      const gapLevel = ctx.total < 20 ? '有望な空白地帯' : ctx.total < 50 ? '発展的探究' : '蓄積あり';
+      const gapColor = ctx.total < 20 ? 'var(--status-done)' : ctx.total < 50 ? 'var(--status-reading)' : 'var(--text-muted)';
+      suggestions.push({ theme: cat, background: bg, ctx, instruction: savedInstructions[cat] || buildInstruction(cat, ctx, bg), gapLevel, gapColor, total: ctx.total, priority: 'high' });
     });
+    Object.entries(catLastDate).filter(([c, d]) => (now - d) > 60 * 86400000 && (allCats[c] || 0) >= 5)
+      .sort((a, b) => (allCats[b[0]] || 0) - (allCats[a[0]] || 0)).slice(0, 2)
+      .forEach(([cat, lastDate]) => {
+        if (suggestions.some(s => s.theme === cat)) return;
+        const ctx = buildContext(cat);
+        const days = Math.round((now - lastDate) / 86400000);
+        let bg = `「${cat}」の探究は${days}日前を最後に停滞しています。`;
+        if (ctx.lateTopics.length > 0) bg += `最後に取り組んでいたのは${ctx.lateTopics.slice(0, 2).join('・')}に関するテーマでした。`;
+        if (ctx.keyFindings.length > 0) bg += `当時の調査では「${ctx.keyFindings[0].finding.slice(0, 60)}」という知見が得られていますが、その後の展開を追えていません。`;
+        bg += `この間に社会や技術の状況は変化しており、最新の動向を反映した再調査が必要です。`;
+        suggestions.push({ theme: cat, background: bg, ctx, instruction: savedInstructions[cat] || buildInstruction(cat, ctx, bg), gapLevel: '再調査', gapColor: 'var(--status-investigating)', total: ctx.total, priority: 'medium' });
+      });
+    Object.entries(allCats).filter(([c, n]) => n >= 3 && n <= 15 && recentCats[c] >= 1)
+      .sort((a, b) => a[1] - b[1]).slice(0, 2)
+      .forEach(([cat, total]) => {
+        if (suggestions.some(s => s.theme === cat)) return;
+        const ctx = buildContext(cat);
+        let bg = `「${cat}」は比較的新しい探究領域で、まだ初期段階にあります。`;
+        if (ctx.lateTopics.length > 0) bg += `${ctx.lateTopics.slice(0, 2).join('と')}を中心に探索が始まっており、`;
+        if (ctx.adjacentCats.length > 0) bg += `「${ctx.adjacentCats[0].cat}」とは${ctx.adjacentCats[0].shared.slice(0, 2).join('・')}というテーマを共有しています。`;
+        bg += `基盤となるリサーチを充実させることで、今後の探究の方向性を確立できる段階です。`;
+        suggestions.push({ theme: cat, background: bg, ctx, instruction: savedInstructions[cat] || buildInstruction(cat, ctx, bg), gapLevel: '有望な空白地帯', gapColor: 'var(--status-done)', total, priority: 'high' });
+      });
+  }
 
   if (suggestions.length > 0) {
     sugEl.innerHTML = suggestions.map((s, i) => `
@@ -3228,7 +3251,18 @@ function renderOverview() {
 
         <div style="font-size:var(--text-base);line-height:1.8;margin-bottom:16px;color:var(--text);">${esc(s.background)}</div>
 
-        ${s.ctx.topTags.length > 0 ? `<div style="margin-bottom:16px;display:flex;gap:var(--space-xs);flex-wrap:wrap;">${s.ctx.topTags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>` : ''}
+        ${s.keyQuestions && s.keyQuestions.length > 0 ? `
+          <div style="margin-bottom:16px;padding:12px 16px;background:var(--accent-light);border-radius:var(--radius-md);">
+            <div style="font-size:var(--text-xs);font-weight:700;color:var(--accent);margin-bottom:6px;">核心的な問い</div>
+            <ul style="margin:0;padding-left:18px;font-size:var(--text-sm);line-height:1.7;color:var(--text);">
+              ${s.keyQuestions.map(q => `<li>${esc(q)}</li>`).join('')}
+            </ul>
+          </div>` : ''}
+
+        ${s.connections && s.connections.length > 0 ? `
+          <div style="margin-bottom:16px;font-size:var(--text-xs);color:var(--text-muted);">
+            関連領域: ${s.connections.map(c => `<span class="tag">${esc(c)}</span>`).join(' ')}
+          </div>` : (s.ctx.topTags.length > 0 ? `<div style="margin-bottom:16px;display:flex;gap:var(--space-xs);flex-wrap:wrap;">${s.ctx.topTags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>` : '')}
 
         <div style="margin-bottom:16px;">
           <div style="font-size:var(--text-xs);font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">調査指示案（編集可能）</div>
@@ -3310,6 +3344,27 @@ function renderOverview() {
     cpEl.innerHTML = cpHtml || '<div style="color:var(--text-muted);font-size:var(--text-sm);">調査提案につながるコメントはまだありません。</div>';
   } else {
     cpEl.innerHTML = '<div style="color:var(--text-muted);font-size:var(--text-sm);">コメントが蓄積されると提案が表示されます。</div>';
+  }
+
+  // === Key Insights (AI-generated) ===
+  const kiPanel = document.getElementById('homeKeyInsights');
+  const kiContent = document.getElementById('homeKeyInsightsContent');
+  if (analysis && analysis.key_insights) {
+    const ki = analysis.key_insights;
+    let kiHtml = '';
+    if (ki.emerging_patterns) {
+      kiHtml += `<div style="margin-bottom:var(--space-lg);"><strong style="font-size:var(--text-sm);color:var(--accent);">浮上するパターン</strong><div style="font-size:var(--text-base);line-height:1.85;margin-top:6px;">${esc(ki.emerging_patterns)}</div></div>`;
+    }
+    if (ki.knowledge_gaps) {
+      kiHtml += `<div style="margin-bottom:var(--space-lg);"><strong style="font-size:var(--text-sm);color:var(--accent);">知識の空白地帯</strong><div style="font-size:var(--text-base);line-height:1.85;margin-top:6px;">${esc(ki.knowledge_gaps)}</div></div>`;
+    }
+    if (ki.convergence_points) {
+      kiHtml += `<div><strong style="font-size:var(--text-sm);color:var(--accent);">領域の収束点</strong><div style="font-size:var(--text-base);line-height:1.85;margin-top:6px;">${esc(ki.convergence_points)}</div></div>`;
+    }
+    if (kiHtml) {
+      kiContent.innerHTML = kiHtml;
+      kiPanel.style.display = 'block';
+    }
   }
 }
 
