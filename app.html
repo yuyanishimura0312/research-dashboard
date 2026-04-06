@@ -1560,6 +1560,83 @@
     background: none; border: none; padding: 2px 0; font-weight: 600;
   }
   .expand-btn:hover { text-decoration: underline; }
+
+  /* Guide modal */
+  .guide-content { max-width: 700px; }
+  .guide-content h3 { font-size: 1rem; font-weight: 700; color: var(--accent); margin: 24px 0 10px; }
+  .guide-content h3:first-child { margin-top: 0; }
+  .guide-content p { font-size: 0.88rem; color: var(--text); line-height: 1.8; margin-bottom: 10px; }
+  .guide-content ul { font-size: 0.85rem; line-height: 1.8; margin: 0 0 12px 20px; color: var(--text); }
+  .guide-content li { margin-bottom: 4px; }
+  .guide-content .guide-feature {
+    background: var(--surface); border-radius: var(--radius-md); padding: 14px 18px;
+    margin-bottom: 10px; border-left: 3px solid var(--accent);
+  }
+  .guide-content .guide-feature strong { color: var(--accent); }
+  .guide-content .guide-shortcut {
+    display: inline-block; background: var(--tag-bg); padding: 2px 8px;
+    border-radius: 4px; font-size: 0.78rem; font-family: monospace;
+  }
+  .guide-nav {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;
+    border-bottom: 1px solid var(--border); padding-bottom: 12px;
+  }
+  .guide-nav-btn {
+    padding: 6px 14px; border: 1px solid var(--border); border-radius: 20px;
+    background: var(--card); font-size: 0.78rem; cursor: pointer;
+    color: var(--text-muted); transition: all 0.15s;
+  }
+  .guide-nav-btn:hover, .guide-nav-btn.active {
+    background: var(--accent); color: #fff; border-color: var(--accent);
+  }
+  .guide-section { display: none; }
+  .guide-section.active { display: block; }
+
+  /* Settings modal */
+  .settings-section { margin-bottom: 24px; }
+  .settings-section h3 {
+    font-size: 0.92rem; font-weight: 700; color: var(--accent);
+    margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border);
+  }
+  .settings-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md);
+    padding: 16px; margin-bottom: 12px;
+  }
+  .settings-card .settings-card-header {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
+  }
+  .settings-card .settings-card-title { font-size: 0.85rem; font-weight: 600; }
+  .settings-card .settings-card-desc { font-size: 0.78rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 10px; }
+  .settings-row { display: grid; grid-template-columns: 140px 1fr; gap: 8px; align-items: center; margin-bottom: 8px; }
+  .settings-row label { font-size: 0.78rem; font-weight: 600; color: var(--text-muted); }
+  .settings-row input, .settings-row select {
+    width: 100%; padding: 7px 10px; border: 1px solid var(--border);
+    border-radius: var(--radius-sm); font-size: 0.82rem; font-family: inherit;
+    background: var(--card);
+  }
+  .settings-row input:focus, .settings-row select:focus { outline: none; border-color: var(--accent); }
+  .source-list { display: flex; flex-direction: column; gap: 10px; }
+  .source-item {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md);
+    padding: 14px; position: relative;
+  }
+  .source-item .source-status {
+    display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px;
+  }
+  .source-item .source-status.connected { background: var(--status-reading); }
+  .source-item .source-status.disconnected { background: var(--status-investigating); }
+  .btn-icon {
+    background: none; border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 4px 8px; cursor: pointer; font-size: 0.78rem; color: var(--text-muted);
+    transition: all 0.15s;
+  }
+  .btn-icon:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-icon.danger:hover { border-color: #c0392b; color: #c0392b; }
+  @media (max-width: 640px) {
+    .settings-row { grid-template-columns: 1fr; }
+    .guide-nav { gap: 4px; }
+    .guide-nav-btn { font-size: 0.72rem; padding: 5px 10px; }
+  }
 </style>
 </head>
 <body>
@@ -1580,6 +1657,7 @@
       </span>
       <button class="btn btn-primary" onclick="openAddModal()">+ 新規追加</button>
       <span class="nav-desktop">
+        <button class="btn btn-sm" onclick="openSettingsModal()">設定</button>
         <a href="admin.html" id="adminLink" class="btn btn-sm" style="display:none">管理</a>
         <span id="userDisplayName" style="font-size:var(--text-xs);color:var(--text-muted);"></span>
         <button class="btn btn-sm" onclick="auth.signOut().then(()=>location.href='index.html')">ログアウト</button>
@@ -1600,6 +1678,7 @@
   <div class="menu-divider"></div>
   <button class="menu-item" onclick="exportData();closeMobileMenu()">Export</button>
   <button class="menu-item" onclick="document.getElementById('importFile').click();closeMobileMenu()">Import</button>
+  <button class="menu-item" onclick="openSettingsModal();closeMobileMenu()">設定</button>
   <a href="admin.html" id="adminLinkMobile" class="menu-item" style="display:none">管理</a>
   <div class="menu-divider"></div>
   <button class="menu-item" onclick="auth.signOut().then(()=>location.href='index.html')">ログアウト</button>
@@ -1805,6 +1884,7 @@
           <option value="recent">最新順</option>
           <option value="alpha">名前順</option>
         </select>
+        <button class="btn btn-sm" onclick="openGuideModal()" title="使い方ガイド">? ガイド</button>
       </div>
     </div>
     <div class="library-topic-map" id="libraryTopicMap"></div>
@@ -1860,6 +1940,281 @@
   </div>
 
 </main>
+
+<!-- ========== GUIDE MODAL ========== -->
+<div class="modal-overlay" id="guideModal" role="dialog" aria-modal="true" aria-label="使い方ガイド">
+  <div class="modal" style="max-width:720px">
+    <h2>Miratuku Research Dashboard 使い方ガイド</h2>
+    <div class="guide-nav">
+      <button class="guide-nav-btn active" onclick="switchGuideSection('guide-overview')">概要</button>
+      <button class="guide-nav-btn" onclick="switchGuideSection('guide-home')">ホーム</button>
+      <button class="guide-nav-btn" onclick="switchGuideSection('guide-list')">一覧</button>
+      <button class="guide-nav-btn" onclick="switchGuideSection('guide-library')">ライブラリ</button>
+      <button class="guide-nav-btn" onclick="switchGuideSection('guide-comments')">コメント</button>
+      <button class="guide-nav-btn" onclick="switchGuideSection('guide-advanced')">高度な機能</button>
+    </div>
+    <div class="guide-content">
+
+      <!-- Overview -->
+      <div class="guide-section active" id="guide-overview">
+        <h3>Research Dashboardとは</h3>
+        <p>Miratuku Research Dashboardは、調査・リサーチの蓄積と活用のためのプラットフォームです。個人のリサーチを登録・整理し、AI分析によって知識の構造や空白領域を可視化します。チームでリサーチを共有することもできます。</p>
+
+        <h3>4つのタブ</h3>
+        <div class="guide-feature">
+          <strong>ホーム</strong> — リサーチ全体の概観、AI文脈分析、次の調査提案を確認できます。ダッシュボードの起点です。
+        </div>
+        <div class="guide-feature">
+          <strong>一覧</strong> — 登録されたリサーチをカード・リスト・時系列の3つのビューで閲覧・検索できます。AI意味検索にも対応しています。
+        </div>
+        <div class="guide-feature">
+          <strong>ライブラリ</strong> — リサーチがトピック別に自動分類されます。知識の全体構造を俯瞰し、各トピックの深掘りができます。
+        </div>
+        <div class="guide-feature">
+          <strong>コメント</strong> — リサーチへのコメントからニーズを抽出し、新しいリサーチ方向を提案します。
+        </div>
+      </div>
+
+      <!-- Home tab -->
+      <div class="guide-section" id="guide-home">
+        <h3>ホームタブの使い方</h3>
+        <p>ホームタブはダッシュボードの起点です。開くと以下の情報が表示されます。</p>
+        <div class="guide-feature">
+          <strong>統計概要</strong> — リサーチ総数、カテゴリ数、今月の登録数、完了率がひと目で分かります。
+        </div>
+        <div class="guide-feature">
+          <strong>リサーチの文脈分析</strong> — AIがリサーチ全体のテーマ間の関連性と文脈を分析した結果です。自分のリサーチがどのような知識構造を形成しているかを把握できます。
+        </div>
+        <div class="guide-feature">
+          <strong>次に調査すべきテーマ</strong> — 蓄積されたリサーチの空白領域を分析し、次に調査すべきテーマを優先度付きで提案します。
+        </div>
+        <div class="guide-feature">
+          <strong>分析セクション</strong> — カテゴリ別の関心度や分野横断テーマの可視化など、より詳しい分析情報を確認できます。
+        </div>
+      </div>
+
+      <!-- Research list tab -->
+      <div class="guide-section" id="guide-list">
+        <h3>一覧タブの使い方</h3>
+        <p>登録されたリサーチを検索・閲覧するメインの画面です。</p>
+        <div class="guide-feature">
+          <strong>検索</strong> — 検索ボックスに自然文を入力してEnterを押すと、AI意味検索が実行されます。キーワード一致ではなく、意味的に近いリサーチが表示されます。<br>
+          <span class="guide-shortcut">AI検索</span> ボタンでAI意味検索のON/OFFを切り替えられます。
+        </div>
+        <div class="guide-feature">
+          <strong>フィルタ</strong> — カテゴリ、ステータス（調査中・読了・整理済・完了）、ソート順でリサーチを絞り込めます。ブックマーク済みのみの表示も可能です。
+        </div>
+        <div class="guide-feature">
+          <strong>3つのビュー</strong>
+          <ul>
+            <li><strong>カード</strong> — リサーチをカード形式で一覧表示（デフォルト）</li>
+            <li><strong>リスト</strong> — コンパクトなリスト形式で多くの件数を表示</li>
+            <li><strong>時系列</strong> — 登録日の時系列でリサーチを並べて表示</li>
+          </ul>
+        </div>
+        <div class="guide-feature">
+          <strong>新規追加</strong> — ヘッダーの「+ 新規追加」ボタンから新しいリサーチを登録できます。タイトル、カテゴリ、ソース、要約、タグなどを入力します。複数ファイルの一括アップロードにも対応しています。
+        </div>
+      </div>
+
+      <!-- Library tab -->
+      <div class="guide-section" id="guide-library">
+        <h3>ライブラリタブの使い方</h3>
+        <p>ライブラリは、登録されたリサーチをAIが自動的にトピック別に分類・構造化した画面です。知識の全体像を俯瞰するために使います。</p>
+        <div class="guide-feature">
+          <strong>トピックマップ</strong> — 上部のカラーチップがトピック一覧です。チップをクリックすると、そのトピックにスクロールします。数字は各トピックのリサーチ件数です。
+        </div>
+        <div class="guide-feature">
+          <strong>トピックセクション</strong> — 各トピックはクリックで展開でき、そのトピックに属するリサーチの一覧が表示されます。キーワードや関連カテゴリも確認できます。
+        </div>
+        <div class="guide-feature">
+          <strong>検索とソート</strong> — ライブラリ内の検索でトピックを絞り込めます。ソートはトピック規模順・最新順・名前順から選べます。
+        </div>
+        <div class="guide-feature">
+          <strong>カテゴリ階層構造</strong> — ページ下部には、カテゴリ &gt; クラスター &gt; リサーチの階層で知識構造を俯瞰できるセクションがあります。
+        </div>
+      </div>
+
+      <!-- Comments tab -->
+      <div class="guide-section" id="guide-comments">
+        <h3>コメントタブの使い方</h3>
+        <p>コメントタブは、リサーチに付けられたコメントを分析し、そこから新しいリサーチの方向性を見つけるための画面です。</p>
+        <div class="guide-feature">
+          <strong>ニーズ抽出</strong> — コメントの文脈から、潜在的なリサーチニーズを自動で抽出・分類します。
+        </div>
+        <div class="guide-feature">
+          <strong>新規リサーチ方針</strong> — コメントから導出されたリサーチ方針が、既存リサーチとの関連性と空白度の評価付きで表示されます。
+        </div>
+        <div class="guide-feature">
+          <strong>コメントの付け方</strong> — 一覧タブでリサーチカードをクリックし、詳細画面の下部にあるコメント欄から入力できます。
+        </div>
+      </div>
+
+      <!-- Advanced features -->
+      <div class="guide-section" id="guide-advanced">
+        <h3>高度な機能</h3>
+        <div class="guide-feature">
+          <strong>Export / Import</strong> — ヘッダーのExportボタンで全リサーチデータをJSON形式でダウンロードできます。Importでバックアップから復元も可能です。
+        </div>
+        <div class="guide-feature">
+          <strong>ダークモード</strong> — ヘッダーの月アイコンでダーク/ライトモードを切り替えられます。
+        </div>
+        <div class="guide-feature">
+          <strong>Magazine表示</strong> — ヘッダーの「Magazine」リンクから、リサーチを読みやすい記事形式で閲覧できます。外部公開にも対応しています。
+        </div>
+        <div class="guide-feature">
+          <strong>リサーチレポート接続</strong> — ヘッダーの「設定」ボタンから、外部のリサーチレポートシステムをデータソースとして接続できます。接続したソースのレポートが自動的にダッシュボードに取り込まれます。
+        </div>
+        <div class="guide-feature">
+          <strong>リサーチ共有（管理者）</strong> — 管理者は個別のリサーチを「共有」に設定でき、一般ユーザーにも閲覧可能にできます。
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-actions">
+      <div></div>
+      <button class="btn" onclick="closeGuideModal()">閉じる</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SETTINGS MODAL ========== -->
+<div class="modal-overlay" id="settingsModal" role="dialog" aria-modal="true" aria-label="設定">
+  <div class="modal" style="max-width:720px">
+    <h2>設定</h2>
+
+    <!-- Data sources section -->
+    <div class="settings-section">
+      <h3>リサーチレポート接続</h3>
+      <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:16px;line-height:1.7;">
+        外部のリサーチレポートシステムをデータソースとして接続します。接続されたソースからレポートが自動的にダッシュボードに取り込まれます。
+      </p>
+
+      <div class="source-list" id="sourceList">
+        <!-- Populated by JS -->
+      </div>
+
+      <button class="btn btn-sm" onclick="addNewSource()" style="margin-top:12px;">+ データソースを追加</button>
+    </div>
+
+    <!-- Add/Edit source form (hidden by default) -->
+    <div class="settings-section" id="sourceFormSection" style="display:none;">
+      <h3 id="sourceFormTitle">データソースを追加</h3>
+      <div class="settings-card">
+        <div class="settings-row">
+          <label>ソース名</label>
+          <input type="text" id="sourceName" placeholder="例: 社内リサーチDB">
+        </div>
+        <div class="settings-row">
+          <label>タイプ</label>
+          <select id="sourceType" onchange="onSourceTypeChange()">
+            <option value="api">REST API</option>
+            <option value="rss">RSS / Atom フィード</option>
+            <option value="webhook">Webhook（受信）</option>
+            <option value="google-sheets">Google Sheets</option>
+          </select>
+        </div>
+        <div class="settings-row" id="sourceUrlRow">
+          <label>エンドポイントURL</label>
+          <input type="url" id="sourceUrl" placeholder="https://...">
+        </div>
+        <div class="settings-row" id="sourceApiKeyRow">
+          <label>APIキー（任意）</label>
+          <input type="password" id="sourceApiKey" placeholder="認証が必要な場合">
+        </div>
+        <div class="settings-row" id="sourceSheetIdRow" style="display:none;">
+          <label>シートID</label>
+          <input type="text" id="sourceSheetId" placeholder="スプレッドシートのID">
+        </div>
+        <div class="settings-row">
+          <label>同期間隔</label>
+          <select id="sourceSyncInterval">
+            <option value="manual">手動</option>
+            <option value="hourly">毎時</option>
+            <option value="daily" selected>毎日</option>
+            <option value="weekly">毎週</option>
+          </select>
+        </div>
+        <div class="settings-row">
+          <label>カテゴリ割り当て</label>
+          <select id="sourceCategory">
+            <option value="">自動分類</option>
+            <option value="テクノロジー">テクノロジー</option>
+            <option value="社会・文化">社会・文化</option>
+            <option value="ビジネス・経営">ビジネス・経営</option>
+            <option value="政治・政策">政治・政策</option>
+            <option value="環境・エネルギー">環境・エネルギー</option>
+            <option value="教育・学習">教育・学習</option>
+            <option value="その他">その他</option>
+          </select>
+        </div>
+
+        <!-- Field mapping -->
+        <div style="margin-top:16px;">
+          <p style="font-size:0.78rem;font-weight:600;color:var(--text-muted);margin-bottom:8px;">フィールドマッピング（APIレスポンスのキー名を指定）</p>
+          <div class="settings-row">
+            <label>タイトル</label>
+            <input type="text" id="mapTitle" placeholder="title" value="title">
+          </div>
+          <div class="settings-row">
+            <label>要約</label>
+            <input type="text" id="mapSummary" placeholder="summary" value="summary">
+          </div>
+          <div class="settings-row">
+            <label>ソースURL</label>
+            <input type="text" id="mapSource" placeholder="url" value="url">
+          </div>
+          <div class="settings-row">
+            <label>日付</label>
+            <input type="text" id="mapDate" placeholder="date" value="date">
+          </div>
+          <div class="settings-row">
+            <label>タグ</label>
+            <input type="text" id="mapTags" placeholder="tags" value="tags">
+          </div>
+        </div>
+
+        <div style="display:flex;gap:8px;margin-top:16px;">
+          <button class="btn btn-primary btn-sm" onclick="saveSource()">保存</button>
+          <button class="btn btn-sm" onclick="testSourceConnection()">接続テスト</button>
+          <button class="btn btn-sm" onclick="cancelSourceForm()">キャンセル</button>
+        </div>
+        <div id="sourceTestResult" style="margin-top:10px;font-size:0.78rem;display:none;"></div>
+      </div>
+    </div>
+
+    <!-- Sync settings -->
+    <div class="settings-section">
+      <h3>同期設定</h3>
+      <div class="settings-card">
+        <div class="settings-row">
+          <label>自動同期</label>
+          <select id="globalAutoSync" onchange="saveGlobalSettings()">
+            <option value="on">有効</option>
+            <option value="off">無効</option>
+          </select>
+        </div>
+        <div class="settings-row">
+          <label>重複チェック</label>
+          <select id="globalDedup" onchange="saveGlobalSettings()">
+            <option value="title">タイトル一致で除外</option>
+            <option value="url">URL一致で除外</option>
+            <option value="both" selected>タイトル + URL</option>
+            <option value="none">チェックしない</option>
+          </select>
+        </div>
+        <div class="settings-card-desc">
+          外部ソースから取り込み済みのレポートと重複するものを自動でスキップします。
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <div></div>
+      <button class="btn" onclick="closeSettingsModal()">閉じる</button>
+    </div>
+  </div>
+</div>
 
 <!-- Bulk Upload Modal -->
 <div class="modal-overlay" id="bulkUploadModal" role="dialog" aria-modal="true" aria-label="ファイル一括アップロード">
@@ -6940,6 +7295,334 @@ function showToast(message, type = 'info', duration = 3000) {
     toast.classList.add('toast-out');
     toast.addEventListener('animationend', () => toast.remove());
   }, duration);
+}
+
+// === Guide Modal ===
+function openGuideModal() {
+  document.getElementById('guideModal').classList.add('active');
+  switchGuideSection('guide-overview');
+}
+function closeGuideModal() {
+  document.getElementById('guideModal').classList.remove('active');
+}
+function switchGuideSection(sectionId) {
+  document.querySelectorAll('.guide-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.guide-nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(sectionId).classList.add('active');
+  // Highlight matching nav button
+  const sections = ['guide-overview','guide-home','guide-list','guide-library','guide-comments','guide-advanced'];
+  const idx = sections.indexOf(sectionId);
+  const btns = document.querySelectorAll('.guide-nav-btn');
+  if (btns[idx]) btns[idx].classList.add('active');
+}
+document.getElementById('guideModal').addEventListener('click', function(e) {
+  if (e.target === this) closeGuideModal();
+});
+
+// === Settings Modal — data source management ===
+let _dataSources = [];
+let _editingSourceIdx = -1; // -1 = new source
+let _globalSettings = { autoSync: 'on', dedup: 'both' };
+
+function openSettingsModal() {
+  document.getElementById('settingsModal').classList.add('active');
+  loadSourceSettings();
+  renderSourceList();
+}
+function closeSettingsModal() {
+  document.getElementById('settingsModal').classList.remove('active');
+  cancelSourceForm();
+}
+document.getElementById('settingsModal').addEventListener('click', function(e) {
+  if (e.target === this) closeSettingsModal();
+});
+
+async function loadSourceSettings() {
+  if (!currentUser) return;
+  try {
+    const doc = await db.collection('users').doc(currentUser.uid).collection('rd_settings').doc('dataSources').get();
+    if (doc.exists) {
+      _dataSources = doc.data().sources || [];
+      _globalSettings = doc.data().global || { autoSync: 'on', dedup: 'both' };
+    }
+  } catch (e) { console.error('Failed to load source settings:', e); }
+  // Apply global settings to UI
+  document.getElementById('globalAutoSync').value = _globalSettings.autoSync || 'on';
+  document.getElementById('globalDedup').value = _globalSettings.dedup || 'both';
+  renderSourceList();
+}
+
+async function saveSourceSettings() {
+  if (!currentUser) return;
+  try {
+    await db.collection('users').doc(currentUser.uid).collection('rd_settings').doc('dataSources').set({
+      sources: _dataSources,
+      global: _globalSettings,
+      updatedAt: new Date().toISOString()
+    });
+    showToast('設定を保存しました', 'success');
+  } catch (e) {
+    console.error('Failed to save source settings:', e);
+    showToast('設定の保存に失敗しました', 'error');
+  }
+}
+
+function renderSourceList() {
+  const container = document.getElementById('sourceList');
+  if (!_dataSources.length) {
+    container.innerHTML = '<p style="font-size:0.82rem;color:var(--text-muted);">接続されたデータソースはありません。「+ データソースを追加」から設定してください。</p>';
+    return;
+  }
+  const typeLabels = { api: 'REST API', rss: 'RSS/Atom', webhook: 'Webhook', 'google-sheets': 'Google Sheets' };
+  const intervalLabels = { manual: '手動', hourly: '毎時', daily: '毎日', weekly: '毎週' };
+  container.innerHTML = _dataSources.map((src, i) => {
+    const connected = src.lastSync && src.status !== 'error';
+    return `
+      <div class="source-item">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <div>
+            <span class="source-status ${connected ? 'connected' : 'disconnected'}"></span>
+            <strong style="font-size:0.88rem;">${escapeHtml(src.name)}</strong>
+            <span style="font-size:0.72rem;color:var(--text-muted);margin-left:8px;">${typeLabels[src.type] || src.type}</span>
+          </div>
+          <div style="display:flex;gap:6px;">
+            <button class="btn-icon" onclick="syncSource(${i})" title="今すぐ同期">&#8635;</button>
+            <button class="btn-icon" onclick="editSource(${i})" title="編集">&#9998;</button>
+            <button class="btn-icon danger" onclick="deleteSource(${i})" title="削除">&#10005;</button>
+          </div>
+        </div>
+        <div style="font-size:0.75rem;color:var(--text-muted);display:flex;gap:16px;flex-wrap:wrap;">
+          <span>同期: ${intervalLabels[src.syncInterval] || src.syncInterval}</span>
+          <span>カテゴリ: ${src.category || '自動分類'}</span>
+          ${src.lastSync ? `<span>最終同期: ${new Date(src.lastSync).toLocaleString('ja-JP')}</span>` : '<span>未同期</span>'}
+          ${src.importedCount != null ? `<span>取込済: ${src.importedCount}件</span>` : ''}
+        </div>
+        ${src.status === 'error' ? `<div style="font-size:0.75rem;color:var(--status-investigating);margin-top:6px;">エラー: ${escapeHtml(src.errorMessage || '接続に失敗しました')}</div>` : ''}
+      </div>`;
+  }).join('');
+}
+
+function addNewSource() {
+  _editingSourceIdx = -1;
+  document.getElementById('sourceFormTitle').textContent = 'データソースを追加';
+  document.getElementById('sourceName').value = '';
+  document.getElementById('sourceType').value = 'api';
+  document.getElementById('sourceUrl').value = '';
+  document.getElementById('sourceApiKey').value = '';
+  document.getElementById('sourceSheetId').value = '';
+  document.getElementById('sourceSyncInterval').value = 'daily';
+  document.getElementById('sourceCategory').value = '';
+  document.getElementById('mapTitle').value = 'title';
+  document.getElementById('mapSummary').value = 'summary';
+  document.getElementById('mapSource').value = 'url';
+  document.getElementById('mapDate').value = 'date';
+  document.getElementById('mapTags').value = 'tags';
+  document.getElementById('sourceTestResult').style.display = 'none';
+  onSourceTypeChange();
+  document.getElementById('sourceFormSection').style.display = '';
+}
+
+function editSource(idx) {
+  const src = _dataSources[idx];
+  if (!src) return;
+  _editingSourceIdx = idx;
+  document.getElementById('sourceFormTitle').textContent = 'データソースを編集';
+  document.getElementById('sourceName').value = src.name || '';
+  document.getElementById('sourceType').value = src.type || 'api';
+  document.getElementById('sourceUrl').value = src.url || '';
+  document.getElementById('sourceApiKey').value = src.apiKey || '';
+  document.getElementById('sourceSheetId').value = src.sheetId || '';
+  document.getElementById('sourceSyncInterval').value = src.syncInterval || 'daily';
+  document.getElementById('sourceCategory').value = src.category || '';
+  const m = src.fieldMapping || {};
+  document.getElementById('mapTitle').value = m.title || 'title';
+  document.getElementById('mapSummary').value = m.summary || 'summary';
+  document.getElementById('mapSource').value = m.source || 'url';
+  document.getElementById('mapDate').value = m.date || 'date';
+  document.getElementById('mapTags').value = m.tags || 'tags';
+  document.getElementById('sourceTestResult').style.display = 'none';
+  onSourceTypeChange();
+  document.getElementById('sourceFormSection').style.display = '';
+}
+
+function cancelSourceForm() {
+  document.getElementById('sourceFormSection').style.display = 'none';
+  _editingSourceIdx = -1;
+}
+
+function onSourceTypeChange() {
+  const type = document.getElementById('sourceType').value;
+  document.getElementById('sourceUrlRow').style.display = type !== 'webhook' ? '' : 'none';
+  document.getElementById('sourceApiKeyRow').style.display = (type === 'api') ? '' : 'none';
+  document.getElementById('sourceSheetIdRow').style.display = (type === 'google-sheets') ? '' : 'none';
+  // Update URL label
+  const urlLabel = document.querySelector('#sourceUrlRow label');
+  if (urlLabel) {
+    const labels = { api: 'エンドポイントURL', rss: 'フィードURL', 'google-sheets': 'シートURL' };
+    urlLabel.textContent = labels[type] || 'URL';
+  }
+}
+
+async function saveSource() {
+  const name = document.getElementById('sourceName').value.trim();
+  const type = document.getElementById('sourceType').value;
+  const url = document.getElementById('sourceUrl').value.trim();
+  if (!name) { showToast('ソース名を入力してください', 'error'); return; }
+  if (type !== 'webhook' && !url) { showToast('URLを入力してください', 'error'); return; }
+
+  const source = {
+    name,
+    type,
+    url,
+    apiKey: document.getElementById('sourceApiKey').value.trim() || '',
+    sheetId: document.getElementById('sourceSheetId').value.trim() || '',
+    syncInterval: document.getElementById('sourceSyncInterval').value,
+    category: document.getElementById('sourceCategory').value,
+    fieldMapping: {
+      title: document.getElementById('mapTitle').value.trim() || 'title',
+      summary: document.getElementById('mapSummary').value.trim() || 'summary',
+      source: document.getElementById('mapSource').value.trim() || 'url',
+      date: document.getElementById('mapDate').value.trim() || 'date',
+      tags: document.getElementById('mapTags').value.trim() || 'tags',
+    },
+    createdAt: new Date().toISOString(),
+    status: 'pending',
+    lastSync: null,
+    importedCount: 0,
+  };
+
+  if (_editingSourceIdx >= 0) {
+    // Preserve existing sync state
+    const existing = _dataSources[_editingSourceIdx];
+    source.createdAt = existing.createdAt || source.createdAt;
+    source.lastSync = existing.lastSync;
+    source.importedCount = existing.importedCount || 0;
+    source.status = existing.status || 'pending';
+    _dataSources[_editingSourceIdx] = source;
+  } else {
+    _dataSources.push(source);
+  }
+
+  await saveSourceSettings();
+  cancelSourceForm();
+  renderSourceList();
+}
+
+async function deleteSource(idx) {
+  if (!confirm(`データソース「${_dataSources[idx].name}」を削除しますか？`)) return;
+  _dataSources.splice(idx, 1);
+  await saveSourceSettings();
+  renderSourceList();
+}
+
+async function syncSource(idx) {
+  const src = _dataSources[idx];
+  showToast(`${src.name} の同期を開始します...`, 'info');
+
+  try {
+    let response;
+    if (src.type === 'api' || src.type === 'rss' || src.type === 'google-sheets') {
+      const headers = {};
+      if (src.apiKey) headers['Authorization'] = `Bearer ${src.apiKey}`;
+      response = await fetch(src.url, { headers, mode: 'cors' });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const data = await response.json();
+      const items = Array.isArray(data) ? data : (data.items || data.results || data.data || []);
+      const m = src.fieldMapping || {};
+      let imported = 0;
+      for (const item of items) {
+        const title = item[m.title] || item.title || '';
+        if (!title) continue;
+        // Dedup check
+        const existing = loadData();
+        const isDupe = existing.some(e =>
+          (_globalSettings.dedup === 'title' || _globalSettings.dedup === 'both') && e.title === title ||
+          (_globalSettings.dedup === 'url' || _globalSettings.dedup === 'both') && e.source === (item[m.source] || '')
+        );
+        if (isDupe && _globalSettings.dedup !== 'none') continue;
+
+        const entry = {
+          id: 'src_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6),
+          title,
+          summary: item[m.summary] || item.summary || '',
+          source: item[m.source] || item.url || '',
+          category: src.category || item.category || '',
+          tags: Array.isArray(item[m.tags]) ? item[m.tags] : (item[m.tags] || '').split(',').map(t => t.trim()).filter(Boolean),
+          status: 'investigating',
+          createdAt: item[m.date] || new Date().toISOString(),
+          _source: 'user',
+          importedFrom: src.name,
+        };
+        await db.collection('users').doc(currentUser.uid).collection('rd_entries').doc(entry.id).set(entry);
+        imported++;
+      }
+      src.lastSync = new Date().toISOString();
+      src.importedCount = (src.importedCount || 0) + imported;
+      src.status = 'ok';
+      src.errorMessage = '';
+      showToast(`${src.name}: ${imported}件のレポートを取り込みました`, 'success');
+    } else if (src.type === 'webhook') {
+      showToast('Webhookはデータ受信を待機中です', 'info');
+      return;
+    }
+  } catch (e) {
+    src.status = 'error';
+    src.errorMessage = e.message;
+    showToast(`同期エラー: ${e.message}`, 'error');
+  }
+
+  _dataSources[idx] = src;
+  await saveSourceSettings();
+  // Reload user entries to reflect new imports
+  await loadUserEntriesFromFirestore();
+  _dataCacheDirty = true;
+  renderAll();
+  renderSourceList();
+}
+
+async function testSourceConnection() {
+  const url = document.getElementById('sourceUrl').value.trim();
+  const type = document.getElementById('sourceType').value;
+  const resultEl = document.getElementById('sourceTestResult');
+  resultEl.style.display = 'block';
+
+  if (type === 'webhook') {
+    resultEl.innerHTML = '<span style="color:var(--status-reading);">Webhookは受信待機型のため、接続テストは不要です。</span>';
+    return;
+  }
+  if (!url) {
+    resultEl.innerHTML = '<span style="color:var(--status-investigating);">URLを入力してください。</span>';
+    return;
+  }
+
+  resultEl.innerHTML = '<span style="color:var(--text-muted);">接続テスト中...</span>';
+  try {
+    const headers = {};
+    const apiKey = document.getElementById('sourceApiKey').value.trim();
+    if (apiKey) headers['Authorization'] = `Bearer ${apiKey}`;
+    const response = await fetch(url, { headers, mode: 'cors' });
+    if (!response.ok) throw new Error(`HTTP ${response.status} ${response.statusText}`);
+    const data = await response.json();
+    const items = Array.isArray(data) ? data : (data.items || data.results || data.data || []);
+    resultEl.innerHTML = `<span style="color:var(--status-reading);">接続成功 — ${items.length}件のアイテムを検出しました。</span>`;
+  } catch (e) {
+    resultEl.innerHTML = `<span style="color:var(--status-investigating);">接続失敗: ${escapeHtml(e.message)}</span>`;
+  }
+}
+
+async function saveGlobalSettings() {
+  _globalSettings.autoSync = document.getElementById('globalAutoSync').value;
+  _globalSettings.dedup = document.getElementById('globalDedup').value;
+  await saveSourceSettings();
+}
+
+// Escape helper (if not already defined)
+if (typeof escapeHtml === 'undefined') {
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
 }
 
 // Init is called from auth.onAuthStateChanged after login verification
