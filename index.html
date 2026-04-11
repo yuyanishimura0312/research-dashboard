@@ -300,6 +300,15 @@
             return messages[code] || 'エラーが発生しました。もう一度お試しください。';
         }
 
+        // Resolve redirect destination from query param (preserves hash from app.html)
+        function getRedirectUrl() {
+            const params = new URLSearchParams(window.location.search);
+            const r = params.get('redirect');
+            // Only allow relative redirects to app.html to prevent open-redirect
+            if (r && r.startsWith('app.html')) return r;
+            return 'app.html';
+        }
+
         // Redirect if already logged in
         auth.onAuthStateChanged(async (user) => {
             if (user) {
@@ -307,7 +316,7 @@
                     const doc = await db.collection('users').doc(user.uid).get();
                     if (doc.exists) {
                         const status = doc.data().status;
-                        if (status === 'active') { window.location.href = 'app.html'; return; }
+                        if (status === 'active') { window.location.href = getRedirectUrl(); return; }
                         if (status === 'pending') { showInfo('管理者の承認をお待ちください。'); await auth.signOut(); return; }
                         if (status === 'disabled') { showError('このアカウントは無効化されています。'); await auth.signOut(); return; }
                     }
@@ -367,7 +376,7 @@
                 const status = doc.data().status;
                 if (status === 'pending') { setLoading(false); showInfo('管理者の承認をお待ちください。'); await auth.signOut(); return; }
                 if (status === 'disabled') { setLoading(false); showError('このアカウントは無効化されています。'); await auth.signOut(); return; }
-                if (status === 'active') { window.location.href = 'app.html'; return; }
+                if (status === 'active') { window.location.href = getRedirectUrl(); return; }
 
                 setLoading(false);
                 showError('不明なアカウント状態です。管理者にお問い合わせください。');

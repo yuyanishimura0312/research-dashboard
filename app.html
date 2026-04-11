@@ -2322,7 +2322,7 @@ let userData = null;
 let _bookmarkCache = {};
 
 auth.onAuthStateChanged(async (user) => {
-  if (!user) { window.location.href = 'index.html'; return; }
+  if (!user) { const h = location.hash; window.location.href = 'index.html' + (h ? '?redirect=' + encodeURIComponent('app.html' + h) : ''); return; }
   currentUser = user;
   try {
     const doc = await db.collection('users').doc(user.uid).get();
