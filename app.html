@@ -1637,6 +1637,167 @@
     .guide-nav { gap: 4px; }
     .guide-nav-btn { font-size: 0.72rem; padding: 5px 10px; }
   }
+
+  /* ===== Reports Tab ===== */
+  .reports-toolbar {
+    display: flex; align-items: center; gap: var(--space-md);
+    margin-bottom: var(--space-xl); flex-wrap: wrap;
+  }
+  .reports-toolbar .search-box { flex: 1; min-width: 200px; }
+  .btn-new-report {
+    padding: 10px 20px; background: var(--accent); color: #fff; border: none;
+    border-radius: var(--radius-md); font-size: var(--text-sm); font-weight: 700;
+    cursor: pointer; white-space: nowrap; transition: background 0.15s;
+  }
+  .btn-new-report:hover { background: var(--accent-hover); }
+
+  .report-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: var(--space-lg); }
+  .report-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg);
+    padding: var(--space-lg); cursor: pointer; transition: all 0.15s;
+    display: flex; flex-direction: column; gap: var(--space-sm);
+  }
+  .report-card:hover { box-shadow: var(--shadow-md); border-color: var(--accent-soft); }
+  .report-card-title { font-size: var(--text-lg); font-weight: 700; color: var(--text); line-height: 1.4; }
+  .report-card-subtitle { font-size: var(--text-sm); color: var(--text-muted); }
+  .report-card-meta { font-size: var(--text-xs); color: var(--text-muted); margin-top: auto; padding-top: var(--space-sm); border-top: 1px solid var(--border); display: flex; justify-content: space-between; }
+  .report-card-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+  .report-card-tags span { background: var(--tag-bg); padding: 2px 8px; border-radius: 3px; font-size: var(--text-xs); }
+
+  /* Report Editor Modal (full-screen) */
+  .report-editor-overlay {
+    position: fixed; inset: 0; background: var(--bg); z-index: 2000;
+    display: none; flex-direction: column;
+  }
+  .report-editor-overlay.active { display: flex; }
+  .report-editor-header {
+    display: flex; align-items: center; gap: var(--space-md);
+    padding: var(--space-md) var(--space-lg); border-bottom: 1px solid var(--border);
+    background: var(--card); flex-shrink: 0;
+  }
+  .report-editor-header input {
+    flex: 1; font-size: var(--text-lg); font-weight: 700; border: none;
+    background: transparent; color: var(--text); outline: none;
+    padding: var(--space-sm);
+  }
+  .report-editor-header input::placeholder { color: var(--text-muted); }
+  .report-editor-body { display: flex; flex: 1; overflow: hidden; }
+  .report-editor-pane {
+    flex: 1; display: flex; flex-direction: column; overflow: hidden;
+  }
+  .report-editor-pane-label {
+    font-size: var(--text-xs); font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--text-muted); padding: var(--space-sm) var(--space-lg);
+    border-bottom: 1px solid var(--border); background: var(--surface); flex-shrink: 0;
+  }
+  .report-editor-textarea {
+    flex: 1; resize: none; border: none; padding: var(--space-lg);
+    font-family: 'SFMono-Regular', Consolas, monospace; font-size: 14px;
+    line-height: 1.7; background: var(--card); color: var(--text); outline: none;
+    overflow-y: auto;
+  }
+  .report-editor-divider { width: 1px; background: var(--border); flex-shrink: 0; }
+
+  /* Whitepaper Preview Pane */
+  .wp-preview {
+    flex: 1; overflow-y: auto; background: #fff; padding: 0;
+  }
+  .wp-preview-inner {
+    max-width: 680px; margin: 0 auto; padding: 3rem 2rem;
+    font-family: 'Noto Serif JP', Georgia, serif; color: #1a1a1a; line-height: 2;
+    letter-spacing: 0.02em;
+  }
+  .wp-preview-inner h1 {
+    font-family: 'Noto Sans JP', sans-serif; font-weight: 700;
+    font-size: clamp(1.6rem, 3vw, 2.2rem); line-height: 1.5;
+    margin-bottom: 1rem; color: #1a2744;
+  }
+  .wp-preview-inner .wp-subtitle {
+    font-size: clamp(0.95rem, 1.5vw, 1.1rem); color: #6b6b6b;
+    margin-bottom: 2rem; padding-bottom: 2rem;
+    border-bottom: 3px solid #1a2744; display: inline-block;
+  }
+  .wp-preview-inner h2 {
+    font-family: 'Noto Sans JP', sans-serif; font-weight: 700;
+    font-size: clamp(1.2rem, 2vw, 1.6rem); margin-top: 3rem; margin-bottom: 1rem;
+    padding-bottom: 0.5rem; border-bottom: 2px solid #e8ecf2; color: #1a2744;
+  }
+  .wp-preview-inner h3 {
+    font-family: 'Noto Sans JP', sans-serif; font-weight: 700;
+    font-size: 1.1rem; margin-top: 2.5rem; margin-bottom: 0.8rem; color: #2a3d5c;
+  }
+  .wp-preview-inner p {
+    font-size: 0.95rem; text-align: justify; margin-bottom: 1.5rem;
+  }
+  .wp-preview-inner strong { color: #1a2744; font-weight: 600; }
+  .wp-preview-inner blockquote {
+    border-left: 3px solid #1a2744; background: #fafafa;
+    padding: 1rem 1.5rem; margin: 1.5rem 0; font-size: 0.92rem;
+  }
+  .wp-preview-inner ul, .wp-preview-inner ol {
+    margin: 1rem 0 1.5rem 1.5rem; font-size: 0.95rem;
+  }
+  .wp-preview-inner li { margin-bottom: 0.5rem; }
+  .wp-preview-inner .wp-pull-quote {
+    text-align: center; font-size: 1.1rem; font-weight: 600; color: #1a2744;
+    border-top: 1px solid #e8ecf2; border-bottom: 1px solid #e8ecf2;
+    padding: 1.5rem 2rem; margin: 2rem -1rem; line-height: 2;
+  }
+  .wp-preview-inner .wp-key-concept {
+    border: 1px solid #e8ecf2; background: linear-gradient(135deg, #fff, #f7f9fc);
+    padding: 1.5rem; margin: 1.5rem 0; border-radius: 4px;
+  }
+  .wp-preview-inner .wp-key-concept .wp-kc-label {
+    font-family: 'Noto Sans JP', sans-serif; font-size: 0.7rem;
+    text-transform: uppercase; letter-spacing: 0.2em; color: #1a2744;
+    margin-bottom: 0.5rem; font-weight: 700;
+  }
+  .wp-preview-inner .wp-key-concept p { font-size: 0.9rem; margin-bottom: 0; }
+  .wp-preview-inner hr {
+    border: none; border-top: 1px solid #f0f0f0;
+    margin: 2rem auto; width: 60px;
+  }
+  .wp-preview-inner .wp-section-break {
+    text-align: center; padding: 1rem 0; color: #b0b0b0; font-size: 0.8rem;
+  }
+
+  /* Report metadata fields in editor */
+  .report-meta-row {
+    display: flex; gap: var(--space-md); padding: var(--space-sm) var(--space-lg);
+    border-bottom: 1px solid var(--border); background: var(--surface);
+    flex-wrap: wrap; align-items: center; flex-shrink: 0;
+  }
+  .report-meta-row label { font-size: var(--text-xs); color: var(--text-muted); font-weight: 600; }
+  .report-meta-row input, .report-meta-row select {
+    padding: 4px 8px; border: 1px solid var(--border); border-radius: var(--radius-sm);
+    font-size: var(--text-xs); background: var(--card); color: var(--text);
+  }
+  .report-meta-row input { width: 160px; }
+
+  /* Report view mode (full-screen whitepaper) */
+  .report-view-overlay {
+    position: fixed; inset: 0; background: #fff; z-index: 2000;
+    display: none; flex-direction: column;
+  }
+  .report-view-overlay.active { display: flex; }
+  .report-view-header {
+    display: flex; align-items: center; gap: var(--space-md);
+    padding: var(--space-md) var(--space-lg); border-bottom: 1px solid #e8ecf2;
+    background: #fff; flex-shrink: 0;
+  }
+  .report-view-body { flex: 1; overflow-y: auto; background: #fff; }
+
+  @media (max-width: 768px) {
+    .report-editor-body { flex-direction: column; }
+    .report-editor-divider { width: auto; height: 1px; }
+    .report-cards { grid-template-columns: 1fr; }
+    .wp-preview-inner { padding: 2rem 1.5rem; }
+    .wp-preview-inner p { text-align: left; }
+  }
+  @media print {
+    .report-view-header { display: none; }
+    .wp-preview-inner { max-width: 100%; padding: 0; }
+  }
 </style>
 </head>
 <body>
@@ -1702,6 +1863,7 @@
     <button class="tab-btn" data-tab="research" onclick="switchTab('research')" role="tab" aria-selected="false" aria-controls="tab-research" id="tab-btn-research">一覧</button>
     <button class="tab-btn" data-tab="library" onclick="switchTab('library')" role="tab" aria-selected="false" aria-controls="tab-library" id="tab-btn-library">ライブラリ</button>
     <button class="tab-btn" data-tab="comments" onclick="switchTab('comments')" role="tab" aria-selected="false" aria-controls="tab-comments" id="tab-btn-comments">コメント</button>
+    <button class="tab-btn" data-tab="reports" onclick="switchTab('reports')" role="tab" aria-selected="false" aria-controls="tab-reports" id="tab-btn-reports">レポート</button>
   </div>
 
   <!-- ========== OVERVIEW TAB ========== -->
@@ -1941,12 +2103,99 @@
     </div>
   </div>
 
+  <!-- ========== REPORTS TAB ========== -->
+  <div class="tab-panel" id="tab-reports" role="tabpanel" aria-labelledby="tab-btn-reports">
+    <div class="reports-toolbar">
+      <input type="text" class="search-box" id="reportSearch" placeholder="レポートを検索..." oninput="renderReportsTab()">
+      <select id="reportCategoryFilter" onchange="renderReportsTab()" style="padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius-md);font-size:var(--text-sm);background:var(--card);color:var(--text);">
+        <option value="">すべてのカテゴリ</option>
+      </select>
+      <button class="btn-new-report" onclick="openReportEditor()">+ 新規レポート</button>
+    </div>
+    <div class="stats" style="margin-bottom:var(--space-xl);">
+      <div class="stat-card"><div class="label">レポート総数</div><div class="value" id="rptStatTotal">0</div></div>
+      <div class="stat-card"><div class="label">カテゴリ</div><div class="value" id="rptStatCategories">0</div></div>
+      <div class="stat-card"><div class="label">今月作成</div><div class="value" id="rptStatThisMonth">0</div></div>
+    </div>
+    <div class="report-cards" id="reportCardsContainer"></div>
+    <div id="reportEmptyState" style="display:none;text-align:center;padding:4rem 2rem;color:var(--text-muted);">
+      <p style="font-size:var(--text-lg);margin-bottom:var(--space-md);">レポートはまだありません</p>
+      <p style="font-size:var(--text-sm);">「+ 新規レポート」からホワイトペーパー形式のレポートを作成できます</p>
+    </div>
+  </div>
+
   <!-- ========== TIMELINE TAB ========== -->
   <div class="tab-panel" id="tab-timeline" role="tabpanel" aria-label="時系列">
     <div class="timeline" id="timelineContainer"></div>
   </div>
 
 </main>
+
+<!-- ========== REPORT EDITOR (full-screen overlay) ========== -->
+<div class="report-editor-overlay" id="reportEditorOverlay">
+  <div class="report-editor-header">
+    <button class="btn-icon" onclick="closeReportEditor()" title="閉じる" style="font-size:1.2rem;">&#x2715;</button>
+    <input type="text" id="rptEditorTitle" placeholder="レポートタイトル">
+    <button class="btn-icon" onclick="saveReport()" style="background:var(--accent);color:#fff;border-color:var(--accent);padding:6px 16px;font-weight:700;">保存</button>
+    <button class="btn-icon" id="rptEditorDeleteBtn" onclick="deleteReport()" style="display:none;">削除</button>
+  </div>
+  <div class="report-meta-row">
+    <label>サブタイトル</label>
+    <input type="text" id="rptEditorSubtitle" placeholder="サブタイトル（任意）" style="width:240px;">
+    <label>カテゴリ</label>
+    <input type="text" id="rptEditorCategory" placeholder="例: 人類学, 経営戦略" style="width:160px;">
+    <label>タグ</label>
+    <input type="text" id="rptEditorTags" placeholder="カンマ区切り" style="width:200px;">
+    <label>ステータス</label>
+    <select id="rptEditorStatus" style="padding:4px 8px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:var(--text-xs);">
+      <option value="draft">下書き</option>
+      <option value="published">公開</option>
+    </select>
+  </div>
+  <div class="report-editor-body">
+    <div class="report-editor-pane">
+      <div class="report-editor-pane-label">Markdown</div>
+      <textarea class="report-editor-textarea" id="rptEditorContent" placeholder="Markdownで本文を入力...
+
+## 見出し2
+本文テキスト。**太字**や*斜体*が使えます。
+
+### 見出し3
+
+> 引用文
+
+:::pullquote
+強調したいフレーズ
+:::
+
+:::keyconcept[キーコンセプト名]
+重要な概念の説明
+:::" oninput="updateReportPreview()"></textarea>
+    </div>
+    <div class="report-editor-divider"></div>
+    <div class="report-editor-pane">
+      <div class="report-editor-pane-label">プレビュー（ホワイトペーパー形式）</div>
+      <div class="wp-preview" id="rptEditorPreview">
+        <div class="wp-preview-inner" id="rptEditorPreviewInner"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== REPORT VIEWER (full-screen whitepaper) ========== -->
+<div class="report-view-overlay" id="reportViewOverlay">
+  <div class="report-view-header">
+    <button class="btn-icon" onclick="closeReportView()" title="閉じる" style="font-size:1.2rem;">&#x2715;</button>
+    <span id="rptViewTitle" style="font-weight:700;font-size:var(--text-base);"></span>
+    <div style="margin-left:auto;display:flex;gap:var(--space-sm);">
+      <button class="btn-icon" onclick="editCurrentReport()">編集</button>
+      <button class="btn-icon" onclick="printReport()">印刷</button>
+    </div>
+  </div>
+  <div class="report-view-body">
+    <div class="wp-preview-inner" id="rptViewContent" style="max-width:680px;margin:0 auto;padding:3rem 2rem;font-family:'Noto Serif JP',Georgia,serif;color:#1a1a1a;line-height:2;letter-spacing:0.02em;"></div>
+  </div>
+</div>
 
 <!-- ========== GUIDE MODAL ========== -->
 <div class="modal-overlay" id="guideModal" role="dialog" aria-modal="true" aria-label="使い方ガイド">
@@ -3095,7 +3344,7 @@ function initTabFromHash() {
   // Redirect legacy tabs to their new homes
   const legacyMap = { 'graph': 'library', 'analytics': 'overview', 'timeline': 'research' };
   const mapped = legacyMap[hash] || hash;
-  const valid = ['overview','library','research','comments'];
+  const valid = ['overview','library','research','comments','reports'];
   if (mapped && valid.includes(mapped)) {
     switchTab(mapped, false);
     if (hash === 'timeline') setView('timeline');
@@ -3105,7 +3354,7 @@ window.addEventListener('hashchange', () => {
   const hash = location.hash.replace('#', '');
   const legacyMap = { 'graph': 'library', 'analytics': 'overview', 'timeline': 'research' };
   const mapped = legacyMap[hash] || hash;
-  const valid = ['overview','library','research','comments'];
+  const valid = ['overview','library','research','comments','reports'];
   if (mapped && valid.includes(mapped) && mapped !== currentTab) {
     switchTab(mapped, false);
     if (hash === 'timeline') setView('timeline');
@@ -6552,10 +6801,345 @@ function renderAll() {
   }
   else if (currentTab === 'comments') renderCommentsTab();
   else if (currentTab === 'library') { renderLibrary(); renderHierarchyInLibrary(); }
+  else if (currentTab === 'reports') renderReportsTab();
   // Legacy tab support (hidden but render functions still work)
   else if (currentTab === 'graph') { renderHierarchy(); }
   else if (currentTab === 'analytics') renderAnalytics();
   else if (currentTab === 'timeline') renderTimeline();
+}
+
+// ===== Reports Tab =====
+const REPORTS_STORAGE_KEY = 'miratuku_reports';
+let _reportsCache = null;
+let _currentReportId = null;
+
+function loadReports() {
+  if (_reportsCache) return _reportsCache;
+  try {
+    const raw = localStorage.getItem(REPORTS_STORAGE_KEY);
+    _reportsCache = raw ? JSON.parse(raw) : [];
+  } catch (e) { _reportsCache = []; }
+  // Also merge from window.REPORTS_DATA if available (file-based)
+  if (window.REPORTS_DATA && Array.isArray(window.REPORTS_DATA)) {
+    const localIds = new Set(_reportsCache.map(r => r.id));
+    window.REPORTS_DATA.forEach(r => { if (!localIds.has(r.id)) _reportsCache.push(r); });
+  }
+  return _reportsCache;
+}
+
+function saveReports() {
+  localStorage.setItem(REPORTS_STORAGE_KEY, JSON.stringify(_reportsCache || []));
+}
+
+function renderReportsTab() {
+  const reports = loadReports();
+  const search = (document.getElementById('reportSearch')?.value || '').toLowerCase();
+  const catFilter = document.getElementById('reportCategoryFilter')?.value || '';
+
+  // Populate category filter
+  const cats = [...new Set(reports.map(r => r.category).filter(Boolean))].sort();
+  const catSelect = document.getElementById('reportCategoryFilter');
+  if (catSelect) {
+    const curVal = catSelect.value;
+    catSelect.innerHTML = '<option value="">すべてのカテゴリ</option>' + cats.map(c => `<option value="${c}" ${c === curVal ? 'selected' : ''}>${c}</option>`).join('');
+  }
+
+  // Filter
+  let filtered = reports.filter(r => {
+    if (catFilter && r.category !== catFilter) return false;
+    if (search) {
+      const hay = `${r.title} ${r.subtitle || ''} ${r.category || ''} ${(r.tags || []).join(' ')} ${r.content || ''}`.toLowerCase();
+      return hay.includes(search);
+    }
+    return true;
+  });
+
+  // Sort by updatedAt desc
+  filtered.sort((a, b) => (b.updatedAt || b.createdAt || '').localeCompare(a.updatedAt || a.createdAt || ''));
+
+  // Stats
+  const now = new Date();
+  const thisMonth = reports.filter(r => {
+    const d = new Date(r.createdAt);
+    return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
+  });
+  document.getElementById('rptStatTotal').textContent = reports.length;
+  document.getElementById('rptStatCategories').textContent = cats.length;
+  document.getElementById('rptStatThisMonth').textContent = thisMonth.length;
+
+  // Render cards
+  const container = document.getElementById('reportCardsContainer');
+  const emptyState = document.getElementById('reportEmptyState');
+
+  if (filtered.length === 0) {
+    container.innerHTML = '';
+    emptyState.style.display = reports.length === 0 ? 'block' : 'block';
+    if (reports.length > 0 && search) emptyState.querySelector('p').textContent = '検索条件に一致するレポートはありません';
+    return;
+  }
+  emptyState.style.display = 'none';
+
+  container.innerHTML = filtered.map(r => {
+    const date = r.updatedAt ? new Date(r.updatedAt).toLocaleDateString('ja-JP') : (r.createdAt ? new Date(r.createdAt).toLocaleDateString('ja-JP') : '');
+    const statusLabel = r.status === 'published' ? '公開' : '下書き';
+    const preview = (r.content || '').replace(/[#>*_`\[\]()]/g, '').substring(0, 120);
+    const tags = (r.tags || []).slice(0, 3);
+    return `<div class="report-card" onclick="openReportView('${r.id}')">
+      <div class="report-card-title">${esc(r.title || '無題')}</div>
+      ${r.subtitle ? `<div class="report-card-subtitle">${esc(r.subtitle)}</div>` : ''}
+      <div style="font-size:var(--text-sm);color:var(--text-muted);line-height:1.6;">${esc(preview)}...</div>
+      ${tags.length ? `<div class="report-card-tags">${tags.map(t => `<span>${esc(t)}</span>`).join('')}</div>` : ''}
+      <div class="report-card-meta">
+        <span>${date} / ${statusLabel}${r.category ? ' / ' + esc(r.category) : ''}</span>
+        <span style="font-size:0.75rem;">${Math.ceil((r.content || '').length / 400)}分</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// Markdown to whitepaper HTML converter
+function mdToWhitepaper(md, title, subtitle) {
+  let html = '';
+
+  // Title block
+  if (title) {
+    html += `<div style="border-bottom:3px solid #1a2744;padding-bottom:2rem;margin-bottom:2.5rem;">`;
+    html += `<h1>${esc(title)}</h1>`;
+    if (subtitle) html += `<div class="wp-subtitle">${esc(subtitle)}</div>`;
+    html += `</div>`;
+  }
+
+  // Process markdown line-by-line with support for special blocks
+  const lines = md.split('\n');
+  let i = 0;
+  let inList = false;
+  let listType = '';
+
+  while (i < lines.length) {
+    const line = lines[i];
+
+    // Custom blocks: :::pullquote and :::keyconcept
+    if (line.trim().startsWith(':::pullquote')) {
+      let blockContent = '';
+      i++;
+      while (i < lines.length && !lines[i].trim().startsWith(':::')) {
+        blockContent += lines[i] + '\n';
+        i++;
+      }
+      if (i < lines.length) i++; // skip closing :::
+      html += `<div class="wp-pull-quote">${esc(blockContent.trim())}</div>`;
+      continue;
+    }
+
+    if (line.trim().startsWith(':::keyconcept')) {
+      const labelMatch = line.match(/\[([^\]]*)\]/);
+      const label = labelMatch ? labelMatch[1] : 'Key Concept';
+      let blockContent = '';
+      i++;
+      while (i < lines.length && !lines[i].trim().startsWith(':::')) {
+        blockContent += lines[i] + '\n';
+        i++;
+      }
+      if (i < lines.length) i++; // skip closing :::
+      html += `<div class="wp-key-concept"><div class="wp-kc-label">${esc(label)}</div><p>${inlineFormat(blockContent.trim())}</p></div>`;
+      continue;
+    }
+
+    // Close list if needed
+    if (inList && !line.trim().match(/^[-*]\s/) && !line.trim().match(/^\d+\.\s/)) {
+      html += listType === 'ul' ? '</ul>' : '</ol>';
+      inList = false;
+    }
+
+    // Headings
+    if (line.startsWith('### ')) {
+      html += `<h3>${inlineFormat(line.slice(4))}</h3>`;
+    } else if (line.startsWith('## ')) {
+      html += `<h2>${inlineFormat(line.slice(3))}</h2>`;
+    } else if (line.startsWith('# ')) {
+      // Skip h1 if title is already rendered
+      if (!title) html += `<h1>${inlineFormat(line.slice(2))}</h1>`;
+    }
+    // Blockquote
+    else if (line.startsWith('> ')) {
+      let bq = line.slice(2);
+      while (i + 1 < lines.length && lines[i + 1].startsWith('> ')) {
+        i++;
+        bq += '<br>' + lines[i].slice(2);
+      }
+      html += `<blockquote>${inlineFormat(bq)}</blockquote>`;
+    }
+    // Horizontal rule
+    else if (line.trim() === '---' || line.trim() === '***') {
+      html += '<hr>';
+    }
+    // Unordered list
+    else if (line.trim().match(/^[-*]\s/)) {
+      if (!inList || listType !== 'ul') {
+        if (inList) html += listType === 'ul' ? '</ul>' : '</ol>';
+        html += '<ul>';
+        inList = true; listType = 'ul';
+      }
+      html += `<li>${inlineFormat(line.trim().replace(/^[-*]\s/, ''))}</li>`;
+    }
+    // Ordered list
+    else if (line.trim().match(/^\d+\.\s/)) {
+      if (!inList || listType !== 'ol') {
+        if (inList) html += listType === 'ul' ? '</ul>' : '</ol>';
+        html += '<ol>';
+        inList = true; listType = 'ol';
+      }
+      html += `<li>${inlineFormat(line.trim().replace(/^\d+\.\s/, ''))}</li>`;
+    }
+    // Paragraph
+    else if (line.trim()) {
+      let para = line;
+      while (i + 1 < lines.length && lines[i + 1].trim() && !lines[i + 1].startsWith('#') && !lines[i + 1].startsWith('>') && !lines[i + 1].startsWith('---') && !lines[i + 1].startsWith('***') && !lines[i + 1].startsWith(':::') && !lines[i + 1].trim().match(/^[-*]\s/) && !lines[i + 1].trim().match(/^\d+\.\s/)) {
+        i++;
+        para += ' ' + lines[i];
+      }
+      html += `<p>${inlineFormat(para)}</p>`;
+    }
+
+    i++;
+  }
+
+  if (inList) html += listType === 'ul' ? '</ul>' : '</ol>';
+  return html;
+}
+
+function inlineFormat(text) {
+  // Bold
+  text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  // Italic
+  text = text.replace(/\*(.+?)\*/g, '<em>$1</em>');
+  // Inline code
+  text = text.replace(/`(.+?)`/g, '<code style="background:#f0f0f0;padding:1px 4px;border-radius:2px;font-size:0.9em;">$1</code>');
+  // Links
+  text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" style="color:#1a2744;text-decoration:underline;">$1</a>');
+  return text;
+}
+
+function updateReportPreview() {
+  const title = document.getElementById('rptEditorTitle').value;
+  const subtitle = document.getElementById('rptEditorSubtitle').value;
+  const content = document.getElementById('rptEditorContent').value;
+  document.getElementById('rptEditorPreviewInner').innerHTML = mdToWhitepaper(content, title, subtitle);
+}
+
+function openReportEditor(reportId) {
+  _currentReportId = reportId || null;
+  const overlay = document.getElementById('reportEditorOverlay');
+
+  if (reportId) {
+    const reports = loadReports();
+    const r = reports.find(x => x.id === reportId);
+    if (!r) return;
+    document.getElementById('rptEditorTitle').value = r.title || '';
+    document.getElementById('rptEditorSubtitle').value = r.subtitle || '';
+    document.getElementById('rptEditorCategory').value = r.category || '';
+    document.getElementById('rptEditorTags').value = (r.tags || []).join(', ');
+    document.getElementById('rptEditorStatus').value = r.status || 'draft';
+    document.getElementById('rptEditorContent').value = r.content || '';
+    document.getElementById('rptEditorDeleteBtn').style.display = '';
+  } else {
+    document.getElementById('rptEditorTitle').value = '';
+    document.getElementById('rptEditorSubtitle').value = '';
+    document.getElementById('rptEditorCategory').value = '';
+    document.getElementById('rptEditorTags').value = '';
+    document.getElementById('rptEditorStatus').value = 'draft';
+    document.getElementById('rptEditorContent').value = '';
+    document.getElementById('rptEditorDeleteBtn').style.display = 'none';
+  }
+
+  overlay.classList.add('active');
+  updateReportPreview();
+  document.getElementById('rptEditorContent').focus();
+}
+
+function closeReportEditor() {
+  document.getElementById('reportEditorOverlay').classList.remove('active');
+  _currentReportId = null;
+}
+
+function saveReport() {
+  const title = document.getElementById('rptEditorTitle').value.trim();
+  if (!title) { alert('タイトルを入力してください'); return; }
+
+  const reports = loadReports();
+  const now = new Date().toISOString();
+  const tagsRaw = document.getElementById('rptEditorTags').value;
+  const tags = tagsRaw ? tagsRaw.split(',').map(t => t.trim()).filter(Boolean) : [];
+
+  if (_currentReportId) {
+    // Update existing
+    const idx = reports.findIndex(r => r.id === _currentReportId);
+    if (idx >= 0) {
+      reports[idx].title = title;
+      reports[idx].subtitle = document.getElementById('rptEditorSubtitle').value.trim();
+      reports[idx].category = document.getElementById('rptEditorCategory').value.trim();
+      reports[idx].tags = tags;
+      reports[idx].status = document.getElementById('rptEditorStatus').value;
+      reports[idx].content = document.getElementById('rptEditorContent').value;
+      reports[idx].updatedAt = now;
+    }
+  } else {
+    // Create new
+    const id = 'rpt_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
+    reports.push({
+      id,
+      title,
+      subtitle: document.getElementById('rptEditorSubtitle').value.trim(),
+      category: document.getElementById('rptEditorCategory').value.trim(),
+      tags,
+      status: document.getElementById('rptEditorStatus').value,
+      content: document.getElementById('rptEditorContent').value,
+      createdAt: now,
+      updatedAt: now,
+    });
+    _currentReportId = id;
+    document.getElementById('rptEditorDeleteBtn').style.display = '';
+  }
+
+  _reportsCache = reports;
+  saveReports();
+  renderReportsTab();
+  showToast('レポートを保存しました');
+}
+
+function deleteReport() {
+  if (!_currentReportId) return;
+  if (!confirm('このレポートを削除しますか？')) return;
+  const reports = loadReports();
+  _reportsCache = reports.filter(r => r.id !== _currentReportId);
+  saveReports();
+  closeReportEditor();
+  renderReportsTab();
+  showToast('レポートを削除しました');
+}
+
+function openReportView(reportId) {
+  const reports = loadReports();
+  const r = reports.find(x => x.id === reportId);
+  if (!r) return;
+  _currentReportId = reportId;
+
+  document.getElementById('rptViewTitle').textContent = r.title;
+  document.getElementById('rptViewContent').innerHTML = mdToWhitepaper(r.content || '', r.title, r.subtitle);
+  document.getElementById('reportViewOverlay').classList.add('active');
+}
+
+function closeReportView() {
+  document.getElementById('reportViewOverlay').classList.remove('active');
+}
+
+function editCurrentReport() {
+  closeReportView();
+  openReportEditor(_currentReportId);
+}
+
+function printReport() {
+  window.print();
 }
 
 // ===== Modal operations =====
