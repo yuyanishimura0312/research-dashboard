@@ -21,3 +21,6 @@ window.REPORTS_DATA = [
     "updatedAt": "2026-04-13T19:30:30.132160Z"
   }
 ];
+// Trigger re-render after this deferred script loads
+if (typeof _reportsCache !== 'undefined') { _reportsCache = null; }
+if (typeof renderReportsTab === 'function') { try { renderReportsTab(); } catch(e) {} }
