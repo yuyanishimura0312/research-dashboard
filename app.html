@@ -6817,7 +6817,7 @@ let _reportsCache = null;
 let _currentReportId = null;
 
 function loadReports() {
-  if (_reportsCache) return _reportsCache;
+  if (_reportsCache !== null) return _reportsCache;
   try {
     const raw = localStorage.getItem(REPORTS_STORAGE_KEY);
     _reportsCache = raw ? JSON.parse(raw) : [];
@@ -6828,6 +6828,16 @@ function loadReports() {
     window.REPORTS_DATA.forEach(r => { if (!localIds.has(r.id)) _reportsCache.push(r); });
   }
   return _reportsCache;
+}
+// Re-merge when reports.js loads after initial render (defer script)
+if (document.readyState === 'complete') {
+  _reportsCache = null;
+  if (typeof renderReportsTab === 'function') renderReportsTab();
+} else {
+  window.addEventListener('load', () => {
+    _reportsCache = null;
+    if (typeof renderReportsTab === 'function') renderReportsTab();
+  });
 }
 
 function saveReports() {
