@@ -3341,9 +3341,24 @@ function switchTab(tab, pushHash) {
   renderAll();
 }
 
-// Restore tab from URL hash
+// Restore tab from URL hash (supports #reports, #report/ID for deep linking)
 function initTabFromHash() {
   const hash = location.hash.replace('#', '');
+  // Handle report deep link: #report/rpt_xxx
+  if (hash.startsWith('report/')) {
+    const reportId = hash.slice('report/'.length);
+    switchTab('reports', false);
+    // Defer opening until reports data is ready
+    const tryOpen = () => {
+      const reports = loadReports();
+      if (reports.find(r => r.id === reportId)) {
+        openReportView(reportId);
+      }
+    };
+    if (window.REPORTS_DATA && window.REPORTS_DATA.length) { tryOpen(); }
+    else { window.addEventListener('load', tryOpen); }
+    return;
+  }
   // Redirect legacy tabs to their new homes
   const legacyMap = { 'graph': 'library', 'analytics': 'overview', 'timeline': 'research' };
   const mapped = legacyMap[hash] || hash;
@@ -3355,6 +3370,13 @@ function initTabFromHash() {
 }
 window.addEventListener('hashchange', () => {
   const hash = location.hash.replace('#', '');
+  // Handle report deep link
+  if (hash.startsWith('report/')) {
+    const reportId = hash.slice('report/'.length);
+    switchTab('reports', false);
+    openReportView(reportId);
+    return;
+  }
   const legacyMap = { 'graph': 'library', 'analytics': 'overview', 'timeline': 'research' };
   const mapped = legacyMap[hash] || hash;
   const valid = ['overview','library','research','comments','reports'];
@@ -7140,10 +7162,14 @@ function openReportView(reportId) {
   document.getElementById('rptViewTitle').textContent = r.title;
   document.getElementById('rptViewContent').innerHTML = mdToWhitepaper(r.content || '', r.title, r.subtitle);
   document.getElementById('reportViewOverlay').classList.add('active');
+  // Update URL for deep linking
+  history.replaceState(null, '', '#report/' + reportId);
 }
 
 function closeReportView() {
   document.getElementById('reportViewOverlay').classList.remove('active');
+  // Restore URL to reports tab
+  history.replaceState(null, '', '#reports');
 }
 
 function editCurrentReport() {
