@@ -13,6 +13,7 @@
 <script defer src="data.js?v=20260403"></script>
 <script defer src="embeddings.js?v=20260330"></script>
 <script defer src="analysis.js?v=20260403"></script>
+<script defer src="reports.js?v=20260413"></script>
 <style>
   :root {
     /* Miratuku CI colors — earth tone palette */
@@ -2137,6 +2138,8 @@
     <button class="btn-icon" onclick="closeReportEditor()" title="閉じる" style="font-size:1.2rem;">&#x2715;</button>
     <input type="text" id="rptEditorTitle" placeholder="レポートタイトル">
     <button class="btn-icon" onclick="saveReport()" style="background:var(--accent);color:#fff;border-color:var(--accent);padding:6px 16px;font-weight:700;">保存</button>
+    <button class="btn-icon" onclick="document.getElementById('rptFileUpload').click();" title="ファイルを読み込み">ファイル読込</button>
+    <input type="file" id="rptFileUpload" accept=".txt,.md,.markdown,.doc,.docx" style="display:none;" onchange="handleReportFileUpload(event)">
     <button class="btn-icon" id="rptEditorDeleteBtn" onclick="deleteReport()" style="display:none;">削除</button>
   </div>
   <div class="report-meta-row">
@@ -7140,6 +7143,156 @@ function editCurrentReport() {
 
 function printReport() {
   window.print();
+}
+
+// File upload handler for report editor
+function handleReportFileUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const name = file.name.toLowerCase();
+  const ext = name.split('.').pop();
+
+  // .doc/.docx: extract text via basic XML parsing for docx, or warn for old .doc
+  if (ext === 'docx') {
+    readDocxAsText(file).then(text => {
+      populateEditorFromFile(file.name, text);
+    }).catch(err => {
+      alert('DOCXファイルの読み込みに失敗しました: ' + err.message);
+    });
+  } else if (ext === 'doc') {
+    alert('.doc形式は直接読み込めません。.docx、.txt、または.md形式で保存し直してください。');
+  } else {
+    // txt, md, markdown — read as plain text
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      populateEditorFromFile(file.name, e.target.result);
+    };
+    reader.readAsText(file);
+  }
+
+  // Reset input so the same file can be re-uploaded
+  event.target.value = '';
+}
+
+function populateEditorFromFile(filename, text) {
+  // Auto-fill title from filename (without extension)
+  const titleField = document.getElementById('rptEditorTitle');
+  if (!titleField.value) {
+    const basename = filename.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ');
+    titleField.value = basename;
+  }
+
+  // Set content (append if editor already has content)
+  const textarea = document.getElementById('rptEditorContent');
+  if (textarea.value.trim()) {
+    if (confirm('既存の内容があります。上書きしますか？\n（キャンセルで末尾に追記）')) {
+      textarea.value = text;
+    } else {
+      textarea.value += '\n\n' + text;
+    }
+  } else {
+    textarea.value = text;
+  }
+
+  updateReportPreview();
+  showToast('ファイルを読み込みました: ' + filename);
+}
+
+// Read .docx as plain text by extracting document.xml from the ZIP
+async function readDocxAsText(file) {
+  const arrayBuffer = await file.arrayBuffer();
+  const uint8 = new Uint8Array(arrayBuffer);
+
+  // Find document.xml inside the ZIP (docx is a ZIP archive)
+  // Look for PK signature and locate word/document.xml
+  const entries = await parseZipEntries(uint8);
+  const docEntry = entries.find(e => e.name === 'word/document.xml');
+  if (!docEntry) throw new Error('document.xml not found in DOCX');
+
+  const xmlBytes = docEntry.data;
+  const xml = new TextDecoder('utf-8').decode(xmlBytes);
+
+  // Extract text from XML: get content of <w:t> tags
+  const texts = [];
+  let inParagraph = false;
+  const paragraphs = xml.split(/<\/w:p>/);
+  for (const para of paragraphs) {
+    const matches = [...para.matchAll(/<w:t[^>]*>([^<]*)<\/w:t>/g)];
+    if (matches.length > 0) {
+      texts.push(matches.map(m => m[1]).join(''));
+    }
+  }
+  return texts.join('\n\n');
+}
+
+// Minimal ZIP parser (no external library needed)
+async function parseZipEntries(data) {
+  const entries = [];
+  let offset = 0;
+
+  while (offset < data.length - 4) {
+    // Look for local file header signature: PK\x03\x04
+    if (data[offset] !== 0x50 || data[offset + 1] !== 0x4B ||
+        data[offset + 2] !== 0x03 || data[offset + 3] !== 0x04) break;
+
+    const compressionMethod = data[offset + 8] | (data[offset + 9] << 8);
+    const compressedSize = data[offset + 18] | (data[offset + 19] << 8) | (data[offset + 20] << 16) | (data[offset + 21] << 24);
+    const uncompressedSize = data[offset + 22] | (data[offset + 23] << 8) | (data[offset + 24] << 16) | (data[offset + 25] << 24);
+    const nameLen = data[offset + 26] | (data[offset + 27] << 8);
+    const extraLen = data[offset + 28] | (data[offset + 29] << 8);
+    const name = new TextDecoder().decode(data.slice(offset + 30, offset + 30 + nameLen));
+    const dataStart = offset + 30 + nameLen + extraLen;
+
+    let fileData;
+    if (compressionMethod === 0) {
+      // Stored (no compression)
+      fileData = data.slice(dataStart, dataStart + compressedSize);
+    } else if (compressionMethod === 8) {
+      // Deflated — use DecompressionStream
+      fileData = null; // Will be handled async
+      // Store raw compressed data for async decompression
+      entries.push({
+        name,
+        compressed: data.slice(dataStart, dataStart + compressedSize),
+        method: 8,
+        data: null
+      });
+      offset = dataStart + compressedSize;
+      continue;
+    } else {
+      offset = dataStart + compressedSize;
+      continue;
+    }
+
+    entries.push({ name, data: fileData, method: 0 });
+    offset = dataStart + compressedSize;
+  }
+
+  // Decompress deflated entries using DecompressionStream API
+  return Promise.all(entries.map(async entry => {
+    if (entry.method === 8 && entry.compressed) {
+      try {
+        // Add zlib header for raw deflate: CMF=0x78, FLG=0x01
+        const stream = new Blob([entry.compressed]).stream().pipeThrough(new DecompressionStream('raw'));
+        const reader = stream.getReader();
+        const chunks = [];
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          chunks.push(value);
+        }
+        const totalLen = chunks.reduce((s, c) => s + c.length, 0);
+        const result = new Uint8Array(totalLen);
+        let pos = 0;
+        for (const c of chunks) { result.set(c, pos); pos += c.length; }
+        entry.data = result;
+      } catch (e) {
+        entry.data = new Uint8Array(0);
+      }
+    }
+    return entry;
+  }));
 }
 
 // ===== Modal operations =====
