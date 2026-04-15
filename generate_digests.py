@@ -183,7 +183,7 @@ def main():
     # Regenerate data.js
     datajs_path = os.path.join(SCRIPT_DIR, "data.js")
     with open(datajs_path, "w") as f:
-        f.write(f"const RESEARCH_DATA = {json.dumps(data, ensure_ascii=False)};\n")
+        f.write(f"window.RESEARCH_DATA = {json.dumps(data, ensure_ascii=False)};\n")
     print(f"Written {datajs_path}")
 
     print(f"\nDone: {processed} digests generated, {errors} errors")
