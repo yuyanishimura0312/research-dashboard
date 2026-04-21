@@ -161,3 +161,123 @@
 - [Personalized Quest & Dialogue Generation](https://dl.acm.org/doi/10.1145/3544548.3581441)
 - [Score Before You Speak](https://arxiv.org/html/2508.06886v1)
 - [Persona-Utterance Pair Dataset](https://pmc.ncbi.nlm.nih.gov/articles/PMC12453736/)
+
+---
+
+## 追加調査結果（リサーチチーム2・3）
+
+### ゲーム業界の会話設計パターン
+
+#### The Sims: 感情トークンベースの抽象化
+- 3,000〜4,000語の感情トークンで多様な雑談生成
+- 「何を言うか」より「どう言うか」が重要
+- **妖怪SNSへ**: 同じ話題でも感情フィルタで異なる表現を自動生成
+
+#### Dwarf Fortress: 関係性駆動の対話
+- 30回以上の会話で「長期知人関係」成立
+- 性格相性で「友情」か「遺恨」が自動決定
+- **妖怪SNSへ**: 関係グラフ（Attraction/Rivalry/Kinship）を構築
+
+#### Animal Crossing: パラメータ駆動の会話分岐
+- 8性格タイプ × 関係度(0-10) × 時間帯 × 天気
+- 168〜300行の基本テンプレートで数万の組み合わせ
+- **妖怪SNSへ**: 妖怪性格5-10種 × 関係4段階 × 季節 × 時刻
+
+#### Stardew Valley: 段階的キャラクター開示
+- 関係度0-2心: 天気の話 → 8-10心: 秘密や悩み
+- **妖怪SNSへ**: 関係度で発言の「深さ」を段階変化
+
+### 商用NPC会話システム
+
+#### Inworld AI
+- Narrative Graph（Xbox共同開発）で高次物語目標を定義
+- Character Card: Personality, Knowledge, Relationships, Dialogue Style
+- Barks Generator: 短い独白・環境反応を大量生成
+
+#### Convai
+- NPC-to-NPC対話: プレイヤーなしの複数エージェント会話
+- マルチモーダル知覚: NPCが環境を「見る・聞く」
+
+#### Ubisoft NEO NPC (2024)
+- ライター主導の人格構築 + LLMの統計的微調整
+- 認証性保持: NPCの人格が破壊されない柔軟な制約
+
+### 反復回避の具体的手法
+
+#### Adaptive Prompt Pruning (APP)
+- 単一パラメータで多様性と一貫性のバランスを制御
+- **妖怪SNSへ**: 季節進行で古い表現を段階的に削除
+
+#### Topic Rotation System
+```json
+{
+  "topic": "炎について",
+  "last_used": "2026-04-10",
+  "cooldown_days": 3
+}
+```
+- 同じ話題のクールダウン期間を強制
+- 月次（季節対応）、週次（トレンド対応）、日次（特別イベント）で更新
+
+#### 発言プール最適サイズ
+| プール規模 | 多様性 | 推奨 |
+|---------|------|------|
+| 10-30 | 低（繰返し多い） | MVP |
+| 50-200 | 中（実用的） | **推奨** |
+| 300-1000 | 高 | 大規模本番 |
+
+### 感情モデルの詳細
+
+#### 8感情スケール (Fallout NV方式)
+怒り/嫌悪/恐怖/喜び/中立/痛み/悲しみ/驚き
+
+#### Fixed-Persona SLMs with Modular Memory (2024-2025)
+- LoRA微調整で各NPCに固有人格を付与
+- 会話メモリと世界知識メモリを分離
+- ランタイムスワップで複数NPC管理を軽量化
+
+### 統合アーキテクチャ提案
+
+```
+┌─────────────────────────────────────────────┐
+│  [Persona Layer]                            │
+│  ├─ 固定人格パラメータ（LoRA or Card）      │
+│  ├─ 動的属性（感情状態、エネルギー）       │
+│  └─ 3層メモリ（エピソディック/セマンティック/関係）│
+│                                             │
+│  [Relationship Graph]                       │
+│  ├─ 1010×1010 関係値マトリクス             │
+│  ├─ 友情/遺恨/中立の自動分類              │
+│  └─ クラスタリング（友人グループ自動検出） │
+│                                             │
+│  [Dialogue Generation]                      │
+│  ├─ Topic Selection（季節×関心×関係値）    │
+│  ├─ LLM Generation + Character Card制約    │
+│  ├─ SDR品質チェック（反復/矛盾検出）      │
+│  ├─ Semantic Diversity Filter              │
+│  └─ Topic Cooldown System                  │
+│                                             │
+│  [Scheduling]                               │
+│  ├─ 投稿タイミング（時刻/曜日/イベント）  │
+│  └─ 関係構築スケジュール                   │
+└─────────────────────────────────────────────┘
+```
+
+### 成果指標
+
+| メトリクス | 現在 | 目標 |
+|---------|------|------|
+| 異なり語数/妖怪 | 100-200 | 500-1000 |
+| 話題エントロピー | 低 | > 3.0 bits |
+| 投稿繰り返し率 | 30-40% | < 10% |
+| 関係値自動形成 | 手動 | 60%自動 |
+
+### 追加Sources
+- [Fixed-Persona SLMs with Modular Memory](https://arxiv.org/pdf/2511.10277)
+- [Memory-Driven Role-Playing in LLMs](https://arxiv.org/html/2603.19313)
+- [Exploring Diversity in LLM-Agent Conversation](https://arxiv.org/html/2412.21102v2)
+- [Evolving Agents: Dynamic Personalities](https://arxiv.org/html/2404.02718v2)
+- [Ubisoft NEO NPC Prototype](https://news.ubisoft.com/en-us/article/5qXdxhshJBXoanFZApdG3L/)
+- [NVIDIA ACE On-Device SLM](https://www.nvidia.com/en-us/on-demand/session/gdc25-gdc1010/)
+- [Inworld AI](https://inworld.ai/)
+- [Convai](https://convai.com/)
