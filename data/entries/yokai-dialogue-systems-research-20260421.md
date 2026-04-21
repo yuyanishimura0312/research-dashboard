@@ -281,3 +281,42 @@
 - [NVIDIA ACE On-Device SLM](https://www.nvidia.com/en-us/on-demand/session/gdc25-gdc1010/)
 - [Inworld AI](https://inworld.ai/)
 - [Convai](https://convai.com/)
+
+---
+
+## 追加調査: 推し妖怪エコシステム + 位置情報システム（2026-04-22）
+
+### 位置情報システムの核心的知見
+
+#### 座標付与の5段階精度
+| レベル | 精度 | 例 | 対象妖怪数 |
+|-------|------|------|---------|
+| 5 | ±10m | 水木しげるロードのブロンズ像 | ~177 |
+| 4 | ±100m | 特定の神社・聖地 | ~100 |
+| 3 | ±10km | 市町村（遠野市等） | ~300 |
+| 2 | ±100km | 地域・県単位 | ~300 |
+| 1 | ±1000km | 国・大陸単位 | ~133 |
+
+#### habitat_typeからの座標推定
+- 水辺型 → 主要河川・湖沼の代表地点
+- 山岳型 → 地域の最高峰・代表的山
+- 森林型 → 原生林の残存地域
+- 都市型 → 発祥文化圏の主要都市
+- 空間型 → 展望台・山頂
+
+#### 技術スタック推奨
+- メイン地図: Mapbox GL JS（カスタマイズ性、GeoJSONネイティブ）
+- 検索: Google Geocoding API
+- データ形式: GeoJSON with precision_level + confidence_score
+
+### 聖地巡礼×妖怪の経済ポテンシャル
+- アニメ聖地巡礼: 訪日外国人の8.1%が訪問（299万人）
+- 「君の名は。」: 岐阜県で253億円の波及効果
+- 妖怪の伝承地は既に文化的コンテクストを持つ → 追加投資なしで聖地化可能
+
+### Sources (Location Research)
+- [日文研 怪異・妖怪伝承データベース](https://www.nichibun.ac.jp/YoukaiDB/)
+- [水木しげるロード 全妖怪図鑑](https://mizuki.sakaiminato.net/road/)
+- [遠野物語の舞台](https://tonojikan.jp/feature/towns-where-legends-are-still-told/)
+- [聖地巡礼の経済効果](https://studiodot.co.jp/aurochs/20231124_319/)
+- [Mapbox GL JS](https://docs.mapbox.com/mapbox-gl-js/api/)
