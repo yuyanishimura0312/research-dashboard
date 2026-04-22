@@ -100,11 +100,10 @@ data.append(entry)
 with open(data_json, "w", encoding="utf-8") as f:
     json.dump(data, f, ensure_ascii=False, indent=2)
 
-# Regenerate data.js
+# Regenerate data.js (compact format to minimize file size)
 with open(data_js, "w", encoding="utf-8") as f:
-    f.write("// Auto-generated from data.json -- do not edit by hand\n")
     f.write("window.RESEARCH_DATA = ")
-    json.dump(data, f, ensure_ascii=False, indent=2)
+    json.dump(data, f, ensure_ascii=False, separators=(',', ':'))
     f.write(";\n")
 
 print(f"Saved: {title} (id: {entry_id})")
@@ -122,4 +121,12 @@ DIGEST_SCRIPT="$SCRIPT_DIR/generate_digests.py"
 if [ -f "$DIGEST_SCRIPT" ]; then
   echo "Generating content digest for new entry..."
   python3 "$DIGEST_SCRIPT" --limit 5 2>&1 || true
+fi
+
+# Update version query parameter in app.html to bust browser cache
+APP_HTML="$SCRIPT_DIR/app.html"
+if [ -f "$APP_HTML" ]; then
+  TODAY=$(date +%Y%m%d)
+  sed -i '' "s/\\.js?v=[0-9]\\{8\\}/.js?v=${TODAY}/g" "$APP_HTML"
+  echo "Updated app.html cache-busting version to ${TODAY}"
 fi
