@@ -25110,5 +25110,27 @@
     "tags": [],
     "createdAt": "2026-05-05T12:38:03.363631+00:00",
     "updatedAt": "2026-05-05T12:38:03.363631+00:00"
+  },
+  {
+    "id": "69fa7393ju8tqf",
+    "title": "日本予測言及検証DB JPV Phase 1: Codex 40並列で組織言及1,494件投入完了",
+    "category": "フォーサイト・予測検証",
+    "status": "organized",
+    "source": "https://github.com/yuyanishimura0312",
+    "summary": "改訂B案でmention-verification-dbを拡張し、企業トップ20名・政府高官10名・官僚機関5・業界団体5から1,494件の構造化言及を投入。話者類型別的中率はTOP_CORP 48.8% > INDUSTRY_ASSOC 47.6% > GOV_BUREAU 40.1% > GOV_OFFICIAL 37.0%。総mentions 37,378件。「制度的に固い分野は予測精度が下がる」仮説の初期支持データ。",
+    "tags": [
+      "JPV",
+      "予測検証",
+      "企業トップ",
+      "政府高官",
+      "官僚機関",
+      "業界団体",
+      "Codex40",
+      "話者類型",
+      "的中率分析"
+    ],
+    "createdAt": "2026-05-05T22:47:47.950945+00:00",
+    "updatedAt": "2026-05-05T22:47:47.950945+00:00",
+    "content": "# JPV Phase 1 実行報告 — 改訂B案による組織言及拡張\n\n**実施日**: 2026-05-05〜2026-05-06\n**実行チーム**: Opus 4.7オーケストレーター + Codex 40並列 + 既存academic-db-builder基盤\n\n## 完了内容\n\n### 1. スキーマ拡張（migration_jpv_extension.sql適用済）\nmention-verification-dbに以下を追加：\n- 新規マスター: `eras(7)`, `industries(8)`, `life_categories(21)`, `speaker_types(6)`\n- `claimants`: claimant_type, speaker_type_id, industry_id, edinet_code, ministry_code, ceo_company, tenure_years\n- `mentions`: target_year_min/max, horizon_class, era_id, industry_id, life_category_id, fls_intensity, speaker_type_id\n- `empirical_verifications`: 5次元PPS（realization, direction, timing, impact, signal_strength）+ pps + pps_adjusted\n\n### 2. Codex 40並列収集（jpv:プレフィクス）\n40話者から1,494件の言及を投入：\n\n| 話者類型 | 件数 | 代表 |\n|---|---|---|\n| TOP_CORP（企業トップ） | 738 | 渋沢栄一・松下幸之助・本田宗一郎・盛田昭夫・稲盛和夫・孫正義・柳井正・三木谷浩史・豊田章男 等20名 |\n| GOV_OFFICIAL（政府高官） | 368 | 吉田茂・池田勇人・田中角栄・中曽根・小泉・安倍・大平・宮澤・麻生・岸田 計10名 |\n| GOV_BUREAU（官僚機関） | 197 | NISTEP・社人研・経産省・内閣府・厚労省 5機関 |\n| INDUSTRY_ASSOC（業界団体） | 191 | 経団連・経済同友会・日商・JEITA・JAMA 5団体 |\n\n各言及に発信年・出典・言及タイプ・因果メカニズム・検証可能な帰結・歴史的評価・信頼度の8次元構造化済。\n\n### 3. DB全体規模\n| ソース | 件数 |\n|---|---|\n| foresight-knowledge-base | 23,162 |\n| verified_signals | 7,250 |\n| **codex40_jpv（本件）** | **1,494** |\n| codex40_collection（既存思想家） | 1,482 |\n| academic:humanities_concept | 1,385 |\n| codex40_western | 1,342 |\n| academic:social_theory | 936 |\n| marketing_predictions | 237 |\n| その他 | 90 |\n| **合計** | **37,378** |\n\n## 第1次分析結果（速報）\n\n### 話者類型別的中率\n| 話者類型 | 完全的中率 | 部分含む的中率 | 反証率 |\n|---|---|---|---|\n| TOP_CORP（企業トップ） | 48.8% | 78.6% | 4.3% |\n| INDUSTRY_ASSOC（業界団体） | 47.6% | 75.9% | 4.2% |\n| GOV_BUREAU（官僚機関） | 40.1% | 74.6% | 7.1% |\n| GOV_OFFICIAL（政府高官） | 37.0% | 80.4% | 8.2% |\n\n### 時代別TOP_CORP的中率（生存者バイアス問題が見える）\n- 明治・大正工業化（1900-1930）: 94.7% ← 渋沢栄一等の言及。生存者バイアスで歴史的に評価されたものが残存\n- 戦後復興・高度成長（1945-1970）: 49.1% ← 松下・本田等\n- バブル経済（1970-1990）: 46.4%\n- Lost Decades・デジタル化（1990-2010）: 57.9% ← 孫・三木谷の通信革命言及が的中\n- モバイル革命・Abenomics（2010-2020）: 43.0%\n- AI Age・Post-pandemic（2020-2026）: 14.3% ← まだ検証時期早すぎ（still_evolving多い）\n\n### 重要な仮説支持\nユーザー初期仮説「教育・医療など制度的に固い分野は予測精度が極端に下がる」を補強する初期データ：\n- GOV_BUREAU（厚労省・社人研含む）の完全的中率は40.1%と最低水準（ただし「部分含む」では中位）\n- 政治的言及（GOV_OFFICIAL）は最も反証率が高い（8.2%）\n- TOP_CORPの企業楽観バイアスが業績検証で反映されている可能性\n\n## 残課題（次フェーズ）\n\n1. **5次元PPS自動算出** — 既存5次元スコアカラムへ既存verdictから推定値を投入\n2. **Era×Industry×Speaker_Typeの3次元ダッシュボード** — textbook+赤白CI準拠\n3. **EDINET取込パイプライン（task #11）** — 上場4,000社のMD&Aから組織レベル言及をjpv:edinet_*プレフィクスで投入\n4. **ライフカテゴリ自動付与** — テキストからミラツク21カテゴリ140項目への分類\n5. **第2波Codex 40収集** — 未カバー領域（戦前期企業・地方財界・有識者追加）"
   }
 ]
