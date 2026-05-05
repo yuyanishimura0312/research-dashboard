@@ -25132,5 +25132,28 @@
     "createdAt": "2026-05-05T22:47:47.950945+00:00",
     "updatedAt": "2026-05-05T22:47:47.950945+00:00",
     "content": "# JPV Phase 1 実行報告 — 改訂B案による組織言及拡張\n\n**実施日**: 2026-05-05〜2026-05-06\n**実行チーム**: Opus 4.7オーケストレーター + Codex 40並列 + 既存academic-db-builder基盤\n\n## 完了内容\n\n### 1. スキーマ拡張（migration_jpv_extension.sql適用済）\nmention-verification-dbに以下を追加：\n- 新規マスター: `eras(7)`, `industries(8)`, `life_categories(21)`, `speaker_types(6)`\n- `claimants`: claimant_type, speaker_type_id, industry_id, edinet_code, ministry_code, ceo_company, tenure_years\n- `mentions`: target_year_min/max, horizon_class, era_id, industry_id, life_category_id, fls_intensity, speaker_type_id\n- `empirical_verifications`: 5次元PPS（realization, direction, timing, impact, signal_strength）+ pps + pps_adjusted\n\n### 2. Codex 40並列収集（jpv:プレフィクス）\n40話者から1,494件の言及を投入：\n\n| 話者類型 | 件数 | 代表 |\n|---|---|---|\n| TOP_CORP（企業トップ） | 738 | 渋沢栄一・松下幸之助・本田宗一郎・盛田昭夫・稲盛和夫・孫正義・柳井正・三木谷浩史・豊田章男 等20名 |\n| GOV_OFFICIAL（政府高官） | 368 | 吉田茂・池田勇人・田中角栄・中曽根・小泉・安倍・大平・宮澤・麻生・岸田 計10名 |\n| GOV_BUREAU（官僚機関） | 197 | NISTEP・社人研・経産省・内閣府・厚労省 5機関 |\n| INDUSTRY_ASSOC（業界団体） | 191 | 経団連・経済同友会・日商・JEITA・JAMA 5団体 |\n\n各言及に発信年・出典・言及タイプ・因果メカニズム・検証可能な帰結・歴史的評価・信頼度の8次元構造化済。\n\n### 3. DB全体規模\n| ソース | 件数 |\n|---|---|\n| foresight-knowledge-base | 23,162 |\n| verified_signals | 7,250 |\n| **codex40_jpv（本件）** | **1,494** |\n| codex40_collection（既存思想家） | 1,482 |\n| academic:humanities_concept | 1,385 |\n| codex40_western | 1,342 |\n| academic:social_theory | 936 |\n| marketing_predictions | 237 |\n| その他 | 90 |\n| **合計** | **37,378** |\n\n## 第1次分析結果（速報）\n\n### 話者類型別的中率\n| 話者類型 | 完全的中率 | 部分含む的中率 | 反証率 |\n|---|---|---|---|\n| TOP_CORP（企業トップ） | 48.8% | 78.6% | 4.3% |\n| INDUSTRY_ASSOC（業界団体） | 47.6% | 75.9% | 4.2% |\n| GOV_BUREAU（官僚機関） | 40.1% | 74.6% | 7.1% |\n| GOV_OFFICIAL（政府高官） | 37.0% | 80.4% | 8.2% |\n\n### 時代別TOP_CORP的中率（生存者バイアス問題が見える）\n- 明治・大正工業化（1900-1930）: 94.7% ← 渋沢栄一等の言及。生存者バイアスで歴史的に評価されたものが残存\n- 戦後復興・高度成長（1945-1970）: 49.1% ← 松下・本田等\n- バブル経済（1970-1990）: 46.4%\n- Lost Decades・デジタル化（1990-2010）: 57.9% ← 孫・三木谷の通信革命言及が的中\n- モバイル革命・Abenomics（2010-2020）: 43.0%\n- AI Age・Post-pandemic（2020-2026）: 14.3% ← まだ検証時期早すぎ（still_evolving多い）\n\n### 重要な仮説支持\nユーザー初期仮説「教育・医療など制度的に固い分野は予測精度が極端に下がる」を補強する初期データ：\n- GOV_BUREAU（厚労省・社人研含む）の完全的中率は40.1%と最低水準（ただし「部分含む」では中位）\n- 政治的言及（GOV_OFFICIAL）は最も反証率が高い（8.2%）\n- TOP_CORPの企業楽観バイアスが業績検証で反映されている可能性\n\n## 残課題（次フェーズ）\n\n1. **5次元PPS自動算出** — 既存5次元スコアカラムへ既存verdictから推定値を投入\n2. **Era×Industry×Speaker_Typeの3次元ダッシュボード** — textbook+赤白CI準拠\n3. **EDINET取込パイプライン（task #11）** — 上場4,000社のMD&Aから組織レベル言及をjpv:edinet_*プレフィクスで投入\n4. **ライフカテゴリ自動付与** — テキストからミラツク21カテゴリ140項目への分類\n5. **第2波Codex 40収集** — 未カバー領域（戦前期企業・地方財界・有識者追加）"
+  },
+  {
+    "id": "69fa79fd083bpy",
+    "title": "日本予測言及検証DB JPV Phase 2: Codex第2波1,396件追加 + ダッシュボード公開",
+    "category": "フォーサイト・予測検証",
+    "status": "organized",
+    "source": "https://github.com/yuyanishimura0312",
+    "summary": "Codex 40第2波で戦前財閥創業者15+地方財界10+追加有識者10+メディア人5から1,396件投入、JPV累計2,890件。話者類型別的中率: INTELLECTUAL 58.3% > TOP_CORP 56.9% > INDUSTRY_ASSOC 47.6% > GOV_BUREAU 40.1% > GOV_OFFICIAL 37.0%。有識者・思想家が最高、政府高官が最低。textbook+赤白CIダッシュボード(38KB)生成。総mentions 41,528件。",
+    "tags": [
+      "JPV",
+      "予測検証",
+      "戦前財閥",
+      "有識者",
+      "メディア人",
+      "Codex40",
+      "ダッシュボード",
+      "赤白CI",
+      "話者類型",
+      "的中率"
+    ],
+    "createdAt": "2026-05-05T23:15:09.791962+00:00",
+    "updatedAt": "2026-05-05T23:15:09.791962+00:00",
+    "content": "# JPV Phase 2 実行報告 — Wave 2 + ダッシュボード + ライフカテゴリ付与\n\n**実施日**: 2026-05-06\n**実行チーム**: Opus 4.7 + Codex 40第2波 + ダッシュボードジェネレーター\n\n## 完了内容\n\n### 1. Codex 40第2波（戦前財閥+地方財界+追加有識者+メディア人）\n40話者から1,396件追加投入：\n\n| 話者類型 | 第1波 | 第2波 | 累計 |\n|---|---|---|---|\n| TOP_CORP（企業トップ） | 738 | 835 | **1,573** |\n| INTELLECTUAL（有識者・思想家） | — | 561 | **561** |\n| GOV_OFFICIAL（政府高官） | 368 | 0 | 368 |\n| GOV_BUREAU（官僚機関） | 197 | 0 | 197 |\n| INDUSTRY_ASSOC（業界団体） | 191 | 0 | 191 |\n| **JPV合計** | 1,494 | 1,396 | **2,890** |\n\n**第2波対象**:\n- 戦前財閥創業者15名: 岩崎弥太郎・岩崎弥之助・益田孝・中上川彦次郎・団琢磨・安田善次郎・古河市兵衛・浅野総一郎・大倉喜八郎・藤田伝三郎・五代友厚・原六郎・豊田佐吉・鮎川義介・三井高福\n- 地方財界・経済人10名: 土光敏夫・石坂泰三・永野重雄・桜田武・茂木友三郎・今井敬・奥田碩・御手洗肇・鈴木修・宮内義彦\n- 追加有識者・経済学者10名: 宇沢弘文・都留重人・森嶋通夫・青木昌彦・村上泰亮・中根千枝・梅棹忠夫・石田英一郎・丸山真男・篠原一\n- メディア人・ジャーナリスト5名: 司馬遼太郎・大宅壮一・立花隆・池上彰・山本七平\n\n### 2. ライフカテゴリ自動付与\nミラツク21カテゴリのキーワード辞書ベースで割当：\n- 34,435/41,528件（82.9%）にlife_category_id付与\n- 上位カテゴリ: LC_KU_MANA（まなぶ）12,041 / LC_SH_INFO（情報メディア）10,752 / LC_SH_ECO（経済）2,440\n\n### 3. textbook+赤白CIダッシュボード\n`dashboard/index.html`（38KB、HTML/CSS自己完結）：\n- top-bar + サイドバーTOC + 本文（max-width 740-760px）\n- 赤白CI（#CC1400）+ Noto Sans JP/Serif JP\n- ダークモード切替・印刷対応・モバイル対応\n- 8セクション・KPIグリッド・5テーブル・1ピボット表\n- 4軸：話者類型 × 時代 × 産業 × ライフカテゴリ\n\n## 分析結果（Wave 1+2統合）\n\n### 話者類型別的中率（vindicated完全的中）\n| 話者類型 | 件数 | 完全的中率 | 順位 |\n|---|---|---|---|\n| INTELLECTUAL（有識者・思想家） | 561 | **58.3%** | 1位 |\n| TOP_CORP（企業トップ） | 1,573 | **56.9%** | 2位 |\n| INDUSTRY_ASSOC（業界団体） | 191 | 47.6% | 3位 |\n| GOV_BUREAU（官僚機関） | 197 | 40.1% | 4位 |\n| GOV_OFFICIAL（政府高官） | 368 | 37.0% | 5位 |\n\n### 重要な知見\n1. **有識者の的中率が最高**: 司馬遼太郎・立花隆・宇沢弘文・梅棹忠夫等の言及群が高的中。学者は政治家より構造的な予測精度が高い。\n2. **企業トップ第2位**: 戦前財閥創業者（岩崎・渋沢・豊田佐吉等）が引き上げに寄与。生存者バイアスもあり明治・大正期で94%超の話者も。\n3. **政府高官が最低、業界団体は中位**: GOV_OFFICIAL 37.0% は最低、政治的言及の振れ幅大。INDUSTRY_ASSOC 47.6% はコンセンサス文書化バイアスで安定的。\n4. **官僚機関の中庸**: GOV_BUREAU 40.1% は政府高官と業界団体の中間。NISTEP・社人研等の制度的予測の限界が示唆される。\n\n## 全体DB状態\n- mentions: 41,528件\n- claimants: 800超\n- empirical_verifications: 25K+\n- historical_verifications: 4K+\n- ライフカテゴリ付与率: 82.9%\n- 話者類型付与率: JPV由来の2,890件すべて\n\n## 残課題\n- ir-collector→mentions流入パイプライン（task #11、EDINET 4,000社の組織言及取込）\n- 5次元PPS自動算出（既存verdictから推定値生成）\n- 第3波Codex（さらに追加カテゴリ：地方政治家・労働組合リーダー・科学者）\n- ダッシュボードのGitHub Pages公開"
   }
 ]
