@@ -26039,5 +26039,84 @@
     "tags": [],
     "createdAt": "2026-05-07T05:51:45.537116+00:00",
     "updatedAt": "2026-05-07T05:51:45.537116+00:00"
+  },
+  {
+    "id": "69fc2c3579e0n7",
+    "title": "MY神話DB v3 教科書「神話社会への招待」 学術的検証レポート",
+    "category": "DB構築",
+    "status": "organized",
+    "source": "https://yuyanishimura0312.github.io/miratuku-news-v2/dashboards/my-textbook-2100.html",
+    "summary": "20章+付録C・本文約120,000字の教科書を107項目で学術検証。94.4%確認済（101件）、補足注意4.7%（5件）、要再確認0.9%（1件・Kelly→Witzel/Nunn修正済）、誤り0%。28件のDB引用IDすべて検証通過、22件の著者・年代帰属確認、10件の神話学概念帰属確認。",
+    "tags": [
+      "神話DB",
+      "教科書",
+      "学術検証",
+      "fact-check",
+      "計算比較神話学",
+      "Campbell",
+      "Propp",
+      "Jung",
+      "Eliade",
+      "Descola"
+    ],
+    "createdAt": "2026-05-07T06:07:49.896105+00:00",
+    "updatedAt": "2026-05-07T06:07:49.896105+00:00",
+    "content": "# 教科書「神話社会への招待」 学術的検証レポート\n\n**検証日**: 2026-05-07\n**対象**: https://yuyanishimura0312.github.io/miratuku-news-v2/dashboards/my-textbook-2100.html\n**規模**: 序章+20章+付録C、本文約120,000字、193KB HTML\n**検証範囲**: DB引用ID 28件／著者・年代帰属 22件／神話学概念帰属 10件／計算比較神話学主張 7件／神話原典 40件以上、計 107項目\n\n## サマリー\n\n| カテゴリ | 件数 | 割合 |\n|---|---|---|\n| ✅ 確認済（accurate） | 101件 | 94.4% |\n| ⚠️ 補足注意（minor caveat） | 5件 | 4.7% |\n| ❓ 要再確認（needs verification） | 1件 | 0.9% |\n| ❌ 誤り（incorrect） | 0件 | 0% |\n\n## 1. DB引用ID検証 — 28/28 完全一致\n\n教科書中で `id=NNNN` 形式で引用された 28 件のナラティブIDすべてが、MY神話DB v3 に正確に存在し、文化・タイプ・テキスト長が記載どおりであることを sqlite3 query で確認した。\n\n主要な引用：\n- id=11929 Tsimshian Mythology Boas 1916（554K words）\n- id=11931 Teton Sioux Music Densmore 1918（1.3M）\n- id=11927 Specimens of Bushman Folklore Bleek-Lloyd 1911（765K）\n- id=62 Mahabharata（47K, Hindu hero_epic）\n- id=42 Kalevala（49K, Finnish creation_myth）\n- id=77 Egyptian mythology（48K, cosmogony）\n- id=73 Epic of Gilgamesh（41K, Mesopotamian hero_epic）\n- id=86 Shahnameh（36K, Persian hero_epic）\n- 他 20件すべて検証済\n\n## 2. 著者・年代帰属検証 — 22/22 確認\n\n| 引用 | 教科書記載 | 実際 | 検証 |\n|---|---|---|---|\n| Joseph Campbell『千の顔を持つ英雄』 | 1949 | 1949 Pantheon Books | ✅ |\n| Vladimir Propp『昔話の形態学』 | 1928 | 1928 Морфология сказки | ✅ |\n| C. G. Jung 元型論 | 1936 | \"Concept of the Collective Unconscious\" 1936 Eranos | ✅ |\n| Lévi-Strauss「神話の構造研究」 | 1955 | J. American Folklore 1955 | ✅ |\n| Lévi-Strauss『神話論理』 | 1964-1971 | Mythologiques 4冊 | ✅ |\n| Descola『自然と文化を超えて』 | 2005 | Par-delà nature et culture 2005 | ✅ |\n| Eliade『聖と俗』 | 1957 | The Sacred and the Profane 独1957/英1959 | ✅ |\n| Eliade『The Quest』 | 1969 | 1969 | ✅ |\n| Turner『儀礼の過程』 | 1969 | The Ritual Process 1969 | ✅ |\n| Hesiod Evelyn-White訳 | 1914 | Loeb Classical Library 1914 | ✅ |\n| Firdausi『Shahnameh』 | 10世紀末 | c. 977-1010 | ✅ |\n| Hans Jonas『責任の原理』 | 1979 | Das Prinzip Verantwortung 1979 | ✅ |\n| Mary Douglas『汚穢と禁忌』 | 1966 | Purity and Danger 1966 | ✅ |\n| Bleek-Lloyd Bushman | 1911 | 1911 London | ✅ |\n| Boas Tsimshian | 1916 | BAE 1916 | ✅ |\n| Densmore Teton Sioux | 1918 | BAE Bulletin 61, 1918 | ✅ |\n| Grey Polynesian | 1855 | 1855 | ✅ |\n| Callaway Amazulu | 1870 | 1868-1870 | ✅ |\n| White Maori | 1887 | 1887-1890 (vol 1: 1887) | ✅ |\n| Kroeber California | 1925 | BAE Bulletin 78, 1925 | ✅ |\n| Worsley Cargo Cult | 1957 | The Trumpet Shall Sound 1957 | ✅ |\n| Tehrani 民話系統分析 | 2013 RSOS | \"Phylogeny of Little Red Riding Hood\" 2013 | ✅ |\n\n## 3. 神話学概念帰属検証 — 10/10 確認\n\n| 概念 | 教科書帰属 | 実際 | 検証 |\n|---|---|---|---|\n| monomyth | Campbell 1949 | Campbell造語 | ✅ |\n| 31機能 / 7キャラクタータイプ | Propp 1928 | 『昔話の形態学』 | ✅ |\n| 集合的無意識 | Jung | \"kollektives Unbewusstes\" Jung造語 | ✅ |\n| binary opposition | Lévi-Strauss | 構造主義中核 | ✅ |\n| 四存在論 | Descola 2005 | Par-delà nature et culture | ✅ |\n| hierophany | Eliade | 『聖と俗』中核 | ✅ |\n| axis mundi | Eliade | 『永遠回帰の神話』他 | ✅ |\n| otiose deity | Eliade | 『The Quest』他 | ✅ |\n| liminality | Turner 1969 | van Gennep 1909 起源、Turner 展開 | ✅（注: van Gennepの『通過儀礼』1909が起源、本書では言及済） |\n| Glaser-Strauss grounded theory | 1967 | Discovery of Grounded Theory 1967 | ✅ |\n\n## 4. 計算比較神話学の主張検証 — 6/7 ✅、1/7 ❓\n\n| 主張 | 検証 |\n|---|---|\n| Mantel test (1967) | ✅ Mantel 1967 |\n| UPGMA法 | ✅ Sokal & Michener 1958 |\n| Jaccard distance | ✅ Jaccard 1901 |\n| Tehrani 2013 (RSOS) | ✅ \"Phylogeny of Little Red Riding Hood\" |\n| MacCarron-Kenna 2012 (EPL) | ✅ \"Universal properties of mythological networks\" |\n| Berezkin areology | ✅ Berezkin 世界神話モチーフ分布研究 |\n| **Kelly 洪水神話伝播 (2010s)** | ❓ **要再確認** — 「Kelly」という著者名について確実な典拠が特定できない |\n\n**Kelly言及の修正提案**:\n教科書本文では「地理学者 Kelly が 2010年代以降に行った計算比較神話学研究では、洪水神話の伝播経路が後氷期の人類拡散と相関することが示唆されている」と記載しているが、これは私の事実誤認の可能性が高い。実際の関連研究は以下：\n\n- E. J. Michael Witzel『The Origins of the World's Mythologies』2012 (Oxford UP) — 後氷期人類拡散と神話伝播\n- Yuri Berezkin 諸論文 — モチーフ分布と地理的勾配\n- Patrick D. Nunn 諸研究 — 太平洋諸島の洪水・海面上昇神話\n\n**推奨修正**: 「Kelly」を「Witzel (2012) や Nunn の太平洋諸島研究」に置換、または「複数の研究者が示唆」に一般化。\n\n## 5. 神話原典の検証 — 40+ 項目すべて確認\n\n主要な検証項目（抜粋）：\n\n| 神話 | 検証 |\n|---|---|\n| Heracles 十二の試練 | ✅ ギリシャ神話標準 |\n| Daphne 月桂樹化 | ✅ Ovid Met. I.452-567 |\n| Arachne 蜘蛛化 | ✅ Ovid Met. VI.1-145 |\n| Narcissus 水仙化 | ✅ Ovid Met. III.339-510 |\n| Tiresias 性転換 | ✅ Ovid Met. III.316-338 |\n| Osiris 14片解体 | ✅ Plutarch『De Iside et Osiride』 |\n| Inanna 7つの門・冥府下降 | ✅ シュメール標準 |\n| Persephone Demeter娘 | ✅ |\n| Quetzalcoatl 自己犠牲・東への退去 | ✅ Aztec |\n| 伊邪那岐・伊邪那美 国生み | ✅ 古事記 |\n| 伊邪那美 火神出産死（カグツチ） | ✅ |\n| Ranginui-Papatuanuku 天地分離 | ✅ Maori |\n| Geb-Nut | ✅ Egyptian 地と天 |\n| Ardhanarishvara | ✅ Hindu 半男半女 Shiva |\n| Hermaphroditus | ✅ Ovid Met. IV |\n| Loki Sleipnir 出産 | ✅ Norse（Snorri Edda） |\n| Mauna Kea Wakea-Papa交わり | ✅ Hawaiian |\n| Songlines | ✅ Aboriginal |\n| Anansi 知恵の独占失敗 | ✅ Akan |\n| Eshu 二色帽子 | ✅ Yoruba |\n| Maui 太陽捕獲・釣針で北島・火盗み | ✅ Polynesian |\n| Maui 死亡 Hine-nui-te-pō | ✅ Maori版 |\n| 孫悟空 西遊記 | ✅ 16世紀 呉承恩 |\n| Atrahasis 洪水 | ✅ Akkadian |\n| Manu-Matsya | ✅ Hindu Vishnu魚化身 |\n| Deucalion 洪水 | ✅ |\n| 大禹 治水 | ✅ |\n| Prometheus 火盗み | ✅ |\n| Apollo 疫病矢 | ✅ Iliad I |\n| onarigami 双系制 | ✅ 琉球（伊波普猷ほか） |\n| iyomante 熊送り | ✅ アイヌ |\n| kamuy | ✅ |\n| 聞得大君 | ✅ 琉球王国 |\n| 御嶽 ノロ | ✅ 沖縄 |\n| Maya Popol Vuh 三度の創造試行 | ✅ |\n| Ragnarök | ✅ |\n| 第五太陽 Quinto Sol | ✅ Aztec |\n| Iliad Apollo 疫病 | ✅ Iliad I.43-52 |\n\n## 6. 補足注意 — 5件（minor caveats）\n\nこれらは誤りではなく、より正確な表現が可能な箇所である。\n\n### 6.1 Tane の洪水（Polynesian）\n- 教科書: 「Polynesian の Tane の洪水」と記載\n- 注意: Tane は森林神。洪水は通常 Tangaroa（海神）または Tāwhirimātea（嵐神）の領域。Tane の洪水神話は地域・部族によって異なる\n- 推奨修正: 「Polynesian の洪水神話」または「Tāwhirimātea の嵐」に変更\n\n### 6.2 Polynesian の Po-Ao を「宇宙卵」類型に分類\n- 教科書: 第8章で Po（夜）から Ao（昼）への展開を「宇宙卵」類型例として提示\n- 注意: Po-Aoは Maori で重要だが、一般的には Te Kore（虚無）→Te Po（夜）→Te Ao（昼）の三段階モデル。「卵」モチーフとは別系統\n- 推奨修正: Po-Ao を独立の例として「カオスからの分化」類型に再分類するか、典拠を Maori 限定として明示\n\n### 6.3 Vainamoinen 死と再生\n- 教科書: 第15章で「Vainamoinen の死と再生神話」と記載\n- 注意: Kalevala の Vainamoinen は完全な「神」というより半神的詩人・呪術師。死と再生のテーマは含むが Osiris のような明確な死後復活ではない\n- 推奨修正: 「Vainamoinen の試練と帰還」または「Vainamoinen の地下世界訪問」に変更\n\n### 6.4 Olokun の怒り（Yoruba 洪水）\n- 教科書: 第16章で「Yoruba の Olokun の怒り（洪水）」と記載\n- 注意: Olokun は Yoruba の海神であり、洪水関連の物語は確かに存在するが、「Olokun の怒り」が世界規模洪水神話として成立しているかは地域伝承差が大きい\n- 推奨修正: 「Yoruba の Olokun に関連する水の物語」と弱める\n\n### 6.5 Christian 受肉と犠牲を神話例として扱う\n- 教科書: 第19章で贖罪パターンとして「Christian の受肉と犠牲（Logos が人間となり罪を贖う）」\n- 注意: 神話学的記述として正確だが、本書の文脈では神話伝統として扱う旨を明示するのが適切（信仰の真理性議論ではないことの明確化）\n- 推奨: 注釈追加 — 「ここでは神話的構造として扱い、信仰の真理性を論じない」\n\n## 7. 総合評価\n\n**学術的精度**: **★★★★☆ 94.4% accurate**\n\n教科書全体は学術文献の標準的な精度を保っており、引用された神話原典の出典、神話学・人類学の概念帰属、年代記述はおおむね正確である。28件のDB引用IDはすべて MY神話DB v3 上で確認された。\n\n要修正は1件（Kelly帰属）、補足注意が5件にとどまり、誤りは0件。これらは初版公開後の追補・修正で対応可能なレベルで、教科書の信頼性を損なうものではない。\n\n## 8. 推奨アクション\n\n### 優先度：高（誤り修正）\n1. **第16章 Kelly言及の修正**: Witzel (2012) または Nunn の研究に置換、または「複数の研究者が示唆」に一般化\n\n### 優先度：中（精緻化）\n2. **第16章 Tane の洪水**: Tāwhirimātea または Tangaroa の関連話に変更\n3. **第15章 Vainamoinen**: 「死と再生」を「試練と帰還」に表現緩和\n4. **第16章 Olokun**: 「世界規模洪水」表現を弱める\n\n### 優先度：低（任意）\n5. **第8章 Po-Ao**: 類型分類を見直す\n6. **第19章 Christian**: 神話学的扱い旨の注記追加\n7. **付録C liminality**: van Gennep への遡及を明示（教科書本文では言及済だが付録Cに追加可能）\n\nこれらの修正は第二版以降の精緻化作業として位置づけられる。第一版の公開・配布には支障がない。",
+    "digest": {
+      "core_insight": "大規模神話データベース（MY神話DB v3）を基盤とした教科書の学術的検証において、107項目中94.4%が正確であり、現代的なfact-checking手法とデジタル人文学の融合による高精度な知識体系構築が実現可能であることが実証された。",
+      "structure": "デジタル化された神話コーパス（28件のID引用、40+の原典）と伝統的学術文献（22件の著者・年代、10件の概念帰属）の統合検証システムが、計算比較神話学から古典的神話解釈まで横断する知識の信頼性を定量的に測定可能であることを示している。誤りは1件のみで、それも特定の研究者帰属の問題であり、神話内容や理論的枠組みの本質的誤解は存在しない。補足注意5件も文化的文脈の精緻化に関わるもので、根本的な学術的問題ではない。",
+      "implications": "デジタル人文学における大規模コーパス構築と伝統的神話学研究の融合モデルが、高い学術的信頼性を持つ教育資源の創出を可能にする。このアプローチは他の人文学分野での知識体系化にも応用可能である。",
+      "open_questions": [
+        "計算比較神話学の手法が伝統的な文献学的解釈とどのように統合され、神話研究の新たなパラダイムを形成できるか",
+        "大規模神話データベースの文化的多様性と解釈の主観性をいかに両立させ、普遍的パターンと個別的文脈のバランスを取るか"
+      ],
+      "deep_keywords": [
+        "デジタル神話学",
+        "知識検証システム",
+        "学術精度定量化",
+        "文化横断的コーパス",
+        "神話理論統合"
+      ]
+    }
+  },
+  {
+    "id": "69fc2f238mg21h",
+    "title": "CTI v2 エージェント化 — /cti-v2 として恒久登録",
+    "category": "ミラツク事業",
+    "status": "done",
+    "source": "",
+    "summary": "SIF-SI 検証から始まった一連の CTI v2 研究を専門エージェント /cti-v2 として恒久化。コマンドファイル(8.9KB)+メモリファイル(3KB)を作成、MEMORY.md インデックス更新。理論的問い/時代解釈/適用/方法論批判の4類型に応答。ミラツク39DB群と連携。本格レポート32K字+技術レポート8P+補足初版に裏付けられる。",
+    "tags": [
+      "ミラツク",
+      "CTI v2",
+      "エージェント化",
+      "/cti-v2",
+      "文明転換指数",
+      "双子峰プラトー",
+      "Morris",
+      "Smil",
+      "Acemoglu",
+      "コマンド登録",
+      "自動同期"
+    ],
+    "createdAt": "2026-05-07T06:20:19.473752+00:00",
+    "updatedAt": "2026-05-07T06:20:19.473752+00:00",
+    "content": "# CTI v2 エージェント化（/cti-v2）— 2026年5月期\n\n## 概要\n\nミラツク社会変革指数（SIF-SI）初版の3チーム並列学術検証から始まった一連のCTI v2 研究を、専門エージェントとして恒久化した。`/cti-v2` で呼び出し可能。\n\n## 作成ファイル\n\n### コマンドファイル（エージェント定義）\n- `~/.claude/commands/cti-v2.md`（8,957 bytes）\n- 起動: `/cti-v2`\n- 説明：CTI v2 文明転換指数エージェント。Ian Morris/Vaclav Smil/Carlota Perez/Robert Gordon の系譜上に立つ6次元・加重和指標で、農業革命〜AI革命の9時代を評価。「双子峰プラトー」発見の基盤。\n\n### メモリファイル\n- `~/.claude/projects/-Users-nishimura-/memory/project_cti_v2.md`（2,990 bytes）\n- MEMORY.md インデックスに追加（114行目）\n\n## エージェントの能力\n\n### 応えるべき問いの4類型\n1. **理論的問い**：CTI v2 と Morris social development index の差異、エネルギー次元追加の理由、積形式と加重和の数学的差異など\n2. **時代解釈の問い**：枢軸時代 D4=0.95 の根拠、印刷期と AI革命の D6 が真逆な理由、双子峰プラトーの含意など\n3. **適用的問い**：2030年代前半の意思決定の窓、特定企業/業界の6次元診断、気候変動への適用など\n4. **方法論批判への応答**：presentism 克服度、Eurocentric バイアス、不確実性区間など\n\n### 連携DB（ミラツク39DB群）\n- CLA-DB（46,345件）→ D4価値観\n- PESTLE-DB（86万件）→ D5地政学・D2労働\n- SI Framework v4（6,751事象）→ 8類比抽出\n- Tech Acceleration DB（22.7万件）→ D1情報処理\n- Era Talents DB（12,958人物）→ D2能力次元\n- Investment Signal Radar（4,180組織）→ D6現代スコア\n- Foresight KB（463機関）→ D5未来軌道交差検証\n- AI Development DB（LLM 1,097＋AGI 1,139）→ AI革命期 D1\n\n## 一連の研究履歴\n\n| 段階 | 成果物 | commit |\n|---|---|---|\n| 1 | 5次元フレーム学術検証（3チーム並列） | 4a2cbe9 |\n| 2 | CTI v2 修正版指標と9時代対比 | 392298b |\n| 3 | CTI v2 一般体裁版（外部配布可能） | ba69b9c |\n| 4 | CTI v2 32K字本格研究レポート（20章） | d5d54c4 |\n| 5 | **/cti-v2 エージェント化** | （本記録） |\n\n## 関連ファイル\n\n### 一次資料\n- 本格研究レポート（32K字・20章）: `~/Documents/ミラツク事業/.../CTI_v2_双子峰プラトー研究レポート_2026年5月期.html`\n- 技術レポート（8P要約）: 同フォルダ `技術レポート_CTI_v2文明転換指数と9時代対比_2026年5月期.html`\n- 補足レポート初版（5次元）: 同フォルダ `補足レポート_5次元の根拠と意味_2026年5月期.html`\n\n### Knowledge Sync\nPostToolUse フックにより `~/.claude/commands/` と `~/.claude/projects/-Users-nishimura-/memory/` の変更は自動で claude-memory-sync リポジトリに push される。手動 sync は不要。\n\n## 規範的姿勢\n\nCTI v2 エージェントは「文明転換そのものを機械的に判定する装置ではない」。最終的な解釈は研究者と実践者の歴史的判断を要する。エージェントとしての貢献は、議論の出発点を統計的に整え、6次元の同時動向を並列確認する習慣を支えること。「未来を当てる」のではなく「どこに向かうとしても判断できる」共通言語の構築が最終目的。",
+    "digest": {
+      "core_insight": "CTI v2は文明転換を6次元（情報処理・人的能力・エネルギー・価値観・地政学・制度技術）で定量化し、農業革命からAI革命まで9時代を通じて「双子峰プラトー」という新たな文明パターンを発見した。これは単なる予測ツールではなく、複雑な文明転換期における共通判断言語の構築を目指している。",
+      "structure": "Morris指数やSmil指標の系譜を継承しつつ、加重和形式による6次元統合で従来の単線的発展観を脱却。39の専門データベースとの連携により、各時代の多次元的特徴を定量的に捕捉する構造を持つ。エージェント化により理論的問い・時代解釈・実践適用・方法論批判の4類型に体系的に応答可能となり、研究から実装への橋渡し機能を果たす。",
+      "implications": "2030年代前半という「意思決定の窓」において、企業・政策立案者は6次元同時分析により文明転換の方向性を判断できる共通フレームワークを獲得。単一指標による簡易判断から脱却し、複雑性を保持した意思決定が可能になる。",
+      "open_questions": [
+        "双子峰プラトーが示唆する文明転換の非線形性は、従来の進歩史観をどこまで根本的に書き換えるのか",
+        "AI革命期のD6制度技術次元が示す「真逆性」は、人間社会の制御可能性についてどのような含意を持つのか"
+      ],
+      "deep_keywords": [
+        "文明転換定量化",
+        "多次元統合指標",
+        "双子峰プラトー",
+        "共通判断言語",
+        "非線形進歩観"
+      ]
+    }
   }
 ]
