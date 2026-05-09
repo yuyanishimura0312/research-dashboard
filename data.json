@@ -26529,5 +26529,38 @@
         "翻訳負荷指標"
       ]
     }
+  },
+  {
+    "id": "69ff5a871jfeqw",
+    "title": "esse-sense Article Generator v1.0 — 対話録から記事を生成するシステム基盤",
+    "category": "",
+    "status": "investigating",
+    "source": "",
+    "summary": "",
+    "tags": [
+      "esse-sense",
+      "generation-system",
+      "editorial-dna",
+      "LLM-pipeline"
+    ],
+    "createdAt": "2026-05-09T16:02:15.318617+00:00",
+    "updatedAt": "2026-05-09T16:02:15.318617+00:00",
+    "content": "# esse-sense Article Generator v1.0\n\n180記事の構造解析（v1-v10）から抽出した編集DNAを基に、対話録から esse-sense 品質の記事を生成するシステム。\n\n## ディレクトリ構成\n\n```\ngenerator/\n├── README.md                  # 本ファイル\n├── editorial_dna.yaml         # 編集DNA仕様（フォーマットの固定部分）\n├── generation_pipeline.md     # パイプライン設計書（7 Stage）\n├── prompt_template.md         # LLMプロンプトテンプレート\n├── validator.py               # 生成記事の品質検証エンジン\n└── few_shot_selector.py       # DBから few-shot 例を選ぶエンジン\n```\n\n## 設計思想\n\nesse-sense の本質は **「フォーマットは固定、対話の中身は生命」** という二重構造である。\n\n180記事の定量分析から：\n- フォーマットは5年間ほぼ完全に一定（27K字/14-19ページ/12-18章）\n- 西村統御は対話面では98%だが、書き手としては8.4%（17名のライター）\n- 内在特徴のみによる西村反復率の予測モデルは R²≈0（**対話の予測不能性が証明された**）\n\nこのシステムは **対話の生命性を尊重したまま、外形だけを esse-sense フォーマットに整える** 設計を採る。\n\n## 7 Stage パイプライン\n\n```\nINPUT: 対話録 (transcript) + 研究者プロフィール\n    ↓\n[Stage 1] Pre-processing & Content Mining\n    ↓\n[Stage 2] Three-Act Structuring (Act1/Act2/Act3 マッピング)\n    ↓\n[Stage 3] Chapter Generation (12-18章、平均21字タイトル)\n    ↓\n[Stage 4] Translation Layer Insertion (説明距離72字以内)\n    ↓\n[Stage 5] Dialogue Polishing (西村比率19.3%、独白2200字以下)\n    ↓\n[Stage 6] Postscript Composition (ライター視点、200-500字)\n    ↓\n[Stage 7] Validation & Quality Check (再生成ループ)\n    ↓\nOUTPUT: HTML/Markdown記事 + 検証レポート\n```\n\n## 使用方法（開発時）\n\n### 編集DNA確認\n```bash\ncat editorial_dna.yaml\n```\n\n### 既存記事を validator にかける（baseline 確認）\n```bash\npython validator.py /path/to/article.html\n```\n\n### few-shot 例を取得（LLMプロンプト埋め込み用）\n```bash\n# ある分野の章タイトル例\npython few_shot_selector.py chapter_titles --field 物理 --count 20\n\n# あるwriter styleの編集後記例\npython few_shot_selector.py postscripts --writer_style writer_friendly --count 5\n\n# L4専門用語を上手く扱った記事\npython few_shot_selector.py l4_handling --count 5\n\n# 失敗譚を含む記事\npython few_shot_selector.py failure_stories --count 5\n```\n\n## システム実装ロードマップ\n\n### Phase 1: ルールベース骨格 (2-4週)\n- ✅ editorial_dna.yaml 完成\n- ✅ validator.py 初版（must_pass / should_pass / quality_score）\n- ✅ few_shot_selector.py\n- 🔲 Stage 1 (transcript pre-processing)\n- 🔲 Stage 4 (translation layer rule-based portion)\n- 🔲 Stage 5 (dialogue balance adjustment)\n\n### Phase 2: LLM統合 (4-6週)\n- 🔲 Stage 2 (three-act structuring with Claude API)\n- 🔲 Stage 3 (chapter generation with few-shot)\n- 🔲 Stage 6 (postscript composition with writer-style fewshot)\n- 🔲 自動再生成ループの実装\n\n### Phase 3: フィードバックループ (2-3週)\n- 🔲 西村本人＋編集者のレビューUI\n- 🔲 ライタースタイル選択精度の向上\n- 🔲 既存記事10件で評価実験\n\n### Phase 4: スケーリング (継続)\n- 🔲 新規研究者対応\n- 🔲 分野別バリエーション\n- 🔲 多言語対応\n\n## 編集DNA要約\n\n### 固定要素（フォーマット）\n- 字数: 27,000 ± 2,000\n- ページ: 14-19、章: 12-18\n- 三幕構成: Origin(0-25%) → Research(25-85%) → Implication(85-100%)\n- 西村発話比率: 19.3% (max 30%)\n- 編集後記: 200-500字、ライター視点、語彙パターン\n\n### 翻訳ルール\n- L1一般語: 20%以上、L4専門用語: 35%以下\n- casual投入率: 50-75%\n- 説明マーカー距離: 中央値72字\n- 用語投入カーブ: 冒頭35→末尾20\n\n### 対話バランス\n- 平均ターン数: 74、平均ターン長183字\n- 最長独白: 平均853字、最大2200字\n- rapid exchange: 1+/記事\n\n### 17ライタースタイル\n1. writer_translator（学術翻訳職人）— 太郎・寿之・研介\n2. writer_portrait（人物描写型）— Maya・千代・真弓\n3. writer_finding_focus（研究成果型）— 真弓・Maya・暁彦\n4. writer_metaphor（比喩使い型）— 道宏・寿之\n5. writer_simple（淡白型）— 浩三\n6. writer_friendly（親しみやすさ志向型）— 絵里子・勇也\n7. writer_future（未来志向型）— 諒子\n\n## 既存DBの活用\n\nすべての few-shot は `~/work/esse-sense-articles/db/esse_articles.db` から取得：\n\n| テーブル | レコード数 | 用途 |\n|---------|---------|------|\n| articles | 188 | 記事本体 |\n| chapters | 1,264 | 章タイトル |\n| highlights | 318 | bold ハイライト（初期記事のみ） |\n| dialogue_turns | 11,280 | 順序付き発話 |\n| article_speaker_stats | 153 | 話者統計 |\n| term_lifecycle | 37,805 | 用語のライフサイクル |\n| term_difficulty | 20,481 | L1-L4分類 |\n| article_tli | 153 | 翻訳負荷指標 |\n| article_translation_devices | 5,850 | 翻訳マーカー |\n| article_arc | 1,840 | ナラティブアーク |\n\n## 重要な原則\n\n1. **対話の生命性を尊重する** — 内在特徴では予測できない対話の流れを大切に\n2. **編集者の声を再現しない** — AIが「西村」を演じない、ライターの声を作る\n3. **検証で守る** — validator.py を厳格に運用、失敗したら必ず再生成\n4. **学習データから逸脱しない** — 全ての生成は既存180記事の統計分布内に収める\n\n## 連絡先\n\nベースとなる構造解析: `~/work/esse-sense-articles/learning_report_v{1-10}.md`\nDB: `~/work/esse-sense-articles/db/esse_articles.db`",
+    "digest": {
+      "core_insight": "esse-senseの記事生成における本質的発見は「フォーマットは完全に予測可能だが、対話の中身は予測不能」という二重構造の存在である。180記事の定量分析により、外形的要素（文字数、章数、構成比率）は5年間完全に一定である一方、内在特徴による西村反復率の予測モデルはR²≈0となり、対話の予測不能性が数学的に証明された。",
+      "structure": "システムは対話の生命性を保持しながら外形のみをesse-senseフォーマットに整える設計思想を採用している。7段階パイプラインは前処理→三幕構成マッピング→章生成→翻訳層挿入→対話調整→編集後記→検証という流れで、各段階が統計的に抽出された編集DNAルール（西村発話比率19.3%、説明距離72字、L4専門用語35%以下など）に準拠する。17種のライタースタイルと既存DBの11,280発話ターンがfew-shot学習の基盤となり、AIが「西村を演じる」のではなく「ライターの声を再現する」メカニズムを構築している。",
+      "implications": "編集プロセスの自動化において、創造的要素（対話）と機械的要素（フォーマット）を明確に分離することで、人間の創造性を損なわずに生産性を向上させる新たなアプローチが可能になる。既存の180記事から抽出した統計的パターンを厳格に守ることで、品質の一貫性を保ちながらスケーラブルなコンテンツ生成が実現できる。",
+      "open_questions": [
+        "対話の予測不能性が証明された中で、どのような要因が「良い対話」と「悪い対話」を分けるのか、そしてそれは事前に判定可能なのか",
+        "17のライタースタイルの分類は本当に本質的な違いを捉えているのか、それとも表面的な文体の違いに過ぎないのか"
+      ],
+      "deep_keywords": [
+        "対話予測不能性",
+        "編集DNA抽出",
+        "創造機械分離設計",
+        "統計的品質保証",
+        "ライター声再現"
+      ]
+    }
   }
 ]
