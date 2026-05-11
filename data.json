@@ -27039,5 +27039,33 @@
         "産業横断的技法クラスタ"
       ]
     }
+  },
+  {
+    "id": "6a0257cc57mnhc",
+    "title": "Web Monetization DB (WMD) v0.3.0 拡張報告",
+    "category": "knowledge-db",
+    "status": "investigating",
+    "source": "",
+    "summary": "",
+    "tags": [],
+    "createdAt": "2026-05-11T22:27:24.333910+00:00",
+    "updatedAt": "2026-05-11T22:27:24.333910+00:00",
+    "content": "# Web Monetization DB (WMD) v0.3.0 拡張報告\n\nNPO法人ミラツク内部知識基盤「Web Monetization DB（WMD）」のv0.3.0として、AI時代の新興収益化サブフィールド四領域を追加した。WM13 AIネイティブ・サブスクリプション、WM14 エージェント仲介商取引、WM15 ML向けデータライセンシング、WM16 クリエイター経済プラットフォームを新規構築し、最終的に16サブフィールド・445パターン・213事例・1001関係・86概念・144指標・68研究者の規模に到達した。\n\n## 拡張の背景\n\nv0.2.0時点では、ウェブ収益化の十二サブフィールドが体系化されていたが、二〇二六年現在のAI時代に固有の収益化様式は十分に捕捉されていなかった。ChatGPT Plus・Claude ProのようなAIネイティブ・サブスクリプション、Anthropic Computer Use・OpenAI Operatorに代表されるエージェント仲介商取引、NYT-OpenAI訴訟以降爆発的に拡大したML向けデータライセンス、Substack-Patreon-Skoolが形成するクリエイター経済プラットフォームの四領域は、それぞれ独自の課金構造・指標・失敗モードを持ち、独立したサブフィールドとしての体系化が必要となっていた。\n\n## 並列リサーチE1-E4\n\n四つの新興領域それぞれに専門リサーチエージェントを並列起動した。Team E1はAIネイティブ・サブスクリプションを担当し、ChatGPT Plus・Claude Pro・Cursor Pro・GitHub Copilotの価格構造、Token原価変動の構造的特異性、ヘビーユーザー赤字のパラドックス、LLMflationという二〇二四年以降の業界現象を体系化した。Team E2はエージェント仲介商取引を担当し、Anthropic Computer Use（二〇二四年十月公開）・OpenAI Operator（二〇二五年一月公開）・Stripe Agentic Commerce Suite・Visa Intelligent Commerce・Skyfire KYAPay Protocolなどのインフラ層を網羅した。Team E3はML向けデータライセンシングを担当し、News Corp-OpenAI（二億五千万ドル五年契約）・Reddit-Google（年間六千万ドル）・Anthropic著者和解（十五億ドル）といった実在契約と、EU AI Act Article 53準拠・robots.txt遵守・RSL Protocolといった制度設計を体系化した。Team E4はクリエイター経済プラットフォームを担当し、Substack（十万有料クリエイター・四億五千万ドル年間化収益）、Patreon（累計二十億ドル支払い）、Skool（a16z一億ドルSeries A）、GitHub Sponsors（四万九千スポンサー可能開発者）といったプラットフォーム経済を整理した。\n\n## 質的拡張\n\nデータ収集と並行して質的拡張を実施した。第一に、cross_db_linksを九件から三十八件へ拡張し、親DB（business-model-patterns-db）への詳細マッピングに加えて、MG-DB（経営学概念）、Innovation-DB、Foresight-KB、Sangaku-PR、Macro-Economy、Investment-Signal、Regulatory-Japanといった八つの外部DBへの参照を構造化した。第二に、薄記述パターン百十三件のうち百十一件を、サブフィールド別の業界知テンプレートと事例由来情報を組合せて二百〜四百字記述へ補強した。第三に、各サブフィールド上位事例のパターン間に補完関係を自動構築し、関係総数を七百八十一件から千一件へ拡大した。関係タイプは複合的になり、complements八百四十八件、substitutes四十二件、precedes三十四件、composes二十四件、measures十九件、conflicts八件に加えて、theorizes・depends_on・uses・implements・enablesといった意味豊富な関係も追加された。\n\n## 構造的発見\n\nE1の調査からは、二〇二六年のAI業界が「消費者優先・赤字採算型」のOpenAI路線と「企業優先・単位経済透明化型」のAnthropic路線に二極化していることが明らかになった。OpenAIは年間収益二百億ドルに対し百四十億ドルの赤字を抱えつつ規模を追求するのに対し、Anthropicは年間収益百九十億ドルでper-token課金により二〇二七年黒字化を見込む。E2の調査からは、エージェント仲介商取引が萌芽段階にあり、Agent Compute Unit（ACU）という新しい課金単位、KYA（Know Your Agent）という新しい身元検証フレームワーク、Answer Engine Optimization（AEO）という新しい発見メカニズムが標準化に向かっていることが示された。E3の調査からは、AI学習データライセンスが訴訟リスクと制度設計の両面で急速に成熟しつつあり、Anthropic著者和解の十五億ドルが米国著作権史上最大規模となったことが記録された。E4の調査からは、クリエイター経済が地域別・領域別に分化し、Substackがプレミアム手数料制（月額五十ドル定額）を導入するなど競争激化が進んでいることが整理された。\n\n## 親DBとの位置関係\n\nv0.3.0で追加された四サブフィールドは、いずれも親DB（business-model-patterns-db）の既存BMフレームワークの派生・再構成として位置づけられる。cross_db_linksテーブルでは、WM13 AIサブスク → 親BM02 saas_subscriptionの派生、WM14 Agentic Commerce → 親BM03 platform_marketplaceの代替・再構成、WM15 ML Data Licensing → 親BM05 digital_contentの派生、WM16 Creator Economy Platform → 親BM08 crowdfunding_patronageの制度化、という関係が明示される。これにより、戦略から実装までの参照経路が拡張された。\n\n## v0.4.0への展望\n\nE1とE4が収集時にトークン予算切れで部分完成となったため、追加収集として手動でWM13に八パターン、WM16に十一パターンをseedとして補強した。次フェーズでは、WM13とWM16の事例層・概念層のさらなる拡充、Web3層と新興AI層のクロス領域パターン（AI Agent on Blockchain、Decentralized Creator Economy等）の発掘、地理的多様性の継続拡張（中国・東南アジア・インド・欧州・中南米事例の追加）を計画する。\n\n## 成果物\n\n- リポジトリ: https://github.com/yuyanishimura0312/web-monetization-db （`76c4188`）\n- ダッシュボード: https://yuyanishimura0312.github.io/miratuku-news-v2/dashboards/wmd.html\n- 教科書: https://yuyanishimura0312.github.io/miratuku-news-v2/dashboards/wmd-textbook.html （二十章・31,099字）\n- DB: `~/projects/research/web-monetization-db/web_monetization.db`\n- スラッシュコマンド: `/wmd`",
+    "digest": {
+      "core_insight": "AI時代のウェブ収益化は、従来のSaaS/プラットフォームモデルの単純な延長ではなく、トークン原価変動・エージェント仲介・データ価値化・クリエイター直接化という構造的に異なる四つの収益化様式を生み出している。特に「消費者優先・赤字採算型」vs「企業優先・単位経済透明化型」の戦略二極化は、AI業界の根本的なビジネスモデル選択を表している。",
+      "structure": "新興四領域は既存ビジネスモデルの派生・再構成として位置づけられるが、それぞれ独自の課金構造と失敗モードを持つ。AIネイティブ・サブスクリプションではLLMflationとヘビーユーザー赤字のパラドックスが、エージェント仲介商取引ではACU課金とKYA身元検証が、ML向けデータライセンシングでは訴訟リスクと制度設計の成熟が、クリエイター経済プラットフォームでは地域別・領域別分化と競争激化が、それぞれの構造的特徴となっている。これらは相互に補完・代替関係を形成し、単一パターンではなく生態系として機能する。",
+      "implications": "戦略立案者は、AI時代の収益化において従来のSaaSメトリクス（ARR、CAC等）だけでなく、トークン原価変動率・エージェント信頼度・データライセンス訴訟リスク・クリエイター離脱率といった新しい指標群による複合的な事業評価が必要となる。特に単位経済の透明化vs規模追求という戦略選択が、長期的な競争優位を左右する。",
+      "open_questions": [
+        "AI Agent on BlockchainやDecentralized Creator Economyなど、Web3層と新興AI層のクロス領域では、どのような新しい収益化パターンと制度設計が出現するのか？",
+        "地理的・文化的多様性（中国・東南アジア・インド等）を考慮した場合、これら四領域の収益化様式はどのように変異・適応するのか？"
+      ],
+      "deep_keywords": [
+        "収益化様式の構造分化",
+        "単位経済透明化",
+        "エージェント仲介経済",
+        "データ価値化制度",
+        "戦略的赤字採算"
+      ]
+    }
   }
 ]
