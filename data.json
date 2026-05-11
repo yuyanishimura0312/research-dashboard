@@ -26788,5 +26788,48 @@
         "非線形知識進化"
       ]
     }
+  },
+  {
+    "id": "6a01d4a2xjqflf",
+    "title": "収益化技法DB構築 Stage 1 Wave 2 — 収益化アプローチの幅 徹底探索（10領域1,114技法）",
+    "category": "学術DB構築",
+    "status": "organized",
+    "source": "",
+    "summary": "Wave 2 で7並列チームを起動し、経営学・社会学・心理学の3学問領域を超えた幅広い収益化アプローチを探索。歴史×文明×宗教経済・公共×法×税制・金融工学×Web3・クリエイター×文化×メディア・NPO×協同×相互扶助・業界特化18産業・インフォーマル×地下×新興、の7領域を網羅。Wave 1+2 で総計1,114技法・187研究者・157文献を把握。Waqf型永久信託・Restaking経済・AIエージェント支払い等の既存DB空白領域TOP10を特定。スキーマ設計の最小公倍数20カラムが収斂。",
+    "tags": [
+      "monetization",
+      "収益化",
+      "academic-db",
+      "歴史経済",
+      "Web3",
+      "NPO",
+      "協同組合",
+      "Waqf",
+      "DAO",
+      "クリエイター経済",
+      "業界別",
+      "インフォーマル経済",
+      "dark-pattern",
+      "ミラツク"
+    ],
+    "createdAt": "2026-05-11T13:07:46.302014+00:00",
+    "updatedAt": "2026-05-11T13:07:46.302014+00:00",
+    "content": "# 収益化アプローチの幅 — Wave 2 統合報告\n\n**日付**: 2026-05-11\n**プロジェクト**: 収益化技法学術DB構築プロジェクト\n**フェーズ**: Stage 1 Wave 2（幅の徹底探索完了）\n\n## 1. 探索結果の総量\n\n7並列チームで「学問領域を超えた収益化アプローチの幅」を徹底探索した結果、Wave 1 と合わせて以下の規模を確認：\n\n| Wave | 領域 | 技法数 | 主要研究者 | 重要文献 |\n|---|---|---|---|---|\n| W1 | 経営学×社会学×心理学（3分野） | 310 | 75 | 55 |\n| W2-1 | 歴史×文明×宗教経済 | 85 | 15 | 15 |\n| W2-2 | 公共×法×税制×地政学 | 50 | 12 | 12 |\n| W2-3 | 金融工学×投資×Web3 | 149 | 20 | 15 |\n| W2-4 | クリエイター×文化×メディア | 100 | 15 | 15 |\n| W2-5 | NPO×社会×協同×相互扶助 | 120 | 20 | 15 |\n| W2-6 | 業界特化（18業界横断） | 200 | 15 | 15 |\n| W2-7 | インフォーマル×地下×新興 | 100 | 15 | 15 |\n| **総計** | **10領域** | **1,114技法** | **187研究者** | **157文献** |\n\n## 2. 幅を可視化する6つの異質な軸\n\n経営学的見方では捉えきれない別軸:\n\n### 軸1: 時間軸（歴史性）\n- 5,000年前のメソポタミア神殿経済 → 21世紀のEigenLayer Restaking ($18B TVL)\n- Waqf（イスラム信託、9世紀〜現在）は1,000年以上耐久\n- 現代復活可能技法: 講・無尽→クラウドファンディング、Waqf→DAO信託、贖宥状→炭素クレジット\n\n### 軸2: 合法性軸\n- 完全合法 / 規制グレー / インフォーマル / 違法の4段階\n- 世界GDP 32-40%がインフォーマル経済（World Bank, Schneider推計）\n\n### 軸3: 組織形態軸\n- 国家・公的→ NPO・公益→ 協同組合→ ハイブリッド（B Corp, Steward-ownership）→ 株式会社→ DAO\n- スチュワード・オーナーシップ（Bosch, Patagonia, Carlsberg）が新潮流\n\n### 軸4: 価値捕捉メカニズム軸（13基層パターンに圧縮可能）\n階層化 / 従量化 / ハイブリッド / サブスク / 成果報酬 / OEM・ホワイトラベル / アップセル拡大 / プラットフォーム手数料 / データ化 / 所有権分離 / エージェント仲介 / 規制内生 / 社会的価値二重化\n\n### 軸5: 文化圏軸\n欧米経営学では見えない: イスラム金融、Jajmani制、講・無尽、Hawala、Susu、模合、Waqf、ROSCA/ASCA\n\n### 軸6: 倫理的グラデーション軸\n複数チームから独立抽出されたダークパターン警戒リスト:\n- W1: ガチャ依存・FOMO悪用・グリンディング・確率非開示・子ども向けゲーミフィケーション・ステルス課金\n- W2-3: MEV・サンドイッチ攻撃・ラグプル・ポンジ的トケノミクス\n- W2-5: ウォッシング・フィランソロキャピタリズム\n- W2-4: グルーミング・未成年配信者搾取\n\n## 3. 領域別主要発見\n\n### W2-1 歴史×文明×宗教経済\n- **Waqf（イスラム宗教信託）**: 9世紀〜現在、オスマン領土の75%がwaqf化。1,000年存続の最強形態\n- **Tithe（十分の一税）**: キリスト教750年〜現在\n- **Zakat（喜捨税）**: 所得・財産2.5%義務献金\n- **Dana（仏教布施）**, **Danka System（檀家制度）**\n- **国家専売制**: 塩・鉄・たばこ・酒・くじ\n- **メディチ・パトロネージ**: 現代Patreon・DAOへ系譜継承\n- **Monte システム**: 中世イタリアの国債前史\n\n主要研究者: Karl Polanyi, Marcel Mauss, David Graeber, Fernand Braudel, Marshall Sahlins, Timur Kuran, 網野善彦, 宮本常一\n\n### W2-2 公共×法×税制×地政学\n- **直接税系**: 所得税、法人税、消費税、相続税、固定資産税、ピグー税、トービン税、グローバル最低法人税15%\n- **専売・国家独占**: たばこ・酒・宝くじ・公営競技\n- **シニョリッジ**: 通貨発行益、GPIF 277兆円運用\n- **ソブリン・ファンド**: ノルウェーGPFG 130兆円、シンガポールGIC\n- **規制レント**: 免許・許認可、参入規制\n- **官民連携**: PFI/PPP/コンセッション/指定管理者\n- **環境市場**: カーボンクレジット、生物多様性、漁業権、FIT/FIP\n- **タックスヘイブン構造**（BEPS対象）\n- **公共財ファイナンス**: Lindahl均衡、VCG機構、Quadratic Funding、Retroactive Public Goods Funding\n\n主要研究者: Stiglitz, Mirrlees, Musgrave, Vickrey, Tiebout, Lindahl, Saez, Zucman, 神野直彦, 井堀利宏\n\n### W2-3 金融工学×投資×Web3\n- **伝統金融**: IPO、種類株、CB、永久債、グリーンボンド、証券化（MBS/CMBS/CLO/CDO）、デリバティブ、REIT\n- **プライベートマーケット**: VC、PE、LBO、ヘッジファンド戦略\n- **起業家ファイナンス**: SAFE、Revenue-based Financing、ARR Financing、Earnout\n- **Web3新興**: \n  - Restaking経済（EigenLayer $18B TVL、AVS）\n  - RWA Tokenization（$33B、BlackRock BUIDL）\n  - DeFi（Aave、Uniswap、Yield Farming）\n  - DeSci（VitaDAO、Molecule）\n  - ReFi（Toucan、KlimaDAO、$1.6-2.5B）\n  - MEV経済（年$7B規模）\n  - NFT二次販売ロイヤリティ（EIP-2981）\n- **公的金融**: SIB、DIB、Pay for Success、Blended Finance、PRI\n\n主要研究者: Damodaran, Buterin, Black-Scholes, Fama, Markowitz, Kaplan, Strömberg, Zingales, Szabo\n\n### W2-4 クリエイター×文化×メディア\n- **歴史的パトロネージ**: メディチ家、教会、宮廷音楽家、御用絵師\n- **著作権体系**: アン女王法1710年〜、ベルヌ条約、JASRAC/NexTone\n- **音楽産業**: 原盤権、メカニカル/パフォーマンス印税、Spotify、Hipgnosis（ロイヤルティ証券化）\n- **映像**: 製作委員会方式、ウィンドウ戦略、完成保証\n- **出版**: 印税、海外版権、KDP（60% royalty）、Kindle Unlimited\n- **アート市場**: Sotheby's/Christie's、Masterworks（フラクショナル）、NFTアート\n- **クリエイターエコノミー**: YouTube/TikTok/Patreon/Substack/Skeb、メンバーシップ\n- **ファン経済・推し活**: スーパーチャット、ガチャ、握手会\n- **VTuber**: COVER Corp ¥43.4B/2024、Hololive\n- **AI代替リスク**: SAG-AFTRA訴訟、Story Protocol（Web3ライセンス）\n\n主要研究者: Henry Jenkins, Tarleton Gillespie, Chris Anderson, Lawrence Lessig, Richard Caves, David Hesmondhalgh\n\n### W2-5 NPO×社会×協同×相互扶助\n- **ファンドレイジング**: ピラミッド理論、メジャーギフト、レガシーギビング、マンスリーサポーター\n- **フィランソロピー**: 私的財団、Donor Advised Fund、PRI/MRI、Effective Altruism\n- **インパクト投資**: SIB、DIB、Blended Finance、IRIS+、SROI\n- **協同組合**: 労協法2022施行、消費生活協同組合、Mondragon、Platform Cooperativism\n- **相互扶助**: 講・無尽・頼母子講、模合、ROSCA/ASCA、Hawala、Time Bank、LETS、WIRシステム\n- **コモンズ運営**: Ostrom原則、Wikipedia財団、Mozilla財団\n- **宗教団体**: 玉串料、お布施、永代供養、戒名料\n- **新興**: 休眠預金活用、Optimism RetroPGF、Quadratic Funding\n\n日本データ:\n- 2024年個人寄付総額2兆261億円（過去最高）\n- 認定NPO法人 寄付48.2%・会費22.1%・補助金18.5%・事業11.2%\n- 労協法施行3年で168法人\n\n主要研究者: Henry Hansmann, Lester Salamon, Elinor Ostrom, Robert Putnam, Muhammad Yunus, Edgar Cahn, Dan Pallotta, Anand Giridharadas, 山内直人, 田中弥生, 鵜尾雅隆\n\n### W2-6 業界特化（18業界）\n全業界が**13基層パターン**に収斂することが判明:\n階層化 / 従量化 / ハイブリッド / サブスク / 成果報酬 / OEM / アップセル拡大 / プラットフォーム手数料 / データ化 / 所有権分離 / エージェント仲介 / 規制内生 / 社会的価値二重化\n\n業界横断トレンド:\n- Servitization（製品→サービス化）: EBIT利益率3-7倍向上\n- Platformization: ネットワーク効果先行\n- Outcome-Based Shift: SaaS 40% by 2026予測\n- Hybrid Adoption: SaaS 43%→61% by 2026\n- Direct-to-Consumer Expansion: $1.5兆ドル by 2033\n\n### W2-7 インフォーマル×地下×新興\n- **インフォーマル経済**（世界GDP 32-40%）: de Soto理論、Schneider MIMIC推計\n- **ハワラ送金**: イスラム圏、出稼ぎ労働者送金\n- **地下経済**: 麻薬・武器・密漁・偽造品（学術的記述視点）\n- **詐欺・ポンジ**: Madoff、Ponzi、HYIP、MLM境界\n- **AI Agent経済**: McKinsey 2030年$3-5T市場、学術研究皆無\n- **メタバース・ゲーム内経済**: 仮想土地、Play-to-Earn（Axie Infinity崩壊実証 Ali & Vidan 2025）\n- **体験経済**（Pine & Gilmore 1999）\n- **結婚・葬儀・ライフイベント経済**: 日本¥1.84T/2024\n- **ペット経済**、**ロビイング経済**、**軍事PMC経済**\n\n主要研究者: Hernando de Soto, Friedrich Schneider, Misha Glenny, Sudhir Venkatesh, Edward Castronova, Vili Lehdonvirta, Pine & Gilmore\n\n## 4. 既存DBで取りこぼされる領域 TOP10\n\n1. Waqf型永久信託（DAO時代に復活可能性大）\n2. Restaking経済（EigenLayer $18B、2025年最大成長）\n3. RWA Tokenization（$33B、BlackRock BUIDL）\n4. DeSci（VitaDAO $1.2B、2640% YoY）\n5. AIエージェント支払い経済（2030年$3-5T、学術空白）\n6. Quadratic Funding / RPGF（公共財ファイナンス革新）\n7. VTuber/仮想アイドル経済（COVER ¥43.4B/2024）\n8. Steward-ownership / Purpose Trust\n9. Platform Cooperativism\n10. Time Bank / 地域通貨 / WIRシステム\n\n## 5. ミラツク独自の戦略的発見\n\n### 既存資産活用の優先順位\n- W1で確認: 既存5DB（MS/BM/IN/MG/Integrated Monetization教科書）から約1,990概念継承可能\n- 既存WMDエージェント（Web Monetization DB）が business-model-patterns の子DBとして存在 → 新DBはWMDを含む上位体系として設計\n\n### Waqf的DB信託化（W2-1独創的提案）\nミラツクの研究資産（DB・記事庫・人脈DB）を信託法下で社会目的信託化、1,000年単位の持続性\n\n### 3年ロードマップ（W2-5提案）\n- Year 1（2026）: 個人寄付ピラミッド確立（メジャー5-10名、マンスリー200名）\n- Year 2（2027）: 受託研究＆DB SaaS化（年200万円パッケージ、企業研修）\n- Year 3（2028）: 協同組合型ハイブリッド or ドナー参加型民主化\n\n### Mondragonモデル参考\n給与格差1:5、収益10%教育・社会貢献義務、民主的資本主義\n\n## 6. 統合スキーマ設計（最小公倍数20カラム）\n\n```\n基本: id, name_ja, name_en, original_language, mechanism_summary\n分類: domain (10領域), category (46+サブ領域), pattern (13基層パターン)\n歴史: origin_century, origin_civilization, evolution_path\n研究: key_researchers[], references[], evidence_level\n適用: applicable_industries[], applicable_org_forms[], applicable_scale\n規制: legality_status, regulatory_dependency, jurisdiction[]\n倫理: ethical_concern_level, dark_pattern_flags[], defensive_only\nミラツク: miratuku_applicability (0-5), npo_compatibility, implementation_difficulty\n```\n\n## 7. 次のアクション提案\n\nWave 1+2 で**幅の探索は完了**。総計1,114技法・10領域・187研究者を把握。次は:\n- **Wave 3 候補**: スキーマ確定とMVP実装計画\n- spec-writer: DB仕様書ドラフト（10領域46サブ領域20カラム）\n- db-specialist: SQLiteスキーマ設計、既存5DB継承計画\n- process-orchestrator: 7段階モデルへの本格移行\n\nユーザー判断ポイント:\n- Phase 1 MVP規模: 500件 / 2,000件 / 5,000件\n- 出口設計: 対話型エージェント / マッチングUI / 教科書+エージェント併用\n- 開発体制: 並列構築 / 段階構築",
+    "digest": {
+      "core_insight": "収益化メカニズムは表面的には1,114技法と膨大だが、本質的には13の基層パターンに収斂する。しかし既存の経営学的枠組みでは、世界GDP 32-40%を占めるインフォーマル経済、1,000年耐久のWaqf的信託構造、Web3ネイティブなRestaking経済（$18B TVL）など、時間軸・文化軸・合法性軸で異質な価値創造メカニズムが体系的に見落とされている。",
+      "structure": "収益化技法は6つの異質な軸（時間軸・合法性軸・組織形態軸・価値捕捉メカニズム軸・文化圏軸・倫理的グラデーション軸）で構造化される。欧米経営学の株式会社前提を超えて、国家専売からDAO、協同組合からWaqf信託まで、組織形態の多様性が価値捕捉の可能性空間を決定する。特に注目すべきは、伝統的相互扶助システム（講・Hawala・ROSCA）がクラウドファンディングやQuadratic Fundingとして現代復活している循環的進化パターンである。Web3領域では新たな価値捕捉メカニズム（Restaking・RWA Tokenization・MEV）が既存金融工学を拡張している。",
+      "implications": "実務者は13基層パターンを習得することで業界横断的な収益化設計が可能になるが、同時にダークパターン（ガチャ依存・MEV攻撃・フィランソロキャピタリズム）への倫理的警戒が必須である。特に1,000年耐久のWaqf型信託構造やSteward-ownershipは、短期株主価値最大化を超えた持続可能な組織設計の指針となる。",
+      "open_questions": [
+        "AIエージェント経済が2030年$3-5T規模に成長する中で、人間-AI間の価値交換メカニズムはどのような新しい基層パターンを生み出すのか？",
+        "Waqf的信託構造とDAOのハイブリッド化により、1,000年単位で持続する分散自律組織は設計可能か？"
+      ],
+      "deep_keywords": [
+        "基層パターン収斂",
+        "異質軸構造化",
+        "循環的進化",
+        "価値捕捉メカニズム",
+        "持続可能組織設計"
+      ]
+    }
   }
 ]
