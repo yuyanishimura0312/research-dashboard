@@ -26831,5 +26831,33 @@
         "持続可能組織設計"
       ]
     }
+  },
+  {
+    "id": "6a01d4e3zuzdkb",
+    "title": "Web Monetization DB (WMD) v0.1.0 構築報告",
+    "category": "knowledge-db",
+    "status": "investigating",
+    "source": "",
+    "summary": "",
+    "tags": [],
+    "createdAt": "2026-05-11T13:08:51.926894+00:00",
+    "updatedAt": "2026-05-11T13:08:51.926894+00:00",
+    "content": "# Web Monetization DB (WMD) v0.1.0 構築報告\n\nNPO法人ミラツク内部知識基盤として、Web/インターネット領域の収益化技法を体系化した派生データベース「Web Monetization DB（WMD）」のv0.1.0を構築した。親DBである統合マネタイズDB（business-model-patterns-db）が長期×戦略×経営判断の視座を持つのに対し、本DBは短中期×戦術×実装パターンの観点を扱う相互補完的な位置づけを取る。\n\n## 構造と規模\n\n本DBは八つのSQLiteテーブルから構成される。subfieldsは収益化の大分類を保持し、十二領域（ウェブ広告、サブスクリプション、EC・D2C・マーケットプレイス、デジタルコンテンツ販売、アフィリエイト、フリーミアム、ペイウォール、クラウドファンディング、API/データ、Web3、ゲーミフィケーション課金、リードジェネレーション）を含む。patternsは具体的な収益化技法、examplesは実在企業の実装事例、metricsは評価指標、conceptsは学術概念、researchersは研究者・専門家、relationsはこれらの間の関係、cross_db_linksは親DBや他のSQLite DBへの参照を保持する。\n\nv0.1.0時点の規模は、サブフィールド12、パターン163、事例153、研究者19、概念17、指標2、関係0、親DBへのクロスリンク9となっている。pattern×exampleペアの実例として、Google AdSense（WM01・Display+Search Ads）、Netflix（WM02・Tiered Subscription with Ad-supported Plan）、Stripe（WM09・API Call Pricing）、Patreon（WM08・Subscription Crowdfunding）、Fortnite（WM11・Battle Pass + Cosmetic IAP）、OpenSea（WM10・NFT Royalty）等が登録されている。\n\n## 構築プロセス\n\n7フェーズ循環開発モデルを適用した。Phase 0でスコープを定義し、十二サブフィールドの設計思想を確定した。Phase 1でSQLiteスキーマを設計し、Phase 2で三チーム並列収集を実行した。Team Aは学術論文・理論層を担当し、Tim Wu・Tien Tzuo・Ben Thompson・Jean Tirole・Patrick Campbell・David Skok・Chris Anderson・Shoshana Zuboff等の研究者19名と、Attention Economy・Two-sided Markets・Aggregation Theory・Subscription Economy・Freemium等の概念17件を収集した。Team Bは業界実例層を担当し、米国56パーセント・日本10パーセントを含む153事例を収集した。Team Cはパターンライブラリ・指標体系を担当した。Phase 3では4カテゴリ品質監査を実行し、Phase 4では親DBへのクロスリンクを9件構築した。\n\n## 成果物\n\nダッシュボード（dashboards/wmd.html）と20章構成の教科書（dashboards/wmd-textbook.html、14,544字）を生成し、ミラツクのデザイン体系（赤白CI #CC1400 + textbook.html構造）に準拠させた。スラッシュコマンド `/wmd` を登録し、エージェント経由でDB検索・パターン推奨・事例参照が可能な状態にした。\n\n## 親DBとの位置関係\n\n統合マネタイズDB（business-model-patterns-db、`/integrated-monetization`）が三年・十年・三十年の長期ホライズンでBM×MS×MPV三軸統合判断を支援するのに対し、WMDは零〜三年の戦術ホライズンで実装パターン選定を支援する。両者の接続はcross_db_linksテーブルで管理され、WMDの個別パターン（例: Per-seat pricing）が親DBの抽象的フレームワーク（例: Subscription Economy）の具体化として参照可能となる。\n\n## 公開URL\n\n- リポジトリ: https://github.com/yuyanishimura0312/web-monetization-db （private）\n- ダッシュボード: https://yuyanishimura0312.github.io/miratuku-news-v2/dashboards/wmd.html\n- 教科書: https://yuyanishimura0312.github.io/miratuku-news-v2/dashboards/wmd-textbook.html\n\n## 次フェーズ（v0.2.0）想定\n\n事例800件、関係3,000-6,000件、概念60-80件、指標80-120件への拡張を予定する。Team Cの収集を再実行してパターン関係グラフを充実させ、親DBとのパターンレベルマッピングを深化させる。",
+    "digest": {
+      "core_insight": "Web収益化における戦術的実装パターンを体系化し、長期戦略フレームワークとの階層的統合を実現することで、理論と実践の間の「実装ギャップ」を埋める知識基盤が構築された。短中期の戦術判断と長期戦略判断を相互参照可能にすることで、収益化意思決定の精度向上を図っている。",
+      "structure": "12の収益化領域を軸とした163の具体的パターンと153の実装事例を、学術理論層・業界実例層・パターンライブラリ層の三層構造で整理している。親DBとの関係は「抽象度の階層化」として設計され、WMDの具体的実装パターン（例：Per-seat pricing）が親DBの戦略フレームワーク（例：Subscription Economy）の具現化として機能する。この構造により、戦術選択が長期戦略との整合性を保ちながら実行される仕組みを提供している。",
+      "implications": "経営者は短期の収益化施策を長期戦略との一貫性の中で選択でき、実装者は理論的背景を持った戦術実行が可能になる。特に0-3年の実装ホライズンでの意思決定速度と精度の向上が期待される。",
+      "open_questions": [
+        "戦術パターンの組み合わせ最適化：個別パターンの相互作用や組み合わせ効果をどう定量化し、最適な収益化ポートフォリオを構築するか",
+        "動的パターン進化：市場環境や技術変化に応じた収益化パターンの進化メカニズムをどう捕捉し、予測可能にするか"
+      ],
+      "deep_keywords": [
+        "実装ギャップ解消",
+        "階層的意思決定統合",
+        "戦術-戦略整合性",
+        "収益化パターン体系化",
+        "知識基盤相互参照"
+      ]
+    }
   }
 ]
