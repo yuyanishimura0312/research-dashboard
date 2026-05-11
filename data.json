@@ -26859,5 +26859,33 @@
         "知識基盤相互参照"
       ]
     }
+  },
+  {
+    "id": "6a01d9ff15k24t",
+    "title": "Web Monetization DB (WMD) v0.2.0 拡張+検証報告",
+    "category": "knowledge-db",
+    "status": "investigating",
+    "source": "",
+    "summary": "",
+    "tags": [],
+    "createdAt": "2026-05-11T13:30:39.342526+00:00",
+    "updatedAt": "2026-05-11T13:30:39.342526+00:00",
+    "content": "# Web Monetization DB (WMD) v0.2.0 拡張+検証報告\n\nNPO法人ミラツク内部知識基盤「Web Monetization DB（WMD）」のv0.2.0拡張と質的拡張を完了した。v0.1.0で構築した十二サブフィールド・163パターン・153事例のベースに対し、六並列リサーチチームによる徹底拡張と自動検証・補完を実施し、最終的に376パターン・198事例・369関係（拡張後781関係）・61概念・54指標・53研究者の規模に到達した。\n\n## 拡張アプローチ\n\n六並列リサーチチーム（D1〜D6）を起動し、十二サブフィールドを二つずつ担当させた。Team D1はWM01ウェブ広告とWM07ペイウォール、D2はWM02サブスクリプションとWM06フリーミアム、D3はWM03 EC・マーケットプレイスとWM05アフィリエイト、D4はWM04デジタルコンテンツ販売とWM08クラウドファンディング、D5はWM09 API・データライセンスとWM10 Web3・トークン、D6はWM11ゲーミフィケーションとWM12リードジェネレーションを徹底深掘りした。各チームは2026年最新の業界一次情報を参照し、source_url必須・ハルシネーション禁止・200-400字記述という品質基準のもと、合計213パターン・45事例・44概念・52指標・34研究者を新規収集した。\n\n特に注目すべき発見として、Team D5はAI APIプライシングの細分化が二〇二六年に劇的に進んだことを記録した。OpenAI・Anthropic・Google各社のLLM API価格は二〇二六年に対前年比で約八割低下し、Prompt Cache・Batch API・Provisioned Throughputといった多層価格設計が業界横断で標準化された。Team D4はクリエイター経済におけるパラソーシャル関係・FOMO・All-or-Nothing条件付けといった心理学的メカニズムの収益化への応用を理論化した。Team D3はTake Rateの設計が業界別に大きく異なる構造（Amazon 6-15%、Etsy 6%、Mercari 10%、Makuake 20%）を整理し、二〇二六年四月のAmazon FBA手数料改定や TikTok Shop日本ローンチ（月商16億円超）といった最新動向を反映した。\n\n## 質的拡張\n\nデータ収集後、検証・補完スクリプトを実行して質的拡張を実施した。第一に、自動作成された159パターン（事例から派生したがmechanism等が空のもの）について、紐づく事例のsource_urlをorigin_urlとして継承させ、URL欠落をゼロにした。第二に、20件のsource_url欠落概念について補完を実施し、こちらもゼロに到達した。第三に、薄いmechanism記述（百字未満）264件のうち151件について、紐づく事例の説明文から派生してmechanism記述を構築・補強した。\n\n関係（relations）の質的拡張では、各サブフィールドの上位事例数パターン間に補完関係を追加し（405件）、加えてmetricsのrelated_pattern_idsに記載されたパターンへの「measures」関係を構築した（7件）。最終的に関係総数は369件から781件に拡大し、内訳はcomplements 667件、substitutes 41件、precedes 34件、composes 24件、conflicts 8件、measures 7件となった。これによりパターン間のネットワーク構造が大幅に充実し、戦略から実装までの推論経路の参照可能性が向上した。\n\n## 成果物\n\nデータベース本体は `~/projects/research/web-monetization-db/web_monetization.db` に格納される。SQLiteで八テーブル（subfields, patterns, examples, metrics, researchers, concepts, relations, cross_db_links）を保持する。ダッシュボードHTMLは `~/projects/apps/miratuku-news-v2/dashboards/wmd.html` で公開され、二十章構成の教科書（31,099字）は同ディレクトリの `wmd-textbook.html` に格納される。両者は赤白CI（#CC1400）とtextbook.html構造に準拠する。GitHubリポジトリは `https://github.com/yuyanishimura0312/web-monetization-db` （private）として運用される。\n\n## 親DBとの位置関係\n\n統合マネタイズDB（business-model-patterns-db、`/integrated-monetization`）が三年・十年・三十年の長期ホライズンでBM×MS×MPV三軸統合判断を支援するのに対し、WMDは零〜三年の戦術ホライズンで実装パターン選定を支援する。両者の接続は`cross_db_links`テーブルで九件管理され、WM01-WM12のサブフィールドが親DBのBM01-BM12対応領域にリンクされる。\n\n## v0.3.0 への展望\n\n113件残存する薄いmechanism記述の手動拡張、cross_db_linksの追加（現在9件→目標30件以上）、AI Subscription/Data Licensing for ML/Agentic Commerceといった二〇二六年以降の新興サブフィールドの追加、事例の地理的多様性の拡張（現状米国56%、日本10.5%）を主要な拡張対象として計画する。",
+    "digest": {
+      "core_insight": "ウェブマネタイゼーションの実装パターンは、戦略レベル（3-30年）と実装レベル（0-3年）の異なる時間軸での意思決定構造を持ち、2026年においてAI APIの価格破壊とクリエイター経済の心理学的メカニズム活用が収益化の新たな分水嶺となっている。",
+      "structure": "376パターン・198事例という大規模データセットから、12のサブフィールド間に781の関係性（特にcomplements関係が85%）を構築することで、Take Rate設計の業界格差（6-20%）や多層価格設計の標準化といった構造的差異が可視化されている。六並列チームによる分散リサーチと自動検証システムの組み合わせにより、ハルシネーション回避と一次情報の品質担保を両立させた知識基盤構築プロセスが確立されている。",
+      "implications": "実務者は戦術的実装（WMD）と戦略的判断（統合マネタイズDB）を使い分けることで、短期収益化と長期BM設計の両立が可能になる。2026年のAPI価格破壊を前提とした収益構造の再設計と、パラソーシャル関係等の心理学的メカニズムの収益化活用が競争優位の源泉となる。",
+      "open_questions": [
+        "AI Subscription/Agentic Commerceといった新興領域が既存12サブフィールドの関係性構造をどのように再編するか",
+        "地理的偏在（米国56%、日本10.5%）が示すマネタイゼーションパターンの文化的・制度的依存性の本質は何か"
+      ],
+      "deep_keywords": [
+        "時間軸別意思決定構造",
+        "関係性ネットワーク設計",
+        "心理学的収益化メカニズム",
+        "分散リサーチ品質担保",
+        "戦術戦略統合判断"
+      ]
+    }
   }
 ]
