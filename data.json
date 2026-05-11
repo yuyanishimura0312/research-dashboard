@@ -27000,5 +27000,44 @@
         "倫理的実装トレードオフ"
       ]
     }
+  },
+  {
+    "id": "6a0255a3fig069",
+    "title": "収益化技法DB Wave 5 — ダッシュボードHTML（赤白CI）+ 関係グラフ823エッジ",
+    "category": "学術DB構築",
+    "status": "organized",
+    "source": "",
+    "summary": "Wave 5でダッシュボードHTML（赤白CI準拠、15章、サイドバーTOC、ダークモード対応、53KB）を~/projects/apps/miratuku-news-v2/dashboards/monetization-db.htmlに生成、GitHub Pages公開。関係グラフtechnique_relationsに823エッジ構築（共有研究者483+同カテゴリ340）。Kahneman/Tverskyクラスタ・Servitizationクラスタ・Uniswap V4クラスタを発見。累積1,435技法+1,314研究者+823関係。",
+    "tags": [
+      "monetization",
+      "収益化",
+      "academic-db",
+      "dashboard",
+      "akashiro-CI",
+      "relations-graph",
+      "kahneman-cluster",
+      "servitization",
+      "wave5",
+      "visualization"
+    ],
+    "createdAt": "2026-05-11T22:18:11.423421+00:00",
+    "updatedAt": "2026-05-11T22:18:11.423421+00:00",
+    "content": "# 収益化技法DB Wave 5 完了報告 — ダッシュボード生成 + 関係グラフ構築\n\n**日付**: 2026-05-12\n**フェーズ**: Wave 5（公開ダッシュボード + 関係グラフ）\n\n## 1. ダッシュボードHTML（赤白CI準拠）\n\n公開URL: https://yuyanishimura0312.github.io/miratuku-news-v2/dashboards/monetization-db.html\n\n赤白CI（#CC1400 + 白背景 + Noto Sans/Serif JP）準拠の15章構成:\n1. プロジェクト概要（統計4カード）\n2. 品質指標（階層・ドメイン別Gold率）\n3-12. 10ドメイン別代表記録（各3件のA-Goldカード）\n13. ミラツク即時実装候補（applicability=5）\n14. 倫理警告リスト（high concern 21件）\n15. 主要研究者TOP 15\n\n特徴:\n- サイドバーTOC（位置固定、章番号付き、ホバー赤色）\n- ダーク/ライトモード切替（localStorage保存）\n- メインカラム max-width 760px\n- モバイル対応（@media max-width 1000px）\n- 印刷対応（@media print）\n- サイズ 53KB\n\n## 2. 関係グラフ（technique_relations）\n\n500件のA-Gold記録に対し**823エッジ**を自動構築:\n\n| タイプ | 件数 |\n|---|---|\n| 共有研究者リンク | 483 |\n| 同カテゴリリンク | 340 |\n| 明示的関連 | 0（フィールド未整備） |\n\n### TOP 10最連結ノード\n1. 確実性効果（PRICING_PSYCH）: 次数25\n2. プロスペクト理論（参照点依存型価値関数）: 24\n3. アンカリング: 21\n4. 損失回避フレーミング: 19\n5. Total Care (Caterpillar): 18\n6. 確率重み関数: 17\n7. Pay-per-Use Equipment: 16\n8. Uniswap V4 Hooks: 13\n9. 集中流動性: 13\n10. エンドウメント効果: 13\n\n**クラスタ発見**:\n- **Kahneman/Tverskyクラスタ**: 5件がTOP 10に入り、行動経済学の知的中心が可視化\n- **Servitizationクラスタ**: Caterpillar Total Care + Pay-per-Use Equipment（製造業のas-a-Service化）\n- **Uniswap V4クラスタ**: Hooks + Concentrated Liquidity（DeFi進化の中核）\n\n## 3. 累積DB状態\n\n| 指標 | 値 |\n|---|---|\n| 総技法数 | 1,435 |\n| A-Gold記録 | 500 |\n| 研究者マスタ | 1,314名 |\n| 関係エッジ | 823 |\n| ドメイン | 10 |\n| 100% Gold達成ドメイン | 8 |\n\n## 4. 累積 Wave 1-5 全成果\n\n| Wave | 成果 |\n|---|---|\n| W1 | 経営学・社会学・心理学3分野マッピング 310技法 |\n| W2 | 10領域に拡張、1,114技法/187研究者把握 |\n| W3 | 量積み失敗 → 質的転換、A-Gold 280件達成 |\n| W4 | 検証・拡張・深化、A-Gold 500件 + 研究者マスタ1,314名 |\n| W5 | ダッシュボードHTML（赤白CI）+ 関係グラフ823エッジ |\n\n## 5. 残課題と次フェーズ\n\n- B-tier 935件（FIN/INDUSTRY）の段階的A-Gold化\n- 教科書HTML（textbook.htmlスタイル、長文ナラティブ章立て）\n- 関係グラフのD3.jsビジュアライゼーション\n- WebFetch によるsource_urls 200応答検証（80件サンプル → 全件）\n- ミラツク事業実装ロードマップ（applicability=5の12件着手）\n\n## 6. ファイル構成\n\n```\n~/projects/research/monetization-db/\n├── data/monetization.db          (SQLite, 1,435技法+1,314研究者+823関係)\n├── phase1_scope/                  (空)\n├── phase2_collect/batches/        (B-tier生バッチ)\n├── phase3_verify/\n│   ├── gold_batches/              (15個のA-Gold JSON)\n│   ├── audit_reports/             (FIN_TRAD監査)\n│   └── researchers_master.json    (1,314名)\n├── phase4_relations/\n│   └── build_relations.py\n└── phase5_dashboard/\n    └── generate_dashboard.py\n\n~/projects/apps/miratuku-news-v2/dashboards/\n└── monetization-db.html           (公開ダッシュボード)\n```\n\n## 7. Git State\n- monetization-db repo: 4 commits（W3→W4→W5×2）\n- miratuku-news-v2: dashboard commit pushed to GitHub Pages",
+    "digest": {
+      "core_insight": "収益化技法の体系化において、行動経済学（特にKahneman/Tverskyの理論群）が知的中心として機能し、製造業のサービス化やDeFiなどの新興領域との予期しない構造的関連性が発見された。単なる技法集積ではなく、異分野間の深層的知識ネットワークが可視化されている。",
+      "structure": "10ドメインに跨る1,435の収益化技法のうち、500件のA-Gold記録が823のエッジで結ばれ、明確なクラスタ構造を形成している。行動経済学の確実性効果・プロスペクト理論が最高次数（25-24）を持ち、サービス化クラスタ（Caterpillar Total Care中心）、DeFiクラスタ（Uniswap V4 Hooks中心）との三極構造が出現。これは心理的認知バイアス→産業実装→金融技術革新という知識伝播の階層性を示唆する。",
+      "implications": "実務者は行動経済学の基礎理論を収益化戦略の中核に据えるべきであり、製造業のサービス化とDeFiは表面的には異なるが共通の認知科学的基盤を持つため、相互学習が可能である。applicability=5の12件は即座に実装検討すべき成熟技法として特定されている。",
+      "open_questions": [
+        "なぜ行動経済学理論が産業横断的な収益化技法の中心ハブとして機能するのか、その認知科学的・進化論的根拠は何か",
+        "B-tier 935件をA-Gold化した際、現在の三極クラスタ構造はどのように変化し、未発見の知識ハブが出現するか"
+      ],
+      "deep_keywords": [
+        "認知バイアス中心性",
+        "異分野知識伝播",
+        "収益化ネットワーク構造",
+        "行動経済学ハブ効果",
+        "産業横断的技法クラスタ"
+      ]
+    }
   }
 ]
