@@ -26701,5 +26701,44 @@
         "構造化検索性"
       ]
     }
+  },
+  {
+    "id": "6a01d0722afox7",
+    "title": "収益化技法DB構築 Stage 1 Wave 1 — 経営学×社会学×心理学 初動マッピング",
+    "category": "学術DB構築",
+    "status": "organized",
+    "source": "",
+    "summary": "収益化技法の学術DB（5,000-10,000件規模）構築プロジェクトの初動リサーチ。既存5DB（MS/BM/IN/MG/教科書）から約1,990概念を学術核として継承可能と判明。経営学13サブ領域・社会学15・心理学18サブ領域でマッピング完了。ダークパターン警戒リスト10件抽出。次フェーズはA/B/C判断後にspec-writer起動。",
+    "tags": [
+      "monetization",
+      "収益化",
+      "academic-db",
+      "経営学",
+      "社会学",
+      "心理学",
+      "行動経済学",
+      "business-model",
+      "pricing",
+      "dark-pattern"
+    ],
+    "createdAt": "2026-05-11T12:49:54.269523+00:00",
+    "updatedAt": "2026-05-11T12:49:54.269523+00:00",
+    "content": "# 収益化技法データベース構築 — Stage 1 Wave 1 初動リサーチ統合報告\n\n**日付**: 2026-05-11\n**プロジェクト**: 経営学・社会学・心理学を中心とする収益化技法の学術DB構築\n**フェーズ**: Stage 1 Wave 1（初動マッピング完了）\n\n## 1. プロジェクト位置づけ\n\n- **目的**: 収益化技法の学術知見を体系化したDB＋収益化プラン精緻提案体制の確立\n- **対象分野**: 経営学・社会学・心理学（中心）/ 行動経済学・マーケティング科学・哲学（周辺）\n- **規模目標**: 概念5,000-10,000件（MG DB 3,369概念・IN DB 9,839概念の方法論を継承）\n- **既存資産**: MG DB / `/integrated-monetization`（18章190K字教科書） / `/business-models`\n\n## 2. 既存資産マッピング（重要発見）\n\n| 既存DB | 収益化関連件数 | 役割 |\n|---|---|---|\n| Marketing & Sales DB | `pricing_monetization` 専用 678件 | 技法カタログの心臓部 |\n| Business Models DB | 735パターン | 価値捕捉構造の骨格 |\n| IN DB（イノベーション） | 543/9,839件 | 価値創造・価値獲得の理論基盤 |\n| MG DB（経営学） | 502/3,369件 | 戦略・財務・マーケ理論 |\n| Integrated Monetization 教科書 | 18章190K字 | BMホライズン三層・730BM史的タイムライン |\n| **既存合計** | **約1,990概念** | 学術的核として継承可能 |\n\n**5つの新規構築必須領域**:\n1. 心理学側の支払行動・WTP理論\n2. 社会学側の交換・贈与・価格正義\n3. 技法×条件マッチング層（業界・市場・成熟度→推奨技法）\n4. NPO/社会的事業の収益化（ミラツク本業領域なのに未カバー）\n5. AI/トークン経済の価値捕捉\n\n## 3. 三分野別リサーチ統合\n\n### 3.1 経営学パート\n\n**13サブ領域**:\nA. 戦略的価値創造と利益構造（Porter, RBV, Profit Pool）\nB. 事業モデル設計と収益源泉（Osterwalder, Chesbrough, Zott&Amit, 井上達彦P-VARM）\nC. 価格戦略と価値捕獲（Nagle/Hogan, Shapiro&Varian, Dynamic Pricing）\nD. プラットフォーム・ネットワーク経済（Rochet&Tirole, Hagiu, Eisenmann）\nE. 新興収益モデル（Tien Tzuo, Anderson, Botsman, Circular）\nF. Attention economy・データ・行動設計（Davenport&Beck, Zuboff, Eyal）\nG. AI時代の新フロンティア（API課金, 推論コスト, トークノミクス, ESG）\n\n**主要研究者TOP30**: Porter, Osterwalder, Amit, Zott, Chesbrough, Nagle, Hogan, Rochet, Tirole, Hagiu, Eisenmann, Tzuo, Anderson, Botsman, Zuboff, Davenport, Beck, Eyal, Gadiesh, Gilbert, Shapiro, Varian, Trigeorgis, 楠木建, 井上達彦, Tadelis, Pavlou, McAfee, Brynjolfsson, Sundararajan\n\n**主要概念100+**: Five Forces, Value Chain, BMC, Two-Sided Market, Network Effects, Freemium, Subscription, Recurring Revenue, CLV, CAC, Churn Rate, Tokenomics, API Monetization, Per-Token Pricing, Outcome-Based Pricing, Real Options 等\n\n### 3.2 社会学パート\n\n**4上位カテゴリ**:\n1. 埋め込み性・制度化（Granovetter, Polanyi, DiMaggio&Powell）\n2. 資本と価値の転換（Zelizer, Bourdieu, Boltanski&Thévenot, Stark, Hochschild）\n3. 取引と交換の社会形態（Mauss, Graeber, Coleman, Burt, Ostrom, Benkler）\n4. 抽出と支配（Srnicek, van Dijck, Couldry&Mejias, Zuboff, Wu, Krippner）\n\n**独自視点**:\n- 社会的正当化メカニズムの可視化（Polanyi二重運動）\n- 価値の複多性と共存モード（Stark dissonance）\n- 非市場形態との相互作用（贈与・コモンズ・ピアプロダクション）\n- 抽出・支配の権力構造（プラットフォーム資本主義批判）\n\n**主要研究者TOP25**: Granovetter, Polanyi, Zelizer, Fligstein, DiMaggio, Powell, Bourdieu, Boltanski, Thévenot, Burt, Coleman, Ostrom, Benkler, Mauss, Graeber, Srnicek, van Dijck, Couldry, Mejias, Zuboff, Wu, Thompson, Krippner, Hochschild, Origgi, Belk, Schor, Stark\n\n### 3.3 心理学パート\n\n**5上位カテゴリ**:\n1. 価値認知メカニズム（アンカリング、チャーム価格、バンドリング）\n2. 支払いの心理抵抗（Pain of Paying, 心的会計）\n3. 意思決定バイアス（損失回避、希少性、時間選好）\n4. 動機づけ・習慣形成（SDT, crowding-out, Hooked Loop）\n5. 社会的影響・集団効果（Cialdini 6 principles, 文化差）\n\n**主要研究者TOP20**: Kahneman, Tversky, Thaler, Sunstein, Prelec, Loewenstein, Ariely, Simon, Mullainathan, Shafir, Laibson, Cialdini, Chou, Eyal, Glimcher, Camerer, Solomon, Sheth, Fehr, Gneezy\n\n**ダークパターン警戒リスト（倫理タグ必須）**:\n- ガチャ・ルートボックス（addiction_risk, gambling_adjacent）\n- FOMO・タイムリミット（artificial_urgency）\n- グリンディング（friction_sludge, pay_to_skip）\n- 確率非開示（transparency_fail）— 極高リスク\n- 子ども向けゲーミフィケーション（vulnerable_population）— 極高リスク\n- 無限スクロール（attention_capture）\n- デフォルト自動更新（optin_sludge）\n- 虚偽の在庫表示（false_scarcity）\n- サブスク縛り（exit_friction）\n- ステルス課金（hidden_costs）\n\n## 4. 三分野統合の核となる対比軸\n\n- **経営学**=「どう設計するか」（How）\n- **社会学**=「なぜ社会的に受容されるか/反発されるか」（Why social）\n- **心理学**=「なぜ個人が支払うか」（Why individual）\n\n## 5. Stage 1 Wave 2 への判断ポイント\n\n### A. DB基本設計方針\n- A1: 統合型新DB（既存5DB再利用＋新DB）【推奨】\n- A2: 横断型（既存DB＋クロスリファレンステーブル）\n- A3: 教科書拡張型（Integrated Monetization拡張）\n\n### B. 規模感\n- B1: 5,000件規模（6-8週間）\n- B2: 10,000件規模（3-4ヶ月、academic-db-build方法論）\n- B3: 段階構築（Phase1で2,000件MVP→検証→拡張）【推奨】\n\n### C. 収益化プラン提案の出口設計\n- C1: 対話型エージェント（/monetization-design）\n- C2: マッチング型ツール\n- C3: 教科書＋エージェント併用【推奨】\n\n## 6. 推奨スキーマ要素（統合版）\n\n```\nconcept_id, concept_name_ja, concept_name_en\ncategory (経営学/社会学/心理学/横断)\nsubcategory (13+15+18=46サブ領域タグ)\nprimary_researchers[] (研究者外部キー)\nyear_proposed\ndescription (300字以内)\nmechanism (核心原理)\n\n# 経営学カラム\napplicable_industry[], market_size_min, competition_structure\nrequired_capabilities, kpi_metrics[], roi_horizon\n\n# 社会学カラム\nsocial_embeddedness, legitimacy_mechanism, counter_movement\ninstitutional_dependency, value_plurality, extraction_asymmetry\ncultural_meaning, resistance_potential\n\n# 心理学カラム\npsychological_foundation, effect_size, evidence_level\nculture_moderation, ethical_concern_level, dark_pattern_flags[]\n\n# 共通\nimplementation_examples[], critique_notes\nrelated_concepts[] (グラフ構造)\nsource_citations[]\n```\n\n## 7. 次のアクション\n\nユーザー判断待ち（A/B/Cの方針確定）。確定後:\n- W2-1: spec-writer によるDB仕様確定\n- W2-2: db-specialist によるSQLiteスキーマ設計\n- W2-3: process-orchestrator による7段階モデルへの本格移行",
+    "digest": {
+      "core_insight": "収益化は単一の経営技法ではなく、経営学的設計（How）・社会学的正当化（Why social）・心理学的受容（Why individual）の三次元が同時に成立して初めて機能する複合現象である。既存の分野別アプローチでは捉えきれない統合的メカニズムの解明が必要。",
+      "structure": "収益化技法の成否は、価値創造の経営戦略、社会的埋め込み性と制度的正当性、個人の認知バイアスと支払い心理という三層が相互作用するシステムとして決定される。ダークパターンや抽出的手法は短期的には心理学的に有効でも、社会学的反発により持続不可能となる構造的矛盾を内包している。現在約2,000概念の知見が分散しているが、統合的フレームワークによる体系化により、条件適合的な収益化設計が可能になる。",
+      "implications": "実務者は技法の表面的効果ではなく、対象市場の制度的文脈と顧客の文化的背景を踏まえた三次元適合性を評価すべきである。特にAI・トークン経済時代においては、既存の価値捕捉モデルの根本的再設計が急務となっている。",
+      "open_questions": [
+        "AI時代の推論コスト・API課金・トークノミクスは、従来の経済社会学的交換理論をどこまで無効化するのか？",
+        "ESG・SDGsという社会的価値と利益最大化の矛盾は、どのような新しい価値捕捉メカニズムによって解決可能か？"
+      ],
+      "deep_keywords": [
+        "三次元適合性",
+        "制度的埋め込み性",
+        "価値捕捉の社会的正当化",
+        "認知的価値構築",
+        "抽出的収益化の構造的限界"
+      ]
+    }
   }
 ]
