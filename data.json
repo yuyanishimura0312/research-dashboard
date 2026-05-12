@@ -27168,5 +27168,33 @@
         "制度的再構築"
       ]
     }
+  },
+  {
+    "id": "6a03356dvb069g",
+    "title": "学術知識DB ak.html 質的向上（5分野textbook化＋関係ネットワーク強化）",
+    "category": "",
+    "status": "investigating",
+    "source": "",
+    "summary": "",
+    "tags": [],
+    "createdAt": "2026-05-12T14:13:01.048386+00:00",
+    "updatedAt": "2026-05-12T14:13:01.048386+00:00",
+    "content": "# 学術知識DB ダッシュボード（ak.html）質的向上 改修記録\n\n**実施日**: 2026-05-11 / 2026-05-12\n**対象**: https://yuyanishimura0312.github.io/miratuku-news-v2/dashboards/ak.html\n**スコープ**: 5分野（人文学・社会科学・自然科学・工学・芸術）すべての章 + 関係ネットワーク章\n\n## 改修方針\n\n「規模ダッシュボード（バーチャート中心）」から「読ませる学術地図（textbook style）」へ。db-design-system.md の textbook 基準（赤白CI・本文中心・地の文）に揃える。\n\n## 変更の概要\n\n### サイズ変化\n- Before: 65 KB / 1,215 行\n- After: **192 KB / 3,845 行**（3倍化）\n\n### 各章の構造（共通）\n- `x.1 分布の解釈` — 観察データに基づく2段落のナラティブ\n- `x.2 代表的概念` — theory-card グリッド（各サブフィールド×2件、definition原文120字を直接引用）\n- `x.3 時代の地層` — サブフィールド × 7時代区分のクロス集計表＋系譜タイムライン\n- `x.4 他分野への接続` — cross_domain_relations 上位12件\n- `x.5 データの限界` — JSON診断から自動生成される欠落・偏在記録\n\n### Chapter 08 関係ネットワーク\n- `8.1` 5×5分野ペアマトリクス（直接接続 1,840 件、ハブDB経由除く）\n- `8.2` ハブ概念ランキング TOP20（社会科学の制度論群が首位）\n- `8.3` 関係タイプの分布（applied_to 19.7% / thematic_overlap 16.0% / informs 12.6% など）\n\n### 構造要素\n- theory-card: 192件（40+38+36+24+54）\n- era-table: 5分野 + Chapter 08 関係タイプ表 = 7表\n- bridge-item: 80件（12×5 + ハブ20）\n- matrix-cell: 20マス（5×5 - 対角線5）\n- limits-list: 5件\n\n## 重要な発見（章本文に反映済み）\n\n1. **芸術↔人文学=609件**: 5分野ペアで最密。人文・社会・芸術の三角がコア。\n2. **自然科学はどの分野とも50件以下**: 「専門島」構造。\n3. **5分野間直接接続は 1,840件**: 全 cross_domain 18,733 の約10%にすぎず、残り90%は innovation_theory / startup_theory / business_models 等のハブDB経由。\n4. **トップハブ概念は社会科学の制度論群**: 新制度主義94 / 制度的空隙89 / 制度ロジック88。\n5. **AI・機械学習サブフィールドは 54% が 2015年以降**: 5分野中最も急加速。\n6. **芸術はBCE 8000年（土建築）から現代まで最大の時代スケール**。\n7. **生態学系6サブフィールド合計が自然科学の29.1%**: Phase 9で意図的に細分化された設計。\n\n## データ忠実度\n\n- 概念名・定義文・研究者名・年号はすべて academic.db の原文を引用\n- AI による再生成・脚色は実施せず（feedback_codex_quality 準拠）\n- definition は原文先頭120字で切り出し（120字以降は ... で省略）\n- ナラティブ部分（地の文）はJSON統計に基づいて手書き\n\n## 数値整合性検証\n\n| 指標 | overview claim | 計算結果 | 一致 |\n|---|---|---|---|\n| 5分野合計 | 18,090 | 18,090 | ✓ |\n| pre1900 | 2,525 | 2,525 | ✓ |\n| 1900-1959 | 2,702 | 2,702 | ✓ |\n| 1960-1984 | 3,864 | 3,864 | ✓ |\n| 1985-1999 | 2,753 | 2,753 | ✓ |\n| 2000-2014 | 2,857 | 2,857 | ✓ |\n| 2015+ | 3,389 | 3,389 | ✓ |\n\n## バックログ（次フェーズ用）\n\n`~/projects/research/academic-knowledge-db/BACKLOG_natural_quality.md` に P1-P5 を記録：\n\n- **P1 研究者リンクの致命的不足**: natural_discovery_researchers は 7行のみ、social/engineering/arts は 0 件。コア研究者の多くは概念側の自由記述フィールドに留まっている。\n- **P2 関係タイプの単一化**: 自然科学では derived_from のみ実存、extends/builds_on は 0 件。\n- **P3 サブフィールド分類の境界事例**: キーワード自動分類の暴走で「ニュートンの光学」が理論生態学に、「大気大循環」が化学に分類されている等。\n- **P4 2015年以降の比率の薄さ**（自然科学16.6%が最下位）\n- **P5 系譜チェーンの labeling 矛盾**\n\n## 生成ツール（再利用可）\n\n- `_extract_ak_all_domains.py`: 5分野統一抽出器（academic.db → JSON）\n- `_gen_ak_section.py`: 5分野対応セクションジェネレータ（JSON → HTML fragment）\n- `_gen_ak_network_section.py`: Chapter 08ジェネレータ\n- 全データ素材 `_ak_*_materials.json`: 後段拡張で再利用可\n\n## チーム編成\n\n| Stage | エージェント | 役割 |\n|---|---|---|\n| 1 構造分析 | codebase-analyst | ak.html 質的問題特定、it-textbook.html がモデルと判明 |\n| 1 素材抽出 | general-purpose（×5並列） | 5分野 SQLite → JSON 抽出 |\n| 2 実装 | Pythonジェネレータ + Edit | HTML/CSS追加、5+1セクション差し替え |\n| 3 検証 | general-purpose（×2並列） | 数値整合性・ハルシネーション・赤白CI適合 |\n| 5 デプロイ | Bash | commit → push → GitHub Pages反映確認 |\n\n## 関連メモリ\n- feedback_codex_quality（AI再生成禁止）\n- feedback_long_document_style（textbook スタイル必須）\n- db-design-system.md（赤白CI体系）\n- reference_akashiro_ci\n\n## 公開URL\n- ダッシュボード: https://yuyanishimura0312.github.io/miratuku-news-v2/dashboards/ak.html\n- 自然科学章: https://yuyanishimura0312.github.io/miratuku-news-v2/dashboards/ak.html#natural",
+    "digest": {
+      "core_insight": "学術知識データベースの可視化において、「量的規模の表示」から「質的理解のための読める学術地図」への転換が実現された。5分野18,090概念の分析により、学術知識の構造は直接的な分野間接続（10%）よりもハブ概念経由の間接的統合（90%）によって成り立つことが明らかになった。",
+      "structure": "学術知識の統合は階層的ハブ構造を持ち、社会科学の制度論群が最上位ハブとして機能している。分野間の接続密度は極めて非均質で、人文・社会・芸術の三角形がコアクラスターを形成する一方、自然科学は「専門島」として独立性を保持している。時間軸では2015年以降のAI・機械学習領域が急速拡大し、既存の学術構造に新たな動的要素を注入している。知識の表現形態は、原データの忠実性を保持しながら教科書様式のナラティブ構造に変換することで、統計的情報と概念的理解の両立が可能となる。",
+      "implications": "学術政策や研究戦略においては、分野横断的な知識統合を促進するために、直接的な分野連携よりもハブ概念の強化と活用が効果的である。データベース設計では、量的可視化から質的理解支援への転換により、専門家の深い洞察形成を支援できる。",
+      "open_questions": [
+        "ハブ概念経由の間接的統合が90%を占める構造は、学術知識の本質的特性なのか、それともデータベース設計の人工的産物なのか？",
+        "自然科学の「専門島」構造と他分野の密結合構造の違いは、知識生産様式の根本的差異を反映しているのか？"
+      ],
+      "deep_keywords": [
+        "知識統合のハブ構造",
+        "質的可視化への転換",
+        "学術島嶼化",
+        "概念系譜のナラティブ",
+        "間接的知識連結"
+      ]
+    }
   }
 ]
