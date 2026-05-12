@@ -27306,5 +27306,39 @@
     ],
     "createdAt": "2026-05-12T19:54:28.427863+00:00",
     "updatedAt": "2026-05-12T19:54:28.427863+00:00"
+  },
+  {
+    "id": "6a03af17butwpr",
+    "title": "DB大規模クリーニング Phase 1 完遂 (58 DB検証→4,276件削除)",
+    "category": "DB品質管理",
+    "status": "done",
+    "source": "",
+    "summary": "5並列検証チームでハルシネーション・テンプレート由来データを特定→Phase 1で4,276件削除+2,763件flag細分化。US/SU/GF/ETD/AAの5基盤DBから合成データを除去し、verified率を大幅改善。Phase 2/3はWikidata置換/Wikipedia補充/Scholar検証で4並列稼働中。",
+    "tags": [
+      "DB",
+      "verification",
+      "cleanup",
+      "hallucination",
+      "quality"
+    ],
+    "createdAt": "2026-05-12T22:52:07.215278+00:00",
+    "updatedAt": "2026-05-12T22:52:07.215278+00:00",
+    "content": "# 大規模クリーニング Phase 1 実行結果\n日時: 2026-05-13\nベース: 5並列検証チーム報告書 (Agent #50-54)\n\n## Phase 1 累計成果\n\n### 削除実行 (4,276件)\n| DB | 削除件数 | DB変化 | 内訳 |\n|---|---|---|---|\n| US (university-startups.db) | 1,538 | 5,132→3,594 | synthetic 全件 (Web痕跡ゼロ確認) |\n| SU (academic.db/startup_theory) | 1,217 | 9,031→7,814 | numbered_suffix 942 + ecosystem 275 |\n| GF (great_figures.db/persons) | 1,465 | 9,178→7,713 | Scientist_NN 935 + Businessman_NN 530 |\n| ETD (era_talents.db/achievers) | 56 | 12,958→12,902 | 日本科学者NN 45 + ダミー 11 |\n| **合計** | **4,276** | | |\n\n### Flag 細分化 (2,763件)\n| DB | カラム追加 | 細分内訳 |\n|---|---|---|\n| AA (ai_acceleration_evidence.db/sources) | verification_status | likely_synthetic 2,548 + paraphrase 215 + possibly_real 532 |\n\n### 関連テーブル整合性\n- US: startup_relations 6,796 → 3,720 (3,076削除)\n- SU: startup_theory_relations 42,497 → 38,291 (4,206削除)\n- GF: person_contexts / childhood_profiles / early_life_events orphan 削除済\n\n## Commit/Push 状態\n\n| Repo | Commit | Push |\n|---|---|---|\n| miratuku-news-v2 | `9cfbf8d` US synthetic 1538 deleted + registry v1.18 | ✅ |\n| great-figures-db | `660dfb8` GF Phase A 1,465 deleted | ✅ |\n| ai-acceleration-evidence-db | `2cb8557` AA subclass flagging | ✅ |\n| era-talents-db | `9e9cd08` ETD placeholder Phase 1 56 deleted | ✅ |\n| academic-knowledge-db | `cf381c5` SU Phase A 1,217 deleted | 🟡 local commit のみ (#48 backup-*.db履歴問題) |\n\n## Phase 2/3 ペンディング (#55-58 登録済)\n\n### #55 SU Phase B\n- synthetic_variant 1,369 → parent ID マージ 800 + 削除 569\n- synthetic_generic_researcher 371 → 論文逆引きで著者補強\n- 所要: 60-90分\n\n### #56 GF Phase B (Wikidata置換)\n- Figure_NN 1,755 + Leader_NN 609 + Royal/Scholar = 約 2,400件\n- era + civilization + occupation で SPARQL 置換\n- 期待 hit率 60-70% (1,500-1,800件置換)\n- 所要: 90-120分 (Wikidata API 律速)\n\n### #57 ETD 補充\n- Wikipedia 一括 54件 (実名+生年あり、hit率 85-95%)\n- 官報スクレイピング 600件 (令和政治家、3段階)\n  - 段階1: 内閣府大臣・衆参議長等 50名\n  - 段階2: 都道府県知事・政党幹部 200名\n  - 段階3: 地方議員・行政官 379名\n- 所要: 60-90分 (Wikipedia) + 数日 (官報スクレイピング)\n\n### #58 AA Phase 2 Google Scholar\n- possibly_real_author_abstract 532件\n- 著者+タイトル確認、verified_google フラグへ昇格\n- 所要: 30-60分 (API 律速)\n\n## 評価指標達成状況\n\n| DB | 指標 | Before | After | Target |\n|---|---|---|---|---|\n| US | total (real) | 5,132 | 3,594 | 3,594 ✅ |\n| SU | verified率 | 67% | 77.5% | 78% (Phase B で達成) |\n| GF | synthetic率 | 48.8% | 39.0% | 22-27% (Phase B で達成) |\n| ETD | placeholder率 | 5.5% | 5.06% | <0.5% (補充で達成) |\n| AA | url_missing分類率 | 0% | 100% | 完了 ✅ |\n\n## 残課題 (#48)\n\nacademic-knowledge-db git push が `*.backup-*.db` 過去履歴 (100MB超 2件+警告8件) で GitHub pre-receive hook 拒否中。\n解決選択肢:\n- A: `git filter-repo` で backup-*.db を履歴削除 → force push (履歴書換)\n- B: Git LFS migrate (academic.db 127MB含む)\n- C: 新リポ作成 (履歴破棄)\n- D: 現状維持 (CHANGELOG運用のみ、push諦め)\n\nユーザー判断待ち。",
+    "digest": {
+      "core_insight": "大規模データベースの品質管理において、synthetic dataとreal dataの混在が深刻な問題となっており、体系的な検証プロセスにより4,276件の低品質データを特定・削除することで、データベース全体の信頼性を大幅に向上させることができた。",
+      "structure": "問題の構造は、AI生成や機械的に作成されたデータ（synthetic_variant、numbered_suffix等）が実データと混在し、データベースの信頼性を損なっている状況である。5並列検証チームによる体系的アプローチにより、パターン認識→検証→削除/フラグ付けの段階的処理を実行し、関連テーブルの整合性も同時に維持している。さらに、削除だけでなくWikidataやGoogle Scholarからの実データ補充により、量的縮小と質的向上の両立を図っている。",
+      "implications": "データドリブン意思決定において、データ品質管理は継続的なプロセスとして組み込む必要があり、特に大規模データベースでは自動検証システムと人的判断を組み合わせた多段階アプローチが不可欠である。",
+      "open_questions": [
+        "synthetic dataの混入を事前に防ぐための予防的品質管理システムをどう設計すべきか",
+        "大規模データベースの品質指標として、verified率以外にどのような多次元評価が必要か"
+      ],
+      "deep_keywords": [
+        "data_quality_assurance",
+        "synthetic_data_contamination",
+        "systematic_verification",
+        "database_integrity",
+        "multi_stage_validation"
+      ]
+    }
   }
 ]
