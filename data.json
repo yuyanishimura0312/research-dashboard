@@ -27270,5 +27270,27 @@
         "創発的製造生態系"
       ]
     }
+  },
+  {
+    "id": "6a038481emu2jc",
+    "title": "製造現場のオーケストラ化 2030-2100 v7工学領域拡張版",
+    "category": "補論",
+    "status": "done",
+    "source": "https://yuyanishimura0312.github.io/miratuku-news-v2/reports/manufacturing-orchestra-2030-2100.html",
+    "summary": "v6付録版に新付録F「工学領域全般への技術発展系譜の拡張」を追加。10工学領域（量子/材料/エネルギー/宇宙/海洋/環境/医療/神経/輸送/建築/農業）×4時代×3経路相対化を統合。12並列リサーチチーム（G1-G6基盤＋H1-H5精緻化）成果統合。9DB横断知見活用（AD/AA/TA/SG/IN/GPT-QoL/MT/FK/PE）。本文59,845字・図解16点・累計18並列チーム×7反復。",
+    "tags": [
+      "manufacturing",
+      "orchestra",
+      "deep-knowledge",
+      "engineering-domains",
+      "quantum",
+      "materials",
+      "energy",
+      "space",
+      "medical",
+      "v7-engineering-expansion"
+    ],
+    "createdAt": "2026-05-12T19:50:25.688439+00:00",
+    "updatedAt": "2026-05-12T19:50:25.688439+00:00"
   }
 ]
