@@ -27292,5 +27292,19 @@
     ],
     "createdAt": "2026-05-12T19:50:25.688439+00:00",
     "updatedAt": "2026-05-12T19:50:25.688439+00:00"
+  },
+  {
+    "id": "6a038574dhry81",
+    "title": "製造現場のオーケストラ化 v7.2最終版",
+    "category": "補論",
+    "status": "done",
+    "source": "https://yuyanishimura0312.github.io/miratuku-news-v2/reports/manufacturing-orchestra-2030-2100.html",
+    "summary": "v7工学領域拡張版+H6学術検証7修正反映でA評価到達。10工学領域×4時代×3経路×規制成熟度マトリクス完全統合",
+    "tags": [
+      "v7.2-final",
+      "A-grade"
+    ],
+    "createdAt": "2026-05-12T19:54:28.427863+00:00",
+    "updatedAt": "2026-05-12T19:54:28.427863+00:00"
   }
 ]
