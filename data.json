@@ -27393,5 +27393,21 @@
     ],
     "createdAt": "2026-05-12T23:39:30.605654+00:00",
     "updatedAt": "2026-05-12T23:39:30.605654+00:00"
+  },
+  {
+    "id": "6a03be81llndz3",
+    "title": "製造現場のオーケストラ化 v7.2 公開（journal.emerging-future.org）",
+    "category": "公開",
+    "status": "done",
+    "source": "https://journal.emerging-future.org/reports/manufacturing-orchestra/",
+    "summary": "deep knowledge補論v7.2付録版を journal.emerging-future.org/reports/manufacturing-orchestra/ 配下に公開。本編260KB（62K字・16図解）+方法論46KB。FTPデプロイ完了（HTTP 200・サイズMATCH）。",
+    "tags": [
+      "manufacturing-orchestra",
+      "v7.2",
+      "public-deploy",
+      "journal-emerging-future"
+    ],
+    "createdAt": "2026-05-12T23:57:53.774893+00:00",
+    "updatedAt": "2026-05-12T23:57:53.774893+00:00"
   }
 ]
