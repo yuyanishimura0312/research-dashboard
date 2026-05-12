@@ -27376,5 +27376,22 @@
         "灰色文献限界"
       ]
     }
+  },
+  {
+    "id": "6a03ba32d3oh5e",
+    "title": "未来技術動向DB（FTT-DB v1.0）構築完了",
+    "category": "DB",
+    "status": "done",
+    "source": "https://github.com/yuyanishimura0312/future-tech-trends-db",
+    "summary": "deep knowledge補論v7.2付録Fを学術的基盤に、10工学領域×4時代×3経路×規制成熟度×5メガトレンドの281レコード構造化SQLite DBを構築。エージェント /future-tech-trends・CLI・ダッシュボード完備。",
+    "tags": [
+      "FTT-DB",
+      "future-tech-trends",
+      "SQLite",
+      "manufacturing-orchestra",
+      "v1.0"
+    ],
+    "createdAt": "2026-05-12T23:39:30.605654+00:00",
+    "updatedAt": "2026-05-12T23:39:30.605654+00:00"
   }
 ]
