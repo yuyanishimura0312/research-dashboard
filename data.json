@@ -27067,5 +27067,43 @@
         "戦略的赤字採算"
       ]
     }
+  },
+  {
+    "id": "6a0326a1nanpur",
+    "title": "収益化技法DB Wave 6 — 教科書HTML（15章113KB）+ D3グラフ + ミラツク実装ロードマップ",
+    "category": "学術DB構築",
+    "status": "organized",
+    "source": "",
+    "summary": "Wave 6で残課題3件を実装。①教科書HTML（赤白CI準拠、15章、113KB、ナラティブ章立て、序章+10ドメイン+ロードマップ+終章）、②D3.js関係グラフ（500ノード×823エッジ、力学レイアウト、ドメイン色分け、ズーム/パン/ホバー）、③ミラツク実装ロードマップMD（14KB、Year 1の12件+Year 2-3の21件+Year 4-5の77件、統合ポートフォリオ4階層+KPI表）。残B-tier 855件A-Gold化とURL全件検証は次フェーズへ。",
+    "tags": [
+      "monetization",
+      "textbook",
+      "d3-graph",
+      "visualization",
+      "implementation-roadmap",
+      "akashiro-CI",
+      "wave6",
+      "ミラツク",
+      "DB-design-system"
+    ],
+    "createdAt": "2026-05-12T13:09:53.755848+00:00",
+    "updatedAt": "2026-05-12T13:09:53.755848+00:00",
+    "content": "# 収益化技法DB Wave 6 完了報告 — 教科書HTML + D3グラフ + 実装ロードマップ\n\n**日付**: 2026-05-12\n**フェーズ**: Wave 6（残課題3件の実装）\n\n## 1. 教科書HTML（textbook.htmlスタイル長文ナラティブ）\n\n**公開**: https://yuyanishimura0312.github.io/miratuku-news-v2/dashboards/monetization-db-textbook.html\n**サイズ**: 113KB / 15章構成 / 赤白CI準拠\n\n構成:\n- **序章**: 収益化という人類普遍の営み（紀元前3000年メソポタミアからWeb3まで）\n- **第1章**: 全体俯瞰 10ドメインの地図\n- **第2-11章**: 各ドメイン（HIST_REL→NPO→PRICING→CREATOR→PUBLIC→WEB3→AI→INFORMAL→FIN→INDUSTRY）\n  - 各章エッセイ風ナラティブ導入文\n  - 8件のA-Gold記録（mechanism全文・代表事例・倫理バッジ）\n- **第12章**: ミラツク実装ロードマップ\n- **終章**: 収益化の倫理的境界\n\n特徴:\n- サイドバーTOC（位置固定、章番号付き）\n- ダーク/ライト切替（localStorage）\n- 字下げ（text-indent 1em）、和文タイポ最適化\n- 倫理バッジ（high/medium/normal色分け）\n- 代表事例の3点セット表示（社名+年+規模）\n\n## 2. D3.js 関係グラフ可視化\n\n**公開**: https://yuyanishimura0312.github.io/miratuku-news-v2/dashboards/monetization-db-graph.html\n**サイズ**: 168KB\n\n- **500ノード × 823エッジ**の力学レイアウト（Force-directed）\n- ドメイン別色分け（10色、赤=NPO、青=Web3、紫=Pricing等）\n- ノードサイズ = miratuku_applicability（0-5）× 2 + 5\n- インタラクション: パン・ズーム・ドラッグ、ホバーで詳細ツールチップ\n- リンク種別表示（共有研究者=赤、同カテゴリ=灰）\n- ラベル表示トグル / リセットボタン\n- レジェンド表示\n\n可視化される構造:\n- Kahneman/Tverskyクラスタ（PRICING_PSYCH中心、確実性効果・プロスペクト理論等）\n- Servitizationクラスタ（INDUSTRY_B2B、Caterpillar Total Care起点）\n- Uniswap V4クラスタ（WEB3、Hooks・Concentrated Liquidity）\n\n## 3. ミラツク実装ロードマップ\n\n**ファイル**: phase5_dashboard/miratuku-implementation-roadmap.md\n**サイズ**: 14KB / 308行\n\n構成:\n1. ロードマップ全体像（Year 1/2-3/4-5の3期）\n2. **Year 1（2026）即時着手12件**（applicability=5）\n   - ドメイン別整理、mechanism全文+研究基盤+代表事例+ミラツク適用観点\n3. **Year 2-3（2027-2028）戦略候補21件**（applicability=4）\n4. **Year 4-5（2029-2030）検討候補77件**（applicability=3）\n5. **統合ポートフォリオ設計の指針**\n   - 個人寄付ピラミッド（認定NPO/メジャーギフト/マンスリー/レガシー）\n   - 受託研究・知識サービス（産学連携/SaaS/研修）\n   - コミュニティ・コモンズ（Open Collective/QF/休眠預金）\n   - 長期信託・永続性（Steward-ownership/Waqf的信託/エンドウメント）\n6. 倫理的境界と非推奨領域（high concern 21件の明示）\n7. KPI表（Year 1/3目標数値）\n\n## 4. 残課題の進捗\n\n| 残課題 | 状況 |\n|---|---|\n| B-tier 935件のA-Gold化 | 一部進行（Wave 4で80件enriched、残り855件） |\n| 教科書HTML生成 | ✅ 完了 |\n| D3.jsグラフ可視化 | ✅ 完了 |\n| ミラツク実装ロードマップ | ✅ 完了 |\n| WebFetch URL検証全件 | 未着手（次フェーズ） |\n\n## 5. 累積成果（Wave 1→6）\n\n| アーティファクト | URL/Path |\n|---|---|\n| SQLite DB | ~/projects/research/monetization-db/data/monetization.db |\n| ダッシュボードHTML | yuyanishimura0312.github.io/miratuku-news-v2/dashboards/monetization-db.html |\n| 教科書HTML | …/monetization-db-textbook.html |\n| 関係グラフ | …/monetization-db-graph.html |\n| 実装ロードマップ MD | phase5_dashboard/miratuku-implementation-roadmap.md |\n| Research Dashboard | 5エントリ（W2/W3/W4/W5/W6） |\n\n### 数値サマリ\n- 総技法数: 1,435\n- A-Gold記録: 500（8ドメインで100%、PRICING/HIST/NPO/CREATOR/PUBLIC/WEB3/INFORMAL/AI）\n- 研究者マスタ: 1,314名\n- 関係エッジ: 823\n- 教科書字数: 約11万字相当\n- 倫理警告タグ: 21件\n- ミラツク即時実装候補: 12件、戦略候補21件\n\n## 6. Git State\n\n- monetization-db: 6 commits（W3→W4→W5×2→W6）\n- miratuku-news-v2: 2 dashboard commits pushed\n- research-dashboard: 5 entries\n\n## 7. 次フェーズ候補\n\n1. B-tier 855件（FIN/INDUSTRY）の段階的A-Gold化（並列エージェント）\n2. WebFetchでsource_urls全件200応答検証\n3. 教科書PDF化（gstack-make-pdfで2万字超なら本格的書籍体裁）\n4. ダッシュボードの検索・フィルタUI追加\n5. 関係グラフのコミュニティ検出（Louvain法）",
+    "digest": {
+      "core_insight": "収益化技法の体系的データベース化により、紀元前3000年から現代Web3まで1,435の技法が10ドメインに構造化され、とりわけミラツクへの適用可能性が定量評価（0-5スケール）された結果、即時実装可能な12技法が特定された。これは収益化を感情的議論から脱却させ、エビデンスベースの戦略選択を可能にする知識基盤の創出である。",
+      "structure": "問題構造は、NPO・研究組織の収益化が個別事例の断片的模倣に依存している現状に対し、(1)歴史的蓄積の体系化→(2)ドメイン横断的パターン抽出→(3)倫理的境界の明示→(4)実装優先度の定量化、という段階的知識変換プロセスを構築している。特に500のA-Gold記録における研究者ネットワーク（823エッジ）の可視化は、Kahneman/TverskyやUniswap V4等の影響クラスタを露呈し、技法間の因果連鎖と適用条件の構造的理解を促進している。",
+      "implications": "実務者は感覚的判断ではなく、miratuku_applicabilityスコアと倫理バッジによる客観的リスク評価に基づいた収益戦略を設計できる。意思決定者にとってはYear 1-5のロードマップにより、即時着手（12件）・戦略検討（21件）・長期候補（77件）の段階的ポートフォリオ構築が具体化される。",
+      "open_questions": [
+        "B-tier 855件（主に金融・産業ドメイン）のA-Gold化により、現在の適用可能性評価はどの程度変動し、ドメイン間の相互依存関係はより複雑な構造を示すか",
+        "倫理的境界（high concern 21件）の判定基準は文化・時代・組織規模によってどう変化し、動的な倫理評価システムへの拡張可能性はあるか"
+      ],
+      "deep_keywords": [
+        "知識体系化メタモデル",
+        "収益化意思決定支援",
+        "倫理的技法選択",
+        "実装優先度定量化",
+        "エビデンスベース戦略設計"
+      ]
+    }
   }
 ]
