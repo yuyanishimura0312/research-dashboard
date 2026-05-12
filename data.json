@@ -27340,5 +27340,41 @@
         "multi_stage_validation"
       ]
     }
+  },
+  {
+    "id": "6a03b1d3imuuex",
+    "title": "DB大規模クリーニング Phase 2 完遂 (verified率 67%→93.9%)",
+    "category": "DB品質管理",
+    "status": "done",
+    "source": "",
+    "summary": "4並列BG subagent で Phase 2/3 実行。SU verified率 67%→93.9% (大幅超過達成)、ETD Wikipedia 6件補充、AA Scholar 検証で灰色文献構造制約確定、GF Wikidata は API レート制限で別アプローチ要。累計 8,796 records 処理 (Phase 1+2合算)。",
+    "tags": [
+      "DB",
+      "verification",
+      "cleanup",
+      "Phase2",
+      "Wikidata",
+      "Wikipedia",
+      "Crossref"
+    ],
+    "createdAt": "2026-05-12T23:03:47.628741+00:00",
+    "updatedAt": "2026-05-12T23:03:47.628741+00:00",
+    "content": "# Phase 2/3 統合報告\n日時: 2026-05-13\nチーム: 4 並列 BG subagent (#55-58)\nベース: Phase 1 完遂後の補強・置換・検証ラウンド\n\n## 統合結果サマリ\n\n| Agent | DB | 結果 | 達成 |\n|---|---|---|---|\n| #55 SU Phase B | academic.db/startup_theory | variant 1,369 → 10 base name 統合 + 削除 1,359、generic 371 reclass | ✅ 大幅超過達成 |\n| #56 GF Wikidata pilot | great_figures.db | Wikidata API rate限 1req/min で agent timeout、DB変更なし | ⚠️ 別アプローチ要 |\n| #57 ETD Wikipedia | era_talents.db/achievers | 6/60 件強マッチ補充 (placeholder 653→647) | ⚠️ 期待85% vs 実hit 10% |\n| #58 AA Phase 2 Scholar | ai_acceleration_evidence.db/sources | STRONG 0/60、SOFT 11件 flag付与 | ⚠️ 灰色文献構造制約 |\n\n## 各 Agent 詳細\n\n### #55 SU Phase B 完遂 (大幅超過)\n- backup: `academic.db.pre-su-phase-b-20260513-075202`\n- synthetic_variant 1,369件 → 10 base name (IPO/M&A/Impact Investment 系 Phase A 残骸) に集約\n  - 各 base name 内で最小 Variant 番号 (30-35) を verified に **promote 10件**\n  - 残り 1,359 variants の relations を parent に rewrite (3,943件) → 重複/自己ループ削除 (6,599件) → 削除\n- synthetic_generic_researcher 371件 → key_works が「Literature on X」汎用記述で論文逆引き不能 → `requires_author_lookup` 再分類\n- relations: 38,291 → 31,692 (orphan 0、自己ループ 0)\n- **verified率: 67% → 93.9%** (target 78% を大幅超過)\n- commit `90a2c9c` → `c6db228` で push 統合済\n\n### #56 GF Wikidata pilot 停止 (rate limit)\n- backup: `great_figures.db.pre-wikidata-pilot-20260513-075119` (DB変更なし)\n- Wikidata SPARQL endpoint 1 req/min × 20件 = 22分超で agent timeout\n- 別アプローチ候補:\n  - **SPARQL バルククエリ**: 1 query で複数 civilization × occupation × era を VALUES節で一括\n  - **curated mapping ファイル**: 民族学者・歴史家のオフライン整理データ (例: Mansa Musa, Trajan等の Pre-modern key figures)\n  - **Wikidata dump 全取得 + ローカル検索**: ~80GB ダウンロード、長期計画\n- DB現状: synthetic 3,006件 / verified 4,707件 のまま\n\n### #57 ETD Wikipedia 部分成功\n- backup: `era_talents.db.pre-wikipedia-fill-20260513-075129`\n- 60件候補のうち強マッチ 6件補充 (吉田秀和/村上世彰/岩国哲人/山本有三/宮崎哲弥/佐藤敬)\n- placeholder: 653 → 647\n- 弱マッチ 18件は `notes` に `[wikipedia_ambiguous ...]` flag維持\n- **期待 85-95% vs 実 hit率 10%** の乖離原因:\n  - 候補プールに `import_experts` 由来単独給名 (姓欠落「由起夫」「美智子」等) 17件混入\n  - `birth_year=1976` placeholder 既定値 (year_set phase 6.1 由来) 19件混入\n  - クリーンプール `source_team='import_great_figures'` だと 7/9 = 78%\n- Phase 2 設計示唆: ①弱マッチ生年逆抽出 ②NGリスト化 ③令和政治家519件は官報・政党公式へ\n- scripts/wikipedia_fill_phase1.py (--dry-run / --limit N 対応) commit `a5c487b` push 済\n\n### #58 AA Phase 2 Scholar 別アプローチ確定\n- backup: `db/ai_acceleration_evidence.db.pre-phase2-scholar-20260513-075137`\n- Crossref → S2 → OpenAlex 3段 fallback、token Jaccard 閾値\n- 前提制約判明: 著者レコード **0/532件** (source_authors 紐付けゼロ) → タイトル類似度のみで判定\n- 60件パイロット (2バッチ): STRONG 0/60 / SOFT 11/60\n- Crossref最大類似度 0.40-0.62 (部分一致レベル)\n- 判断ゲート「hit率<10% → 別アプローチ」適用、残り 502件への拡大は実施せず\n- 11件に `quality_flag='soft_title_match_only'` 付与\n- INDUSTRY/GOVERNMENT REPORT (60%占有) は灰色文献で API DB 未収録の構造的制約\n- scripts/phase2_verify_scholar.py commit `0332dfd` push 済\n\n## Phase 2/3 累積処理 (Phase 1+2)\n\n| カテゴリ | 件数 |\n|---|---|\n| Phase 1 削除 | 4,276 (US 1,538 + SU 1,217 + GF 1,465 + ETD 56) |\n| Phase 1 Flag 細分化 | 2,763 (AA 3層) |\n| **Phase 2 SU 削除** | 1,359 (variant マージ) |\n| **Phase 2 SU promote** | 10 (base name 昇格) |\n| **Phase 2 SU 再分類** | 371 (requires_author_lookup) |\n| **Phase 2 ETD 補充** | 6 (Wikipedia 強マッチ) |\n| **Phase 2 AA Soft flag** | 11 (soft_title_match_only) |\n| **累計 records 処理** | **8,796** |\n\n## Commit/Push 全リポ最終確認\n\n| Repo | Latest Commit | Push |\n|---|---|---|\n| miratuku-news-v2 | `34ba0dd` v1.19 (US/SU/GF/AA registry 反映) | ✅ |\n| academic-knowledge-db | `c6db228` 5 commits combined (P1 verification + SU A+B) | ✅ #48解決 |\n| great-figures-db | `660dfb8` GF Phase A CHANGELOG | ✅ |\n| ai-acceleration-evidence-db | `0332dfd` Phase 2 Scholar pilot | ✅ |\n| era-talents-db | `a5c487b` Wikipedia fill Phase 1 | ✅ |\n| myth-function-db | `fd4a96e` Wodehouse 76削除 | ✅ |\n| research-dashboard | `ffcea6f` Phase 1結果公開 | ✅ |\n\n## 検証可能性 (verified率) 達成\n\n| DB | Before P1 | After P1 | After P2 | Target | 達成 |\n|---|---|---|---|---|---|\n| SU | 67% | 77.5% | **93.9%** | 78% | ✅ 大幅超過 |\n| US | 70% (synth含) | 100% (synth除) | — | 70% | ✅ |\n| ETD | placeholder 5.5% | 5.06% | 5.01% | <0.5% | ⚠️ Phase 3 補充必須 |\n| GF | synth 48.8% | 39.0% | 39.0% | 22-27% | ⚠️ Wikidata 別法要 |\n| AA | url_missing 79.6% | 0% (3層分類済) | SOFT 0.3% 昇格 | TBD | ⚠️ 灰色文献限界 |\n\n## Phase 3 ペンディング (タスク登録要)\n\n### 高優先度\n- **GF Wikidata バルク取得 or curated mapping**: pre-modern Figure_NN 1,228件\n- **ETD 官報スクレイピング**: 令和政治家 519件 (3段階)\n- **ETD NGリスト化 候補抽出 SQL 改修**: import_experts ノイズ除外\n\n### 中優先度\n- **AA INDUSTRY/GOVERNMENT REPORT 復元**: Wayback/Google CSE 検証\n- **SU requires_author_lookup 371件**: ecosystem cluster 著者調査\n\n### 低優先度\n- **AK 残 social_theory 77件 / business_models 56件**: 個別検証\n- **MY narratives source_team 別の二次クリーン**\n\n## 教訓 (Phase 2 追加)\n\n1. **API レート律速の壁**: Wikidata SPARQL 1req/min は pilot 20件で 22分超 → bulk クエリ or オフラインダンプが必要\n2. **「possibly_real」の幻想**: AA で著者レコード 0件と判明、source_team 種別の精査が前提\n3. **クリーンプールの威力**: ETD で `source_team='import_great_figures'` 限定だと hit率 10% → 78% に向上\n4. **灰色文献の構造的限界**: AA INDUSTRY/GOVERNMENT 60% 占有は学術API では到達不能\n5. **判断ゲートの有効性**: 「hit率 < 10%」の事前定義で AA は 60件で停止判断、無駄な502件展開を回避\n\n## ファイル所在\n\n- Phase 1 結果: `~/work/db-cleanup-phase1-results-2026-05-13.md`\n- Phase 2 結果 (本): `~/work/db-cleanup-phase2-results-2026-05-13.md`\n- 実行計画: `~/work/db-cleanup-plan-2026-05-13.md`\n- Research Dashboard: https://yuyanishimura0312.github.io/research-dashboard/\n- Memory: `~/.claude/projects/-Users-nishimura-/memory/project_db_cleanup_phase1_2026_05_13.md`",
+    "digest": {
+      "core_insight": "大規模DBクリーニングにおいて、データソースの構造的制約とAPI制限が検証可能性向上の決定的制約因子となる。一律的アプローチでは限界があり、データ種別ごとの固有制約を事前把握した上でのアプローチ選択が必要。",
+      "structure": "検証可能性向上は「技術的実行可能性」×「データ構造適合性」×「外部リソース利用可能性」の制約最適化問題として構造化される。API制限（Wikidata 1req/min）、灰色文献の学術DB未収録性、データ品質のソース依存性が階層的制約を形成。成功事例（SU 67%→93.9%）と失敗事例（GF Wikidata timeout）の差は、制約認識と回避策準備の有無にある。",
+      "implications": "大規模データ品質管理では、処理量ベースではなく制約識別ベースの計画策定が必要。判断ゲート（hit率<10%で停止）のような事前定義された撤退基準により、無効な作業への資源投入を回避できる。",
+      "open_questions": [
+        "データソース固有制約の体系的予測手法：新規DB統合時に技術的・構造的制約をどう事前評価するか",
+        "灰色文献・非学術資料の検証可能性向上手法：従来学術APIでカバーできない領域への代替アプローチの確立"
+      ],
+      "deep_keywords": [
+        "制約最適化",
+        "検証可能性階層",
+        "データソース構造制約",
+        "判断ゲート設計",
+        "灰色文献限界"
+      ]
+    }
   }
 ]
