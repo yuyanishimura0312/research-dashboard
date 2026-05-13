@@ -27971,5 +27971,42 @@
         "長期集中投資"
       ]
     }
+  },
+  {
+    "id": "6a04736bfcfl0n",
+    "title": "収益化技法DB Wave 8 — 質的拡張115件（Bridge/Theory/Regional/Failure/Frontier）+ コミュニティ2.4倍",
+    "category": "学術DB構築",
+    "status": "organized",
+    "source": "",
+    "summary": "Wave 8で5並列リサーチによる質的拡張115件追加：BRIDGE 25（ドメイン横断概念、既存125件参照）+ THEORY 20（理論基盤、ノーベル賞10件、原論文DOI45）+ REGIONAL 25（非西欧：WeChat/M-Pesa/UPI/Pix/Sukuk/Stokvels等）+ FAILURES 20（Terra/Luna・FTX・Theranos等アンチパターン）+ FRONTIER 25（Devin 2.0・BUIDL・EU CBAM等2025-2026最新）。総1,550件、A-Gold 675件（35→44%）。Louvainコミュニティ147→351件(2.4倍)、Bridge概念がTop連結ノードに（Versioning 24、Lock-in 20、Servitization 19）。",
+    "tags": [
+      "monetization",
+      "wave8",
+      "bridge-concepts",
+      "theory-frameworks",
+      "regional-models",
+      "anti-patterns",
+      "frontier-2025",
+      "Louvain-improved"
+    ],
+    "createdAt": "2026-05-13T12:49:47.160517+00:00",
+    "updatedAt": "2026-05-13T12:49:47.160517+00:00",
+    "content": "Wave 8 Quality Expansion: +115 A-Gold records. BRIDGE 25 (cross-domain), THEORY 20 (Nobel-grade frameworks), REGIONAL 25 (non-Western), FAILURES 20 (anti-patterns), FRONTIER 25 (2025-2026 latest). Communities tripled to 351 nodes. Domain integration achieved.",
+    "digest": {
+      "core_insight": "収益化手法の研究において、従来の西欧中心的なモデルを超えて、ドメイン横断的なブリッジ概念と失敗パターンの体系化が、実用的な知識体系構築の核心であることが実証された。特にVersioning、Lock-in、Servitizationといったブリッジ概念が知識ネットワークの主要な連結点として機能している。",
+      "structure": "この研究は5つの質的次元（BRIDGE/THEORY/REGIONAL/FAILURE/FRONTIER）を並列展開することで、収益化知識の構造的多様性を捉えている。地域特化モデル（WeChat/M-Pesa等）と理論基盤（ノーベル賞理論含む）、そして失敗事例（Terra/FTX等）を統合することで、成功要因と阻害要因の両面からメカニズムを解明している。Louvainアルゴリズムによるコミュニティ検出の2.4倍拡張は、知識間の潜在的関連性が従来の想定を大幅に上回ることを示している。",
+      "implications": "実務者は単一の成功モデルではなく、地域性・理論的基盤・失敗パターンを統合した多面的アプローチが必要である。特にブリッジ概念を活用したドメイン横断的な収益化戦略の設計が、持続可能な事業モデル構築の鍵となる。",
+      "open_questions": [
+        "ブリッジ概念の連結性が高い理由は何か、そしてこの連結性は収益化の成功確率とどう相関するのか",
+        "地域特化モデルの成功要因は他地域・他ドメインにどの程度一般化可能なのか"
+      ],
+      "deep_keywords": [
+        "収益化メカニズム",
+        "ドメイン横断概念",
+        "地域適応型モデル",
+        "失敗パターン学習",
+        "知識ネットワーク構造"
+      ]
+    }
   }
 ]
