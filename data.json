@@ -28428,5 +28428,45 @@
         "実用性重視アプローチ"
       ]
     }
+  },
+  {
+    "id": "6a05f87413zyu7",
+    "title": "ミラツク新規DB盲点分析 — 5候補提案統合レポート (2026-05-15)",
+    "category": "DB戦略",
+    "status": "organized",
+    "source": "https://yuyanishimura0312.github.io/miratuku-news-v2/databases.html",
+    "summary": "既存64DB体系（db-registry v1.28）の盲点を埋める5新規DB候補（TUW/PB/ET/DM/FAS）を提案。5並列researcher+Claude直接WebSearchで実在性検証完了。優先度: TUW(Time Use & Wellbeing)>PB(Planetary Boundaries)>ET(Energy Transition)>DM(Demographics)>FAS(Food & Agriculture)",
+    "tags": [
+      "DB",
+      "新規DB",
+      "盲点分析",
+      "並列リサーチ",
+      "TUW",
+      "PB",
+      "ET",
+      "DM",
+      "FAS",
+      "源泉サイクル",
+      "FVCP"
+    ],
+    "createdAt": "2026-05-14T16:29:40.377863+00:00",
+    "updatedAt": "2026-05-14T16:29:40.377863+00:00",
+    "content": "# ミラツク新規DB提案統合レポート — 64DB体系の盲点を埋める5候補\n2026-05-15 / 西村勇也\n\n## エグゼクティブサマリー\n\nミラツク既存64DB（基軸4・構造6・変化10・概念17・事業8・補助19）は学術知識・フォーサイト・産業観測の3層が厚いが、**実生活7軸（生命/環境/エネルギー/食/人口都市/平和/デジタル）**の **環境・エネルギー・食・人口・時間使用** が未整備。\n\n5並列リサーチチーム（researcher subagent）と Claude直接WebSearch検証により、5候補すべてのデータソース実在性・公開ライセンス・MVP設計・既存64DBとのcross_ref・ミラツク事業接続点を確認。**5候補すべて構築可能**。\n\n## 5候補 優先度マトリクス\n\n| 略号 | DB名 | データソース可用性 | 盲点性 | ミラツク事業適合 | 工数 | 推奨着手 |\n|---|---|---|---|---|---|---|\n| **TUW** | Time Use & Wellbeing | ★★★ CC BY 多数 | ★★★ Easterlin実証層 | ★★★ kurashi/itonami/futures2/EPO 全直結 | 3週MVP/11週Full | **🥇 最優先** |\n| **PB** | Planetary Boundaries & Earth System | ★★★ CC BY 4.0多数 | ★★★ ESG実値層欠落 | ★★★ FVCP次弾候補/GC-DB SF5統合 | 220h MVP/460h Full | 🥈 即着手 |\n| **ET** | Energy Transition Trajectories | ★★★ OWID/Ember CC BY | ★★ CDHは技術全般 | ★★★ FVCP第2弾「Energy 2030-2100」候補 | 4-6週MVP/14週Full | 🥉 即着手 |\n| **DM** | Demographics & Migration | ★★★ UN WPP CC BY 3.0 | ★★ ME混在のみ | ★★★ 自治体コンサル収益化 | 6週/17.5 FDD | ⚡ 短期着手 |\n| **FAS** | Food & Agriculture System | ★★★ FAOSTAT bulk公開 | ★★★ ゼロ | ★★ itonami/jigyo連載準備 | 10.7人月 | 🌱 並行進行 |\n\n## 推奨実行戦略\n\n### 即時並列着手（Phase 1 MVP 6週内完成）\n\n**Wave A（最優先 — 5月後半着手）**\n- **TUW**: 既存EPO/HA/WV/GC-DB(SF4)との接続が深く、kurashi/itonami連載の学術裏付けで即効性。3週MVP。\n- **PB**: FVCP次弾テーマの基盤、GC-DB(SF5)再生型と直結。8週MVP。\n\n**Wave B（次期 — 6-7月着手）**\n- **ET**: FVCP第2弾「Energy 2030-2100」深知補論を計画する場合、6週MVPで基盤化。\n- **DM**: 自治体向け限界集落判定コンサルとして収益化見込み。6週。\n\n**Wave C（並行 — 6月以降）**\n- **FAS**: itonami連載開始（2026-09予定）と同期。FAOSTAT bulk処理に時間を要するため早期着手推奨。\n\n### 工数試算（MVP合計）\n\n| Wave | DB | 工数 | 並列チーム |\n|---|---|---|---|\n| A1 | TUW | 18日 | DB-specialist + researcher×2 |\n| A2 | PB | 220h（≒28日） | Codex×3 + Claude×2 |\n| B1 | ET | 4-6週 | researcher×6 + db-specialist×1 |\n| B2 | DM | 17.5 FDD（≒6週） | researcher + engineer + designer + qa |\n| C | FAS | 42.7日（Phase 0-3まで） | researcher + engineer + designer |\n\n**並列実行時の全体期間**: 約8週間で5DB MVP完成（Wave A完了→Wave B並行→Cは独立進行）\n\n## 既存64DBとの統合効果\n\n5DB追加後の体系:\n\n```\nLayer    既存          新規追加         合計\n─────────────────────────────────────────\n基軸     4             —                4\n構造理解 6             —                6\n変化検出 10            —                10\n概念基盤 17            —                17\n事業化   8             —                8\n補助     19            +5（PB/ET/FAS/DM/TUW） 24\n─────────────────────────────────────────\nTOTAL    64            +5              69\n```\n\n新規5DBは**実データ層**を担う「補助層」として位置づけ、既存「概念基盤17」が学術概念を持ち、「事業化8」が事業パターンを持つのに対し、5DBは**地球システムと人間活動の実数値時系列**を提供。\n\n## cross_ref 統合効果（5DB×既存64DBの実装可能リンク数）\n\n| 新規DB | 既存DB接続 | 推定cross_ref件数 |\n|---|---|---|\n| TUW | WV/HA/EPO/GC-DB/AN/ME/MS/MPV/AICE/FTT-DB v2/SI | 30-50件 |\n| PB | PE/CLA/GR/CTI/TK/FK/MT/FS/TA/AA/ETD/AN/IT/MG/PHIL/MY | 50-100件 |\n| ET | CDH/FTT-DB v2/PE/PD/ME/RG/IR/CLA/Mobility/Manufacturing/GC-DB | 60-120件 + 論文ピア 2000-3000件 |\n| DM | ME/ETD/JPMS/PST/HA/GR/PE/CI/SIF/AK/FTT2/WMD | 30-50件 |\n| FAS | PE/CI/GR/TK/ME/RG/AK/UPR/CDH/HA | 30-50件 |\n\n**合計新規cross_ref**: 200-370件 + 学術論文ピア 2,000-3,000件\n\n## ミラツク事業接続インパクト\n\n### 連載シリーズ\n- **kurashi**: TUWで時間使用×幸福の実数値層\n- **itonami**: TUW + FASで「いとなみ」分類体系の1次データ\n- **jigyo**: PB/ET/DM/FAS全てで事業前提条件強化\n- **henka**: ET/PBが新メタ型・サブ型候補\n- **futures / futures2**: 5DB全てが「問いの深化軸」基盤\n\n### deep knowledge補論シリーズ（FVCP）\n- **第2弾候補**: 「Energy 2030-2100」（ETベース）\n- **第3弾候補**: 「環境再生 2030-2100」（PB+GC-DB SF5ベース）\n- **第4弾候補**: 「いとなみ 2030-2100」（TUW+FASベース）\n\n### GC-DB（源泉サイクル）統合\n- SF1（三資本）×DM（人口・人的資本）\n- SF3（内生成長）×ET（エネルギー転換）×FAS（食農）\n- SF4（ケイパビリティ・脱GDP）×TUW（Easterlin実証）\n- SF5（再生型・脱成長）×PB（地球システム制約）\n- **5DB全てがGC-DB Wave 2拡張の実証基盤**\n\n### コンサル収益化\n- DM × 自治体限界集落診断: 初年度10件×500万円目標\n- TUW × 健康経営/働き方改革診断: 既存esse-sense ANSWER+ 拡張\n- ET × エネルギー転換戦略: ANSWER+ Scenario Composer\n\n## 次のアクション\n\n1. **本提案の承認確認** — 5DBすべて並列着手か、Wave A優先か\n2. **GitHub Issue化** — 5DB各々で Phase 0 Issue 起票\n3. **db-registry v1.29** — 5新規エントリ（PB/ET/FAS/DM/TUW）を予約登録\n4. **TUW Phase 0即着手** — 最優先候補のスキーマ作成・OECD取得スクリプト\n5. **Codex並列リサーチ** — 各DB Phase 1のデータ収集を codex-team research で並列化\n\n## ファイル成果物\n\n```\n/Users/nishimura+/work/db-proposals/2026-05-15_new_db_blindspots/\n├── 00_INTEGRATED_PROPOSAL.md          ← 本ファイル\n├── 00_data_source_verification.md     ← Claude直接WebSearch検証結果\n├── 01_pb_summary.md                   ← PB要約\n├── 02_et_summary.md                   ← ET要約\n├── 03_fas_summary.md                  ← FAS要約\n├── 04_dm_summary.md                   ← DM要約\n└── 05_tuw_summary.md                  ← TUW要約\n```\n\n各DBの完全提案書（リサーチエージェント出力）は `/private/tmp/claude-502/.../tasks/` 配下に保管。重要な決定後、永続化が必要であれば GitHub repo化を推奨。\n\n## 検証ステータス\n\n| 項目 | ステータス |\n|---|---|\n| 既存64DB盲点マッピング | ✅ 完了 |\n| 5候補のデータソース実在性検証（Claude直接WebSearch） | ✅ 完了 |\n| 5並列リサーチチーム実行 | ✅ 5/5完了 |\n| MVPスキーマ提案 | ✅ 5DB完了 |\n| 既存DB cross_ref案 | ✅ 5DB各10-16件 |\n| ミラツク事業接続点 | ✅ 5DB完了 |\n| 工数見積もり | ✅ 5DB完了 |\n| ハルシネーション対策 | ✅ 全データソースURL確認済み |\n\n## 結論\n\n**5候補すべてを推奨。優先度はTUW > PB > ET > DM > FAS。**\n\n最も即効性高くミラツク事業に資するのは **TUW** （Easterlin Paradox実証で源泉サイクル理論を裏打ち、kurashi/itonami連載の数値基盤、健康経営コンサル基盤）。最も体系的インパクトが高いのは **PB+ET** （FVCP次弾2本の基盤）。最も収益直結なのは **DM** （自治体限界集落コンサル）。最も長期投資となるのは **FAS** （FAOSTAT 245カ国の食農システム実データ層）。",
+    "digest": {
+      "core_insight": "ミラツクの既存64DB体系は学術知識・フォーサイト・産業観測に特化している一方で、実生活基盤データ（環境・エネルギー・食・人口・時間使用）が欠落している。この盲点を埋める5つのDB（TUW/PB/ET/DM/FAS）すべてが技術的に構築可能であり、既存事業との統合により「概念と実データの架橋」が実現できる。",
+      "structure": "問題構造は3層に分かれる：①既存64DBが「概念基盤17+事業パターン8」として抽象層を担う一方、②「実データ層」としての補助DBが薄い（19→24への拡張）、③この結果として理論と現実の乖離が生じている。5新規DBは既存体系に200-370件のcross_refで統合され、特にGC-DB（源泉サイクル）の5つのシナリオフレーム（SF1-5）それぞれに実証データを提供する構造となる。因果関係として、TUWがEasterlin Paradoxの実証を通じて脱GDP論を数値で裏付け、PBが地球システム制約を可視化し、ETが技術転換の現実性を検証するメカニズムが示されている。",
+      "implications": "実務的には、理論先行だったミラツクの知識体系に「現実検証機能」が加わることで、コンサルティングの説得力と精度が大幅に向上する。特に自治体限界集落診断（DM）、健康経営診断（TUW）、エネルギー転換戦略（ET）として直接収益化が可能になる。",
+      "open_questions": [
+        "概念と実データの統合による「第3の知識形態」は、従来の学術研究や産業分析とは異なるどのような新しい洞察生成メカニズムを生み出すのか？",
+        "5DB統合後の69DB体系が生成する200-370件のcross_refネットワークは、単なるデータ連携を超えて、どのような創発的な問題発見・解決能力を持つのか？"
+      ],
+      "deep_keywords": [
+        "概念-実データ架橋",
+        "盲点補完戦略",
+        "統合知識生成",
+        "実証基盤設計",
+        "創発的cross_ref"
+      ]
+    }
   }
 ]
