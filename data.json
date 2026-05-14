@@ -28393,5 +28393,40 @@
         "儀式的統合"
       ]
     }
+  },
+  {
+    "id": "6a05f5f8dujp2a",
+    "title": "AO-DB Phase 5 完遂 (publications 7,028 / 達成率47% / 独自6指標37K / Dashboard公開)",
+    "category": "DB品質管理",
+    "status": "done",
+    "source": "",
+    "summary": "Academic Outcomes DB 構築 Phase 0-5 完遂。FTT-DBの学術成果軸独立再建版として 5並列計画→5並列実行を反復。publications 1,224→7,028 (47%)、awards 1,145 (Nobel/Turing/Fields/Kyoto/Japan)、startups 3,594 (US ATTACH)、publication_concepts 9,507 (AK結合)、publication_metrics 37,020 (独自6指標)、funding_grants 300 (NIH+Crossref)、Dashboard公開済 (赤白CI textbook style)。重要発見10件: Abel Hugo汚染/EX ORCID 0%/pykakasi限界/FTT v2 41K papers等。",
+    "tags": [
+      "AO-DB",
+      "Phase5",
+      "academic-outcomes",
+      "publications",
+      "metrics",
+      "dashboard"
+    ],
+    "createdAt": "2026-05-14T16:19:04.713431+00:00",
+    "updatedAt": "2026-05-14T16:19:04.713431+00:00",
+    "content": "# AO-DB Phase 5 完遂 最終統合報告\n日時: 2026-05-15\nPhase 0-5 全完了 / Dashboard 公開済\n\n## エグゼクティブサマリ\n\nNPO法人ミラツク AO-DB (Academic Outcomes DB) は FTT-DB の学術成果軸での独立再建版として 2026-05-13 に着手、5並列計画策定 → 5並列実行を反復し、Phase 0-5 を完遂。\n\n**最終達成 publications 7,028件 (target 15K の 47%)**、L2 アウトカム層 2/7 充足、L3 メタ層 95.5% カバー、独自6指標 37,020件算出、Dashboard 公開済。\n\n## Phase 1-5 累計成果\n\n| 指標 | Phase 1 | Phase 2 | Phase 3 | Phase 4 | Phase 5 | 達成率 |\n|---|---|---|---|---|---|---|\n| publications | 1,224 | 5,798 | 5,798 | 5,798 | **7,028** | 47% |\n| authors | 4,305 | 14,943 | 15,191 | 15,191 | **17,632** | - |\n| affiliations | 691 | 2,006 | 2,006 | 2,006 | **2,246** | - |\n| **awards** | 0 | 0 | 852 | 1,145 | 1,145 | Nobel/Turing/Fields/Kyoto/Japan/Abel |\n| **startups** | 0 | 0 | 3,594 | 3,594 | 3,594 | US 全件 |\n| **publication_concepts** | 0 | 0 | 0 | 6,530 | **9,507** | AK 5分野 (D1 retry) |\n| **publication_metrics** | 0 | 0 | 0 | 0 | **37,020** | 独自6指標 (7,028×6+α) |\n| **outcome_domain_map** | 1,224 | 3,203 | 3,203 | 9,256 | **10,613** | FTT v2 30-code 95.5% |\n| **citation_links** | 0 | 0 | 0 | 1,718 | 1,718 | 内部 AO×AO |\n| **funding_grants** | 0 | 0 | 0 | 0 | **300** | NIH+Crossref |\n| ex_person_id | 0 | 0 | 0 | 55→0 | 0 | bronze 14件偽陽性NULL化 |\n| DB サイズ | 1.9MB | 8.9MB | 9.6MB | 12MB | **25MB** | - |\n\n## カバー率達成\n\n| 軸 | 目標 | Phase 5達成 |\n|---|---|---|\n| 領域カバー | 10/10 | ✅ 完全 |\n| 日本語論文比率 | 40% | ✅ **47.6%** |\n| 2020-24期 | 20% | ✅ **23.3%** |\n| 1980-99期 | 25% | ✅ **29.3%** (Phase 5-4 で +1,230件) |\n| FTT v2 domain カバー | 60% | ✅ **95.5%** |\n| publication_concepts カバー | - | 48.3% (5,798中 2,798件にリンク) |\n\n## 重要発見 (5並列体制で判明)\n\n1. **EX persons ORCID 0% / researchmap_id 0% / name_kana 0%** → 名寄せ可能上限 ~55名物理上限 (構造制約)\n2. **pykakasi Hepburn 圧縮の同音異字区別不能** → bronze 14件全偽陽性 (森政弘 ≠ 森真弘 等)\n3. **Abel Prize Q-ID 誤参照** (Q188914 = Hugo Award, 正 Q173432) → 12件全件 Hugo Award汚染、flag降格\n4. **Fields/Kyoto/Japan Prize 旧 Q-ID 誤参照** (Q11414=subnet) → 修正で +293件取得\n5. **FTT v2 ftt_v2.db** (41,070 academic_papers, 30 domain code) v1 の 146倍規模\n6. **AK 概念 18,171件** (humanities 3,094/social 3,249/natural 3,650/eng 2,986/arts 5,192)\n7. **OpenAlex funders field 空** (publications にgrant未紐付け) → NIH RePORTER で代替投入\n8. **NIH RePORTER API flatcase 応答** (`coreproject` / `pmid`、ドキュメント snake_case と不一致)\n9. **KAKEN OpenSearch IP block** → NRID 月次 RDF dump 必須 (Phase 6以降)\n10. **citation_links 内部一致率 3.16%** (54,387 refs 中 1,718 が AO内部) → publications 拡張で向上\n\n## 独自6指標 算出結果 (Phase 5-1)\n\n| 指標 | mean | max | top 論文 |\n|---|---|---|---|\n| **CULTURAL Impact** | 0.365 | 1.0 | ResNet / Random Forests / BLAST / U-Net |\n| **LSI** (Lineage) | 0.039 | 0.868 | ResNet 0.868 / AlexNet 0.820 / VGG 0.764 |\n| **IDD** (Interdisciplinary) | - | 1.0 | Evolution and the Theory of Games / ARRIVE guidelines |\n| **AIG** (Academic-Industry Gap) | balanced | - | EDGE_AI 領域 日本語ML論文群 |\n| **CI** (Commercialization) | - | 0.2 | patents 0 / startup_affiliation NULL で頭打ち |\n| **OPM** (Outcome Phase) | - | 0.7 | awards × authors 交差 2件のみで頭打ち |\n\nCI/OPM は Phase 6 で publication_patents 補完 + EX 名寄せ拡充で 1.0 までスケール可能。\n\n## 全 commits (Phase 1-5)\n\n```\n58c7c24 phase5-5 funding pilot (+300 grants)\n61c4609 phase5-2/5-3 dashboard + audit (Abel Hugo 汚染発見)\neb76476 phase5-4 1980-99期 backfill (14.3%→29.3%)\n2aba501 phase5-1 metrics 37,020\n951e360 phase4-d1 AK 9,507 (retry 48.3% coverage)\n368caeb phase4-e citation 1,718 / funders 0\n56f6397 phase3-extend + phase4-d1/d2/d4 (awards 1,145 / concepts 6,530 / 95.5%)\nc6c693f phase3 L2 pilot (awards 852 / startups 3,594)\n7b8b856 phase2-a 日本論文 (J-STAGE 1K + CiNii 1.76K)\nab32c47 phase2-b OpenAlex 5+5 (領域10/10完全)\n1af02cc phase1 verification (0 hallucination)\n2b6a781 phase1 OpenAlex+Crossref+arXiv (1,224 pubs)\nbd4964e phase0 schema + agent + docs\n```\n\n## 公開リソース\n\n- **Dashboard**: https://yuyanishimura0312.github.io/miratuku-news-v2/dashboards/academic-outcomes.html\n- **GitHub**: https://github.com/yuyanishimura0312/academic-outcomes-db\n- **registry**: miratuku-news-v2 db-registry.json v1.27\n- **agent**: `/academic-outcomes`\n\n## Phase 6 候補 (Phase 5 後)\n\n| 優先 | 課題 | 想定対応 |\n|---|---|---|\n| 高 | publication_patents 0 → 補完 | USPTO API / Lens.org Patent / OpenAlex Works.patent reference |\n| 高 | Abel Prize Q-ID 修正で再収集 | phase3_wikidata_awards.py Abel Q173432 に修正 |\n| 中 | citation_links internal hit率向上 | AO publications 拡大 + Crossref Funder 直接 funder linkage |\n| 中 | EX 名寄せ 漢字三重一致必須化 | bronze 廃止、所属+分野+漢字の三重一致 |\n| 中 | publication_funding 拡大 | NSF Awards Search API / NIH より広い IC 範囲 |\n| 低 | KAKEN 別 IP 再試行 | RDF dump or 固定 IP 経由 |\n| 低 | publication_funding NIH → AO linkage | Crossref Works.funder で直接照合 |\n\n## ファイル所在\n\n- Phase 5 報告 (本書): `~/work/ao-db-phase5-final-2026-05-15.md`\n- 計画書群: `~/work/new-academic-outcomes-db/00-11.md` (12本)\n- 監査レポート: `~/projects/research/academic-outcomes-db/reports/phase5/audit-2026-05-15.md`\n- funding pilot: `~/projects/research/academic-outcomes-db/reports/phase5/funding-pilot-2026-05-15.md`\n- CHANGELOG: `~/projects/research/academic-outcomes-db/CHANGELOG.md`",
+    "digest": {
+      "core_insight": "学術成果データベース構築において、量的目標の部分達成(47%)よりも、構造的制約と品質課題の発見が本質的価値を持つ。名寄せの物理限界、データソース間の品質格差、独自指標算出の実現可能性が明確化された。",
+      "structure": "5段階の並列開発プロセスで、データ収集→品質管理→指標算出→検証のサイクルを反復実行。外部API依存による構造制約(ORCID 0%、特許データ欠如)と内部処理限界(同音異字区別不能)が品質上限を規定。独自6指標の算出可能性と限界値が、データベース設計の実用境界を示している。",
+      "implications": "学術データベース構築では、完全性より実用性を重視し、構造制約を前提とした設計思想が必要。データ品質の物理限界を受容しつつ、段階的拡張による価値創出アプローチが有効である。",
+      "open_questions": [
+        "構造制約下でのデータベース品質向上の最適解は、外部連携強化か内部アルゴリズム改良か？",
+        "学術インパクト測定における独自指標群の妥当性は、従来指標との相関検証でどう実証できるか？"
+      ],
+      "deep_keywords": [
+        "構造制約認識",
+        "品質限界設計",
+        "段階的拡張",
+        "データ品質物理境界",
+        "実用性重視アプローチ"
+      ]
+    }
   }
 ]
