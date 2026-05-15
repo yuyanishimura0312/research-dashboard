@@ -28709,5 +28709,45 @@
         "創発的理解"
       ]
     }
+  },
+  {
+    "id": "6a06b0c7848kpe",
+    "title": "GC-DB Wave 3 — 研究循環×人類学の統合（教科書補強+4,435字）",
+    "category": "学術DB",
+    "status": "done",
+    "source": "https://github.com/yuyanishimura0312/gc-db",
+    "summary": "源泉サイクル学術DB (GC-DB) 教科書補強Wave 3。2並列リサーチで「研究→研究」循環を6機制（Romer/Jaffe/Bloom/Mode 2/CUDOS/Mansfield）と人類学6機制（Mauss贈与論/STS民族誌/Bourdieu学術界/Polanyi暗黙知/先住民知/通過儀礼）の二方向で理論化。46文献実在検証完了。textbook.html 第1章1.2・第3章3.2・第9章9.6に4,435字統合、反証条件H6-H8追加。GitHub 9db7ac3 push済。",
+    "tags": [
+      "GC-DB",
+      "源泉サイクル",
+      "esse-sense",
+      "研究循環",
+      "贈与経済",
+      "STS",
+      "Bourdieu",
+      "Romer",
+      "Bloom2020",
+      "Wave3",
+      "textbook"
+    ],
+    "createdAt": "2026-05-15T05:36:07.141757+00:00",
+    "updatedAt": "2026-05-15T05:36:07.141757+00:00",
+    "content": "# GC-DB Wave 3 統合レポート — 研究循環 ×人類学\n\n**日付**: 2026年5月15日\n**対象**: 源泉サイクル学術DB (GC-DB) 教科書補強 Wave 3\n**統合先**: textbook.html 第1章 1.2 / 第3章 3.2 / 第9章 9.6（合計4,435字追加・25K→26.5K字）\n**GitHub**: 9db7ac3 push済 (https://github.com/yuyanishimura0312/gc-db)\n**文献検証**: 46文献実在確認完了 (VERIFICATION_LOG_46_SOURCES.txt)\n\n---\n\n## I. 課題と方法\n\nesse-sense社の「源泉サイクル」（8ノード：源泉→三資本→資源→Innovation×経済活動→富・再投資→Sustainability→we→源泉還流）は、Bourdieu・Ostrom・Romer・Sen・Daly・Mazzucatoの6理論で構築されている。しかし「知的資本→研究」の循環、および「研究は文化的・社会的実践である」という人類学的視点が薄かった。Wave 3 では2並列リサーチエージェントを起動し、Stream A（経済学・科学計量学・規範社会学）とStream B（人類学・STS・知識社会学）の二方向から「研究→研究の循環」を再構築した。\n\n## II. Stream A — 知的資本→研究循環の6機制\n\n第3章 3.2 に2,428字を追加。Romer 1990 の知識非競合性に始まり、Jaffe-Trajtenberg-Henderson 1993 の特許引用の地理的局在（同一都市圏内で3-7倍）、Bloom et al. 2020 AER の研究生産性逆説（研究者数1930年比25倍だが生産性41%減衰）、Mode 2 / Triple / Quadruple Helix の組織進化、Hagstrom-Merton CUDOS規範と Plan S / arXiv / FAIR data の制度的拡張、Mansfield 1991 の米国新製品の11%が学術研究なしには不可能であるという事実に至る6機制で循環を理論化した。\n\n社会的収益率中央値56% vs 私的25%、最適水準より44pt過小投資（Jones-Williams 1998）という経済学的事実は、源泉サイクルにおける研究還流の制度設計の必要性を経験的に裏打ちする。一方 Bloom et al. の研究生産性逓減は「源泉が薄まりつつある」という警告であり、esse-sense哲学に内在化されるべき事実である。\n\n## III. Stream B — 人類学的循環\n\n第1章 1.2 補注（818字）と第9章 9.6（1,189字）を追加。10領域・46文献を整理：\n\n1. モースの贈与論 → Hagstrom 1965「科学は贈与コミュニティ」\n2. STS民族誌（Latour-Woolgar 1979 / Knorr-Cetina 1999 / Galison 1997 取引地帯）\n3. Bourdieu 学術界論（『ホモ・アカデミクス』1984 / 文化資本と象徴資本）\n4. Polanyi-Collins-Ingold の暗黙知・身体知\n5. エスノサイエンス（Conklin / Berlin / Frake）\n6. 先住民知識と脱植民地化（Berkes / Smith / McGregor Two-Eyed Seeing）\n7. 鶴見和子内発的発展論・中根千枝タテ社会\n8. Strathern dividual・Graeber 価値の人類学\n9. Said オリエンタリズム・Haraway 状況的知・Feyerabend 方法への異議\n10. van Gennep / Turner 通過儀礼としての博士課程\n\n4つの修正提案：(A) 知識生産は文化的実践、(B) 循環は贈与経済（返礼にズレ＝不確実性が関係を再生産）、(C) 暗黙知・身体知の比重、(D) 先住民知識・在野知の対等性。\n\n## IV. 反証可能性条件 H6-H8 追加\n\n源泉サイクルがPopper基準で反証可能であるための条件として H6-H8 を追加：\n\n- **H6**: 研究評価の定量化を強化した国・分野で長期的な重要発見頻度が体系的に上昇するか → Strathern『監査文化』批判への対峙\n- **H7**: PIへの集中投資が若手研究者の独立成果産出を阻害しないか → Mertonian平等規範弱化テスト\n- **H8**: 大学院養成期間の短縮・厳格化が暗黙知伝承を損なわず長期成果に影響しないか → 通過儀礼論への譲位条件\n\n## V. 教科書統合状況\n\n| 章 | セクション | 追加字数 |\n|---|---|---|\n| 第1章 1.2 | 補注 — 源泉の人類学的根拠 | 818字 |\n| 第3章 3.2 | 研究→研究の循環 — 知の自己拡大と贈与経済 | 2,428字 |\n| 第9章 9.6 | 研究の人類学的循環 — 規範と現実のあいだ | 1,189字 |\n| **合計** |  | **4,435字** |\n\ntextbook.html: 142,869 bytes / 本文25K→26.5K字 / 130字超プロセ文 0件 / 赤白CI textbook style 準拠 / ダークモード対応\n\n## VI. 結論\n\n源泉サイクルの「研究→研究」循環は、経済学（R&D資本ストック・スピルオーバー）／科学計量学（生産性逓減）／組織学（Mode 2-3, n-Helix）／規範社会学（CUDOS・Matthew Effect）／制度設計（OA・FAIR・産学還流）の5層と、人類学（贈与経済・暗黙知・コモンズ・通過儀礼）の1層、合計6層で統合されるシステムとして理論化された。esse-sense社の「源泉を豊かにすれば経済も豊かになる」という哲学は、単なる経済学的主張から「知識を民主化し、複数の認識論を承認し、社会的紐帯を贈与経済的に再編成すれば、経済も社会も人間の尊厳も豊かになる」という人文学的主張へと深化した。\n\n## VII. 主要参照\n\n- Romer (1990) Endogenous Technological Change. JPE 98(5)\n- Bloom, Jones, Van Reenen, Webb (2020) Are Ideas Getting Harder to Find? AER 110(4)\n- Jaffe, Trajtenberg, Henderson (1993) Geographic Localization of Knowledge Spillovers. QJE 108(3)\n- Mauss (1925) Essai sur le don\n- Hagstrom (1965) The Scientific Community\n- Latour-Woolgar (1979) Laboratory Life\n- Knorr-Cetina (1999) Epistemic Cultures\n- Bourdieu (1984) Homo Academicus\n- Polanyi (1966) The Tacit Dimension\n- Ingold (2000) The Perception of the Environment\n- Strathern (2000) Audit Cultures\n- 鶴見和子 (1989) 内発的発展論\n- Wilkinson et al. (2016) FAIR Guiding Principles. Scientific Data 3\n- Merton (1968) The Matthew Effect in Science. Science 159(3810)\n- van Gennep (1909) The Rites of Passage\n\n完全文献リスト46件は wave3/VERIFICATION_LOG_46_SOURCES.txt 参照。",
+    "digest": {
+      "core_insight": "研究活動は単なる経済的投入産出関係ではなく、贈与経済的な循環構造を持つ文化的実践である。知識の非競合性と地理的局在という一見矛盾する性質は、暗黙知・身体知・社会的紐帯が研究生産性を規定しているからであり、源泉サイクルの「研究→研究」循環は経済学的効率性と人類学的互酬性の統合によってのみ持続可能となる。",
+      "structure": "研究循環は6層構造（R&D資本ストック、知識スピルオーバー、生産性逓減、組織進化、規範制度、贈与経済）で作動し、各層で異なる時間スケールの循環が入れ子になっている。経済学的には社会的収益率56% vs 私的25%のギャップが過小投資を生み、人類学的には贈与の返礼における「ズレ」が関係を再生産し続ける。しかしBloom et al.が示す研究生産性の41%減衰は、定量化・効率化の制度設計が暗黙知伝承や通過儀礼的成長を阻害している可能性を示唆する。",
+      "implications": "研究政策は効率性指標だけでなく、贈与経済的な知識共有、複数認識論の承認、暗黙知の世代間継承を制度設計に組み込む必要がある。大学・研究機関の評価システムは短期的成果測定から長期的関係性構築へとパラダイム転換を求められている。",
+      "open_questions": [
+        "研究評価の定量化強化が重要発見を促進するのか阻害するのか（Audit Culture vs Innovation のトレードオフの実証的解明）",
+        "先住民知識・在野知・学術知の対等な統合は、西洋近代科学の認識論的覇権を維持したまま可能なのか、それとも根本的な脱植民地化が前提となるのか"
+      ],
+      "deep_keywords": [
+        "贈与経済的知識循環",
+        "暗黙知の制度化",
+        "認識論的多元主義",
+        "研究生産性逆説",
+        "文化実践としての科学"
+      ]
+    }
   }
 ]
