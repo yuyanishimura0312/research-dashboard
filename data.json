@@ -28824,5 +28824,48 @@
         "R&D構造的断絶"
       ]
     }
+  },
+  {
+    "id": "6a06cae68wqrow",
+    "title": "GC-DB Wave 4 — 源泉サイクル歴史実証（10並列・N6ボトルネック発見）",
+    "category": "学術DB",
+    "status": "done",
+    "source": "https://github.com/yuyanishimura0312/gc-db/tree/main/wave4",
+    "summary": "源泉サイクル学術DB (GC-DB) の中核モデル「8ノード循環」を10並列エージェントで歴史データ実証。HIC 20ケースで完全循環5件(三井/キリスト教/科挙/Newton/Napoleonic Code)、SI 7,389事象でノード網羅率96.9%、CDH 346手法で源泉還流型14.3%→68.4%推移、CLA 127年で1974/1990/2008/2020の4位相転換、CTI 4学派が8ノード裏打ち、META 64DB体系でN6/N8極端偏り。6ソース独立にN6 Sustainabilityがボトルネックと収束。SI-DB実規模7,389確認。GitHub gc-db@b39d234。",
+    "tags": [
+      "GC-DB",
+      "源泉サイクル",
+      "esse-sense",
+      "歴史実証",
+      "N6ボトルネック",
+      "HIC",
+      "SI-Framework",
+      "CLA",
+      "CDH",
+      "Tech-Acceleration",
+      "CTI-v2",
+      "Era-Talents",
+      "DB-Coverage",
+      "Wave4"
+    ],
+    "createdAt": "2026-05-15T07:27:34.958367+00:00",
+    "updatedAt": "2026-05-15T07:27:34.958367+00:00",
+    "content": "# GC-DB Wave 4 — 源泉サイクル歴史実証（10並列・interim）\n\n**日付**: 2026-05-15\n**対象**: 源泉サイクル学術DB (GC-DB) Wave 4 歴史実証\n**規模**: 10並列エージェント・10レポート177KB\n**GitHub**: gc-db@b39d234 push済\n**ステータス**: interim（knowledge-synthesizer による統合レポート生成中）\n\n---\n\n## I. 実行体制\n\nWave 3（教科書補強）の完了後、ユーザー指示「源泉サイクルの歴史変動の事象連関における実証」「歴史DBをはじめDBメタエージェントも協力」「チームを拡大」を受けて、10エージェント並列で源泉サイクル8ノード（源泉/三資本/資源/Innovation×経済/富再投資/Sustainability/we/源泉還流）の歴史実証を実施した。\n\n### コア4チーム（既存DB横断）\n1. **HIC 20ケース実証** — `~/projects/research/great-figures-db/integrated-cases/samples*/`\n2. **SI Framework 7,389事象クエリ** — `si_events.db`\n3. **Great Figures 循環起点偉人** — `great_figures.db`\n4. **GC-DB 47ケース時系列再配置** — `gc-db.sqlite`\n\n### 拡張6チーム（チーム拡大指示後）\n5. **Tech Acceleration DB** — N4 Innovation×経済の時系列実証\n6. **CDH 230年史** — N5 富・再投資の還流先推移\n7. **CTI-v2** — 4学派×8ノードの長波動実証\n8. **CLA 127年** — 1900-2026年の7期×8ノード推移\n9. **Era Talents** — 6時代×19能力次元の起点能力プロファイル\n10. **DB Coverage Diagnostic（メタ）** — 64DB体系の3軸スコアリング\n\n## II. 主要発見\n\n### N6 Sustainability ボトルネックの構造的確証\n6ソース（HIC/TA/CTI/CDH/CLA/META）が独立に同一結論に到達した。源泉サイクル前半（N1-N5）は自然駆動するが、後半（N6-N8）は意図的な制度設計を要する非対称構造である。HICでは完全循環5件（三井/キリスト教/科挙/Newton/Napoleonic Code）が共通して創業期から制度設計（家訓/公会議/試験/学会/法典）を内蔵していた。N6 は単なる弱いノードではなく、ミクロケース実証とマクロ長波動（Perez Turning point / Smil 環境制約 / Gordon 環境コスト / Morris war-making）の両方で「構造的最遅滞ノード」として検出される。\n\n### 4類型の時代展開\nHIC/GC47/CDH/CTI/CLA の5ソースが独立に同一の歴史的展開を検出した：(1) 中世コモンズ型（800-1517年・スペイン灌漑/スイス Törbel）、(2) Bell Labs 型（20世紀前半・独占収益の企業内還流）、(3) Mode 2 / Triple Helix 型（20世紀後半・公的R&D→民間Innovation の制度化）、(4) 21世紀持続性型（Costa Rica PES/Bhutan GNH/NZ Wellbeing Budget/Wales Well-being of Future Generations Act/Iceland 4-day week/Amsterdam Doughnut）。CDH 346手法の還流先分布では、源泉還流型比率が 14.3%（19世紀）→25%（20世紀前半）→63.2%（20世紀後半）→68.4%（21世紀）へ単調上昇している。\n\n### CLA 127年の位相転換点\nCLA DB（91,550レコード）の加重キーワード密度解析で、1900-2026年に4つの位相転換が観察された。1974年（成長の限界）が初動位相転換で N7 we と N8 源泉還流が同時上昇（+0.189 / +0.193）、1990年 IT革命期は逆に we/N3/N5 が同時低下する U 字底（N4 Innovation のみ +0.217）、2008年リーマンが本格点火点で N1 -0.454 / N3 +0.591 の劇的逆転、2020年パンデミックで N8 源泉還流が初めて 1.000 到達。「真の到達点は N8 源泉還流であり N7 we ではない」という発見が、esse-sense 哲学の中核「源泉還流」の必要性を経験データで支持した。\n\n### Tech Acceleration 50-2,400倍と N5→N6 弱化\nTA DB（81MB・44テーブル）で N4 強度を Wikipedia timeline 件数密度 / OpenAlex publication / 世界R&D対GDP の3指標で測ると、古代→現代で50-2,400倍の増加（1830s 5.3万→2010s 1.27億 publication）。一方 N4→N5（Innovation→富）と再投資→N4強化は強く支持されるが、N5→N6（富→持続性）は弱く地域差が大きい。これは HIC の「N6 ボトルネック」と TA の独立データから到達した同じ結論である。\n\n### Era Talents 起点能力プロファイル\nET DB の信頼版20,371スコア（is_uniform_bulk=0）から、源泉サイクル全循環を起動できる起点偉人20人の能力プロファイル仮説が抽出された：起業家精神≥7 ∧ システム思考≥7 ∧（集団協調 or 対人）≥6 ∧ 異分野統合≥7。Great Figures Wave 4 起点 20人のうち6名（渋沢栄一/Rockefeller/Carnegie/Edison/Gandhi/Yunus）が Era Talents に実登録され、明治期4名はほぼ同一プロファイル（起業家8-9・システム思考7-8）、ユヌス型は集団協調7で N7 we を組み込む特徴を持つ。\n\n### DB Coverage Diagnostic メタ評価\n64DB全体を8ノードに写像すると、N1 源泉 31／N3 資源 31／N4 Innovation 24／N7 we 20／N2 三資本 18／N5 富再投資 13／N6 Sustainability 12／N8 源泉還流 4 という極端な偏りが現れた。Wave 4 で観測されたボトルネックは GC-DB 単独の限界ではなく、ミラツク64DB体系全体の構造的問題である。時代カバレッジでも近世0／19世紀3件のみで、HIC 20ケースのみが全7時代を跨いでいた。\n\n## III. 反証可能性 H1-H8\n\nWave 3 で追加された反証条件 H1-H8（既存5 + H6-H8）について、Wave 4 の10ソース横断検証では：\n- H1-H4: 強支持（HIC 6件強支持・反証ゼロ）\n- H5（人類学的循環）: 部分支持（贈与経済10ケース+/暗黙知伝承系/ケア系の3群で観測）\n- H6（研究評価の定量化と発見頻度）: 部分支持（CLA で1974以降の研究指標上昇と並行）\n- H7（PI集中投資と若手成果）: 検証不足（Wave 5 で要追加実証）\n- H8（養成期間と暗黙知伝承）: 検証不足（PST-DB 統合で実証可能）\n\n## IV. SI-DB 数値更新\n\nWave 4 で SI Framework DB の実規模が初版「1,096事象」から「7,389事象」へ拡張済みであることが判明した。MEMORY 索引と project_si_framework_db.md を更新済み。系譜関係も2,425件（intra-node 2,219 vs cross-node 36）まで拡張。\n\n## V. Wave 5 推奨アクション\n\nDB Coverage Diagnostic メタ分析が以下の優先順位を示した：\n- **Wave 5-A（即）**: N6/N8 特化 cross_db_refs 再構築\n- **Wave 5-B（短期）**: MY/TK/WV の8ノードタグ付与\n- **Wave 5-C（中期）**: GC-RECYCLE マイクロDB（既存6DBのN8ビュー化）\n- **Wave 5-D**: 新規5候補（TUW/PB/ET/DM/FAS）は Wave 6 以降で再評価\n- **Wave 5-E**: HIC 19世紀・近世拡張（時代空白埋め）\n\n推薦DB 12件: MY神話/TK伝統知識/WV世界価値観/MEマクロ経済/CFG研究助成財団/GA現代偉業/HA健康寿命/PD政策/AN人類学/PHIL哲学/ITイノベーション理論/MSマーケティング学術。\n\n## VI. 結論（interim）\n\n源泉サイクル仮説は10エージェント独立データから収束的な支持を得た。esse-sense 中核哲学「源泉を豊かにすれば経済も豊かになる」は、HIC 完全循環5件、GC-DB 47ケース4類型、CDH 源泉還流型比率の単調上昇、CLA 127年の位相転換点、CTI 4学派の8ノード裏打ち、TA の N4強度 50-2,400倍 増加によって、歴史的事象連関データとして実証可能であることが示された。同時に、N6 Sustainability と N8 源泉還流が構造的に滞りやすい後半サイクルが、意図的制度設計を要する次の挑戦領域として浮かび上がった。\n\n統合レポート（INTEGRATED_HISTORICAL_VERIFICATION.md）は knowledge-synthesizer により生成中で、完了時に追記する。\n\n## VII. 関連リンク\n\n- GitHub: https://github.com/yuyanishimura0312/gc-db (commit b39d234)\n- 個別レポート: `wave4/HIC_historical_verification.md` 他9件\n- 上位プロジェクト: GC-DB（237概念・109研究者・47ケース・教科書26.5K字）\n- Wave 3（教科書補強）: textbook.html @ 9db7ac3、Research Dashboard d4ccd28",
+    "digest": {
+      "core_insight": "源泉サイクルにおける「N6 Sustainability」が構造的ボトルネックとして機能し、前半サイクル（N1-N5）の自然駆動に対し、後半サイクル（N6-N8）は意図的制度設計を要する非対称構造が、10の独立データソースから収束的に実証された。真の到達点はN7（we）ではなくN8（源泉還流）であり、この循環完成には創業期からの制度内蔵が決定的である。",
+      "structure": "イノベーションと富蓄積の加速（N4→N5、50-2,400倍増）に対し、持続性への転換（N5→N6）が系統的に弱化する構造的断層が存在する。歴史的には4つの進化類型（中世コモンズ→Bell Labs独占→Mode2制度化→21世紀持続性）を経て、源泉還流型比率が14.3%（19世紀）から68.4%（21世紀）へ単調上昇している。1974年、2008年、2020年の3つの位相転換点で、経済成長パラダイムから源泉還流パラダイムへの本質的移行が観測される。完全循環を達成した5事例（三井、キリスト教、科挙、Newton、Napoleonic Code）は共通して創業期から制度設計を内蔵していた。",
+      "implications": "持続可能な価値創造システムの構築には、イノベーション促進と同等以上の意図的な制度設計投資がN6-N8段階で必要である。既存の64DB体系がN6（12件）・N8（4件）で極端に薄い現実は、学術・政策コミュニティ全体でこの構造的課題への認識と対応が不足していることを示している。",
+      "open_questions": [
+        "N6ボトルネックを突破する制度設計の具体的メカニズム：完全循環5事例の「創業期制度内蔵」パターンを現代の組織・政策レベルでいかに再現可能にするか？",
+        "源泉還流パラダイムの測定と評価体系：従来のGDP中心指標を超えて、N8源泉還流の質と量を適切に捉える新たな指標体系をどう構築するか？"
+      ],
+      "deep_keywords": [
+        "構造的ボトルネック",
+        "制度内蔵設計",
+        "位相転換動学",
+        "源泉還流パラダイム",
+        "非対称循環構造"
+      ]
+    }
   }
 ]
