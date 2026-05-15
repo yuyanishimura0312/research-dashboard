@@ -28583,5 +28583,27 @@
         "時代横断的対話"
       ]
     }
+  },
+  {
+    "id": "6a0662ech6i6il",
+    "title": "哲学的問いと時代変遷の螺旋 — 本格版v3（編集チーム読みやすさ改善版）",
+    "category": "知識統合",
+    "status": "done",
+    "source": "https://journal.emerging-future.org/philosophical-questions/full/",
+    "summary": "本格版v3。v2(43図解)に9章編集チーム並列適用：長文分割・段落接続詞補強・反復削減・受動態→能動態化・文末バリエーション・専門用語hedging・冗長表現削減。本文151,832字（v2比+1,273字）。漢数字回帰39件は算用数字に再修正。HTML 811KB。journal.emerging-future.org/philosophical-questions/full/",
+    "tags": [
+      "本格版v3",
+      "編集改善",
+      "9章編集",
+      "読みやすさ",
+      "長文分割",
+      "段落接続",
+      "文末バリエーション",
+      "151K字",
+      "赤白CI",
+      "emerging-future.org"
+    ],
+    "createdAt": "2026-05-15T00:03:56.108810+00:00",
+    "updatedAt": "2026-05-15T00:03:56.108810+00:00"
   }
 ]
