@@ -29061,5 +29061,39 @@
         "予測精度質的転換"
       ]
     }
+  },
+  {
+    "id": "6a073effv3v8ah",
+    "title": "AO-DB 質的6軸+量的拡張 完遂 (2026-05-16)",
+    "category": "",
+    "status": "investigating",
+    "source": "",
+    "summary": "",
+    "tags": [
+      "ao-db",
+      "quality-expansion",
+      "arxiv-2025",
+      "patents",
+      "future-tech-curated"
+    ],
+    "createdAt": "2026-05-15T15:42:55.880559+00:00",
+    "updatedAt": "2026-05-15T15:42:55.880559+00:00",
+    "content": "質的拡張 Q-α/β/γ/δ/ε/ζ/η の 7 軸を実装し、量的拡張で publications 49,741→51,905 / future_technologies 166→217 / patents 0→30 を加えた。\n\n質的拡張:\nQ-α メタデータ: publications quality_flag 再判定 (gold 8/silver 119/bronze 32/requires_review 7)\nQ-β verification: tbp 12,420 を partially_verified 5,983 (48.2%) / unverified 0 に昇格\nQ-γ relation_category: 3,274件 100% 付与 (genealogy 2,722/enablement 376/composition 114/influence 41/competition 21)\nQ-δ 妥当性検証: future_tech 7件 requires_review flagged\nQ-ε 地理多元性: 西洋 69.0%/東アジア 15.4%/Global South 8.0%/Other 7.6% (US 788/CN 256/GB 233/DE 206/FR 149)\nQ-ζ narrative: Top 20 future_tech に 200-400字 curated narrative\nQ-η wikipedia_url: 166件付与 (curated 45 + auto 121)\n\n量的拡張:\narXiv 2025 12 categories ×200 件 → +2,164 publications (cs.AI/CL/LG/RO/NE/CR + q-bio.BM/QM + cond-mat + physics.optics + quant-ph + eess.SY)\nfuture_technologies +51 curated (humanoid robotics/SMR/AI drug discovery/CAR-T/zk-SNARK/post-quantum crypto/sodium-ion battery/Joby Aviation 他)\npatents 0→30 USPTO curated (Neuralink/Synchron/AlphaFold/Starlink/Loihi 他、ftt_domain 全領域カバー)\n\n最終 stats: publications 51,905/future_technologies 217/patents 30/tbp 12,420/outcome_domain_map 55,902。",
+    "digest": {
+      "core_insight": "技術データベースの質的・量的拡張において、メタデータの多次元構造化（7軸質的拡張）と大規模データ統合（5万件超の文献統合）を同時実現することで、技術発展の系譜的理解と予測精度の向上が可能となることが実証された。",
+      "structure": "質的拡張では、技術の系譜関係（genealogy 83%）を中核とした関係性分類体系と、地理的多様性の定量化（西洋69%/東アジア15.4%）により技術発展の構造的偏在を可視化している。量的拡張では、arXivの最新研究2,164件と特許30件の戦略的統合により、基礎研究から実装までの技術移転パイプラインを構築し、未来技術217件への影響経路を追跡可能にしている。この二重構造により、技術発展の質的理解と量的予測の統合的分析基盤が形成されている。",
+      "implications": "研究機関や企業の技術戦略立案において、単純な論文数ベースではなく系譜的関係性と地理的偏在を考慮した技術ポートフォリオ設計が可能となる。特に、基礎研究（arXiv）から実装（特許）への移転パターンの定量化により、投資対効果の高い技術領域の特定と開発タイミングの最適化が実現できる。",
+      "open_questions": [
+        "地理的技術偏在（西洋69%優位）が将来の技術覇権にどのような構造的影響を与え、Global Southの8%という低比率がイノベーション生態系の持続可能性にもたらすリスクは何か",
+        "genealogy関係が83%を占める技術発展パターンにおいて、破壊的イノベーションの予兆をどのように早期検出し、既存の系譜的分析枠組みの限界をどう克服するか"
+      ],
+      "deep_keywords": [
+        "系譜的技術分析",
+        "多次元メタデータ構造化",
+        "技術移転パイプライン",
+        "地理的イノベーション偏在",
+        "予測的技術情報学"
+      ]
+    }
   }
 ]
