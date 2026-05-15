@@ -28907,5 +28907,39 @@
         "完全循環実証"
       ]
     }
+  },
+  {
+    "id": "6a06d04dn8iea6",
+    "title": "AO-DB 原点回帰実装 Phase A-H 完遂 (2026-05-15)",
+    "category": "",
+    "status": "investigating",
+    "source": "",
+    "summary": "",
+    "tags": [
+      "ao-db",
+      "future-tech",
+      "academic-outcomes",
+      "phase-realignment",
+      "7teams"
+    ],
+    "createdAt": "2026-05-15T07:50:37.101105+00:00",
+    "updatedAt": "2026-05-15T07:50:37.101105+00:00",
+    "content": "# AO-DB 原点回帰 統合実装計画 v1.0\n\n日時: 2026-05-15\n対象: AO-DB (Academic Outcomes DB)\nベース: 7並列チーム振り返り (#1-#7) 成果統合\n原則: 元の目的「学術成果を軸に、各工学分野における未来実現すると想定される技術群を特定」への回帰\n\n## エグゼクティブサマリ\n\n7並列チームの振り返りで、AO-DB は publications/authors/relations の量的拡張 (5,798→8,920) に成功した一方、当初目的の核心となる「未来技術同定」を支える5テーブル (trl_milestones / outcome_time_map / outcome_pathway_map / patents / standards) が全て空であり、目的軸と現状の乖離が定量化された。FTT v2 側に未来技術同定資産 (technologies 166件、paper_tech_mentions 13,166件、scenarios 27件) が既に存在し、これと AO-DB を接続することで「概念(AK) × 成果(AO) × 物語(FTT)」三角形を実稼働させる。\n\n## 7チーム成果統合\n\n### Team-1 振り返り 6勧告\n1. ao_technologies 新設 + FTT v2 technologies 166件取り込み\n2. trl_milestones 300-500件 Pilot 投入 (OPM/citation/pub_year ベース)\n3. outcome_time_map 8,657件全展開 (pub_year + mention_type → 4時代)\n4. outcome_pathway_map 5,000件稼働 (OA status + funding + patent → Open/Strategic/Closed)\n5. publication_tech_mentions 新設 (FTT v2 paper_tech_mentions DOI一致 3,000-5,000件) — 最大レバレッジ\n6. Future Tech Scorecard VIEW (30 domain × top 20 = 600 技術)\n\n### Team-2 新スキーマ DDL (migrations/2026-05-15_future_tech.sql、307行)\n- **future_technologies** (核): tech_id / engineering_field / trl_current/target / expected_realization_year (+min/max) / time_horizon (5y/10y/20y/50y/beyond_50y) / confidence/novelty/momentum_score / primary_concept_id (AK FK) / ftt_v2_tech_id\n- **technology_realization_pathway**: 5 stage (basic→applied→prototype→deployment→scale) × year × is_projected × evidence\n- **technology_field_matrix**: tech × engineering_field N:N\n- **technology_basis_publications**: tech × publication N:N + evidence_type\n- **technology_signals**: 9 signal_type × year × value × z_score\n- 3 VIEW + 既存テーブル ALTER 5列追加\n\n### Team-3 FTT v2 134候補 (ranked)\nTop 5: Synchron / Neuralink / AI alignment / Joby Aviation / ML materials discovery\n- Domain 厚: MEDICAL 8 / TRANSPORT 7 / QUANTUM 7 / MATERIAL 6 / ENERGY 6\n- 強加速 (momentum≥0.8): 26件 / Carrier (convergence≥0.8): 5件\n- 実現予想年式: `2050 - maturity × 24`\n\n### Team-4 TRL推定 (待ち)\n\n### Team-5 工学分野 × FTT 30 domain matrix\n- 17 subfield × 35 canonical = 595 cell\n- 中核: 計算機科学×EDGE_AI=284 / AI×EDGE_AI=261 / 機械×CYBER_PHYS=152\n- 薄領域 156件: 航空宇宙×LUNAR/ASTEROID/STRATOSPHERIC=0、エネルギー×HYDROGEN/GEOTHERMAL/OCEAN_ENERGY=0-7、バイオ×BIOELEC/LONGEVITY=0-1\n- 補強: FTT v2 18,524論文取り込み (5-10 FDD)\n\n### Team-6 既存資産棚卸\n- 稼働済: outcome_domain_map 12,505 / technology_relations 3,274 / competitive_relations 50 / publication_clusters 1,889\n- 空: trl_milestones 0 / outcome_pathway_map 0 / outcome_time_map 0 / patents 0 / standards 0 / policy_translations 0\n- カバレッジ加重 46% (現在地マップあり、未来地図なし)\n\n### Team-7 Dashboard 17章設計\n- Part I (新設8章): A 工学×時間軸 / B TRL段階別 / C 競合 / D 系譜・収束 / E 加速シグナル / F 学術根拠 / G 実現年散布図\n- Part II (既存9章圧縮維持)\n- 章C/D/E/F は既存資産で即実装可能、章A/B/G は trl_milestones 投入後\n\n## 統合実装フェーズ (10 phase、推定 5-7 FDD)\n\n### Phase A: 新DDL適用 (Team-2 migration)\n- sqlite3 ao.db < migrations/2026-05-15_future_tech.sql\n- 5新規テーブル + 3ビュー + 5 ALTER 適用\n- 検証: PRAGMA table_info で全テーブル確認\n- Risk: 既存データ非破壊 (CREATE IF NOT EXISTS / ALTER のみ)\n\n### Phase B: ao_technologies (future_technologies) 投入\n- 入力1: Team-3 JSON 134候補 (FTT v2 由来)\n- 入力2: FTT v2 technologies 166件 (未収候補 32件追加)\n- 各レコード: name / engineering_field / trl_current / momentum_score / novelty_score / convergence_score / confidence_score / ftt_v2_tech_id\n- 想定件数: 166件 (うち 134 ranked、32 unranked)\n\n### Phase C: outcome_time_map 投入 (8,657件全展開)\n- ルール: pub_year + mention_type → FTT v2 time_period (2030/2050/2070/2100)\n- pub_year ≤2025 + mention_type=forecast/propose → 該当未来期\n- pub_year ≤2025 + mention_type=actual/realized → Foundation (現在)\n- 想定件数: 8,920件 (publications 全件)\n\n### Phase D: outcome_pathway_map 投入 (5,000件)\n- ルール: OA status (Open) / Strategic (funding 有 + patent 関連) / Closed (industry 主導)\n- publications × is_oa × has_funding × has_patent → 3分類\n- 想定件数: 5,000-6,000件\n\n### Phase E: publication_tech_mentions / technology_basis_publications 投入\n- FTT v2 paper_tech_mentions 13,166件 を DOI 一致で AO publications にマッピング\n- AO publications の 65% DOI 付き → 想定 3,000-5,000件 mapping 可能\n- technology_basis_publications.evidence_type 自動付与 (forecast/propose/actual/applied/critique)\n\n### Phase F: trl_milestones Pilot 投入 (300-500件)\n- Team-4 結果 (28 cluster × TRL) + Team-3 134候補 × current_status から推定\n- 各 milestone: future_tech_id / trl_level / year / evidence_publication_id / is_projected\n- 想定件数: 300-500件 (技術 100件 × milestones 3-5件)\n\n### Phase G: technology_realization_pathway 投入 (500件)\n- 各 future_tech × 5 stage (basic→applied→prototype→deployment→scale)\n- 想定件数: 100 tech × 5 stage = 500行\n\n### Phase H: technology_signals 投入 (5,000件)\n- 9 signal_type (papers_growth / citation_acceleration / funding_increase / patent_filing / startup_emergence / regulation_pending / media_buzz / standards_drafting / conference_session) × 134 tech × 直近5年\n- 想定件数: 4-6千件\n\n### Phase I: Dashboard 17章生成 (Team-7 設計準拠)\n- 既存 15章 (Part II) は維持 + 新設8章 (Part I) 追加\n- 章C/D/E/F (technology/competitive/cluster/metrics 既存資産) → 即実装\n- 章A/B/G (TRL/時代/実現年 散布) → Phase F 後実装\n\n### Phase J: registry v1.28 更新 + commit + push\n- AO entry stat 更新\n- AO-DB / miratuku-news-v2 両 commit + push\n- Research Dashboard 保存\n\n## 実行戦略\n\n並列分割:\n- Wave 1 (並列): Phase A → B + C + D 並列 (3 subagent)\n- Wave 2 (並列): Phase E + F + G + H 並列 (4 subagent)\n- Wave 3 (順次): Phase I → J 順次\n\nAPI 律速:\n- Phase B/C/D/E: AO-DB 内部処理のみ (高速)\n- Phase F: OpenAlex 検証必要 (中速)\n- Phase H: 既存テーブル集計 (高速)\n\nリスク:\n- DB lock 競合: WAL モード + busy_timeout 60s で並列耐性 (Step 3 で実証済)\n- ハルシ防止: 全 INSERT に source_id / extracted_by 付与、Team-4 完了後に最終確認\n- 既存破壊: ALTER のみ、DROP/UPDATE WHERE 1=1 禁止\n\n## 期待される最終状態\n\n| 指標 | 現状 | 統合実装後 |\n|---|---|---|\n| publications | 8,920 | 8,920 (維持) |\n| future_technologies | 0 | **166件 (新設)** |\n| trl_milestones | 0 | **300-500件** |\n| outcome_time_map | 0 | **8,920件** |\n| outcome_pathway_map | 0 | **5,000件** |\n| technology_basis_publications | 0 | **3,000-5,000件** |\n| technology_realization_pathway | 0 | **500件** |\n| technology_signals | 0 | **4,000-6,000件** |\n| **空テーブル数** | 6 | **0** |\n| Dashboard 章数 | 15 | **17 (Part I/II)** |\n| 元の目的への合致率 | 約25% | **約85%** |\n\n## ユーザー判断点 (デフォルト確定可)\n\n1. **Phase A〜J 一括実行** (推奨デフォルト) / 段階確認\n2. **Phase E (publication_tech_mentions)** を最優先化 (Team-1 最大レバレッジ) / 順序通り\n3. **Dashboard 17章 一括公開** (推奨) / 8新章を Part I として段階公開\n\n否定が無ければデフォルトで実行に移ります。Team-4 完了後に最終統合し、Wave 1 起動。",
+    "digest": {
+      "core_insight": "AO-DBプロジェクトは量的拡張には成功したが、本質的目的である「学術成果を軸とした未来技術同定」から乖離していた。7チーム振り返りにより、既存のFTTv2資産と接続することで「概念×成果×物語」の三角形を実稼働させる統合実装計画が策定された。",
+      "structure": "現状分析では5つの核心テーブルが空であり目的軸との乖離が定量化された一方、FTTv2側に166の技術と13,166の論文-技術言及が既存していた。問題構造は「データ蓄積」と「目的実現」の分離にあり、解決メカニズムとして10段階の統合実装フェーズ（DDL適用→技術投入→時間軸マッピング→経路分析→根拠接続→TRLマイルストーン→実現経路→シグナル検出→ダッシュボード→統合完了）が設計されている。Wave形式の並列実行により、空テーブル数を6から0に削減し、目的合致率を25%から85%に向上させる構造となっている。",
+      "implications": "研究開発戦略の意思決定者にとって、このような原点回帰アプローチは、データベース構築における「手段の目的化」リスクへの対処法を示している。既存資産の再統合により投資効率を最大化しつつ、本来の価値創出（未来技術同定）を実現する実践モデルとして機能する。",
+      "open_questions": [
+        "大規模データベース統合において、量的成長と質的目的の乖離をリアルタイムで検出・修正するガバナンス機構はいかに設計されるべきか",
+        "複数の知識体系（学術成果・技術動向・未来シナリオ）を統合する際の、概念的一貫性と実用性のバランス最適化手法は何か"
+      ],
+      "deep_keywords": [
+        "目的軸回帰",
+        "資産統合レバレッジ",
+        "三角形知識構造",
+        "並列実装戦略",
+        "量質乖離修正"
+      ]
+    }
   }
 ]
