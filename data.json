@@ -29503,5 +29503,43 @@
         "認知的先取り構造"
       ]
     }
+  },
+  {
+    "id": "6a09a38c56ngnh",
+    "title": "ミラツクのデータ駆動型未来学 — Deep Knowledge への道 / 全100話 連載企画書",
+    "category": "連載企画",
+    "status": "done",
+    "source": "https://journal.emerging-future.org/deep-knowledge-foresight/?v=15",
+    "summary": "journal.emerging-future.org/deep-knowledge-foresight/ を起点に AR-DB × 編集企画チームで全100話の連載企画を立案。9 Part / 100話 / kurashi/ep007正本型 / 100ユニークタイトル / 92日本人研究者・概念 / 18日本独自概念 / 27候補DB。HTML企画書（202KB / 14ページ / progress-report-style）+ JSON 12フィールド × 100話 + AR-DB Part別割当てマップ。GitHub: deep-knowledge-foresight-series (private)",
+    "tags": [
+      "連載企画",
+      "Deep Knowledge",
+      "データ駆動型未来学",
+      "AR-DB",
+      "編集企画",
+      "100話",
+      "kurashi-ep007型",
+      "progress-report-style",
+      "2070-2100年"
+    ],
+    "createdAt": "2026-05-17T11:16:28.536282+00:00",
+    "updatedAt": "2026-05-17T11:16:28.536282+00:00",
+    "content": "# ミラツクのデータ駆動型未来学 — Deep Knowledge への道 / 全100話 連載企画書\n\n## 概要\n\njournal.emerging-future.org/deep-knowledge-foresight/ を起点に、ミラツク70+のデータベース・約500万レコードを基盤とする全100話の連載企画を立案した。AR-DB（Agent Registry DB / 358 records / 82 agents）と編集企画チーム（editorial-planner）を並列に動員し、kurashi/ep007 正本型を厳守する連載として9 Part / 100話の論証の弧を構築した。\n\n## 成果物（3点）\n\n1. **00_overview.md** (25KB / 154行) — 連載編集方針 + 9 Part 別の核 + 全100話通し見出し一覧表\n2. **01_db_mapping.md** (29KB / 363行) — AR-DB照会に基づく Part 別 DB / エージェント割当てマップ（88 DB参照 + 87 エージェント参照）\n3. **02_episode_plan.json** (136KB / 100話 × 12フィールド) — 各話の構造化企画データ（title / subtitle / en_title / theme / core_proposition / lead_seed / key_concepts / japanese_anchor / suggested_dbs / signal_seeds）\n4. **planning_document.html** (202KB / 14ページ) — 進捗報告書/企画書スタイル（warm cream + wine #8B3A2E）で印刷可能なHTML企画書\n\n## 9 Part 構造\n\n- Part 0 序章 うしろ側に見る未来 (EP001-004 / 4話)\n- Part 1 基盤マップ DB星座 4×4 と500万レコード (EP005-014 / 10話)\n- Part 2 三層の未来学アプローチ (EP015-029 / 15話)\n- Part 3 歴史変動サイクルと3つの緊張期 (EP030-041 / 12話)\n- Part 4 2026 重なりの時代と大哲学時代 (EP042-056 / 15話)\n- Part 5 AI/AGIと浅い知の完了 (EP057-068 / 12話)\n- Part 6 深い知の時代の再来 (EP069-084 / 16話)\n- Part 7 崖の上の景色 — 2070-2100年への階梯 (EP085-096 / 12話)\n- Part 8 終章 すでにある未来を、今からはじめる (EP097-100 / 4話)\n\n## 品質メトリクス\n\n- **タイトル ユニーク率**：100 / 100（命題的宣言形を厳守、説明的タイトル0件）\n- **日本人研究者・概念 ユニーク数**：92（要求30名を3倍超過。純粋人物名のみで50-60名）\n- **日本独自概念 ユニーク数**：18（「間／縁／侘び寂び／もったいない／みち」を Part 6 EP077-081 に5話連続配置）\n- **候補DB ユニーク数**：27（FTT / CLA / PESTLE / CQ / PQS / SFS / HTP / KGH / GC / TC / Megatrend / Foresight-KB 他）\n- **Part間橋渡し設計**：9/9 Part（各 Part 最終話の core_proposition が次 Part 最初話に直接接続）\n- **西田幾多郎を3点に配置**：EP005「場所の論理」/ EP068「絶対無の場所」/ EP100「行為的直観」を連載全体の哲学的骨格として配置\n\n## 連載中核命題\n\n「未来は常に足元にある」。この命題を100話分の異なる視点から立証することが、本連載の全体構造。\n\n## 制作プロセス（次フェーズ）\n\n- Phase A：連載共通スタイルシート整備（kurashi/ep007 派生の deep-knowledge 専用 series-style.css）\n- Phase B：/ma + AR-DB 連動で EP001 試作（5軸評価で A 評価到達まで反復）\n- Phase C：Part 0 完成（4話）— 論証の弧の検証\n- Phase D：10話バッチ並列着手（series.db + episode_versions + edit_history 必須運用）\n- Phase E：FTP デプロイ + strategy.html#strategy にカード追加 + 読者参与経路\n\n## 編集企画チームからの懸念点\n\n1. DB略号の表記揺れ（GreatFigures vs Great Figures DB） → 執筆段階で正規化\n2. 日本人研究者カウントに概念名・人物名混在 → 純粋人物名でも50-60名規模で目標達成\n3. EP049-052「いのち／知性／正義／共生」4問い連投 → 各話固有の一次ソース追加発掘必要\n\n## 起点コンテンツ\n\n- URL: https://journal.emerging-future.org/deep-knowledge-foresight/?v=15\n- ソースHTML: ~/projects/apps/miratuku-news-v2/dashboards/data-driven-foresight/index.html (227KB / 9 H2 / 44 H3)\n\n## 保管先\n\n- GitHub: https://github.com/yuyanishimura0312/deep-knowledge-foresight-series (private)\n- ローカル: ~/projects/research/deep-knowledge-foresight-series/\n- HTML企画書: plan/planning_document.html\n\n## 履歴\n\n- 2026-05-17 16:54 着手・作業領域作成\n- 2026-05-17 17:01 AR-DB 照会完了（01_db_mapping.md）\n- 2026-05-17 17:13 100話企画完了（02_episode_plan.json + 00_overview.md）\n- 2026-05-17 20:14 進捗報告書スタイル HTML 完成（planning_document.html）\n- 2026-05-17 20:32 GitHub private repo 作成・push 完了",
+    "digest": {
+      "core_insight": "「未来は常に足元にある」という命題を核とし、500万レコードのデータベースを基盤として、浅い知から深い知への認識論的転換点（2026-2100年）を100話で論証する壮大な知的プロジェクトが設計された。これは単なる未来予測ではなく、データ駆動型未来学という新しい学問領域の構築を目指している。",
+      "structure": "9部構成の論証アーキテクチャは、データベース星座の基盤構築（Part1）から始まり、三層未来学アプローチ（Part2）、歴史変動サイクル分析（Part3）を経て、AI/AGI時代の浅い知の完了（Part5）から深い知の時代の再来（Part6）へと展開する。西田幾多郎の哲学を全体の骨格として配置し、日本独自概念92個を織り込むことで、西洋的未来学を超えた東洋的認識論による未来学の再構築を図る構造となっている。各パート間は橋渡し設計により有機的に連結され、単話完結でありながら全体として一つの大きな知的物語を形成する。",
+      "implications": "学術界においては、データ駆動型未来学という新領域の確立と、東洋思想に基づく未来学方法論の提示により、西洋中心的な未来研究のパラダイム転換を促す可能性がある。実務者にとっては、単なる技術予測を超えた深層的な社会変動理解のフレームワークとして機能する。",
+      "open_questions": [
+        "500万レコードという膨大なデータから「深い知」を抽出する具体的方法論は、人間の直観と機械的処理をどのように統合するのか？",
+        "西田哲学を中核とした東洋的未来学は、グローバルな未来研究コミュニティにおいてどの程度の普遍性と説得力を持ち得るのか？"
+      ],
+      "deep_keywords": [
+        "論証アーキテクチャ",
+        "認識論的転換点",
+        "データ駆動型未来学",
+        "深い知への回帰",
+        "東洋的未来学"
+      ]
+    }
   }
 ]
