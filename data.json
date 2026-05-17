@@ -29746,5 +29746,23 @@
         "問いの存在論"
       ]
     }
+  },
+  {
+    "id": "6a09d35ddwvqh9",
+    "title": "futures-platform 市民出版機能 + 公開ランディング 完成 (2026-05-17)",
+    "category": "実装記録",
+    "status": "done",
+    "source": "https://futures.emerging-future.org",
+    "summary": "AR-DB連動記事生成・Insight Grade 5軸A-F評価・直接編集・バージョン管理・公開記事/p/{id}・ランディング/、申込/join、法的ページ/legal/*、watchdog、通知メール、モーダルa11yを本番リリース。17 commits / migrations 0015-0033 / 検証5チーム完了",
+    "tags": [
+      "futures-platform",
+      "市民出版",
+      "AR-DB",
+      "記事生成",
+      "ランディング",
+      "本番リリース"
+    ],
+    "createdAt": "2026-05-17T14:40:29.479415+00:00",
+    "updatedAt": "2026-05-17T14:40:29.479415+00:00"
   }
 ]
