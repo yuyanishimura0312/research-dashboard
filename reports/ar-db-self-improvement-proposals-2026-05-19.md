@@ -63,9 +63,30 @@ academic-db-build:18  db:17  mg:16  kurashi:16  innovation-db:16
 
 ## 増強案（優先順）
 
-### 【トップ 3 ─ 緊急性高】
+### 【提案 0 ─ 最優先・実行済】品質指標 5 件セット標準化
 
-#### 提案 1: 評価者間一致度の DB 単位測定を 5 → 50 DB へ展開
+**2026-05-19 検証結果と実行内容**
+
+外部学術文献検証（PLOS ONE 2019 / PMC 5712640 / Sage Journals 2025 等）により、Cohen のカッパ係数単独公表の方法論的限界が確認された。本エコシステム内でも CEH（broad κ=0.08 / canonical κ=0.99）・ES（broad κ=0.73 / canonical κ=0.93）でカテゴリ粒度による κ の大幅変動が観測され、これはカッパパラドックスの実証例である。
+
+**実行済アクション**:
+1. ルール正本化: `~/.claude/rules/quality-metrics-standard.md`（5 件セット標準）
+2. 計算ツール実装: `~/projects/research/agent-registry-db/tools/gwet_ac1.py`（自己テスト済）
+3. 既存 5 DB へマイグレーション通知記録: `quality_metric_status='kappa_only_legacy_2026_05_19'`
+4. 新規測定 DB は初回から 5 件セットで記録（カッパ単独公表禁止）
+
+**5 件セット構成**:
+- `observed_agreement`（Po, 生の一致率）
+- `gwet_ac1`（Gwet AC1, 推奨主指標）
+- `cohens_kappa`（参考値、後方互換）
+- `positive_prevalence`（解釈の前提条件）
+- `sample_size`（信頼区間判定）
+
+**アイデンティティ寄与度**: 最高。「学術知の ConceptNet」として 2020 年代の学術基準に整合させる必須対応。
+
+---
+
+#### 提案 1: 評価者間一致度の DB 単位測定を 5 → 50 DB へ展開（5 件セット形式で）
 
 - **着手対象**: 概念 DB 群 30+ を中心に未測定 DB
 - **改善する軸**: 5（品質保証）
