@@ -30031,5 +30031,44 @@
         "輪郭溶解"
       ]
     }
+  },
+  {
+    "id": "6a0c98a9ikhov3",
+    "title": "PERM-DB Wave 0 着手: 順列・置換の学術横串DB + AR-DB エージェント置換群層提案",
+    "category": "学術DB",
+    "status": "investigating",
+    "source": "https://github.com/yuyanishimura0312/permutation-knowledge-db",
+    "summary": "順列・置換の学術概念 15 SF を集積する PERM-DB を /adb v1.1 経路 A で構築。Wave 0 で 32 concepts / 22 researchers / 28 relations / 28 cross_db_refs (10 target DBs) / source_url 100% を達成。AR-DB v1.1 に「エージェント置換群層」を追加する提案 DDL (5 テーブル + 3 ビュー + 9 canonical seed) と dry-run スクリプトを完備。Wave 1 (600 concepts) を db-concept-builder で background 実行中。",
+    "tags": [
+      "学術DB",
+      "PERM-DB",
+      "順列",
+      "対称群",
+      "AR-DB",
+      "オーケストレーション",
+      "/adb",
+      "組合せ論",
+      "Cauchy",
+      "Okounkov"
+    ],
+    "createdAt": "2026-05-19T17:06:49.991915+00:00",
+    "updatedAt": "2026-05-19T17:06:49.991915+00:00",
+    "content": "# PERM-DB 着手 ── 順列・置換の学術横串DB と AR-DB エージェント置換群層\n\n## 背景\n\nミラツク／esse-sense エコシステムには 462 のエージェント、1,938 の関係、539 の DB 参照が AR-DB に集積されているが、「**エージェント順序付き列**」というオーケストレーション形式は明示テーブル化されていない。一方で、Stage 0-6 ワークフロー、Phase 0-15 構築、Wave 反復、100 話バッチオーケストレーションなど、エージェント順列はエコシステムの中核実体として動いている。\n\n「順列・置換」という数学概念は、al-Khalil ibn Ahmad al-Farahidi の 786 年『Kitab al-Mu'amma』からアンドレイ・オクンコフの 2006 年 Fields Medal 受賞研究まで、1,200 年を超える系譜を持つ。対称群 Sn の代数構造は、合成・可換性・巡回・逆元・パターン回避・固定点・stabilizer といった概念を提供しており、これらは AR-DB のエージェントオーケストレーションをそのまま記述できる。\n\n本プロジェクトは、(1) パーミュテーションの学術概念を 15 サブフィールド・最終 5,500 概念で集積する **PERM-DB** を /adb v1.1 経路 A で構築すること、(2) その数理基盤を使って AR-DB に「エージェント置換群層」を追加し、可換ペア・禁止パターン・反復構造を構造的に扱えるようにすること、の二重目標で着手した。\n\n## Wave 0 で確定した範囲\n\n- プロジェクトディレクトリ作成: `~/projects/research/permutation-knowledge-db/`\n- スキーマ DDL: subfields / concepts / formulas / algorithms / researchers / publications / concept_relations / researcher_concepts / publication_concepts / genealogy_chains / chain_members / cross_db_refs / ardb_bridge / _quality_metadata / sources\n- AR-DB v1.1 拡張提案 DDL: agent_permutations / commuting_pairs / forbidden_patterns / orchestration_cycles / perm_db_links + 3 ビュー + 9 canonical seed\n- 32 canonical concepts 投入完了 (15 SF / Cauchy 1815 cycle notation / Galois 1830 symmetric group / Cayley 1854 theorem / MacMahon 1915 major index / Heap 1963 algorithm / RSK 1970 correspondence / Valiant 1979 #P-complete / Marcus-Tardos 2004 Stanley-Wilf / Okounkov 2006 Plancherel measure / Zaheer 2017 DeepSets ほか)\n- 22 researchers (Cauchy / Galois / Cayley / MacMahon / Young / Knuth / Diaconis / Okounkov (Fields 2006) / Stanley / Marcus / Tardos / Valiant (Turing 2010) / Arrow (Nobel 1972) / Bhargava (Fields 2014) / al-Khalil / Bhaskara II / Narayana Pandita / Takebe Katahiro / Yang Hui / Teiji Takagi ほか)\n- 28 concept_relations (predecessor/successor/generalizes/specializes/equivalent/applies_to/composed_of/dual_to)\n- 28 cross_db_refs (10 target DBs: math / phys / ar-db / ai-development / great-figures / kgh / cdh / ec / bot / phai)\n- source_url 100% / 非西洋 12.5% / 多言語 12.5%\n\n## AR-DB 拡張の核心アイデア\n\n5 新規テーブル + 3 ビュー + 9 canonical seed を、既存 11 テーブルを一切変更せずに `CREATE TABLE IF NOT EXISTS` で安全追加する設計とした。dry-run スクリプトで適用前の影響を完全可視化し、自動バックアップ付き apply、リバースの rollback もサポートする。\n\n数理的根拠は次のとおり整理した。\n\n- 順列の合成 σ ∘ τ → オーケストレーションの連結\n- 可換性 στ = τσ → 並列起動可能なエージェント対の自動抽出\n- 巡回構造 cycle(σ) → 反復オーケストレーション (Wave 反復・QA-Refinement ループ)\n- 逆元 σ^{-1} → ロールバック / 取消手続き\n- 順列パターン回避 → 禁止オーケストレーション (例: publisher→reviewer の時系列違反、engineer→engineer の自己検証バイアス)\n- 固定点 / stabilizer → フェーズ独立な役割の特定\n\nforbidden_patterns には開発プロセス規範 (`development-process.md`) と `feedback_process_meta_principles` 由来の 5 件 (`self-verification-after-implementation` / `publisher-then-reviewer` / `writer-then-planner` / `deploy-then-spec` / `codex-without-verifier`) を canonical seed として投入済み。\n\norchestration_cycles には実証済み 4 件 (`qa-refinement-loop` 3 回反復 / `fvcp-v4-iteration` HRORG v1→v4 で実証 / `dk-batch-10-loop` 10 話単位検証 / `katachi-100-batch-loop` 10 話×10 バッチ) を canonical seed として投入済み。\n\n## Wave 1 で目指す到達点 (現在進行中)\n\n| 指標 | Wave 0 | Wave 1 目標 |\n|---|---|---|\n| concepts | 32 | 600 |\n| relations | 28 | 1,800 |\n| researchers | 22 | 80 |\n| formulas (LaTeX) | 0 | 80 |\n| algorithms | 0 | 30 |\n| cross_db_refs | 28 | 60 (12+ DBs) |\n| 多言語率 | 12.5% | 25% |\n| 非西洋率 | 12.5% | 18% |\n\ndb-concept-builder エージェントを background で起動し、15 SF 順次拡張中。usage limit 対策として batch JSON 10 件刻みで seeds/wave1_sfNN_batch*.json に逐次保存、1 SF 完了ごとに intermediate commit、Wave 1 完遂で集約 commit + push する設計。Priority 1 (SF02 対称群論 / SF04 生成アルゴリズム / SF07 表現論 / SF08 確率順列 / SF10 ML 不変性) を最優先、Priority 3 (SF09 / SF12 / SF13 / SF15) は時間制約時に Wave 2 へ繰越可とした。\n\n## Production 完備までのロードマップ\n\n| Wave | 目標 |\n|---|---|\n| Wave 0 (完了) | 32 concepts / scaffold / AR-DB 拡張提案 |\n| Wave 1 (進行中) | 600 concepts / 1,800 relations / 80 formulas / 30 algorithms / 60 cross_db_refs |\n| Wave 2 | 2,500 concepts / 8,000 relations / AR-DB 観測ログから自動抽出開始 |\n| Wave 3 | 5,500 concepts / 22,000 relations / Production 完備到達 / AR-DB 最適化エンジン |\n| Wave 4 | IRR Gwet AC1 ≥ 0.85 / 多言語 40% / 非西洋 28% / 22 DB cross_ref / 年次自動更新 |\n\n## 関連リソース\n\n- GitHub: https://github.com/yuyanishimura0312/permutation-knowledge-db (private)\n- AR-DB: https://yuyanishimura0312.github.io/miratuku-news-v2/dashboards/ar-db.html\n- 系譜ドキュメント: `docs/genealogy_cauchy_to_okounkov.md` (786-2017 の 1,200 年系譜)\n- AR-DB 拡張提案: `docs/ardb_extension_proposal.md` (数理的根拠 + Wave 計画 + 非破壊性保証)\n\n## 進行状況 (2026-05-20 時点)\n\nWave 0 完了。Wave 1 拡張は db-concept-builder エージェントが background 実行中 (agent ID: a280a590cc4ccba83)。AR-DB v1.1 拡張本適用はユーザー明示確認後 (現状は dry-run で安全性確認済み)。",
+    "digest": {
+      "core_insight": "順列・置換の数学的概念を学術DB化し、AR-DBのエージェントオーケストレーションに対称群理論を適用することで、可換性・禁止パターン・巡回構造といった深層構造を発見・最適化できる新たな知識基盤を構築している。",
+      "structure": "1200年の数学史から現代AIシステムまでを貫く構造的同型性が核心にある。順列の合成→オーケストレーション連結、可換性→並列実行可能性、巡回→反復プロセス、逆元→ロールバック、パターン回避→プロセス規範という対応関係により、462エージェント・1,938関係のAR-DBシステムに数理的秩序を与える。Wave進行により32概念から最終5,500概念まで段階的に拡張し、観測ログからの自動抽出によってシステムの潜在的最適化を発見する。",
+      "implications": "AIシステムのオーケストレーション設計において、従来の経験的アプローチから数学的基盤に基づく体系的アプローチへのパラダイム転換が可能になる。禁止パターンの自動検出とプロセス最適化により、大規模エージェントシステムの信頼性と効率性が飛躍的に向上する。",
+      "open_questions": [
+        "AR-DBから自動抽出される実際のオーケストレーションパターンが、理論的に予測される対称群構造とどの程度一致するか、そのギャップから何が発見できるか",
+        "この数理的基盤が他の複雑システム（組織論、生物学的ネットワーク等）にどの程度汎用的に適用可能で、どのような新たな洞察をもたらすか"
+      ],
+      "deep_keywords": [
+        "構造的同型性",
+        "数理的オーケストレーション",
+        "対称群論的システム設計",
+        "パターン回避理論",
+        "知識系譜学"
+      ]
+    }
   }
 ]
