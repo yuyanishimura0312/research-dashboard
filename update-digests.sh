@@ -13,8 +13,8 @@ echo "$(date): Starting digest update..."
 # Generate digests for new entries (only entries without digest)
 python3 generate_digests.py 2>&1
 
-# Regenerate embeddings
-python3 generate_embeddings.py 2>&1
+# Regenerate embeddings (best-effort: sentence_transformers/torch 未導入でも本体は継続)
+python3 generate_embeddings.py 2>&1 || echo "$(date): embeddings をスキップ (sentence_transformers 未導入 / digest 本体は継続)"
 
 # Generate AI analysis (weekly: only on Mondays, or if analysis.json is missing)
 ANALYSIS_JSON="$SCRIPT_DIR/analysis.json"
