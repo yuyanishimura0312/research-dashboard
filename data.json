@@ -30290,5 +30290,41 @@
         "災害駆動システム設計"
       ]
     }
+  },
+  {
+    "id": "6a226dcdnkptbn",
+    "title": "ANSWER+ 学術知×産業 連結基盤 — 戦略から実装・実証まで",
+    "category": "事業戦略",
+    "status": "organized",
+    "source": "",
+    "summary": "ANSWER+ API供給を「学術知を産業へつなぐ第一歩」と位置づけ、戦略→競合調査→開発提案→実装→実API実証→検証まで完遂。ECU demand-signal 化を実装し村田・ダイキンの実R&D記述から6需要シグナル抽出(吸収能力・OI理論に収束)。検証で2,500粒度は選択ばらつき(Ppos=0.167)だがsubdomain主単位でPpos=0.667 ゲートPASS。特許不使用方針。",
+    "tags": [
+      "ANSWER+",
+      "産学連携",
+      "demand-signal",
+      "ECU",
+      "吸収能力",
+      "オープンイノベーション",
+      "API供給"
+    ],
+    "createdAt": "2026-06-05T06:33:49.921241+00:00",
+    "updatedAt": "2026-06-05T06:33:49.921241+00:00",
+    "content": "# ANSWER+ 学術知×産業 連結基盤 ── 戦略から実装・実証まで (2026-06-05)\n\n## 概要\n\nANSWER+ の API供給事業を「まず徹底的に産業界に寄り添い、学術知を産業とつなげる」第一歩として位置づけ、戦略策定→競合調査→DB拡充検討→具体的開発提案→実装→実API実証→検証まで一気通貫で完遂した。学術知を全設計の基盤に据え、特許情報は使わない方針(日本の特許過剰供給・無成果問題)を採用。\n\n## 戦略の確定\n\n- ANSWER の API供給は「日本×政策×学際」の垂直で水平な汎用 retrieval と戦わない(Scite→Research Solutions / Tavily→Nebius のように水平は買収される)。\n- くさび: Consensus API + 政府・法令・産業層 + 日本語。\n- だが第一歩は産業界。橋桁は文書(特許)でなく「企業の課題と研究能力の適合(assortative matching)」、証拠は実際の産学連携実績。\n- 学術根拠: Assortative Matching(SPP 日本共同研究) / Intermediation+Absorptive Capacity(Kodama TAMA, Research Policy) / 個人レベル吸収能力(J.Tech Transfer 2024) / Knowledge Brokering(KAS) / JTBD(Christensen)。\n\n## 実装と実証 (ECU Demand-Signal 化)\n\n- ECU(企業課題理解DB 2,500課題)は既に JTBD/ODI 構造をアーキタイプ層で保持。欠けていたのは実企業インスタンス層。\n- 3層設計: L0 アーキタイプ(統制語彙) → L1 demand-signal(JTBD/ODI構造) → L2 能力マッチ(後続)。\n- grounded extraction ETL を実装(ECU 2,500課題を統制語彙とし候補外破棄=捏造ゼロ、証拠原文照合)。\n- 実API実証: 村田製作所・ダイキン工業の実R&D記述から6需要シグナルを抽出。全件 evidence 照合 PASS。\n- 学術収束: 抽出課題が Cohen-Levinthal 吸収能力 / Chesbrough オープンイノベーション / 産学連携理論に収束。\n\n## 検証(正直版)\n\n- 候補binary Gwet AC1=0.89(Excellent)だが非選択一致に駆動され過大評価。\n- 選択の実質一致 positive specific agreement Ppos=0.167(Poor)。2,500粒度では妥当な代替肢が多くモデル間でばらつく。\n- subdomain(54)主単位に修正: 両モデル・両社が subdomain 11(産学連携・オープンイノベーション)に収束。\n- Wave 1-c subdomain IRR: Ppos_subdomain=0.667(≥0.6)、主subdomain一致=1.0 → Wave 1 完了ゲート PASS。\n\n## 成果物\n\n- 戦略・設計レポート 8本(report-refiner-base-design / RITE-base デザイン): RITE OEM / ANSWER API供給BM / 競合ベンチマーク / DB拡充検討 / 政策連鎖トレースDB提案 / 産業連結検討(特許除外v2) / 政策連鎖開発提案 / demand-signal成果。\n- 実装(enterprise-challenge-understanding-db/demand_signal/): SCHEMA.sql(本番ECU適用済) / extract_demand_signals.py / measure_irr.py / wave1c_subdomain_irr.py / DESIGN / EXTRACTION_SPEC / VALIDATION。\n- 本番 ECU-DB に demand-signal層・subdomain層・3ビュー・6シグナル格納。GitHub 両リポジトリ push 済。\n\n## 次\n\nWave 1-c 拡張(有報「研究開発活動」セクションへの需要源拡張 + subdomain ensemble)、L2 能力マッチ層(研究シーズとの goodness-of-fit + 吸収能力フィルタ + 産学連携実績 evidence)。",
+    "digest": {
+      "core_insight": "学術知と産業界の連結には、水平的な汎用検索ではなく、企業の具体的課題と研究能力の適合マッチング(assortative matching)という垂直統合アプローチが有効である。ANSWER+は「日本×政策×学際」の特化領域で、企業課題理解DB(ECU)を基盤とした需要シグナル抽出により、産学連携の実質的な橋渡し機能を実現した。",
+      "structure": "問題構造は3層設計で解決される：L0アーキタイプ層(統制語彙による品質統制)→L1需要シグナル層(JTBD/ODI構造による課題構造化)→L2能力マッチ層(研究シーズとの適合性評価)。核心メカニズムは、Cohen-Levinthal吸収能力理論に基づく企業の知識受容能力と、Chesbrough オープンイノベーション理論による外部知識活用の組み合わせである。検証では、2,500粒度の詳細課題レベルでは選択一致が低い(Ppos=0.167)が、54サブドメインレベルでは実用的な一致度(Ppos=0.667)を達成し、特に産学連携・オープンイノベーション領域での収束を確認した。",
+      "implications": "API供給事業者は汎用検索競争を避け、特定ドメインでの深い構造化知識と実証済みマッチング機能に特化すべきである。企業のR&D戦略においては、自社の吸収能力を正確に把握し、それに適合する学術知識との組み合わせを体系的に探索する仕組みが競争優位の源泉となる。",
+      "open_questions": [
+        "企業の吸収能力をリアルタイムで測定・更新し、研究シーズとの適合性を動的に評価するメカニズムをどう構築するか",
+        "産学連携の成功確率を事前予測するために、課題-能力マッチング以外にどのような要因(組織文化、地理的近接性、過去の協働履歴等)を統合すべきか"
+      ],
+      "deep_keywords": [
+        "適合マッチング",
+        "吸収能力",
+        "需要シグナル構造化",
+        "知識仲介機能",
+        "垂直統合API"
+      ]
+    }
   }
 ]
