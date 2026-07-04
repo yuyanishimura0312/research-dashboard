@@ -30391,5 +30391,25 @@
     "createdAt": "2026-07-04T03:10:36.241540+00:00",
     "updatedAt": "2026-07-04T03:10:36.241540+00:00",
     "content": "# 産業創造プラットフォーム（ANSWER+ v4 基盤）— 構築と第1サイクル実証\n\n## 目的\nカンパニークリエーションの先の**産業創造**を支えるシステムを ANSWER+ v4 上に構築。最終アウトプットは (1) テーマ別の産業創造の精緻な仮説、(2) 推進に必要な日本の研究者候補リスト。\n\n## 構築した4層（すべて捏造ゼロ・生成⊥検証）\n- **① ICK-DB**（産業創造の学術知見）: 840概念/12サブフィールド（クラスター論・ミッション志向産業政策・地域IS・技術商用化・プラットフォーム・産業ライフサイクル・制度・東アジア開発国家・ベンチャーエコシステム・ベンチャービルダー・GVC・企業家的金融）。\n- **② ICB-DB**（各国×産業×政策×成果）: industries 1,185（ITT接続）/ policies 12,484 / outcomes 7,612 / SCE戦略転換実証 6,020 / 各国旗艦政策20件（EU Chips Act €43bn・US IRA $369bn・中国製造2025・SG RIE2025・KR K-Chips 等・全live source_url検証済）。\n- **③ AGF-DB**（農業＋食 実データ）: FAOSTAT 21,314観測（26カ国×5ドメイン・2010-2024・source_url/verification_status 100%）。ITT「農と食の横断」起点、生産→加工→流通→消費→環境の一産業設計。\n- **④ 研究者マッチ**: RID 235,521名から既存本番matcherを無改修流用（A1捏造ゼロ・A2 PII非出力 PASS）。\n\n## 第1サイクル実証（農業＋食）\n統合オーケストレーターが4層を一気通貫し、産業創造仮説＋日本研究者候補100名を赤白CI HTMLで生成。\n**仮説の核（非自明性層）**: 産業創造の梃子は「生産」でも「需要」でもなく、価格管理（麦管理経費 約4,970億円/年）に固定された公共資本を、日本が単収優位を持つ制御環境農業（施設トマト34,785 kg/ha）×細胞農業×データ統合へ再配置すること。反証条件（CEA/細胞農業のエネルギーコスト・資本再配置の政治的制約）を明記。\n研究者マッチはRID pool 25,465→100名（荻田信二郎「植物細胞農業」等on-theme）。\n\n## 独立監査で確立した規律\n生成⊥検証を全DBに適用。ICKで「収集エージェントの自己申告 source_url 100% は非null率であって実在性ではない」（実live率8.3%＝akdb由来Wikipedia）を捕捉・是正。捏造ゼロを守る仕組みが機能。\n\n## リポジトリ\n- ~/projects/research/industry-creation-knowledge-db（ICK）\n- ~/projects/research/industry-creation-benchmark-db（ICB）\n- ~/projects/research/agri-food-db（AGF）\n- ~/projects/research/industry-creation-platform（統合・成果物 out/agri-food-industry-creation.html）\n\n## 次段（Production化 Wave 2 進行中）\nICK: OpenAlex実DOI backfill＋関係120→3,120＋多言語 / ICB: 各国政策・dedup view・USD正規化（完了 78b5c0a）/ AGF: FAOSTAT貿易＋launchd更新ジョブ / e-Stat国内実数はAPIキー登録後。"
+  },
+  {
+    "id": "6a488da3ma69am",
+    "title": "産業創造プラットフォーム 第2サイクル(半導体)＋Wave3-4 Production化",
+    "category": "システム構築",
+    "status": "organized",
+    "source": "",
+    "summary": "ANSWER+ v4産業創造プラットフォームを半導体テーマで実証しテーマ横断汎用性を確認。ICK 2,731概念/6,886関係、ICB 9カ国政策、AGF 33,202観測へProduction化。捏造ゼロ・独立監査。",
+    "tags": [
+      "産業創造",
+      "半導体",
+      "ANSWER+",
+      "industry-creation",
+      "ICK",
+      "ICB",
+      "研究者マッチ"
+    ],
+    "createdAt": "2026-07-04T04:35:47.967218+00:00",
+    "updatedAt": "2026-07-04T04:35:47.967218+00:00",
+    "content": "# 産業創造プラットフォーム 第2サイクル実証（半導体）＋ Wave 3-4 Production化\n\n産業創造プラットフォーム（ANSWER+ v4）を第2テーマ「半導体・先端エレクトロニクス産業の創造」で実証し、テーマ横断の汎用性を確認した。\n\n## 第2サイクル（半導体）\nICBから各国の実政策・実額が接地: 先端半導体国内生産拠点の確保（¥632bn+¥471bn+¥450bn）・ポスト5G基盤強化（¥990bn）・重要物資サプライチェーン強靱化半導体（¥437bn）、加えてEU Chips Act €43bn/US CHIPS $52.7bn/中国製造2025/印PLI・Semicon India/韓K-Chips。RID pool 22,530→100名（窒化物半導体・経済安全保障×産業政策 等on-theme）。\n仮説の核（非自明性層）: 補助金で世界が奪い合う前工程ファブへの量産回帰でなく、支配的設計が未確定の後工程（先端パッケージング・チップレット）・材料・製造装置層に、日本が構造的空隙を占める新産業を編む。経済安保が要請するのは自給でなく不可欠性(indispensability)の設計。反証条件明記。\n\n## Wave 3-4 Production化（同期完遂・codex不要）\nICK: 概念840→2,731（akdb関連度フィルタ・品質優先・off-theme水増し回避）、関係120→6,886（2.5×・89.9%連結・実共有キーワード/研究者から接地）、en+ja 100%。ICB: DE/IL/TW/IN政策+12→9カ国（全URL live検証・台湾は到達不可でhonest skip）。AGF: FAOSTAT貿易11,888追加→33,202観測・launchd 2本稼働。ICK実DOI化は夜間launchd継続。\n\n## 汎用性\nicp_generate.py --sector {ITTセクター} --focus で任意産業へ横展開。4層（ICK学術/ICB各国政策/テーマ別実データ/RID研究者）+ 独立監査による捏造ゼロ。"
   }
 ]
