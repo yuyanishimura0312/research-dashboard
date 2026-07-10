@@ -30428,5 +30428,25 @@
     ],
     "createdAt": "2026-07-06T12:48:41.410571+00:00",
     "updatedAt": "2026-07-06T12:48:41.410571+00:00"
+  },
+  {
+    "id": "6a508380dpxq8f",
+    "title": "フォーサイト基盤6WS精緻化 サイクル1（決定論的基盤層）",
+    "category": "フォーサイト",
+    "status": "investigating",
+    "source": "",
+    "summary": "PESTLE/Signal/CLA/機関/歴史の6ワークストリームをcodex併用で精緻化。サイクル1成果(全additive・検証済): WS6 PRRRCスコア5.8%→100%(6,957事象を決定論計算)+サイクル理論スキーマ(Kondratiev/Modelski/Strauss-Howe 3理論・5,799事象紐付け); WS3 シグナル→シナリオ演繹エンジンで律速点開通(シナリオ1→121・実シグナル接地・Sol散文化フリート稼働中); WS2 network指標50ノード全計算(ハブ特定)+weak/driver/trend三分法view; WS5 region 6.8%→96.8%(country→region決定論導出・Global South機関176可視化); WS1 品質flag+clean view(監査の誤警報を訂正:真の日付異常2件・パイプライン健全)。重要発見: 運用DB(pestle/signal/cla)がAR-DB cross-ref層に未登録=Phase Fで新規接続予定。GitHub: yuyanishimura0312/foresight-precision-2026",
+    "tags": [
+      "foresight",
+      "PESTLE",
+      "signal",
+      "scenario",
+      "CLA",
+      "cycle-theory",
+      "codex",
+      "PRRRC"
+    ],
+    "createdAt": "2026-07-10T05:30:40.208343+00:00",
+    "updatedAt": "2026-07-10T05:30:40.208343+00:00"
   }
 ]
