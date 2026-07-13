@@ -5,74 +5,86 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Noto+Serif+JP:wght@400;600;700;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#FFFFFF;--card:#FFFFFF;--card-hover:#F7F7F5;--accent:#121212;--accent-warm:#CC1400;--accent-warm-soft:#B01200;--accent-muted:rgba(204,20,0,.06);--text:#121212;--text-secondary:#555;--text-muted:#6B6B6B;--border:#D9D9D9;--border-light:#EEE;--surface:#F7F7F5;--good:#3F6B2E;--good-bg:rgba(63,107,46,.06);--font:"Noto Sans JP","Hiragino Sans",-apple-system,sans-serif;--font-serif:"Noto Serif JP","Hiragino Mincho ProN",Georgia,serif;--mono:"Fira Code",monospace}
-[data-theme="dark"]{--bg:#121212;--card:#1A1A1A;--card-hover:#222;--accent:#E0E0E0;--accent-warm:#FF4030;--accent-muted:rgba(255,64,48,.10);--text:#E0E0E0;--text-secondary:#AAA;--text-muted:#8A8A8A;--border:#333;--border-light:#2A2A2A;--surface:#1A1A1A;--good:#8FCB6E;--good-bg:rgba(143,203,110,.10)}
-*{box-sizing:border-box}html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.9;letter-spacing:.02em;font-feature-settings:"palt"}
-.top-bar{position:sticky;top:0;z-index:20;height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;background:var(--bg);border-top:3px solid var(--accent-warm);border-bottom:1px solid var(--border-light)}
-.brand{font-weight:700;font-size:14px;letter-spacing:.04em}.brand b{color:var(--accent-warm)}
-.theme-btn{cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--text-secondary);border-radius:4px;padding:4px 10px;font-size:12px;font-family:var(--font)}
-.wrap{display:grid;grid-template-columns:280px 1fr;max-width:1180px;margin:0 auto}
-.toc{position:sticky;top:48px;align-self:start;height:calc(100vh - 48px);overflow-y:auto;padding:26px 16px 60px;border-right:1px solid var(--border-light)}
-.toc-label{font-size:11px;letter-spacing:.18em;color:var(--text-muted);text-transform:uppercase;margin:0 0 12px 8px}
+/* ── tokens (warm-editorial 版面 / 赤白CI #CC1400・ゴシック法・イタリック禁止) ─────
+   接地: ds/tokens.css [data-preset="warm-editorial"] / design-benchmark 10原則
+   選定根拠: 戦略コンサル級レポート × 経営層読者 → 暖白主地・大側余白・締まった見出し・静かな演出 */
+:root{--paper:#FAF8F4;--surface:#F3EFE9;--surface-warm:#EDE7DE;--accent:#0E0E0E;--accent-warm:#CC1400;--accent-warm-soft:#9A0F00;--accent-muted:rgba(204,20,0,.06);--text:#1A1A1A;--text-strong:#0E0E0E;--text-secondary:#3A3A3A;--text-muted:#595959;--faint:#8A8A8A;--rule:#E4DCD2;--rule-soft:#EFE9E1;--good:#3F6B2E;--good-bg:rgba(63,107,46,.07);--font:"Noto Sans JP","Hiragino Sans",-apple-system,sans-serif;--font-serif:"Noto Serif JP","Hiragino Mincho ProN",Georgia,serif;--mono:"Fira Code",monospace;--measure:64ch;--side:clamp(28px,6vw,80px);--ease:cubic-bezier(.16,1,.3,1)}
+[data-theme="dark"]{--paper:#141210;--surface:#1B1917;--surface-warm:#1E1B18;--accent:#E4E4E4;--accent-warm:#FF4A38;--accent-muted:rgba(255,74,56,.10);--text:#E4E4E4;--text-strong:#FFFFFF;--text-secondary:#C4C4C4;--text-muted:#B0B0B0;--faint:#6E6E6E;--rule:#2E2A26;--rule-soft:#262320;--good:#8FCB6E;--good-bg:rgba(143,203,110,.10)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--text);font-family:var(--font);line-height:1.95;letter-spacing:.01em;font-feature-settings:"palt" 1,"kern" 1}
+.top-bar{position:sticky;top:0;z-index:20;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 var(--side);background:color-mix(in oklch,var(--paper) 92%,transparent);backdrop-filter:saturate(1.1) blur(8px);border-top:2px solid var(--accent-warm);border-bottom:1px solid var(--rule)}
+.brand{font-weight:500;font-size:12.5px;letter-spacing:.02em;color:var(--text-secondary)}.brand b{color:var(--accent-warm);font-weight:700}
+.theme-btn{cursor:pointer;border:1px solid var(--rule);background:transparent;color:var(--text-muted);border-radius:6px;padding:6px 12px;font-size:12px;min-height:36px;font-family:var(--font);transition:color .2s var(--ease),border-color .2s var(--ease)}
+.theme-btn:hover{color:var(--accent-warm);border-color:var(--accent-warm)}
+.wrap{display:grid;grid-template-columns:290px 1fr;max-width:1200px;margin:0 auto}
+.toc{position:sticky;top:52px;align-self:start;height:calc(100vh - 52px);overflow-y:auto;padding:36px 20px 70px;border-right:1px solid var(--rule)}
+.toc-label{font-size:11px;letter-spacing:.2em;color:var(--text-muted);text-transform:uppercase;margin:0 0 16px 10px;font-weight:600}
 .toc ol{list-style:none;margin:0;padding:0;counter-reset:t}
 .toc li{counter-increment:t}
-.toc a{display:block;padding:5px 8px;font-size:12.5px;color:var(--text-secondary);text-decoration:none;border-radius:5px;line-height:1.5}
-.toc a::before{content:counter(t,decimal-leading-zero);color:var(--accent-warm);font-family:var(--mono);font-size:10px;margin-right:8px}
-.toc a:hover{background:var(--card-hover);color:var(--accent-warm)}
-main{padding:40px 40px 120px;max-width:820px}
-.doc-title{font-family:var(--font-serif);font-weight:900;font-size:30px;line-height:1.35;margin:8px 0 6px}
-.doc-sub{color:var(--text-secondary);font-size:14px;margin-bottom:6px}
-.doc-meta{color:var(--text-muted);font-size:12px;font-family:var(--mono);border-bottom:1px solid var(--border-light);padding-bottom:26px;margin-bottom:10px}
-.chapter{padding:38px 0 8px;border-bottom:1px solid var(--border-light)}
-.ch-num{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--accent-warm);text-transform:uppercase}
-.chapter h2{font-family:var(--font-serif);font-weight:700;font-size:23px;line-height:1.4;margin:4px 0 18px}
-.chapter h3{font-size:15px;font-weight:700;margin:26px 0 6px;padding-left:11px;border-left:3px solid var(--accent-warm)}
-.h-now{border-left-color:var(--text-muted)!important}.h-gap{border-left-color:var(--accent-warm)!important}.h-drive{border-left-color:var(--accent)!important}
-.chapter h4{font-size:14px;font-weight:700;margin:18px 0 4px;padding:7px 12px;border-radius:6px}
+.toc a{display:block;padding:7px 10px;font-size:12.5px;color:var(--text-secondary);text-decoration:none;border-radius:6px;line-height:1.5;border-left:2px solid transparent;transition:color .2s var(--ease),border-color .2s var(--ease)}
+.toc a::before{content:counter(t,decimal-leading-zero);color:var(--accent-warm);font-family:var(--mono);font-size:10px;margin-right:9px}
+.toc a:hover{color:var(--accent-warm);border-left-color:var(--accent-warm)}
+main{padding:clamp(40px,6vw,72px) var(--side) 130px;max-width:calc(var(--measure) + 8ch)}
+.doc-cn{font-size:10.5px;font-weight:600;letter-spacing:.2em;color:var(--accent-warm);text-transform:uppercase}
+.doc-title{font-family:var(--font);font-weight:900;font-size:clamp(28px,5vw,40px);line-height:1.14;letter-spacing:-.02em;margin:14px 0 14px;color:var(--text-strong)}
+.doc-sub{color:var(--text-secondary);font-size:clamp(14px,1.3vw,17px);line-height:1.7;max-width:52ch;margin-bottom:16px}
+.doc-meta{color:var(--text-muted);font-size:11.5px;font-family:var(--mono);border-bottom:1px solid var(--rule);padding-bottom:26px;margin-bottom:10px;line-height:1.7}
+.chapter{padding:clamp(40px,5vw,60px) 0 10px;border-bottom:1px solid var(--rule-soft)}
+.ch-num{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--accent-warm);text-transform:uppercase}
+.chapter h2{font-family:var(--font);font-weight:800;font-size:clamp(20px,2.4vw,26px);line-height:1.28;letter-spacing:-.02em;margin:6px 0 20px;color:var(--text-strong)}
+.chapter h2::after{content:"";display:block;width:34px;height:2px;background:var(--accent-warm);margin-top:14px}
+.chapter h3{font-size:14.5px;font-weight:700;margin:28px 0 8px;padding-left:12px;border-left:3px solid var(--accent-warm);letter-spacing:.01em;color:var(--text-strong)}
+.h-now{border-left-color:var(--faint)!important}.h-gap{border-left-color:var(--accent-warm)!important}.h-drive{border-left-color:var(--accent)!important}
+.chapter h4{font-size:13px;font-weight:700;margin:22px 0 6px;padding:9px 14px 9px 16px;border-radius:4px;letter-spacing:.02em;position:relative}
+.chapter h4::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:4px 0 0 4px}
 .sc-fill{background:var(--good-bg);color:var(--good);border:1px solid var(--good)}
+.sc-fill::before{background:var(--good)}
 .sc-nofill{background:var(--accent-muted);color:var(--accent-warm);border:1px solid var(--accent-warm)}
-.chapter p{font-family:var(--font-serif);font-size:15px;line-height:1.95;margin:0 0 14px;text-indent:1em}
-.chapter h3 + p,.chapter h4 + p{text-indent:0}
-.prov{font-family:var(--font)!important;font-size:12px!important;color:var(--text-muted);text-indent:0!important;background:var(--surface);padding:12px 14px;border-radius:6px;line-height:1.7}
+.sc-nofill::before{background:var(--accent-warm)}
+.chapter h4+p{padding-left:2px}
+.chapter p{font-size:clamp(15px,1.05vw,16.5px);line-height:1.95;margin:0 0 16px;max-width:var(--measure)}
+.prov{font-size:12px!important;color:var(--text-muted);background:var(--surface-warm);border:1px solid var(--rule);padding:14px 16px;border-radius:4px;line-height:1.75;max-width:var(--measure)}
 code{font-family:var(--mono);font-size:.85em;background:var(--surface);padding:1px 5px;border-radius:3px;color:var(--accent-warm)}
 strong{color:var(--accent-warm);font-weight:700}
-.foot{color:var(--text-muted);font-size:12px;padding:34px 0 10px;line-height:1.7}
+.foot{color:var(--text-muted);font-size:12px;padding:44px 0 10px;line-height:1.85;max-width:var(--measure);border-top:1px solid var(--rule-soft);margin-top:8px}
+:where(a,button):focus-visible{outline:2px solid var(--accent-warm);outline-offset:2px;border-radius:3px}
+::selection{background:rgba(204,20,0,.14)}
 @media(max-width:1000px){.wrap{grid-template-columns:1fr}.toc{display:none}main{padding:26px 20px 90px}}
-@media print{.top-bar,.toc{display:none}.wrap{grid-template-columns:1fr}main{max-width:none}.chapter{page-break-inside:avoid}}
+@media print{.top-bar,.toc{display:none}.wrap{grid-template-columns:1fr}main{max-width:none}.chapter{page-break-inside:avoid}body{background:#fff}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:.001ms!important;scroll-behavior:auto}}
 </style></head><body>
 <div class="top-bar"><span class="brand">ミラツク <b>産業創造モデル</b>／産業領域 空隙・シナリオ分析</span><button class="theme-btn" onclick="tt()">◐ テーマ</button></div>
 <div class="wrap">
-<aside class="toc" aria-label="目次"><div class="toc-label">28 産業領域</div><ol><li><a href="#d57167">横断・政策テーマ(産業)</a></li>
-<li><a href="#d44513">卸売・商社</a></li>
-<li><a href="#d75192">情報技術</a></li>
-<li><a href="#d53596">通信・コミュニケーション</a></li>
-<li><a href="#d22972">エネルギー</a></li>
-<li><a href="#d54983">公益事業</a></li>
-<li><a href="#d80924">鉱業・資源</a></li>
-<li><a href="#d89595">ヘルスケア・医療</a></li>
-<li><a href="#d40040">食品・飲料</a></li>
-<li><a href="#d42122">生活必需品・消費財</a></li>
-<li><a href="#d83685">製造・機械</a></li>
-<li><a href="#d19328">電機・電子</a></li>
-<li><a href="#d46109">素材</a></li>
-<li><a href="#d68051">航空・宇宙</a></li>
-<li><a href="#d50400">防衛・安全保障産業</a></li>
-<li><a href="#d76336">船舶・海事</a></li>
-<li><a href="#d43077">自動車・モビリティ</a></li>
-<li><a href="#d97146">金融</a></li>
-<li><a href="#d79690">不動産</a></li>
-<li><a href="#d95371">建設・インフラ</a></li>
-<li><a href="#d41066">運輸・物流</a></li>
-<li><a href="#d66060">農林水産業</a></li>
-<li><a href="#d8115">教育・人材</a></li>
-<li><a href="#d49441">メディア・エンタメ</a></li>
-<li><a href="#d96361">観光・宿泊・レジャー</a></li>
-<li><a href="#d30469">服飾・アパレル</a></li>
-<li><a href="#d42371">飲食・外食</a></li>
-<li><a href="#d10967">小売・EC</a></li></ol></aside>
+<aside class="toc" aria-label="目次"><div class="toc-label">28 産業領域</div><ol><li><a href="#d19865">横断・政策テーマ(産業)</a></li>
+<li><a href="#d18652">卸売・商社</a></li>
+<li><a href="#d38296">情報技術</a></li>
+<li><a href="#d504">通信・コミュニケーション</a></li>
+<li><a href="#d94969">エネルギー</a></li>
+<li><a href="#d19770">公益事業</a></li>
+<li><a href="#d79070">鉱業・資源</a></li>
+<li><a href="#d64942">ヘルスケア・医療</a></li>
+<li><a href="#d15118">食品・飲料</a></li>
+<li><a href="#d14435">生活必需品・消費財</a></li>
+<li><a href="#d83126">製造・機械</a></li>
+<li><a href="#d33583">電機・電子</a></li>
+<li><a href="#d19097">素材</a></li>
+<li><a href="#d81974">航空・宇宙</a></li>
+<li><a href="#d79224">防衛・安全保障産業</a></li>
+<li><a href="#d51915">船舶・海事</a></li>
+<li><a href="#d50736">自動車・モビリティ</a></li>
+<li><a href="#d60396">金融</a></li>
+<li><a href="#d70735">不動産</a></li>
+<li><a href="#d18237">建設・インフラ</a></li>
+<li><a href="#d97670">運輸・物流</a></li>
+<li><a href="#d68338">農林水産業</a></li>
+<li><a href="#d63584">教育・人材</a></li>
+<li><a href="#d18460">メディア・エンタメ</a></li>
+<li><a href="#d1189">観光・宿泊・レジャー</a></li>
+<li><a href="#d28622">服飾・アパレル</a></li>
+<li><a href="#d60093">飲食・外食</a></li>
+<li><a href="#d74485">小売・EC</a></li></ol></aside>
 <main>
-<div class="ch-num">INDUSTRY CREATION MODEL — GAP &amp; SCENARIO</div>
+<div class="doc-cn">INDUSTRY CREATION MODEL — GAP &amp; SCENARIO</div>
 <h1 class="doc-title">産業創造モデルで読む<br>産業領域の空隙と未来シナリオ</h1>
 <div class="doc-sub">28産業領域・200業種｜必要だが手薄い空隙領域と、埋まる未来／埋まらない未来</div>
 <div class="doc-meta">ICFM × IIDB(200業種) × RMP-DB(250技術ロードマップ)｜2026-07-12</div>
@@ -86,7 +98,7 @@ strong{color:var(--accent-warm);font-weight:700}
 <p>各領域について、その空隙を埋める鍵——統合を担う学際クラスターの編成、材料供給網の内製化、次世代核の担い手の出現——をドライビングフォースとして特定し、それが働いた場合の<strong>【埋まる未来】</strong>と、働かなかった場合の<strong>【埋まらない未来】</strong>を、ICFMの相遷移が前進する機序・死の谷で止まる機序として書き分けた。技術ロードマップ（RMP-DB 250ロードマップ）が各産業に接続されており、空隙を埋める具体的な技術系譜として参照している。</p>
 <p class="prov">接地データ: IIDB <code>iidb_industry_state</code>（f/q/r・相・欠落ポジション）＋ <code>iidb_industry_diagnosis</code>（律速制約・欠落クラスター・監視シグナル）× RMP-DB 250技術ロードマップ（産業別接続）。全記述は実診断データに接地し、モデル外の技術・数値・固有名は用いていない。生成 2026-07-12。</p>
 </section>
-<section class="chapter" id="d57167"><div class="ch-num">領域 01</div><h2>横断・政策テーマ(産業)</h2><h3 class="h-now">現在の産業状況</h3>
+<section class="chapter" id="d19865"><div class="ch-num">領域 01</div><h2>横断・政策テーマ(産業)</h2><h3 class="h-now">現在の産業状況</h3>
 <p>横断・政策テーマ領域は、AI実装からグリーン水素、量子コンピューティング、災害復旧まで18業種を束ねる、政策と産業が交差する領域である。ICFM診断ではすべての業種が「基盤が厚い」と判定されており、F(基盤完全性)は0.8〜1.0が大半を占めるが、相とQ(統合点の質)の分布は大きく割れている。一方の極には、貿易監視・規制コンプライアンス(相4・f1.0/q0.887/r6.349)、重要インフラ防護(相4・q0.925/r6.527)、工場自動化・省人化(相5・q0.925)、リチウムイオン電池(相5・q0.887)といった全位置充足の成熟群があり、他方の極には、グリーン水素(相2・f0.6/r1.812)と量子コンピューティング(相2・f0.2/r2.12)という黎明期の2業種が座る。とりわけ量子は、統合点・統合者は既に存在する(q0.925)のにhas_material=0、すなわち核となる知見の側が律速という、この領域で唯一の「知見蓄積」型を示す。</p>
 <p>中間帯には、DX・クラウド変革、データガバナンス基盤、サイバーセキュリティ、サプライチェーン管理、スマート交通・モビリティ基盤という相3・growth期のデジタル基盤群が並ぶ。これらは一様にf0.8・q0.388〜0.425・r2.914〜3.087、has_integration=0という同型のプロファイルを持ち、missing_positionsはいずれも「統合点」と返る。基盤も担い手もあるのに、束ねる位置だけが空いている——これがこの領域の中間帯を貫く構造である。</p>
 <h3 class="h-gap">必要だが手薄い空隙領域</h3>
@@ -100,7 +112,7 @@ strong{color:var(--accent-warm);font-weight:700}
 <p>2030年前後、規制が要求する相互運用(デジタル製品パスポート、デジタルIDとトラスト基盤、秘匿計算・プライバシー保護計算)を設計目標として、データ工学・法情報学・OR/最適化・交通工学を横断する統合アーキテクト・クラスターが編成される。DX・データガバナンス・SCM・スマート交通の各業種で統合点が充足されると、q0.388前後で足踏みしていた中間帯は相3から相4(標準・連合)へ一斉に前進し、連邦型データ空間の国産標準が支配的設計の座を占める。並行して、グリーン水素電解とグリーンスチール冶金の研究者連結が補助金非依存のオフテイク実需を立ち上げ、水素は相2から相3へ発火する。量子では量子誤り訂正の核クラスター(QEC理論×物性材料×極低温工学)が編成され、2030年代半ばの論理量子ビット実用化と耐量子暗号移行需要が接続して、has_material=0の欠落が埋まる。2040年には、この領域は「規制を実装力に転換した統合産業群」として、系統近代化・サプライチェーン強靭化まで束ねる面的な産業基盤に育つ。</p>
 <h4 class="sc-nofill">【埋まらない未来】</h4>
 <p>統合点の空白が放置された場合、中間帯5業種は相3で停滞し、断片化した実装層が個別最適を続ける「統合なき成長」が常態化する。DXはIT人材79万人不足(2030)の下で人月商売から脱せず、SCMやスマート交通の単一データモデルは海外プラットフォーム(EU連邦型データ空間、米系可視化SaaS)が定義し、日本は自国の産業データの相互運用条件を外から与えられる立場に落ちる。グリーン水素は需要動機の欠落が解けず、FID到達率1桁のままパイプラインが縮小、中国のFID容量65%偏在が固定化して、電解装置も需要地も海外に依存する。量子はQEC核の編成に失敗し、セクター側の資金・統合が先行したまま知見の核が空洞である逆転構造が続き、量子冬(R&amp;D投資25%超減少)の到来とともに国内クラスターは霧散する。成熟群も次世代核(フィジカルAI、全固体)への延伸を逃し、2040年の日本は「現行世代の優等生・次世代の周辺国」として、統合の死の谷の手前で立ち尽くすことになる。</p></section>
-<section class="chapter" id="d44513"><div class="ch-num">領域 02</div><h2>卸売・商社</h2><h3 class="h-now">現在の産業状況</h3>
+<section class="chapter" id="d18652"><div class="ch-num">領域 02</div><h2>卸売・商社</h2><h3 class="h-now">現在の産業状況</h3>
 <p>卸売・商社領域は、飲食料品卸売業、建築材料・鉱物・金属材料等卸売業、機械器具卸売業の3業種で構成され、ICFM診断上もっとも均質なプロファイルを示す領域である。3業種すべてが相5(国家・投資家・企業の本格参入を経た段階)・lifecycle成熟・F=1.0で、Qも0.85〜0.887、R(非循環予測核)は6.176〜6.349と高い。missing_positionsはいずれも「なし(全位置充足)」であり、材料・統合・統合者のすべてが揃った完成された産業である。constraint_axisも3業種とも「成熟→次世代」型で一致する。つまりこの領域の問いは「発火するか」ではなく、「成熟しきった統合機能が次の時代にも価値を保てるか」である。</p>
 <p>その足元は静かに揺らいでいる。飲食料品卸では産直EC・D2Cによる中抜きが統合機能を部分的に脅かし、集中度はむしろ低下中、事業承継未定は55.2%に達する。建築材料等卸では後継者不在率57.3%とBtoB EC(建デポ型)の浸食が重なり、脱炭素・重要鉱物需給が扱い素材そのものの構造再編を迫る。機械器具卸ではメーカーEC直販とmeviy型の調達代替が進み、3.9万の中小が分散したままロールアップの草刈り場になりつつある。全位置充足でありながら、その充足の中身が陳腐化リスクに晒されている——これがこの領域の現在地である。</p>
 <h3 class="h-gap">必要だが手薄い空隙領域</h3>
@@ -113,7 +125,7 @@ strong{color:var(--accent-warm);font-weight:700}
 <p>2030年前後、事業承継の崖を契機とするロールアップと商社TOBが、単なる集約ではなく次世代業態への転換装置として機能する。飲食料品卸では食品EDI相互運用の標準化を軸に商流×物流データ連携基盤が業者横断で成立し、トラック台数を3割削減しながら、産直ECには担えない情報縮約・与信・リスク負担の価値が「価値循環プラットフォーム」として再定義される。建築材料等卸は重要鉱物循環と先端材料の学術知を取り込み、CBAM対応CO2トレーサビリティを標準装備した「製品加工業」へ転換、鉄スクラップと都市鉱山を握る川上の要となる。機械器具卸はIoT予知保全のコト売り統合基盤で建設機械ロボティクスなど新機械群のサービス収益を獲得する。2040年、卸は「消えゆく中間業者」ではなく、素材から食品までの産業データと循環資源の結節点として、相5の成熟を次世代の統合機能へ更新し終えている。</p>
 <h4 class="sc-nofill">【埋まらない未来】</h4>
 <p>価値再定義の主体が現れない場合、全位置充足という現在の診断はそのまま「充足したまま陳腐化する」経路を意味する。産直EC・D2C、BtoB EC、メーカー直販が商流の可視な部分を段階的に奪い、卸に残るのは低マージンの物流代行と与信の残余機能のみとなる。後継者不在率57%の中小卸は次世代投資の原資を欠いたまま淘汰され、ロールアップは業態転換なき規模集約に終わって、統合の質Qは0.85台から緩やかに劣化する。CBAMと重要鉱物循環への対応は海外プラットフォームと大手メーカーの垂直統合に取り込まれ、素材トレーサビリティのデータは卸を素通りする。食品では商流物流データ連携が成立せず物流危機が地方の品揃えを直撃、機械では予知保全サービスをメーカーが独占して卸の技術サービス価値が空洞化する。2040年、この領域は発火の失敗ではなく、成熟の出口で次世代核を編成できなかったことによる「静かな解体」を迎える。</p></section>
-<section class="chapter" id="d75192"><div class="ch-num">領域 03</div><h2>情報技術</h2><h3 class="h-now">現在の産業状況</h3>
+<section class="chapter" id="d38296"><div class="ch-num">領域 03</div><h2>情報技術</h2><h3 class="h-now">現在の産業状況</h3>
 <p>情報技術領域の15業種は、産業創造モデル（ICFM）で見ると相5（国家・投資家・企業の重層投資）に到達した成熟業種が10、相4（標準・連合形成）が4、相2（個人・国家の萌芽）が1という分布を示す。相5群の基盤指標はきわめて高い。半導体（f=1.0/q=0.925/r=6.527）、半導体製造装置（f=1.0/q=0.887/r=6.349）、データセンターシステム（f=1.0/q=0.887/r=6.349）はいずれも材料・統合・統合担い手の3位置が充足し、判定は「基盤が厚い」で揃う。ライフサイクルも単なる成熟ではなく、半導体は「mature→再成長（AI駆動）」、データセンターは「growth（AI駆動急拡大）」、パブリッククラウドは「mature→再成長（生成AI駆動）」と、AIを駆動源とする再成長局面にある。</p>
 <p>一方で、この厚い基盤の内側に指標の断層がある。ITコンサルティング・ITサービスはf=0.8ながらq=0.112/r=1.623と統合点の質が崩落しており、has_integration=0・has_integrator=0。デジタルアイデンティティ・トラストサービス（q=0.15）とIoT・エッジコンピューティング（q=0.188）も同型で、材料は在るのに統合点と統合担い手が欠けた相4滞留型である。さらに量子技術は相2・f=0.4・q=0.225・r=-0.052と唯一の負のr値を示し、材料・需要・統合の3位置がすべて欠落する「基盤が平均的」な萌芽業種として孤立している。人工知能基盤・応用ソリューションは指標上は高い（f=1.0/q=0.925）ものの、基盤層の充足に対して産業AI（専有データ×垂直応用）層の統合点が形成途上という二層構造の歪みを抱える。</p>
 <h3 class="h-gap">必要だが手薄い空隙領域</h3>
@@ -128,7 +140,7 @@ strong{color:var(--accent-warm);font-weight:700}
 <p>2030年前後、3つの空隙で統合結節点が相次いで編成される。ITサービスでは実装自動化の研究者と組織設計・労働経済の研究者が束ねられ、多重下請構造が生成AI前提の新デリバリーモデルへ再統合されて、相4滞留から相5への遷移が完了する。量子技術では物性物理・極低温工学・量子情報理論・電子工学を横断する量子ビット統合クラスターが富士通・理研を起点に立ち上がり、方式収斂と誤り訂正の進展を受けて材料・需要・統合の3位置が順に充足、相2から相3〜4への段階遷移が進む。半導体ではチップレット・先端パッケージング、GAA/CFETトランジスタ微細化、裏面給電、ガラスコア基板、シリコンフォトニクスを束ねる日本発のimec型統合者が形成され、後工程で7%に沈んでいた国内地位が次世代パラダイムの主導権へ転じる。2040年には、産業AI層の統合点を握った垂直ドメインから新産業群が発火している。</p>
 <h4 class="sc-nofill">【埋まらない未来】</h4>
 <p>統合結節点が編成されないまま2030年代を迎えると、空隙はそのまま死の谷になる。ITサービスは多重下請のまま生成AIによる生産性向上を下層淘汰の圧力としてだけ受け、55万人不足と倒産増が併存する縮小均衡に陥る。デリバリーモデルの再統合を果たした海外勢へ実装層が置換される。量子技術はr=-0.052が示す通り非循環予測核が立たず、方式収斂を海外が主導した後で量産材料と誤り訂正の知見を輸入する側に固定され、政府目標50兆円は投機的需要のまま反証される。半導体では次世代統合点（Q_integration=0.188）が育たず、High-NA EUV・CFET・CPOのパラダイム転換をインテル・TSMC・imecが握り、Rapidusは量産に達しても次世代の芽を束ねる位置を得られない。IoT・エッジのフルスタック層はハイパースケーラー5社のプラットフォーム層60%集約に呑まれ、国内は部品供給に退行する。</p></section>
-<section class="chapter" id="d53596"><div class="ch-num">領域 04</div><h2>通信・コミュニケーション</h2><h3 class="h-now">現在の産業状況</h3>
+<section class="chapter" id="d504"><div class="ch-num">領域 04</div><h2>通信・コミュニケーション</h2><h3 class="h-now">現在の産業状況</h3>
 <p>通信・コミュニケーション領域の8業種は、全業種が相5・f=1.0・「基盤が厚い」判定で揃う、担当領域中で最も均質に成熟した領域である。固定通信サービス（q=0.887/r=6.349）、移動通信サービス（q=0.925/r=6.527）、専用線・法人通信（q=0.887）、インターネット附随・プラットフォームサービス（q=0.887）、広告サービス（q=0.887）まで、材料・統合・統合担い手の3位置はすべて充足し、missing_positionsは全業種で「全位置充足」、binding_constraintは全業種で「律速なし」と記録される。constraint_axisも8業種すべてが「成熟→次世代」で統一される。</p>
 <p>ただしライフサイクルの内訳には傾斜がある。民間放送と有線テレビジョン放送・ケーブルテレビの2業種はdeclineに入っており、民間放送は「技術は成熟だがビジネスモデルが崩れる」——ネット広告2.3倍・地方局利益57%減——という、ICFMの技術指標では捉えきれない事業モデル律速を実質の拘束として抱える。CATVも有料加入620万世帯への縮小が進み、実質は事業モデル律速である。つまりこの領域の問いは「基盤が編成できるか」ではなく、「厚い現世代基盤の上で、次世代核への価値移転を誰が担うか」に完全に移っている。</p>
 <h3 class="h-gap">必要だが手薄い空隙領域</h3>
@@ -144,7 +156,7 @@ strong{color:var(--accent-warm);font-weight:700}
 <p>2030年代前半、次世代ネットワーク核の統合クラスターが既存キャリアの内側に編成される。固定側ではコヒーレント伝送・シリコンフォトニクスと局舎省電力を束ねた全光化（IOWN/APN）が敷設TCOの壁を越えて商用移行し、移動側ではテラヘルツ通信・分散MIMO/AI無線・LEO衛星直接通信・成層圏HAPSを一体設計する6G-NTNクラスターが、au Starlink Directで先行した衛星地上統合の延長線上に立つ。無線通信工学と宇宙工学の異分野統合が研究者オーケストレーションで先回り編成されたことで、相5の重層投資が次世代核へ滑らかに接続し、標準化（相4の再演）を国内勢が主導する。放送では放送IP化×CTV転換クラスターがTVerの成長を収益構造の再建へ翻訳し、declineに入った2業種が運用外販・地域DXへ事業再編して着地する。2040年、耐量子暗号とデータ主権を組み込んだ次世代プラットフォーム層が再分化の受け皿になっている。</p>
 <h4 class="sc-nofill">【埋まらない未来】</h4>
 <p>学際クラスターの編成が遅れると、律速なしの成熟はそのまま次世代不在の停滞に転じる。6G/NTNでは衛星直接通信の主導権をStarlink型の垂直統合勢が握り、国内キャリアはギガあたり収益デフレが続く地上網の運用者に固定される。全光化はAI大容量網需要に敷設が追いつかず、Open RANのコスト破壊だけが進んで価値は海外ベンダーへ流出する。放送ではネット広告2.3倍・地方局利益57%減の傾斜が止まらず、CTV転換クラスター不在のままdeclineが加速、CATVは620万世帯からの縮小を運用外販へ転じる担い手を欠いて地域網が細る。プラットフォーム再分化の局面でも、耐量子暗号・データ主権・分散SNS標準化の次世代核を欧米の規制主導で設計され、国内は適応する側に回る。分野ゲートの谷に埋没した電気通信・放送の研究者は最後まで発見されず、担い手の索引が壊れたまま機会の窓が閉じる。</p></section>
-<section class="chapter" id="d22972"><div class="ch-num">領域 05</div><h2>エネルギー</h2><h3 class="h-now">現在の産業状況</h3>
+<section class="chapter" id="d94969"><div class="ch-num">領域 05</div><h2>エネルギー</h2><h3 class="h-now">現在の産業状況</h3>
 <p>エネルギー領域15業種は、産業創造モデル（ICFM）で見ると相5成熟の厚い土台と、相1〜相3の形成途上層が二層をなす構造にある。石油・ガス探鉱・生産、石炭・コークス燃料、太陽光発電（結晶シリコン）、陸上風力、送配電網、リチウムイオン蓄電池サプライチェーンはいずれもf=1.0、q=0.85〜0.96、r=6.2〜6.7と全指標が高く、材料・統合点・統合担い手の3要素が揃った「基盤が厚い」成熟産業である。ただしその多くは判定に「成熟→次世代移行の入口」「先進国は相6手前＝衰退」という但し書きが付く。つまり厚さは過去の発火の遺産であり、次の産業の厚さではない。</p>
 <p>一方、形成途上層は様相が一変する。浮体式洋上風力はf=0.6・q=0.425・r=1.985で材料と統合点が同時に欠け、原子力SMRはf=0.6・q=0.225・r=1.05で材料・統合点・統合担い手の3つすべてが未充足。低排出水素・SAF・CCUSはいずれもf=0.4・r=0.711で「両面」律速、燃料アンモニアはf=0.2・r=-0.569で「基盤が平均的」、核融合に至ってはf=0.0・r=-2.428で15業種中唯一「基盤が薄い——欠けた位置の構成が必要」と判定される。エネルギーとは、成熟の高原と萌芽の谷が最も鋭く同居する領域である。</p>
 <h3 class="h-gap">必要だが手薄い空隙領域</h3>
@@ -157,7 +169,7 @@ strong{color:var(--accent-warm);font-weight:700}
 <p>2030年代前半、浮体式洋上風力で統合担い手の設計が先行的に成立する。田中・武内・サハレ・竹沢ら浮体・係留研究者と造船量産・動的ケーブル・港湾施工船・O&amp;Mを束ねるコンソーシアムが標準設計を収斂させ、NEDO浮体実証と日英量産連携を足場に相2形成から相4統合への遷移が進む。並行して、石油上流の貯留層知見がCCS貯留クラスターへ、掘削サービス技能が強化地熱系（EGS）・クローズドループ地熱へ転位し、成熟産業の人材が次世代の材料・統合点を埋める。ペロブスカイトは宇佐美・矢口ら次世代PV研究者の越境編成で「知財→量産→海外展開」の統合が立ち、アンモニアは小林秀昭・早川晃弘・丸田薫らの燃焼学核が専焼と舶用実機を確立する。2040年、日本は次世代エネルギーの複数分野で統合担い手を持つ側に立つ。</p>
 <h4 class="sc-nofill">【埋まらない未来】</h4>
 <p>統合担い手の設計が誰の仕事にもならないまま、要素研究だけが並走する。浮体式は造船・電力・港湾の分散が解消されず、秋田・千葉沖の開発中止と同型の淘汰が繰り返されて標準化の主導権は海外陣営へ移る。SMRはHALEU・TRISO加工の前端空白ゆえに実装は米国依存となり、水素はFID到達率4%の投機性が晴れず政策依存需要のまま死の谷で停滞する。核融合はトリチウム循環とHTS線材の材料クラスターが構成されず、正味エネルギー実証後の商用化局面で国内サプライヤーの席を失う。成熟側では石油・石炭の工学的厚みが転位先を持たないまま退職とともに散逸し、脱炭素移行の中核技術——貯留・掘削・冶金——を海外調達する構図が固定する。厚い基盤が、次の産業の厚さに変換されないまま痩せていく未来である。</p></section>
-<section class="chapter" id="d54983"><div class="ch-num">領域 06</div><h2>公益事業</h2><h3 class="h-now">現在の産業状況</h3>
+<section class="chapter" id="d19770"><div class="ch-num">領域 06</div><h2>公益事業</h2><h3 class="h-now">現在の産業状況</h3>
 <p>公益事業5業種（電力・ガス・水道下水道・熱供給・再生可能電力事業）は、領域として例外的に均質である。全業種が相5、f=1.0、q=0.85〜0.962、r=6.176〜6.7で、材料・統合点・統合担い手のすべてが充足し、5業種すべてでフォーサイト設問の答えが「全位置充足」、binding_constraintは「律速なし」。産業創造モデルの語彙でいえば、ここに新産業発火の欠落位置は存在しない。ライフサイクルは電力・ガス・水道・熱供給がmature、再生可能電力事業のみgrowthで、後者はq=0.962・r=6.7と領域内最高値を示す。</p>
 <p>ただし成熟の内実は一様でない。ガスはe-メタン目標が1-5%へ軌道修正され家庭用電化代替が進む縮小局面、水道は上水道1,293事業+簡易水道2,302事業のロングテール構造で更新費用80%値上げ試算・下水75%原価割れという持続性の危機、熱供給は往還温度差約5度設計と第4世代地域熱供給（4GDH）が要求する25度以上との間に大きな設計ギャップを抱える。成長側の再エネ事業も、太陽光の適地枯渇・系統混雑、洋上風力の秋田・千葉沖開発中止という淘汰に直面している。</p>
 <h3 class="h-gap">必要だが手薄い空隙領域</h3>
@@ -169,7 +181,7 @@ strong{color:var(--accent-warm);font-weight:700}
 <p>2030年代、更新期の圧力が逆に統合の触媒となる。水道では広域化とPPP設計に公共経営研究が接続され、古米弘明・田中宏明・西嶋渉らの水環境工学核がPFAS処理・管路更生・点検AIと束ねられて、小規模事業体のロングテールが持続可能な事業単位へ再編される。電力は基幹系統6-7兆円投資とDC需要44TWh増を機に、西谷・内藤・佐野ら系統工学人材による系統用蓄電池・DER統合の高度化が進み、再エネ事業は補完基盤（系統統合×浮体式×ペロブスカイト×蓄電パワエレ×リサイクル）で成長を持続する。熱供給は4GDH設計転換とデータセンター排熱統合で縮小を反転させる。2040年、公益は「静かな成熟」から「次世代化された基盤」へ移行し、料金と技能継承の危機は制度側で吸収されている。</p>
 <h4 class="sc-nofill">【埋まらない未来】</h4>
 <p>律速なしの判定が油断に転じ、制度改革が更新期に間に合わない。水道は値上げ80%試算と下水原価割れが放置され、小規模事業体の統合が進まないままインフラ劣化が地方から顕在化する。ガスは55歳以上2割の技能者が退職の波を越えて継承されず、e-メタンも1-5%目標のまま縮小が固定。熱供給は往還温度差5度の旧設計から転換できず、分散型ヒートポンプに接続価値を侵食されて熱網ごと座礁する。再エネは秋田・千葉沖型の開発中止が続き、系統統合と人材不足がボトルネックとなって成長側さえ失速。全位置充足という厚い基盤が、担い手不在という産業創造モデルの外側の要因で機能を落としていく——新産業の死の谷ではなく、既存インフラの静かな空洞化という形の機会喪失である。</p></section>
-<section class="chapter" id="d80924"><div class="ch-num">領域 07</div><h2>鉱業・資源</h2><h3 class="h-now">現在の産業状況</h3>
+<section class="chapter" id="d79070"><div class="ch-num">領域 07</div><h2>鉱業・資源</h2><h3 class="h-now">現在の産業状況</h3>
 <p>鉱業・資源7業種は、6業種（石油・天然ガス開発、石炭採掘、鉄鉱石、銅、金、リチウム）が相5・f=1.0・全位置充足の成熟構造にあり、レアアース・永久磁石材料のみ相4・f=0.8で異質な断面を見せる。成熟6業種のqは0.887〜0.925、rは6.349〜6.527と揃って高いが、lifecycleではリチウム資源・電池材料だけがgrowthであり、他はmatureである。石炭は座礁資産2,200億ドル（90%がアジア）を抱えた縮小相、石油・天然ガスもIEAの2029年需要ピーク・2030年供給過剰21.7mb/dという需要破壊を前にした「成熟→次世代」の入口に立つ。</p>
 <p>この領域の特異点はレアアースである。q=0.188・r=1.979、has_integration=0・has_integrator=0——材料はあるのに統合点と統合担い手の双方を欠く。ICFMの設問への答えは端的に「欠けている位置=統合点」。政策認定6計画に分散した国内磁石層に対し、上流は中国が92%を寡占するという構造下で、鉱業・資源のなかで唯一、産業創造上の欠落位置が現在進行形で開いている業種である。</p>
 <h3 class="h-gap">必要だが手薄い空隙領域</h3>
@@ -182,7 +194,7 @@ strong{color:var(--accent-warm);font-weight:700}
 <p>2030年代前半、リチウムでDLEとブラックマスリサイクルの支配的設計が確定し、今西・尾原・河口・鄭系の研究者クラスターが産総研・NIMSや海外拠点（CELIMIN・AMTC）と結んで、供給拡大と精製の脱中国依存という二重の実需に応える循環クラスターが立つ。銅では一次硫化鉱バイオリーチングが商業化に達し、供給制約と電化需要のギャップを知見主導で埋める希少ケースが実証される。レアアースでは分散した6計画に統合主体が形成され、分離精製から磁性物理までを貫くmine-to-magnet一貫サプライチェーンが国内に成立、希土類磁石リサイクルがこれを補完する。鉄鉱石はDR級高品位ペレットの冶金・選鉱で水素還元製鉄の原料質転換に応え、2040年、日本は重要鉱物の「供給と循環の科学」を握る側に立つ。</p>
 <h4 class="sc-nofill">【埋まらない未来】</h4>
 <p>統合主体が形成されないまま、レアアースの6計画は個別最適の分散を続け、中国の域外型輸出管理の運用強度が上がるたびに国内下流が揺さぶられる構図が固定する。リチウムはDLE・ブラックマスの支配的設計収束を海外に握られ、精製の中国集中はむしろ深まり、非中国化の窓——パックが「今が最も効くタイミング」と記した局面——は閉じる。銅はバイオリーチングの知見蓄積が進まず、脱炭素・電化・AIの物質的前提そのものが供給制約で律速される。鉄鉱石はDR級適合の選鉱を欠いてグリーンスチール転換の原料側から脱落し、石炭は商社撤退後の技術継承が途絶えて秩序ある縮小にすら失敗する。需要は実在し続けるのに供給と循環の科学を持たない国として、重要鉱物の対外依存が二重三重に深まる未来である。</p></section>
-<section class="chapter" id="d89595"><div class="ch-num">領域 08</div><h2>ヘルスケア・医療</h2><h3 class="h-now">現在の産業状況</h3>
+<section class="chapter" id="d64942"><div class="ch-num">領域 08</div><h2>ヘルスケア・医療</h2><h3 class="h-now">現在の産業状況</h3>
 <p>ヘルスケア・医療の12業種は、その多くが産業創造モデルの相5（離陸・自己増殖）に到達した成熟・成長領域である。医薬品（f=1.0/q=0.887/r=6.349）、バイオ医薬・バイオテクノロジー（q=0.925/r=6.527）、体外診断・検査、医療機器はいずれも物質・統合・統合担い手の3位置を充足し、「基盤が厚い」と判定される。日本は創薬研究層と計測工学の蓄積を持ち、相1（大学・研究所）から相5（国家・投資家・企業）までの垂直が既に立ち上がっている。一方で、病院・診療所（相4）、調剤薬局（相4）、介護・高齢者ケア（相4）、デジタルヘルス・医療DX（相3・流動）といったサービス・DX系の業種は統合点（has_integration=0）を欠いたまま滞留しており、製造業の厚みとサービス層の薄さが同居する二重構造をなす。</p>
 <h3 class="h-gap">必要だが手薄い空隙領域</h3>
 <p>空隙は2種類に分かれる。第1は成熟した製造・診断業種の内部で「成熟→次世代」の遷移を担う新結節点である。医薬品ではAI創薬による新モダリティ探索の統合点、バイオ医薬では細胞遺伝子治療（CGT）の量産・fill-finish供給網統合、体外診断ではコンパニオン診断（CDx）／リキッドバイオプシーの精密診断統合点、医療保険では価値基準医療（VBC）の給付最適化統合点が、いずれも「誰が握るか」未決着のまま形成途上にある。第2はサービス・DX業種の統合点そのものの欠落で、これは性格が異なる。医療用品・医療消耗品（constraint_axis=セクター動き）はコモディティを高機能材料で脱コモディティ化する統合者が不在、病院・診療所（セクター動き）は非営利原則下で機能分化・再編を設計する結節点が欠落、調剤薬局（知見蓄積）は狭い薬学基盤を医療情報学・フィジカルAIへ拡張する越境が未達、介護・高齢者ケア（セクター動き）は科学的介護×介護ロボット×老年社会科学×介護DXを横断する広域運営組織が未編成、デジタルヘルス・医療DX（セクター動き＋知見偏在）は標準化×分散基盤×臨床AI統合×データガバナンスの五点編成が未特定である。代表的な欠落クラスターは、介護における「科学的介護（LIFE/EBPM）×介護ロボット工学×老年社会科学×医療経済×介護DX」の担い手であり、真田弘美・高汐一紀・吉村典子・正木治恵らの実研究者とJAGES系のEBPMアンカーが揃うにもかかわらず束ねる統合設計が欠けている。</p>
@@ -193,7 +205,7 @@ strong{color:var(--accent-warm);font-weight:700}
 <p>2030年代前半、AI創薬統合点と医療機器のバイオデザイン型結節点が先行して立ち上がる。医療・長寿ロードマップ、精密ゲノミクス、AI医用画像ワークフロー、外科ロボティクスの技術系列が実装段階に入り、創薬化学と機械学習・計算生物学の研究者クラスターが探索コストを桁で下げる。CGT量産では富士フイルム富山CDMOのような実在拠点にCiRA系臨床研究者とバイオプロセス量産・GMP品質工学研究者が接続され、希少能力の結節点が形成される。介護・薬局・病院のサービス層でも、federated-learning・遠隔患者モニタリング・ロボティック薬局自動化を軸に越境運営組織が組成され、日本の厚い基礎研究層とサービス実装が架橋される。</p>
 <h4 class="sc-nofill">【埋まらない未来】</h4>
 <p>製造・診断の基盤は厚いまま、サービス・DX層の統合点が空白のまま固定される。デジタルヘルスは標準がEpic型民間支配とデジタル庁公的標準の間で膠着し、医療情報学の担い手不在が解消されず流動相に留まる。医療用品は中国INTCO等との価格競争に敗れ、高機能材料への軸移動が起きないまま国内特許出願の減少が続く。治験のDCT分散網は日本だけがFDA/APAC標準に乗り遅れ、国際共同治験の空洞化を招く。介護は小規模事業者の断片化と2040年の供給類型分岐が進み、統合運営の担い手を海外SaaS・複合網に奪われる。基礎研究の厚みが社会実装に翻訳されない「死の谷」が、医療サービス全域で恒常化する。</p></section>
-<section class="chapter" id="d40040"><div class="ch-num">領域 09</div><h2>食品・飲料</h2><h3 class="h-now">現在の産業状況</h3>
+<section class="chapter" id="d15118"><div class="ch-num">領域 09</div><h2>食品・飲料</h2><h3 class="h-now">現在の産業状況</h3>
 <p>食品・飲料は4業種のうち3業種が相5（離陸・自己増殖）の成熟産業である。食品製造・加工、食品流通・小売インフラ、食品通販・食品ECはいずれもf=1.0・q=0.925・r=6.527で3位置を充足し「基盤が厚い」。ただし食品製造は零細中小97.4%の薄利多売と大手・穀物メジャー支配が両立する二重構造を持ち、流通も総合食品卸のCR4=71.7%集中と業界全体の分散が併存する。これら成熟業種の焦点は新産業要素でなく、物流2024/2030年問題への対応、中小の省人化DX、リテールメディアといった既存位置の高度化にある。これに対し代替タンパク原料・食品だけが相2（個人・国家）・nascentで、f=0.4・q=0.225・r=-0.052と全業種で唯一マイナスのreadinessを示し、物質・統合・統合担い手のすべてを欠く。</p>
 <h3 class="h-gap">必要だが手薄い空隙領域</h3>
 <p>明確な空隙は代替タンパク原料・食品に集中する。binding_constraintはmaterial／demand／integrationの三重欠落であり、constraint_axisは「両面」——知見蓄積側（スケールアップ工学）が核律速でありながら、需要動機の設計と統合者の不在も同時に欠落する複合型である。欠落クラスターは「スケールアップ工学×培地・宿主株×食品安全規制科学×消費者受容・感覚パリティ」の統合クラスターで、国内の統合者位置が未特定のまま残されている。細胞培養の量産材料（培地・足場・アミノ酸の低コスト化）、食品グレード発酵設備、価格と味の需要動機設計、そして異分野を集約する統合者の4位置がすべて未充足であり、これは15産業のなかで最も明確な研究者オーケストレーション機会と評価される。成熟3業種側では、食品製造の食品ロボティクス・細胞農業という新セグメントの担い手（古川英光・高橋宏信・仁宮一章）が周辺的な余地として残るのみである。</p>
@@ -203,7 +215,7 @@ strong{color:var(--accent-warm);font-weight:700}
 <p>2030年代、代替タンパクが相2から相3・相4へ前進する。細胞農業・代替タンパク、生体模倣タンパク繊維、計算タンパク質設計、合成生物学の技術系列が量産採算に接近し、高橋宏信・仁宮一章・裏出令子・橋本健志らを核に、スケールアップ工学と食品安全規制科学を架橋する国内統合者が成立する。144食品製造の食品ロボティクス・発酵基盤と連携することで、培地・足場の低コスト量産と感覚パリティが両立し、味と価格の需要動機が設計される。二層市場（premium培養肉と低価格植物肉）の下層に、日本発の発酵・エコフィード基盤が食い込む。</p>
 <h4 class="sc-nofill">【埋まらない未来】</h4>
 <p>三重欠落が解けないまま、代替タンパクは相2に滞留する。スケールアップ工学の谷を越えられずアミノ酸・培地コストが高止まりし、味と価格の需要動機が設計されないため消費者受容が停滞、植物肉の売上減が続く。統合者位置が国内で埋まらず、細胞農業・精密発酵の実在研究者が個別最適のまま分散し、量産・規制・受容を束ねる担い手が現れない。結果として日本はNew Harvest/GFI/TUM等が主導する国際基盤への依存を深め、成熟した既存食品産業の物流・省人化DXという内向きの効率化に資源が吸収され、新セグメント創造の機会を喪失する。</p></section>
-<section class="chapter" id="d42122"><div class="ch-num">領域 10</div><h2>生活必需品・消費財</h2><h3 class="h-now">現在の産業状況</h3>
+<section class="chapter" id="d14435"><div class="ch-num">領域 10</div><h2>生活必需品・消費財</h2><h3 class="h-now">現在の産業状況</h3>
 <p>生活必需品・消費財は農業一次生産から加工・小売・衛生用品まで9業種を含み、その大半が相5（離陸・自己増殖）の成熟産業である。飼料・ペットフード、加工食品・包装食品、酒類、非アルコール飲料、たばこ、食品・生活雑貨小売、家庭用清掃・衛生用品はいずれもf=1.0で3位置を充足し「基盤が厚い」。これら成熟・全位置充足の業種では、律速は新産業要素でなく置換型イノベーションの速度——省人化投資、代替タンパク原料転換、容器循環（ボトルtoボトル）、サステナブル処方——にある。これに対し一次生産の作物栽培（f=0.8/q=0.225）と畜産・酪農生産（f=0.8/q=0.188）だけが統合点（has_integration=0）を欠き、物質基盤（育種核）は厚いのに統合機能が薄いという偏在を示す。</p>
 <h3 class="h-gap">必要だが手薄い空隙領域</h3>
 <p>空隙は農業一次生産の統合点に集中する。作物栽培・畜産の両者ともbinding_constraintはhas_integration=0（統合点の欠落・唯一のゼロ入力）で、constraint_axisは「セクター動き側＋知見偏在」の複合である。市場が多数の生産者に断片化（セクター動き側）する一方、それを再統合する農業情報学・ロボティクス・データプラットフォームの学際が育種核に比して薄い（知見偏在）という二重要因が働く。作物栽培の欠落クラスターは「精密農業・スマート農業データプラットフォーム統合クラスター（農業情報学×農業ロボティクス×気候適応育種×データガバナンス）」であり、遺伝研・農研機構の育種核研究者と東大岩田・京大近藤系の農業情報学・ロボティクス研究者を束ねる橋渡しが求められる。畜産は破壊圧（代替タンパク・メタン規制）がより強く統合の緊急度が高く、欠落クラスターは「生産基盤再統合クラスター（家畜育種×獣医・疾病×動物栄養・低メタン飼料×精密畜産ICT×畜産経営・組織設計）」で、統合は技術供給でなく担い手・組織の設計が核心となる。成熟業種側では、家庭用清掃・衛生用品の界面活性剤化学×環境化学×微生物学によるサステナブル処方の学術核強化が周辺的な余地として残る。</p>
@@ -213,7 +225,7 @@ strong{color:var(--accent-warm);font-weight:700}
 <p>2030年代、作物栽培と畜産で統合点が立ち上がる。農業フィールドロボティクス、精密畜産、低メタン飼料添加剤の技術系列が普及し、育種核研究者と農業情報学・畜産ICT研究者が架橋される。作物栽培では100ha超の大規模経営層向けにデータ統合プラットフォームを担う学際クラスターが構成され、気候適応品種と精密農業ソフトが結合する。畜産では育種・獣医・栄養研究者（農研機構畜産部門）と精密畜産ICT（京大近藤）・畜産経営（広島大横溝）が生産基盤再統合の組織設計クラスターを形成し、代替タンパク・メタンの破壊圧への応答も同クラスターの射程に収める。</p>
 <h4 class="sc-nofill">【埋まらない未来】</h4>
 <p>一次生産の育種核は厚いまま、統合点が空白で固定される。作物栽培は経営体数減と大規模層への集約が進むなかで、データプラットフォームの担い手が農業情報学の薄さゆえ育たず、精密農業ソフト市場を海外プラットフォーマーに委ねる。畜産は配合飼料価格高と事業承継率低下のなかで、精密畜産ICTと畜産経営を束ねる組織設計が現れず、代替タンパク・低メタン飼料という破壊圧に個別対応のまま押し込まれる。成熟業種の省人化・容器循環・サステナブル処方は企業R&amp;D主導で進む一方、一次生産の再統合という最も緊急度の高い空隙が放置され、断片化した小規模生産者の淘汰と統合機能の海外依存が進行する。</p></section>
-<section class="chapter" id="d83685"><div class="ch-num">領域 11</div><h2>製造・機械</h2><h3 class="h-now">現在の産業状況</h3>
+<section class="chapter" id="d83126"><div class="ch-num">領域 11</div><h2>製造・機械</h2><h3 class="h-now">現在の産業状況</h3>
 <p>製造・機械領域の12業種は、産業創造モデル(ICFM)上で明確な二層構造をなしている。第1層は相5(離陸・自己増殖)に達した成熟業種群である。建設機械・工作機械・産業用ロボット・半導体/電子部品製造・自動車/モビリティ製造・航空宇宙/防衛機器・船舶建造・医療/歯科機器製造がここに属し、いずれもF=1.0、Q=0.887〜0.962、R=6.3〜6.7と、需要動機・統合の質・基盤readinessの3指標が高水準で揃う。物質材料・統合・統合担い手の3位置もすべて充足しており、支配的設計を握る統合者(建機のコマツ、工作機械のCNC二層統合、ロボットのFANUC等)が確立している。電池製造も相5・R=5.247と離陸済みだが、唯一 has_material=0 という川上欠落を抱える。</p>
 <p>第2層は相3(流動・多様試行)に留まる3業種である。産業機械・設備製造とスマートファクトリー設備はF=0.8に対しQ=0.225と、統合の質が4産業最低水準まで落ち込み(R=2.152)、has_integration=0・has_integrator=0、すなわち工場全体を束ねる単一統合者が不在でデータがサイロ化している。さらにドローン・無人航空機製造はF=0.4、Q=0.225、R=−0.052と本領域で唯一Rがマイナスであり、自律飛行という核だけが充足し、物質材料・需要動機・統合点の3位置が同時に欠けた複合律速の状態にある。成熟の厚みと流動の薄さが同じ領域内に同居していることが、この領域の産業状況の本質である。</p>
 <h3 class="h-gap">必要だが手薄い空隙領域</h3>
@@ -227,7 +239,7 @@ strong{color:var(--accent-warm);font-weight:700}
 <p>2026年のOPC-UA over TSN標準化とプライベート5Gを起点に、制御工学・データ工学・デジタルツイン・OTセキュリティを横断する工場知識統合クラスターが編成され、サイバーフィジカル生産システムとAI予知保全が支配的設計へ収斂する。統合点の成立により産業機械・スマートファクトリーは相3から相4(標準連合)へ前進し、稼働課金型サービスへの移行が国内主導で進む。電池では固体電解質・ナトリウムイオン電池・重要鉱物循環を軸とする材料クラスターが川上の中国依存を代替し、ドローンでは自律制御核を起点に材料・運航経済・型式認証/UTM統合の3クラスターが束ねられ、水素燃料電池長時間滞空の量産(2026)を経て2030年代に非中国圏の量産統合が立ち、8万台国産化目標が現実の産業基盤に変わる。</p>
 <h4 class="sc-nofill">【埋まらない未来】</h4>
 <p>統合担い手が現れないまま、実証パイロット止まり18%と本番導入59%の乖離が固定化し、OTランサムウェアの増勢がスマート化投資を萎縮させる。工場データを束ねるプラットフォームは第三者主導すなわち海外勢に握られ、稼働課金型サービス化の利益は国外へ流出する。電池は固体電解質・LFP正極・ブラックマス処理の中国集中が続き、計画能力4,800GWh対実需1,200GWhの4倍過剰が引き起こす価格崩壊と正極材メーカーの赤字淘汰に日本勢が巻き込まれる。ドローンは非中国圏標準が収斂せず国産化目標が死の谷に落ち、さらにレアアース規制によるサーボ磁石8割減が産業用ロボットの次世代統合点(フィジカルAI・ヒューマノイド)の離陸まで律速し、機械産業全体の更新機会が海外依存のまま失われる。</p></section>
-<section class="chapter" id="d19328"><div class="ch-num">領域 12</div><h2>電機・電子</h2><h3 class="h-now">現在の産業状況</h3>
+<section class="chapter" id="d33583"><div class="ch-num">領域 12</div><h2>電機・電子</h2><h3 class="h-now">現在の産業状況</h3>
 <p>電機・電子領域の4業種(民生用電子機器・産業用電子機器・電子部品/電子回路基板・電子デバイス/半導体)は、すべて相5(離陸・自己増殖)・成熟lifecycleにあり、F=1.0、Q=0.887〜0.925、R=6.349〜6.527と指標が高位で均質に揃う。物質材料・統合・統合担い手の3位置はいずれも充足しており、ICFMの判定はそろって「基盤が厚い」、constraint_axisは4業種すべて「成熟→次世代」である。すなわちこの領域には、流動相の空白も欠落位置も存在しない。その代わり、成熟の内側で実務律速が進行している。民生用電子機器は世界TV出荷の縮小が続く需要縮小局面にあり、利益源がハードからOS/広告(LGのwebOSが1兆ウォン超)へ移転しつつある。電子部品・基板ではPCBが台湾/中国優位で日本の統合位置が相対的に弱く、電子デバイス・半導体では先端ノードと後工程の統合位置が地政学的に集中したまま、AI需要(HPC比率40%)が製造装置のスーパーサイクルを駆動している。成熟の完成度が高いがゆえに、問いは「何が欠けているか」ではなく「次のパラダイムの統合を誰が束ねるか」に移っている領域である。</p>
 <h3 class="h-gap">必要だが手薄い空隙領域</h3>
 <p>4業種とも missing_positions は「なし(全位置充足)」であり、空隙は現行産業の内部にではなく、次世代パラダイムの統合クラスターとして立ち現れる。これを本稿では「次世代統合の空隙」と呼ぶ。constraint_axis「成熟→次世代」型の空隙の性格は、位置の欠落ではなく、既存統合点が次の支配的設計へ更新される際に必要となる越境編成の未成立である。具体的には4本ある。最大のものは電子デバイス・半導体における次世代半導体統合クラスター——光電融合(CPO)×High-NA EUV×CFET×2次元材料を束ねる編成であり、パックはこの機会を「大」と明示する。第2は電子部品・基板における先端パッケージング×印刷/融合実装クラスター(チップレット×ガラスコア基板×印刷有機回路)で、半導体後工程(163)との接続が要件となる。第3は産業用電子機器の隣接相に立つエッジAI×産業IoT統合クラスター(エッジ推論×産業通信×制御工学×産業サイバーセキュリティ)。第4は民生用電子機器の防衛資産としての次世代ディスプレイ×プラットフォーム経済クラスター(マイクロLED×OS/広告収益設計×ユーザーデータ)である。いずれも既存業種名の内側では手薄なまま残る、業種横断の統合位置である。</p>
@@ -238,7 +250,7 @@ strong{color:var(--accent-warm);font-weight:700}
 <p>日本の材料・装置の強みを核に、光電融合・High-NA EUV・CFET・2次元材料を束ねる次世代半導体統合クラスターが編成され、Rapidusの2nm量産と歩調を合わせて先端ロジック統合への足場が立つ。後工程ではチップレット/先端パッケージングとガラスコア基板を電子部品・基板側の材料工学×実装工学と接続する越境編成が成立し、光I/Oのパッケージ内移行を国内統合位置で受け止める。SiC/GaNパワーエレクトロニクス・スピントロニクス・メタマテリアルが次世代核として並走し、産業用電子機器はエッジAI×産業IoT統合の隣接相を開いて機器のインテリジェント化へ展開する。2030年代半ばには、成熟した現行統合点の上に次世代統合点が重ねられ、更新型の産業創造が完成する。</p>
 <h4 class="sc-nofill">【埋まらない未来】</h4>
 <p>先端ノード・後工程の地政学的集中が解けないまま、次世代統合クラスターの編成が遅れる。AI単一ドライバー依存の反動——売上50%対数量0.2%未満の乖離の露呈、DRAM急騰後のCXMT量産による2027年以降の供給過剰と価格崩壊——がスーパーサイクルを断ち、統合位置確保の投資余力が失われる。日本は材料・装置の供給者位置に固定され、チップレット・ガラスコア・光電融合の統合は域外で完結する。PCBの台湾/中国優位は不変のまま、民生機器では利益源のOS/広告移転と若年層のモバイル動画移行が進み、ハード側の価値は空洞化する。全位置充足という現在の厚みが、次世代への相転換を伴わない「完成された停滞」に転じ、更新の機会損失が2040年まで累積する。</p></section>
-<section class="chapter" id="d46109"><div class="ch-num">領域 13</div><h2>素材</h2><h3 class="h-now">現在の産業状況</h3>
+<section class="chapter" id="d19097"><div class="ch-num">領域 13</div><h2>素材</h2><h3 class="h-now">現在の産業状況</h3>
 <p>素材領域の8業種(基礎化学品・特殊化学品・産業ガス・プラスチック/樹脂材料・パルプ/紙・鉄鋼・アルミニウム・銅)は、8業種すべてが相5(離陸・自己増殖)・成熟lifecycleにあり、F=1.0、Q=0.887〜0.925、R=6.349〜6.527で、物質材料・統合・統合担い手の全位置が充足する。判定は全業種「基盤が厚い」、constraint_axisは全業種「成熟→次世代」——本レポートが扱う28領域の中でも、もっとも均質に成熟が完成した領域である。厚みの実体は、化学工学(基礎化学品)、材料科学(特殊化学品)、分離工学(産業ガス)、高分子化学(樹脂)、パルプ化学、冶金(鉄鋼)、非鉄冶金(アルミ・銅)という確立した知見蓄積にある。ただし成熟の足元では構造変化が進む。基礎化学品は中国過剰能力の下でエチレン稼働率が90%を割り12基から8基への集約が進み、パルプ/紙はグラフィック用紙の不可逆縮小に直面し、銅はAI/データセンターと防衛需要による構造的供給不足が予告されている。成熟産業の課題はもはや創造ではなく、脱炭素と循環への相転換である。</p>
 <h3 class="h-gap">必要だが手薄い空隙領域</h3>
 <p>8業種すべてで missing_positions は「全位置充足」だが、パックは全業種に共通して、次の相を担う越境クラスターの未成立を missing_cluster として挙げる。これを本稿では「グリーン相転換の空隙」と呼ぶ。constraint_axis「成熟→次世代」型として、その性格は現行産業の欠落ではなく、脱炭素・循環パラダイムへの転換を担う知見の組み合わせがまだ編成されていないことにある。具体的には、鉄鋼における冶金×水素工学×電気化学のグリーンスチール統合クラスター(パックは「水素還元製鉄の次の相では水素工学・電気化学の研究者位置の厚みが律速になりうる」と明示し、これを「2050年カーボンニュートラルへの橋渡しの律速位置」と規定する)、アルミにおける非鉄冶金×電気化学×リサイクル工学のグリーンアルミ統合クラスター(次の相ではアルミ×鉄鋼マルチマテリアル接合が律速位置になりうる)、銅における都市鉱山・リサイクル統合クラスター(低品位鉱バイオリーチングでは微生物・電気化学が新位置になる)、基礎化学品における触媒化学×プロセス工学×循環経済のグリーン化学品クラスター、樹脂における高分子化学×循環経済工学×触媒化学の循環型樹脂クラスター、産業ガスにおける低温工学×水素工学×CCS工学の脱炭素ガスクラスター、パルプにおけるパルプ化学×繊維工学×バイオエコノミーの森林由来バイオ素材クラスター(セルロースナノファイバー複合材の相では材料科学・酵素工学の追加位置が必要)、そして特殊化学品における材料科学×データ科学×計算化学のマテリアルズインフォマティクス・クラスターである。8本はいずれも、厚い単一分野の知見を横につなぐ「越境の位置」が手薄い、という同型の空隙である。</p>
@@ -249,7 +261,7 @@ strong{color:var(--accent-warm);font-weight:700}
 <p>CBAM本格化とGX-ETS義務化を追い風に、冶金×水素工学×電気化学のグリーンスチール冶金クラスターが編成され、日本製鉄の電炉転換投資2,514億円と接続して水素還元製鉄が2030年代に商業段階へ進む。アルミでは不活性アノード電解、銅では低品位鉱バイオリーチングと金属スクラップAI選別が新位置として立ち、二次供給比率40%への移行を国内クラスターが担う。化学系ではケミカルリサイクルとバイオナフサの商業化が循環型樹脂・グリーン化学品の相転換を牽引し、マテリアルズインフォマティクスが処方開発を数万倍高速化して特殊化学品の優位を更新する。パルプはセルロースナノファイバー複合材と成形パルプで森林由来バイオ素材産業へ展開し、2040年までに素材8業種の統合点がグリーン相の上に再建される。</p>
 <h4 class="sc-nofill">【埋まらない未来】</h4>
 <p>水素工学・電気化学・循環経済工学の研究者位置が薄いまま越境編成が成立せず、律速位置が律速のまま残る。CBAMとGX-ETSは転換の駆動力ではなく単なるコスト負担となり、中国過剰能力下でエチレン稼働率90%割れ・設備集約が続く基礎化学品は防戦一方に陥る。水素還元製鉄は人材の厚み不足で2050年カーボンニュートラルへの橋渡しを果たせず、IEAが示すCO2原単位60%削減の経路から脱落する。構造的供給不足の銅では、都市鉱山・バイオリーチングの新位置を域外が先に押さえ、AI/データセンター需要の果実は輸入依存で流出する。PFAS規制や対韓輸出管理の摩擦だけが残り、厚い冶金・化学工学の蓄積は次の相に接続されないまま、成熟産業の縮小と海外依存が2040年にかけて同時進行する。</p></section>
-<section class="chapter" id="d68051"><div class="ch-num">領域 14</div><h2>航空・宇宙</h2><h3 class="h-now">現在の産業状況</h3>
+<section class="chapter" id="d81974"><div class="ch-num">領域 14</div><h2>航空・宇宙</h2><h3 class="h-now">現在の産業状況</h3>
 <p>航空・宇宙は9業種のうち7業種が相5(国家・投資家・企業の本格投資)ないし相4(標準・連合形成)に到達しており、旅客航空輸送・航空貨物輸送・一般/ビジネス航空機製造・航空機MRO・衛星地上機器・衛星製造・宇宙輸送はいずれもf=1.0、q=0.887〜0.962、r=6.3〜6.7という高水準で「基盤が厚い」と判定される。物質・材料、統合点、統合担い手の3位置がすべて充足しており、ライフサイクルは旅客輸送やMROの成熟(mature)と、航空貨物・衛星製造・宇宙輸送の成長(growth)が混在する。宇宙輸送は完全再使用と軌道給油という次世代パラダイムの萌芽期にあり、衛星製造は光衛星間通信とオンボードAIの実装が焦点となる高成長局面にある。</p>
 <p>この厚い基盤のなかで2業種だけが際立って異質である。SAF・航空脱炭素燃料は相3(流動)にとどまり、f=0.6、q=0.388、r=1.812と領域内で唯一r値が2を下回る。衛星サービス・衛星通信は相4だがq=0.425と統合の質が薄く、HHI約170という断片化市場のまま統合者が確立していない。領域全体としては「成熟した本体産業の脇に、脱炭素と衛星統合という2つの未成熟な急所を抱えた構造」と読める。</p>
 <h3 class="h-gap">必要だが手薄い空隙領域</h3>
@@ -262,7 +274,7 @@ strong{color:var(--accent-warm);font-weight:700}
 <p>2030年前後、触媒・プロセス工学とバイオ燃料微生物学、水素電解、供給網工学を束ねた多経路量産クラスターが国内に編成され、持続可能航空燃料(SAF)の複数経路が並行してTRLを上げる。水素・合成燃料(e-fuel)ロードマップと接続した電解水素の供給が原料制約を緩め、has_material=0が解消。断片化していた供給市場に統合者が現れて相3から相4(標準・連合)へ遷移し、192万kLの政策数値が実供給に転化する。同時に水素航空機推進と先進航空(eVTOL含む)の学術核が旅客・製造の成熟基盤と接続し、2035-2040年には再使用型ロケットと宇宙デブリ除去を含む宇宙輸送の次世代パラダイムと合わせ、脱炭素航空・宇宙の二正面で日本の推進・低温工学の強みが産業化する。</p>
 <h4 class="sc-nofill">【埋まらない未来】</h4>
 <p>SAFの原料供給制約と断片化が2030年代まで持続し、250倍ギャップは海外勢の量産統合——米欧のFT/e-SAFメジャー——によって埋められる。国内航空6社は脱炭素義務をSAF輸入プレミアムとして支払い続け、運賃転嫁で国際競争力を削られる。触媒・バイオ・水素電解の研究者は個別には存在しても束ねられず、相3の流動状態のまま統合者不在の死の谷に沈む。衛星サービスでも3GPP NTN統合の学術核を欠いたまま、Starlinkの垂直統合が地上×衛星融合の標準を握り、国内通信・衛星工学は下請け的な部材供給に退行する。厚い成熟基盤(旅客・製造・MRO)だけが残り、次世代の付加価値層を丸ごと海外に依存する構図が固定される。</p></section>
-<section class="chapter" id="d50400"><div class="ch-num">領域 15</div><h2>防衛・安全保障産業</h2><h3 class="h-now">現在の産業状況</h3>
+<section class="chapter" id="d79224"><div class="ch-num">領域 15</div><h2>防衛・安全保障産業</h2><h3 class="h-now">現在の産業状況</h3>
 <p>防衛・安全保障産業は6業種のうち5業種(スタンドオフ精密誘導弾、統合防空・ミサイル防衛、無人航空機・自律無人アセット、電子戦・電磁波防護、軍用レーダー・防衛センサー)がf=1.0、q=0.887〜0.925、r=6.3〜6.5で相5ないし相4に位置し、ICFM上は全位置充足を返す。ただしこの領域には他産業にない構造的特殊性がある。成熟業種の実務律速は研究者クラスターの欠落ではなく、固体ロケットモーター供給の寡占(EUバックログ44億ユーロ)やIBCSオープン化といったサプライチェーン集中・寡占構造内の再編であり、しかも軍事中核はprime企業と国立研究所の内部・機密領域に閉じているため、研究者DBへの接地が原理的に限定される。無人航空機は成長局面で他4産業より流動性が高く、防衛領域で唯一、民生無人機の実在研究者(昆虫飛行制御の得竹浩、災害情報収集の水野秀樹、過酷環境観測の田中智)が接地可能である。</p>
 <p>例外が小型無人機対処・カウンターUAS(C-UAS)である。相3・f=0.6・r=4.146で、パック自身が「verdict『基盤が厚い』は寛容な閾値による誤振れ」と注記する通り、実態は検知から無力化までを貫く技術核が未確立の流動局面にある。</p>
 <h3 class="h-gap">必要だが手薄い空隙領域</h3>
@@ -275,7 +287,7 @@ strong{color:var(--accent-warm);font-weight:700}
 <p>2030年前後、防衛デュアルユースの技術移転経路を通じて、民生側のセンサーフュージョン・レーダー信号処理と指向性エネルギー物理、RF電子戦の研究者クラスターが非機微領域で編成され、検知〜無力化を貫く統合理論の学術核が形成される。多センサー融合がTRL8-9に達して低RCS標的や鳥誤検知の壁を越え、C-UASは相3から相4へ遷移、17社に断片化していた供給側は統合再編へ向かう。無人航空機側でも自律無人システムのロードマップに沿い、昆虫飛行制御・災害情報収集など民生自律航法の基礎研究がレベル4-5完全自律の谷を下支えし、AI安全ガバナンスの制度知と併走する。2035-2040年、日本は反撃能力国産化と無人監視の双方で、資金でなく知見蓄積の側から次世代主導権を確保する。</p>
 <h4 class="sc-nofill">【埋まらない未来】</h4>
 <p>C-UASの統合理論が確立しないまま、ドローン脅威の進化速度が対処側の学術核形成を上回り続ける。検知・識別・無力化は個別ベンダーの部分解の寄せ集めにとどまり、脅威側が数百ドルの民生機で更新するたびに対処側は数億円のシステム改修で追う非対称が固定される。指向性エネルギーの実戦配備は海外primeの独占となり、日本は完成システムの輸入と飛行禁止圏の運用規制でしのぐ受け身に退行する。無人機でもレベル4-5自律AIの谷を越えられず、Replicator型調達で量産体制を築いた米国と非伝統的供給者の連合に周回遅れとなる。機密の壁ゆえ大学の知が動員されないまま、知見蓄積律速の谷が資金投入では埋まらないことだけが確認され続ける。</p></section>
-<section class="chapter" id="d76336"><div class="ch-num">領域 16</div><h2>船舶・海事</h2><h3 class="h-now">現在の産業状況</h3>
+<section class="chapter" id="d51915"><div class="ch-num">領域 16</div><h2>船舶・海事</h2><h3 class="h-now">現在の産業状況</h3>
 <p>船舶・海事は4業種で構成され、本体2業種と次世代2業種の落差が領域構造をそのまま描いている。造船・船舶修繕と水上輸送・海運サービスはともに相5・成熟(mature)・f=1.0・q=0.85・r=6.176で全位置充足。実務律速は中国国家補助が規定する競争条件、脱炭素対応、船員不足、DX実装といった再編・生産性側の課題であり、産業創造上の知の谷はない。</p>
 <p>対して低排出船舶推進・代替燃料船は相3(流動)・f=0.8・has_material=0で、q=0.925と統合の質は高いのに材料の川上が欠ける偏った構造を持つ。さらに自動運航船・船舶DXは相2(個人・国家)・nascent(萌芽)・f=0.6で、has_material=0に加え需要動機の欠落を伴う両面律速——本担当4領域で唯一の相2業種であり、産業としては最も未成熟な位置にある。成熟本体が厚いだけに、次世代2業種の谷の深さが際立つ。</p>
 <h3 class="h-gap">必要だが手薄い空隙領域</h3>
@@ -288,7 +300,7 @@ strong{color:var(--accent-warm);font-weight:700}
 <p>2028年のIGFコード改正発効と2030年の燃料転換離陸点を跳躍台に、アンモニア舶用推進とeメタノール舶用燃料のロードマップに沿った量産統合クラスター——燃料合成×舶用蓄電池×SOFC/PEMスタック×供給網工学——が国内に編成される。J-ENGアンモニア主機の商用化が先行事例となり、北欧集中だった推進研究を国内材料科学が追走、低排出船舶推進は相3から相4へ遷移する。並行して2032年MASS強制コードを見据え、センサー・統合ブリッジ・陸上運航管制・サイバーの標準化クラスターと認証・保険・港湾受入の制度クラスターが同時編成され、MEGURI2040の省人化実証が内航の商用運航に転化。2035-2040年、造船再生ロードマップの建造量倍増と次世代船受注シェア30%目標が、風力補助推進や船体空気潤滑も束ねた「ゼロエミ×自律」の複合優位として実現する。</p>
 <h4 class="sc-nofill">【埋まらない未来】</h4>
 <p>材料の川上——燃料量産供給網・舶用蓄電池セル・燃料電池スタック——の国内基盤が編成されないまま2030年の離陸点を迎え、代替燃料船の発注ラッシュは北欧・韓国・中国の推進系と燃料供給網に吸収される。国内造船は成熟本体の設計知を持ちながらゼロエミ推進を輸入部品の艤装に依存し、中国国家補助下の価格競争で建造シェアをさらに失う。自動運航船では標準化と商用接続の二正面編成が間に合わず、MEGURI2040の実証は認証・保険・港湾受入の制度未整備の谷で商用化に至らないまま、2032年MASS強制コードの規格形成を海外主導で受け入れる。船員不足は解決策を欠いたまま深刻化し、内航の担い手喪失と外航の海外依存が同時進行する縮小均衡に陥る。</p></section>
-<section class="chapter" id="d43077"><div class="ch-num">領域 17</div><h2>自動車・モビリティ</h2><h3 class="h-now">現在の産業状況</h3>
+<section class="chapter" id="d50736"><div class="ch-num">領域 17</div><h2>自動車・モビリティ</h2><h3 class="h-now">現在の産業状況</h3>
 <p>自動車・モビリティは7業種すべてがf=1.0という、本担当4領域で最も充足度の高い産業である。乗用車完成車・商用車・ブレーキシステム・車載蓄電池パック・EV充電インフラ・アフターマーケットの6業種が相5、自動運転システムが相4で、q=0.887〜0.962、r=6.349〜6.7。全業種で物質・材料、統合点、統合担い手が充足し、ICFMは全位置充足を返す。ライフサイクルは完成車・ブレーキ・アフターマーケットの成熟と、蓄電池パック・充電インフラ・自動運転の成長が併存する。そして特徴的なことに、7業種すべてのconstraint_axisが「成熟→次世代」で統一されている。つまりこの領域には産業創造上の欠落ポジションが1つもなく、問いはすべて「支配的設計の再形成を誰が統合するか」に集約される。乗用車では全固体電池(電気化学)と自動運転(情報)への競争軸移動、ブレーキでは完全電動制動(Brake-by-Wire)、充電では規格(MCS/NACS)と方式(有線/走行中給電/電池交換)の未確定が、それぞれの次世代局面を定義している。</p>
 <h3 class="h-gap">必要だが手薄い空隙領域</h3>
 <p>この領域の空隙は欠落した位置ではなく「成熟→次世代の再統合空隙」——既に存在する研究者を次世代軸で束ね直す統合クラスターの不在である。パックは業種ごとに具体的な再統合の設計図を示す。ブレーキでは「車両運動制御工学×パワーエレクトロニクス×制御ソフト(ASIL-D機能安全)×低粉塵摩擦材」の次世代電動制動クラスター——律速は要素技術の谷でなく統合力の谷と明記される。蓄電池パックでは「電気化学(正極/電解質)×材料工学(LFP/全固体)×熱工学×BMS・劣化推定」の次世代化学系クラスター。充電インフラでは「電力系統工学×無線電力伝送(DWPT)×OCPP相互運用×V2Gアグリゲーション」の系統収益装置化クラスター。そして最も要求が重いのが自動運転の「認識AI・センサフュージョン×車両運動制御×路側センサ協調通信×法/責任工学」——技術4分野に事故責任制度の研究者を加えて同時に束ねる、パックが「稀少なオーケストレーション機会」と呼ぶ統合である。commercial側では隊列走行・MCS規格・物流2024年問題、アフターマーケットではEV高電圧整備(浸透率2.7%)×修理する権利法制度という現場実装・制度側の空隙が続く。</p>
@@ -299,7 +311,7 @@ strong{color:var(--accent-warm);font-weight:700}
 <p>2027-28年のトヨタ全固体電池量産と2026年UNECE ADS法規採択を起点に、支配的設計確定前の窓で再統合クラスターが次々と編成される。蓄電池では芝田隼次・仁科辰夫・漆畑広明を核に全固体/LFP材料と劣化推定BMSが接続され、電池パスポートとナトリウムイオン電池まで含む次世代化学系の選択を学術横断が支える。ブレーキでは須田義大(車両運動)・近藤圭一郎(回生電力制御)を核にASIL-D機能安全と低粉塵摩擦材が束ねられ完全電動制動の首位を確保。充電では武道宏平・森實俊充を核にV2G双方向充電・メガワット充電・走行中給電が「電力販売から系統サービスへ」拡張される。自動運転では北栄輔・星野博之・藤原章正と大学発Autoware系技術移転、事故責任制度の研究者が束ねられ、2030年レベル4車1万台とソフトウェア定義車両への移行を技術と制度の両輪で達成する。</p>
 <h4 class="sc-nofill">【埋まらない未来】</h4>
 <p>統合クラスターの編成が支配的設計の確定に間に合わず、7分野統合力という日本の強みが次世代軸で発揮されないまま窓が閉じる。全固体電池の量産界面は個社の垂直統合に閉じて学術横断の支えを欠き、中国LFP優位とアジア勢セル依存が固定化。中国EV価格競争がBoschの警告通りサプライヤー利益プールを侵食し、日本勢特許の減退が次世代蓄積の鈍化として顕在化する。自動運転では技術と責任制度の統合を欠いたまま、レベル4の支配的方式と事故責任の制度設計を米中の運行実績と欧州の法規が先に確定し、日本は2030年1万台目標を掲げたまま社会実装で周回遅れとなる。現場ではEV高電圧整備の浸透率2.7%が象徴する転換の遅れが進み、エンジン系需要の構造縮小だけが先行して、成熟の厚みが次世代の重荷へと反転する。</p></section>
-<section class="chapter" id="d97146"><div class="ch-num">領域 18</div><h2>金融</h2><h3 class="h-now">現在の産業状況</h3>
+<section class="chapter" id="d60396"><div class="ch-num">領域 18</div><h2>金融</h2><h3 class="h-now">現在の産業状況</h3>
 <p>金融は、担当4領域のなかで最も産業創造モデル上の完成度が高い領域である。8業種のうち6業種——商業銀行・地域金融、消費者信用・貸金、カード・決済処理サービス、証券仲介・取引所サービス、資産運用・ウェルスマネジメント、保険・再保険サービス——が相5（国家・投資家・企業が本格参入する段階）に到達し、ライフサイクルはいずれも成熟。基盤完全性F=1.0、統合品質Qは0.85〜0.887、基盤readiness Rは6.18〜6.35と高水準で揃い、物質・統合・統合担い手の全位置が充足している。判定はすべて「基盤が厚い」であり、律速は存在しない。つまり既存金融の骨格は産業として組み上がっており、問いは「創造」ではなく「次世代への移行」に移っている。</p>
 <p>例外が2業種ある。組込型金融・オープンファイナンス（相3・成長期、F=0.8、Q=0.15、R=1.80）と暗号資産・デジタル資産金融（相3・成長期、F=0.8、Q=0.225、R=2.15）である。両者とも素材は揃っている（has_material=1）のに統合と統合担い手が欠け（has_integration=0、has_integrator=0）、相3の流動段階で支配的設計が未収束のまま滞留している。成熟6業種と成長2業種のあいだに、Qで0.6以上の断層が走っているのが金融の現在地である。</p>
 <h3 class="h-gap">必要だが手薄い空隙領域</h3>
@@ -312,7 +324,7 @@ strong{color:var(--accent-warm);font-weight:700}
 <p>2030年代前半、組込型金融と暗号資産金融の統合点クラスターが組成され、相3から相4（標準・連合）への遷移が起こる。API標準化科学×データガバナンス×決済工学のクラスターが3型分裂した標準の収束を主導し、金融工学×暗号資産法×分散システムの架橋が「統合台帳かAPI連携か」の二択に決着をつける。連合学習に基づく保護型の与信・不正検知が地域金融データ分析と結びつき、公平性制約付きAI与信が消費者信用の次世代核として制度化される。保険では気候科学×保険数理が大災害モデリングを更新し、トークン化清算は証券インフラに実装される。2040年、成熟6業種の次世代核と成長2業種の支配的設計が接続し、日本発の統合レイヤーが機能している。</p>
 <h4 class="sc-nofill">【埋まらない未来】</h4>
 <p>統合点が組成されないまま、組込型金融は標準3型の分裂が固定化し、暗号資産金融はレール競争が海外規制（GENIUS/MiCA）主導で決着する。支配的設計は米欧のステーブルコイン発行体と決済プラットフォームが握り、日本勢は資産トークン化24.5兆ドル市場に周辺参加者として組み込まれる。決済処理の収益成長急減速が示す構造侵食は、A2Aやレール外代替への対応を欠いたまま進行し、成熟業種の厚い基盤は防衛的に消耗する。公平性制約なきAI与信は自己破産の13年ぶり高水準と衝突して規制の後追いを招き、BNPLの拡大は消費者保護の空白のまま摩擦を蓄積する。次世代核を持たない成熟は緩やかな衰退であり、越境クラスター不在の代償は2040年の金融インフラの海外依存として現れる。</p></section>
-<section class="chapter" id="d79690"><div class="ch-num">領域 19</div><h2>不動産</h2><h3 class="h-now">現在の産業状況</h3>
+<section class="chapter" id="d70735"><div class="ch-num">領域 19</div><h2>不動産</h2><h3 class="h-now">現在の産業状況</h3>
 <p>不動産6業種の大勢は相5・成熟である。不動産賃貸（Q=0.812、R=6.00）、不動産開発・ランドプランニング（Q=0.85、R=6.18）、不動産管理・運営サービス（Q=0.812、R=6.00）、REIT・不動産証券化（Q=0.887、R=6.35）はいずれもF=1.0で全位置充足、判定は「基盤が厚い」。産業創造上の欠落クラスターは存在せず、局面は創造ではなく更新・防衛・再編である。人口減による住宅着工縮小とフローからストックへの転換、脱炭素規制による低性能ストックの座礁資産化、J-REITの減益シナリオと資本再編が、この成熟基盤の上で進行している。</p>
 <p>例外は2業種。不動産仲介・取引サービスは相4にあるがF=0.8、Q=0.312、R=2.56と低く、統合が欠けている（has_integration=0）。パックの判定raw「基盤が厚い」は誤振れであり、実体は統合律速——13万業者の断片化を束ねる支配的統合者が未確立という状態である。もう1つのプロップテック・不動産データ基盤は相4・成長期でQ=0.887と数値上は充足するが、実務的には528のサービスが断片化したまま、データ統合レイヤーと不動産データ科学者の薄さが併存する「両面」律速と診断されている。</p>
 <h3 class="h-gap">必要だが手薄い空隙領域</h3>
@@ -325,7 +337,7 @@ strong{color:var(--accent-warm);font-weight:700}
 <p>2030年前後、囲い込み規制の実効と不動産ID標準化を追い風に、不動産学×不動産金融工学×AI査定を束ねた統合の担い手クラスターが成立し、仲介・取引は相4の標準化を完了して支配的設計に到達する。プロップテックでは横断データ統合レイヤーが528サービスの断片を束ね、自動価格査定の低確度物件ギャップがデータ科学者の厚み形成とともに解消。取引と運営のデータが接続し、自律型スマートビル制御、デジタルツイン予知保全、賃料アルゴリズムの説明可能性設計が実装される。2035年以降、不動産セキュリティトークンの流通とデータセンターREITの電力整合が新収益源となり、まちづくりDXと既存ストック再生がフローからストックへの転換を支える次世代核として定着する。</p>
 <h4 class="sc-nofill">【埋まらない未来】</h4>
 <p>統合の担い手が現れず、13万業者の断片化と囲い込みの慣行が残存する。REINS標準化と不動産IDは接続されないまま部分実装にとどまり、AI査定は各社縦割りの精度競争に留まって低確度物件の15%超ギャップが放置される。データ統合レイヤーは海外勢（Cherre型）の日本進出で外部化され、取引・運営データの基盤は国外依存となる。成熟側では、省エネ基準達成率18%のストックが改正建築物省エネ法の下で座礁資産化し、防衛の学術核——ESG改修工学と説明可能なアルゴリズム設計——を欠いたままオフィスREITのNAV割引44.1%型の価値毀損が広がる。世帯数が2030年の5,773万でピークアウトする中、フロー縮小をストック再生で相殺する計画知が育たず、産業は縮小均衡に沈む。</p></section>
-<section class="chapter" id="d95371"><div class="ch-num">領域 20</div><h2>建設・インフラ</h2><h3 class="h-now">現在の産業状況</h3>
+<section class="chapter" id="d18237"><div class="ch-num">領域 20</div><h2>建設・インフラ</h2><h3 class="h-now">現在の産業状況</h3>
 <p>建設・インフラは、担当4領域のなかで最も「統合欠落」が構造的な領域である。8業種のうち6業種——住宅建設（衰退期）、非住宅建設、道路・橋梁建設、公益インフラ建設、建築設備工事、建築・エンジニアリング技術サービス——が相5・成熟（住宅のみ衰退）にありながら、F=0.6〜0.8、Q=0.15〜0.225、R=1.05〜1.98と、金融・不動産の成熟業種と比べて一段低い。共通のパターンは、素材は揃っている（技術サービスを除きhas_material=1）のに統合と統合担い手が全業種で欠けている（has_integration=0、has_integrator=0）ことである。その背景は断片化の規模で説明される。住宅は6万社、非住宅は集中度指数約58で5.7万事業所、道路・橋梁は下請19万社超、公益インフラは川下48万業者超——生産の束ね手が不在のまま、産業全体が「相5の見かけの成熟」と「相3並みの統合品質」の乖離を抱えている。</p>
 <p>対照的に成長期の2業種は数値が反転する。データセンター建設は相4・成長期でF=1.0、Q=0.962、R=6.7と全業種中最高の完成度を示し全位置充足、律速は産業内でなく電力確保という外部制約にある。建設マネジメントソフトウェアも相4・成長期でQ=0.85、支配的設計（ANDPAD首位、Glodon寡占）は固まりつつあり、欠けるのは物質・材料位置のみである。つまり建設・インフラは、旧来6業種の統合欠落と、新興2業種の高完成という二重構造にある。</p>
 <h3 class="h-gap">必要だが手薄い空隙領域</h3>
@@ -338,7 +350,7 @@ strong{color:var(--accent-warm);font-weight:700}
 <p>2030年代、労働制約を契機に生産統合の学術核が成立する。建築生産システム/DfMA×建築構造×建築物理のクラスターがモジュール・プレファブ建設と建設3Dプリンティングを設計段階から統合し、住宅・非住宅の断片化生産は「束ね手」を得る。AIエージェント施工管理とBIM/デジタル許認可が統合の配管となり、建設ロボットと自己治癒コンクリートが省人化と長寿命化を担う。線状インフラでは構造ヘルスモニタリング×劣化予測AIが老朽更新期の価値の核となり、水工学×次世代グリッドが上下水道広域化と38兆円下水更新を支える。データセンター建設は電源×液冷×AI制御の超学際深化へ進み、2040年、建設は「作る産業」から「維持し統合する産業」への転換を完了している。</p>
 <h4 class="sc-nofill">【埋まらない未来】</h4>
 <p>統合の学術核が形成されないまま、2024年問題の労働制約が断片化構造を直撃する。6万社の住宅生産、19万社の下請網は個別に縮小し、DfMA・BIMの導入は一部大手と海外プラットフォーム（Glodon型寡占）に限られ、生産統合の設計知は外部依存化する。維持修繕予算32%超の圧力下で、構造ヘルスモニタリング未実装の橋梁・管路は点検の人手不足とともに更新が滞り、老朽インフラの機能不全が地方から顕在化。人口減下の維持困難は広域化・コンセッションの制度対応を追い越し、38兆円の下水更新は実行主体を欠く。高完成のデータセンター建設だけが電力制約の範囲で伸び、二重構造は固定化。統合なき成熟は「維持の谷」となり、建設は国土の劣化を止められない産業として2040年を迎える。</p></section>
-<section class="chapter" id="d41066"><div class="ch-num">領域 21</div><h2>運輸・物流</h2><h3 class="h-now">現在の産業状況</h3>
+<section class="chapter" id="d97670"><div class="ch-num">領域 21</div><h2>運輸・物流</h2><h3 class="h-now">現在の産業状況</h3>
 <p>運輸・物流4業種は、完成と欠落が鮮明に二分される。スマート港湾・海運物流（相4・成長期、F=1.0、Q=0.925、R=6.53）と3PL・倉庫物流サービス（相5・成熟、F=1.0、Q=0.925、R=6.53）は全位置充足で、産業創造としては構成完了に近い。港湾は自動化荷役とターミナル運用システムの統合が進み（スマート港湾市場は年率25-30%成長）、倉庫物流は自動化と支配的統合者を備えた成熟産業として、物流2030問題（輸送力34.1%不足）とDSVによるDBシェンカー143億ユーロ買収に象徴される再編局面を迎えている。</p>
 <p>一方、地域公共交通・MaaS（相3・成長期、F=0.8、Q=0.188、R=1.98）と輸送脱炭素インフラ（相3・成長期、F=0.6、Q=0.925、R=4.32）は相3の流動段階に滞留する。MaaSは素材が揃いながら統合が欠け（has_integration=0）、Whim破産・Ringo Pass終了・市場予測の6.36兆円から1.72兆円への下方修正が示すとおり、収支自立する統合者が世界的に未確立である。輸送脱炭素は逆に統合は存在するが物質・材料が欠け（has_material=0）、持続可能航空燃料は全燃料の0.8%、米国の充電インフラ予算は50億ドル割当に対し実支出3,000万ドルと、量産基盤と実需の双方が未形成である。</p>
 <h3 class="h-gap">必要だが手薄い空隙領域</h3>
@@ -351,7 +363,7 @@ strong{color:var(--accent-warm);font-weight:700}
 <p>2030年前後、運転士3.6万人不足の危機を制度再設計の契機として、政策制度設計×交通工学×データガバナンス×決済を束ねた収支自立MaaS統合クラスターが成立し、相3から相4への遷移が始まる。需要応答型交通と相互運用基盤が補助金依存を脱する事業モデルを実装し、地域公共交通は統合されたモビリティサービスへ転換する。輸送脱炭素では、合成燃料・水素貯蔵の量産化学工学クラスターが属性取引の制度実装と結びつき、政策義務が実需へ転化。持続可能航空燃料は0.8%の壁を越えて量産期に入る。港湾は自律運航船と港湾ターミナル自動化に制御系セキュリティの学術核を重ね、倉庫はレベル4トラックとフィジカルインターネットの水平連携で2030問題を吸収し、2040年、物流網は脱炭素と省人化を両立した社会基盤となる。</p>
 <h4 class="sc-nofill">【埋まらない未来】</h4>
 <p>収支自立モデルが成立しないまま、MaaSはWhim破産・Ringo Pass終了の轍を踏み続け、市場予測の下方修正（6.36兆円→1.72兆円）が既定路線化する。統合者不在の地域交通は路線廃止と運転士不足の悪循環に入り、移動困難地域が拡大。ライドシェア答申の先送りが制度空白を長引かせる。輸送脱炭素は量産基盤と実需転化の二重欠落が解けず、充電インフラの実支出停滞と持続可能航空燃料0.8%の水準が続き、航空・陸運は海外の燃料供給網と規制体系に従属する。物流2030問題の輸送力34.1%不足は、水平連携標準化を欠いた個社の自動化投資だけでは吸収しきれず、供給制約が物価と地域経済を圧迫する。構成完了した港湾・倉庫も、制御系サイバーの単一障害点という脆さを抱えたまま未統合領域に足を引かれる。</p></section>
-<section class="chapter" id="d66060"><div class="ch-num">領域 22</div><h2>農林水産業</h2><h3 class="h-now">現在の産業状況</h3>
+<section class="chapter" id="d68338"><div class="ch-num">領域 22</div><h2>農林水産業</h2><h3 class="h-now">現在の産業状況</h3>
 <p>農林水産業は、8業種すべてが成熟(mature)段階にあり、ICFM相でみると相4〜相5に集中する厚い基盤産業である。米作農業(f=1.0/q=0.887/r=6.349)、畜産業(f=1.0/q=0.925/r=6.527)、養殖業・木材生産業・栽培きのこ生産業(いずれもf=1.0/q≈0.85〜0.887)は素材・統合・統合担い手のすべてを充足した相5の完成相にある。一方で野菜作農業(q=0.225)・果樹作農業(q=0.188)・漁業(q=0.15)の3業種は、素材(has_material=1)は厚いが統合(has_integration=0)・統合担い手(has_integrator=0)を欠いた相4に留まる。つまりこの領域は「作物学・畜産学・水産資源管理といった要素研究は豊かだが、それを束ねる統合位置が業種によって発火済みか未発火かで二分される」構造を示す。</p>
 <h3 class="h-gap">必要だが手薄い空隙領域</h3>
 <p>空隙は明確に相4の3業種に集約される。野菜作農業の欠落は「園芸学×環境制御×データ科学の統合点クラスター+園芸プラットフォーム」であり、分散した生産者と分散した研究室を束ねて施設園芸のスマート化を標準化する統合主体が binding_constraint(統合の欠如=生産・研究室の断片化・標準化未収束)として最重要位置に立つ。果樹作農業も同型で、「農業経済×農業ICT×輸出流通を産地を束ねる統合機能へ結節させる越境クラスター」が空く。constraint_axisはいずれも「セクター動き」——技術は足りており、埋めるべきは統合の担い手側である。漁業のみ constraint_axis が「両面」で、分散漁業者を束ねてTAC(漁獲可能量)管理を実効化する統合的管理主体の不在に加え、天然資源枯渇という外部限界が重なる。相5業種の空隙は次相の性格を持ち、畜産業では細胞農業(培養肉)・精密発酵という破壊軸との対抗/融合戦略が「成熟→次世代」の橋として未確立である。</p>
@@ -362,7 +374,7 @@ strong{color:var(--accent-warm);font-weight:700}
 <p>2030年前後、スマート農業面積50%という分岐点を超え、野菜作では園芸学×環境制御×データ科学を束ねる統合点クラスターと園芸プラットフォームが支配的設計として収斂する。農業フィールドロボティクスや群ロボティクス、精密畜産といった食料・農業技術ロードマップが現場実装され、米作は生産性余地15%をスマート米作(作物学×農業工学×データ科学)で実現する。果樹では作業請負サービス事業体が50産地へ展開し、育種・スマート生産の厚い研究蓄積(久永・國武・齋藤ら)が農業経済(仙田・甲斐・山路)・農業ICT(谷口)・青果物流通(木立)と結節し、分散産地を束ねる統合主体が立ち上がる。養殖では吉崎・竹内・太田ら生殖工学研究者と異業種資本(NTT・JR東・商社)が陸上養殖・ゲノム編集の統合設計で合流し、2040年へ向けマーケットイン型の次世代軸が形成される。</p>
 <h4 class="sc-nofill">【埋まらない未来】</h4>
 <p>統合の担い手が現れなければ、野菜作・果樹作・漁業は分散した生産者と分散した研究室のまま端境の常態化(高温での秋冬野菜)と経営体の淘汰に晒され続ける。園芸プラットフォームや漁獲情報データ基盤の標準化が収斂せず、後付け制御や部分最適が乱立して支配的設計が定まらない。漁業はTAC管理率が伸びず資源枯渇の外部限界に達し、産業創造でなく縮小管理に転じる。畜産業は培養肉・精密発酵の破壊軸への対抗/融合戦略を欠いたまま、代替タンパク質の市場浸透に既存研究資源が置き去られる。養殖の次世代軸は中国養殖研究の集中動向にスカウティングで後れを取り、異業種資本と養殖研究の断絶が埋まらぬまま海外主導の統合に呑まれる。米作・木材・きのこも次相の自動化・付加価値化ロードマップが担い手縮小に間に合わず、成熟産業の緩慢な縮退に落ち込む。</p></section>
-<section class="chapter" id="d8115"><div class="ch-num">領域 23</div><h2>教育・人材</h2><h3 class="h-now">現在の産業状況</h3>
+<section class="chapter" id="d63584"><div class="ch-num">領域 23</div><h2>教育・人材</h2><h3 class="h-now">現在の産業状況</h3>
 <p>教育・人材領域は4業種からなり、成熟相5(相5)の完成業種と成長相3(相3)の未発火業種にくっきり二分される。eラーニング・教育テクノロジー(f=1.0/q=0.925/r=6.527)と語学・国際教育サービス(f=1.0/q=0.887)は素材・統合・統合担い手をすべて備えた成熟相にある。対して企業研修・リスキリングサービス(lifecycle=growth/q=0.188)と人材派遣・紹介・再就職支援サービス(q=0.15)は、素材は厚いが統合(has_integration=0)・統合担い手(has_integrator=0)を欠いた相3にあり、断片化した専門機能が束ねられぬまま並立している。成熟2業種の課題は新産業創出でなく、生成AIによる需要侵食への防衛と差別化資産(独占教材・教育データ標準対応・高リスクAI試験対応)の設計にある。</p>
 <h3 class="h-gap">必要だが手薄い空隙領域</h3>
 <p>空隙は成長相3の2業種に集中する。企業研修・リスキリングでは「研修統合クラスター(スキル診断×学習設計×効果測定×業務実装×デジタル配信の一気通貫)」が最重要位置(統合点)であり、binding_constraintは「セクター動き+知見偏在」——断片化した研修を束ねる統合設計と、その統合を支える学際そのものの薄さが同時に律速する。人材派遣・紹介では「労働市場統合クラスター(マッチングプラットフォーム設計×スキルタクソノミ×キャリア遷移科学×労働市場仲介経済学)」が空く。求人広告・直接採用・紹介・候補者データベース・派遣・再就職支援を横断集約する統合者が欠け、Recruitが巨大なマッチング市場を掲げてもまだ統合しきれていない。両業種とも constraint_axis は「セクター動き」で、機能別断片化を一気通貫の統合科学へ編み直す設計が価値の中核となる。</p>
@@ -373,7 +385,7 @@ strong{color:var(--accent-warm);font-weight:700}
 <p>2030年代前半、人的資本開示が研修需要を制度化し、ブレンディッド型研修が職種別に標準化される流れのなかで、スキル診断・学習設計・効果測定・業務実装・デジタル配信を一気通貫で束ねる研修統合クラスターが立ち上がる。教育テクノロジーや連合学習のロードマップが学習科学に接地され、断片化した専門研修が統合科学へ編み直される。人材領域ではマッチングプラットフォーム設計×スキルタクソノミ×キャリア遷移科学を束ねる労働市場統合クラスターが2040年の人材仲介構造需要化を先取りし、支配的設計として収斂する。生成AIを学習科学・労働市場科学に接地する越境クラスターが差別化資産を設計し、成熟2業種のAI需要侵食への防衛(語学価値の再定義・試験信頼性維持)も同じ知の系譜から供給される。</p>
 <h4 class="sc-nofill">【埋まらない未来】</h4>
 <p>統合クラスターが編成されなければ、企業研修は専門研修が断片のまま並立し、DX研修の職種別設計も効果測定と切り離されて「やりっぱなし」に留まる。人材派遣・紹介は機能別に分断されたまま派遣就業者数が供給制約で頭打ちとなり、製造派遣の供給律速が顕在化する。統合科学が定まらぬうちに既存大手が寡占的統合を進めれば、学術知が入り込む余地は閉じ、断片化した労働市場仲介が形式知化されないまま非効率を温存する。成熟業種側では、万能翻訳が語学需要を縮小させ、生成AI不正が試験信頼性を侵し、教育データ標準への対応が遅れて差別化資産を築けぬまま海外プラットフォームに需要を明け渡す。</p></section>
-<section class="chapter" id="d49441"><div class="ch-num">領域 24</div><h2>メディア・エンタメ</h2><h3 class="h-now">現在の産業状況</h3>
+<section class="chapter" id="d18460"><div class="ch-num">領域 24</div><h2>メディア・エンタメ</h2><h3 class="h-now">現在の産業状況</h3>
 <p>メディア・エンタメは4業種すべてが成熟(mature)で、素材・統合・統合担い手を備えた相4〜相5の完成相にある。ゲーム・eスポーツ、動画配信・ストリーミング、デジタル広告・広告テック(いずれもf=1.0/q=0.85/r=6.176)は相5、録音音楽・音楽配信は相4(q=0.85)に位置する。共通するのは「基盤はすべて充足しているが、統合位置が生成AI・プライバシー規制・違法配信によって再構成の圧力に晒されている」流動相であることだ。新産業創出の余地は小さく、課題は既存の統合位置を次世代軸へどう移すかにある。</p>
 <h3 class="h-gap">必要だが手薄い空隙領域</h3>
 <p>本体に欠落位置(missing_positions=なし)はなく、空隙はいずれも「次世代の統合クラスター」として現れる。ゲームでは「生成AIコンテンツ×クラウドゲーム×eスポーツ経済クラスター」、動画配信では「ライブ配信×エッジ低遅延×広告テック統合クラスター(超低遅延配信×リアルタイム推薦×広告設計×コンテンツ保護)」、デジタル広告では「プライバシー保護測定×リテールメディア×生成AIクリエイティブ統合クラスター(形式保証測定×リテールデータ×生成AI広告制作)」が次相の空隙となる。これら3業種の constraint_axis は「成熟→次世代」で、統合位置の再構成そのものが律速する。録音音楽だけは constraint_axis が「セクター動き」で、生成AI音楽が権利帰属・収益配分の統合位置を脅かす相にあるが、missing_clusterに明記される通り実在研究者層が薄く、産業創造でなく次世代の配分規範を知財法×メカニズムデザイン×情報検索で読み解く規範供給が立ち位置となる。</p>
@@ -384,7 +396,7 @@ strong{color:var(--accent-warm);font-weight:700}
 <p>2030年前後、動画配信はライブ配信が主戦場化しエッジ低遅延が差別化軸となるなかで、超低遅延配信×リアルタイム推薦×広告設計×コンテンツ保護を束ねる統合クラスターが完成し、マルチモーダル基盤モデルのロードマップが配信・推薦に組み込まれる。デジタル広告はサードパーティCookie廃止に対し、差分プライバシー等の形式保証つき測定×リテールデータ×生成AIクリエイティブの統合クラスターが規制対応の価値を確立する。ゲームは課金深化依存を脱し、生成AIコンテンツ×クラウドゲーム×eスポーツ経済の越境クラスターへ重心を移す。録音音楽では生成AI時代の配分規範が知財法×メカニズムデザイン×情報検索の学際で設計され、次世代の配分ルールの知的翻訳が供給される。</p>
 <h4 class="sc-nofill">【埋まらない未来】</h4>
 <p>次世代統合クラスターが編成されなければ、動画配信は違法IPTVにスポーツ配信権を侵食され、広告モデルの完成が遅れて収益基盤が痩せる。デジタル広告はCookie廃止後の測定基盤を再構成できず、寡占への規制対応にも後れて広告効果の可視性を失う。ゲームは大型作・課金深化への依存を続けたまま統合形態の分岐再編に呑まれ、生成AIコンテンツの制作応用でも先行者に遅れる。録音音楽は生成AI音楽の権利帰属・配分ルールが定まらぬまま、SNSがDSPを代替し、配分規範なき混乱のなかで既存プレイヤーの収益プールが浸食される。</p></section>
-<section class="chapter" id="d96361"><div class="ch-num">領域 25</div><h2>観光・宿泊・レジャー</h2><h3 class="h-now">現在の産業状況</h3>
+<section class="chapter" id="d1189"><div class="ch-num">領域 25</div><h2>観光・宿泊・レジャー</h2><h3 class="h-now">現在の産業状況</h3>
 <p>観光・宿泊・レジャーは3業種からなる。宿泊施設・トラベルアコモデーションと旅行代理店・観光予約サービス(いずれもf=1.0/q=0.85/r=6.176)は素材・統合・統合担い手を備えた成熟相5にある一方、観光イベント・MICE(lifecycle=growth/q=0.15)は統合・統合担い手をともに欠いた成長相3にある。宿泊・旅行代理店は基盤が厚いが、OTA支配・生成AI旅行エージェントによって既存統合位置(OTA)が陳腐化・置換される圧力に晒される。MICEは市場が断片化(上位10社で7%)したまま束ねる主体が現れていない、発火前の未発火市場である。</p>
 <h3 class="h-gap">必要だが手薄い空隙領域</h3>
 <p>最大の空隙は観光イベント・MICEにあり、「登録〜会場〜宿泊〜スポンサー販売〜参加者データを一元化する統合イベントプラットフォームの支配的担い手」が欠落した統合点(★いま構成すべき最重要位置)である。binding_constraintは断片化(上位10社で7%)を束ねる支配的統合プラットフォーム/標準化団体の欠落(q=0.15)で、constraint_axisは「セクター動き」。ここは発火前観測の好例であり、統合プラットフォーム理論・参加者データ標準・群衆安全AIの制度接続という欠落した統合知を設計できる段階にある。宿泊業は本体に欠落位置はないが、「観光×交通の地域政策研究者(持続可能地域観光/観光交通モデル)×レベニューマネジメント/OR×ホスピタリティ経営学×不動産金融」のクラスターに研究接地余地があり、3業種中で最も研究者オーケストレーションの機会がある。旅行代理店は「生成AI旅行エージェントを軸にした次世代予約統合の担い手が未確定」で、統合位置の置換リスクが律速する。</p>
@@ -395,7 +407,7 @@ strong{color:var(--accent-warm);font-weight:700}
 <p>2030年前後、MICEはPE主導のロールアップ(Hyve/Informa/Cvent型)が集約を進めるなかで、登録から参加者データまでを一元化する統合イベントプラットフォームが支配的担い手として立ち上がり、統合プラットフォーム理論・参加者データ標準・群衆安全AI(Martyn's Law型安全規制への対応)を組み込む。宿泊業では持続可能地域観光・観光交通モデルの研究者を軸に、レベニューマネジメントとホスピタリティ経営学を束ねるクラスターが、宿泊を地域の高付加価値観光・持続可能な交通の結節点として設計する。旅行代理店はAI時代における信頼・在庫・体験手配の非代替価値を学術知と接続し、生成AI旅行エージェントを軸にした次世代予約統合の担い手を確定する。</p>
 <h4 class="sc-nofill">【埋まらない未来】</h4>
 <p>MICEに統合点が構成されなければ、市場は断片化したまま(上位10社で7%)AI商談マッチングの品質検証も進まず、支配的設計が定まらずに海外PEのロールアップに主導権を明け渡す。宿泊業は産業と地域観光研究の分離が続き、利益がREITからブランド/フィー会社へ非対称に移動するなかで直販シフトも中途に留まり、地域の高付加価値化が実現しない。旅行代理店は生成AI検索によるOTA中抜きが進むまま、代理店・OTAの非代替価値を再定義できず、既存統合点の陳腐化に置換リスクが顕在化する。観光情報学界と産業の断絶が埋まらず、AI時代の予約経済の再配分規範が空白のまま海外プラットフォームに囲い込まれる。</p></section>
-<section class="chapter" id="d30469"><div class="ch-num">領域 26</div><h2>服飾・アパレル</h2><h3 class="h-now">現在の産業状況</h3>
+<section class="chapter" id="d28622"><div class="ch-num">領域 26</div><h2>服飾・アパレル</h2><h3 class="h-now">現在の産業状況</h3>
 <p>服飾・アパレルは3業種からなり、成熟度と学術核の厚さが対照的である。産業・技術繊維(f=1.0/q=0.925/r=6.527)は素材・統合・統合担い手をすべて備えた相4で、本バッチ全体で唯一「実在する厚い素材科学核」を持つ。衣料品・アパレル製造(f=1.0/q=0.85)も相5で全位置充足だが、製造側の学術核は薄い。繊維リサイクル・循環型テキスタイル(lifecycle=growth/q=0.425)は成長相3で、統合担い手(has_integrator=1)はいるが統合(has_integration=0)を欠く——分離技術の担い手はいるが混紡分離を束ねる支配的主体が未収束の相にある。この領域は「厚い素材科学核(181)を成熟→次世代へ発展させる軸」と「循環経済で統合点を新たに構成する軸」が併存する。</p>
 <h3 class="h-gap">必要だが手薄い空隙領域</h3>
 <p>最も貢献余地が大きい空隙は産業・技術繊維で、「用途横断の統合知と、スマートテキスタイル/水素/PFAS代替を素材科学核から社会実装へ翻訳する担い手クラスター」が空く。信州大繊維学部・産総研の素材科学核と、モビリティ/先端材料/医療の応用需要を橋渡しする位置である。constraint_axisは「成熟→次世代」で、知見の薄さでなく発展そのものが律速する。繊維リサイクルの空隙は「混紡分離統合クラスター(分離工学×高分子化学×環境工学LCA×プロセス工学)」で、binding_constraintは統合点欠落(混紡分離を束ねる支配的担い手不在)+化学再生の薄利・稼働率、constraint_axisは「セクター動き」。大阪大宇山・産総研田中・繊維リサイクル関連会員機関を核に、分離技術×回収網×LCA黒字化を束ねる統合クラスターの設計支援が最も効く介入点となる。衣料品・アパレル製造は学術核が薄く単独では余地が限定的だが、素材(181)⇄製造(180)を橋渡しする統合知に大きな貢献余地がある。</p>
@@ -406,7 +418,7 @@ strong{color:var(--accent-warm);font-weight:700}
 <p>2030年前後、産業・技術繊維では信州大繊維学部・産総研の素材科学核とモビリティ/先端材料/医療の応用需要が結節し、スマートテキスタイル・ウェアラブル、水素タンク向け炭素繊維、無水CO2染色、バイオ製造タンパク質繊維といった次世代用途のロードマップが社会実装へ翻訳される。素材(181)⇄製造(180)の橋渡しにより、無縫製3Dニッティングやオンデマンド生産・自動縫製がデジタル製品パスポート対応のトレーサビリティとともに実装される。繊維リサイクルでは、EU繊維EPRの各国稼働(2028年)を追い風に、大阪大宇山・産総研田中を核とする混紡分離統合クラスター(分離工学×高分子化学×環境LCA×プロセス工学)が立ち上がり、繊維間リサイクル・プラスチック化学再生が黒字化への稼働率を確保する。</p>
 <h4 class="sc-nofill">【埋まらない未来】</h4>
 <p>素材科学核を社会実装へ翻訳する担い手クラスターが編成されなければ、産業・技術繊維は東レ・帝人の業績明暗が分岐するなか、厚い研究蓄積が応用需要に届かず、スマートテキスタイル・水素・PFAS代替の次世代用途が海外先行に呑まれる。繊維リサイクルは混紡分離を束ねる支配的担い手が現れず、化学再生プラントが薄利・低稼働率に苦しみ、先行事例の破綻(Renewcell教訓)が繰り返される。混紡分離統合クラスターが定まらぬまま回収網とLCA黒字化が接続されず、EU規制対応が輸入代替の競争軸に転じて国内循環が育たない。衣料品製造はShein型オンデマンド生産インフラに従来の統合位置を破壊されたまま、素材⇄製造の橋渡し知を欠いて次世代製造への移行に取り残される。</p></section>
-<section class="chapter" id="d42371"><div class="ch-num">領域 27</div><h2>飲食・外食</h2><h3 class="h-now">現在の産業状況</h3>
+<section class="chapter" id="d60093"><div class="ch-num">領域 27</div><h2>飲食・外食</h2><h3 class="h-now">現在の産業状況</h3>
 <p>飲食・外食は3業種すべてが成熟相5(相5)にある。飲食店・集団給食サービス(いずれもf=1.0/q=0.85/r=6.176)は素材・統合・統合担い手を備え、料飲主体サービス(f=1.0/q=0.65/r=5.241)は素材・統合はあるが統合担い手(has_integrator=0)が不在に近い。共通するのは基盤の欠落でなく、分散構造を束ねる統合の集約度が業種・セグメントで大きく異なることだ。飲食店は独立店領域で統合者が不在、集団給食は完調品・セントラルキッチン集約への転換途上、料飲主体は分散を束ねる名指しの統合主体(named integrator)が弱い。学術核の厚さも業種で分かれ、飲食店・料飲主体は薄く、集団給食は研究者層が実在する。</p>
 <h3 class="h-gap">必要だが手薄い空隙領域</h3>
 <p>飲食店の空隙は「業界横断の省人オペレーション知識基盤と担い手クラスター(需要予測・動的価格・ロボット運用の標準化知)」で、binding_constraintは分散構造の再編速度(チェーン化の深化)、constraint_axisは「セクター動き」。学術核が薄いため知見注入でなく、省人オペレーション知や立地・需要データを横断的に形式知化して中小店へ届ける知識媒介が価値となる。集団給食の空隙は「食品工学×給食経営管理×栄養科学を横断する工程科学クラスターと高付加価値給食(嚥下調整食)の標準化知」で、constraint_axisは「両面」——完調品・セントラルキッチン集約への転換を支える工程科学の体系化と、転換速度そのものが同時に律速する。研究者層が実在するため貢献余地は飲食店より大きく、公的調達領域ゆえ政策接続も効く。料飲主体の空隙は「分散を束ねる統合主体と、酒席再設計・喫茶プレミアム化を駆動する運営知の担い手クラスター」で、統合の担い手が不在という構造的空隙が最大の特徴である。</p>
@@ -417,7 +429,7 @@ strong{color:var(--accent-warm);font-weight:700}
 <p>2030年前後、飲食店では配膳ロボットが標準装備化し、需要予測・動的価格・ロボット運用の省人オペレーション知が業界横断で形式知化され、分散した中小店にも届く知識媒介の担い手が立ち上がる。集団給食では給食経営管理学・栄養科学の研究者と食品工学・オペレーションが結節し、完調品・セントラルキッチン集約を支える工程科学が体系化されるとともに、高圧食品加工や低温プラズマ食品加工、食料・農業技術のロードマップが嚥下調整食など高付加価値給食の標準化に接続される。公的調達領域の政策接続(給食費負担軽減交付金等)も同じ知の系譜から働く。料飲主体では酒類総研の品質研究が低アル/ノンアルの体験設計へ翻訳され、分散した独立店を束ねる知識媒介と運営知の形式知化が進む。</p>
 <h4 class="sc-nofill">【埋まらない未来】</h4>
 <p>知識媒介・工程科学クラスターが編成されなければ、飲食店の省人オペレーション知はチェーン内に閉じたまま横展開されず、分散した中小店が労働政策(特定技能等)の制約下で個別最適に留まる。集団給食は完調品・セントラルキッチン集約の転換を支える工程科学が体系化されず、病院院外調理制度の明確化にも実装が追いつかず、高付加価値給食の標準化が進まない。料飲主体は分散を束ねる統合主体が不在のまま、喫茶プレミアム化や酒席再設計の運営知が形式知化されず、酒量縮小と客単価再編のなかで独立店の淘汰が進む。実務知の翻訳・横展開という橋渡し役が欠ければ、成熟産業の分散構造が非効率を温存したまま緩慢に縮退する。</p></section>
-<section class="chapter" id="d10967"><div class="ch-num">領域 28</div><h2>小売・EC</h2><h3 class="h-now">現在の産業状況</h3>
+<section class="chapter" id="d74485"><div class="ch-num">領域 28</div><h2>小売・EC</h2><h3 class="h-now">現在の産業状況</h3>
 <p>小売・ECは3業種すべてが成熟相5(相5)にあり、BtoC物販EC・BtoCサービスEC・CtoCオンラインマーケットプレイス(いずれもf=1.0/q=0.85/r=6.176)は素材・統合・統合担い手を備えた完成相にある。共通するのは基盤が堅い一方で、統合位置が越境EC・AIエージェント購買・プラットフォーム規制によって再構成・重心移動の圧力に晒されていることだ。物販ECは中国発越境EC(Temu/SHEIN)とAIエージェント購買が寡占の統合位置を脅かし、サービスECとCtoCは仲介手数料から金融・広告・真贋鑑定へと利益プールの重心が移動しつつある。3業種とも constraint_axis は「セクター動き」で、いずれもmissing_clusterに実在研究者層の薄さが明記される。</p>
 <h3 class="h-gap">必要だが手薄い空隙領域</h3>
 <p>本体に欠落位置(missing_positions=なし)はなく、空隙は「次世代小売の実装知/規範の学際橋渡し」として現れる。物販ECでは「サプライチェーン工学/OR×情報検索/推薦×行動経済学×労働経済(物流)」、サービスECでは「レベニューマネジメント/OR×マッチング/推薦×観光/サービス経済学×行動経済(キャンセル)」、CtoCでは「プラットフォーム経済学(two-sided market)×評判/信頼/マッチング×真贋鑑定AI×循環経済」がmissing_clusterに挙がるが、いずれも実在研究者層が薄い。したがって3業種とも産業創造機会は限定的で、implicationが示す通り立ち位置は「AIエージェント購買時代の物流・購買行動」「予約経済の再配分規範」「個人間取引の信頼と循環の規範」を学際で読み解く実装知/規範の翻訳・橋渡しにある。</p>

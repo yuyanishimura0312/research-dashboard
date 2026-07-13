@@ -4,86 +4,114 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Noto+Serif+JP:wght@400;600;700;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#fff;--ink:#151515;--ink2:#555;--mut:#6B6B6B;--warm:#CC1400;--border:#E2E2E2;--bl:#EEE;--surf:#F7F7F5;--f:"Noto Sans JP",system-ui,sans-serif;--fs:"Noto Serif JP",Georgia,serif;--m:"Fira Code",monospace}
-[data-theme=dark]{--bg:#111;--ink:#E4E4E4;--ink2:#AEAEAE;--mut:#8A8A8A;--warm:#FF4A38;--border:#333;--bl:#262626;--surf:#1A1A1A}
+/* ── tokens (warm-editorial 版面 / 赤白CI #CC1400・ゴシック法・イタリック禁止) ─────
+   接地: ds/tokens.css [data-preset="warm-editorial"|"museum-editorial"] / design-benchmark 10原則
+   選定根拠: 戦略コンサル級レポート × 経営層読者 → 暖白主地・大側余白・締まった見出し・静かな演出 */
+:root{
+  --accent:#CC1400;--accent-deep:#9A0F00;
+  --ink-strong:#0E0E0E;--ink:#1A1A1A;--ink-soft:#3A3A3A;--mut:#595959;--faint:#8A8A8A;
+  --paper:#FAF8F4;--surf:#F3EFE9;--surf-warm:#EDE7DE;   /* warm off-white 主地 + セクション交互 */
+  --rule:#E4DCD2;--rule-soft:#EFE9E1;--rule-strong:#1A1A1A;
+  --f:"Noto Sans JP","Hiragino Sans",-apple-system,sans-serif;
+  --fs:"Noto Serif JP","Hiragino Mincho ProN",Georgia,serif;   /* dropcap のみ */
+  --m:"Fira Code",monospace;
+  --fs-body:clamp(15px,1.05vw,16.5px);--fs-h2:clamp(20px,2.4vw,26px);--fs-dt:clamp(28px,5vw,40px);
+  --lh-body:1.95;--lh-head:1.28;
+  --tr-head:-.02em;--tr-body:.01em;--tr-label:.2em;
+  --measure:64ch;--side:clamp(28px,6vw,80px);
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+[data-theme=dark]{
+  --accent:#FF4A38;--accent-deep:#C42A1E;
+  --ink-strong:#FFFFFF;--ink:#E4E4E4;--ink-soft:#C4C4C4;--mut:#B0B0B0;--faint:#6E6E6E;
+  --paper:#141210;--surf:#1B1917;--surf-warm:#1E1B18;
+  --rule:#2E2A26;--rule-soft:#262320;--rule-strong:#E4E4E4;
+}
 *{box-sizing:border-box}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f);line-height:1.9;font-feature-settings:"palt";overflow-x:hidden}
-.bar{position:sticky;top:0;z-index:40;height:52px;display:flex;align-items:center;gap:12px;padding:0 14px;background:var(--bg);border-top:3px solid var(--warm);border-bottom:1px solid var(--bl)}
-.bar .brand{font-weight:700;font-size:13px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.bar .brand b{color:var(--warm)}
-.ib{cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--ink2);border-radius:8px;padding:7px 11px;font-size:13px;min-height:38px;font-family:var(--f)}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f);line-height:var(--lh-body);font-feature-settings:"palt" 1,"kern" 1;overflow-x:hidden;letter-spacing:var(--tr-body)}
+.bar{position:sticky;top:0;z-index:40;height:54px;display:flex;align-items:center;gap:12px;padding:0 var(--side);background:color-mix(in oklch,var(--paper) 92%,transparent);backdrop-filter:saturate(1.1) blur(8px);border-top:2px solid var(--accent);border-bottom:1px solid var(--rule)}
+.bar .brand{font-weight:500;font-size:12.5px;letter-spacing:.02em;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink-soft)}.bar .brand b{color:var(--accent);font-weight:700}
+.ib{cursor:pointer;border:1px solid var(--rule);background:transparent;color:var(--mut);border-radius:6px;padding:7px 11px;font-size:13px;min-height:38px;min-width:38px;font-family:var(--f);transition:color .2s var(--ease),border-color .2s var(--ease)}
+.ib:hover{color:var(--accent);border-color:var(--accent)}
 .mb{display:none}
-.wrap{display:grid;grid-template-columns:280px minmax(0,1fr);max-width:1120px;margin:0 auto}
-.toc{position:sticky;top:52px;align-self:start;height:calc(100vh - 52px);overflow-y:auto;padding:24px 14px 80px;border-right:1px solid var(--bl)}
-.toc-h{font-size:11px;letter-spacing:.16em;color:var(--mut);text-transform:uppercase;margin:0 0 12px 8px}
+.wrap{display:grid;grid-template-columns:290px minmax(0,1fr);max-width:1200px;margin:0 auto}
+.toc{position:sticky;top:54px;align-self:start;height:calc(100vh - 54px);overflow-y:auto;padding:36px 20px 90px;border-right:1px solid var(--rule)}
+.toc-h{font-size:11px;letter-spacing:var(--tr-label);color:var(--mut);text-transform:uppercase;margin:0 0 16px 10px;font-weight:600}
 .toc ol{list-style:none;margin:0;padding:0}
-.toc a{display:block;padding:8px;font-size:12.5px;color:var(--ink2);text-decoration:none;border-radius:8px;line-height:1.55}
-.toc a:hover,.toc a:active{background:var(--surf);color:var(--warm)}
+.toc a{display:block;padding:8px 10px;font-size:12.5px;color:var(--ink-soft);text-decoration:none;border-radius:6px;line-height:1.55;border-left:2px solid transparent;transition:color .2s var(--ease),border-color .2s var(--ease)}
+.toc a:hover,.toc a:active{color:var(--accent);border-left-color:var(--accent)}
 .scrim{display:none}
-main{padding:36px 40px 120px;max-width:800px;min-width:0}
-.dt{font-family:var(--fs);font-weight:900;font-size:clamp(24px,5.4vw,32px);line-height:1.34;margin:8px 0 8px}
-.ds{color:var(--ink2);font-size:clamp(13px,3.4vw,15px)}
-.dm{color:var(--mut);font-size:12px;font-family:var(--m);border-bottom:1px solid var(--bl);padding-bottom:22px;margin:6px 0 4px;word-break:break-word}
-.chapter{padding:34px 0 10px;border-bottom:1px solid var(--bl)}
-.cn{font-family:var(--m);font-size:11px;letter-spacing:.18em;color:var(--warm)}
-.chapter h2{font-family:var(--fs);font-weight:700;font-size:clamp(19px,4.6vw,23px);line-height:1.42;margin:4px 0 16px;scroll-margin-top:64px}
-.chapter p{font-family:var(--fs);font-size:clamp(14.5px,3.5vw,15.5px);line-height:1.98;margin:0 0 14px;text-indent:1em}
-.intro{background:var(--surf);border-radius:12px;padding:24px 22px 12px;border-left:4px solid var(--warm)}
-.intro h2{margin-top:0}.intro p:first-of-type{text-indent:0}
-strong{color:var(--warm);font-weight:700}
-.foot{color:var(--mut);font-size:12px;padding:32px 0 12px;line-height:1.7}
-@media(max-width:900px){.wrap{grid-template-columns:1fr}.mb{display:inline-flex;align-items:center}
- .toc{position:fixed;top:0;left:0;width:82%;max-width:320px;height:100vh;background:var(--bg);z-index:60;transform:translateX(-100%);transition:transform .25s;border-right:1px solid var(--border);box-shadow:2px 0 24px rgba(0,0,0,.18);padding-top:20px}
- body.o .toc{transform:translateX(0)}body.o .scrim{display:block;position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:55}
- main{padding:22px 18px 90px}.intro{padding:18px 16px 8px}}
-@media print{.bar,.toc,.scrim{display:none}.wrap{grid-template-columns:1fr}main{max-width:none}.chapter{page-break-inside:avoid}}
+main{padding:clamp(40px,6vw,72px) var(--side) 130px;max-width:calc(var(--measure) + 8ch);min-width:0}
+.cn{font-family:var(--f);font-size:10.5px;font-weight:600;letter-spacing:var(--tr-label);color:var(--accent);text-transform:uppercase}
+.dt{font-family:var(--f);font-weight:900;font-size:var(--fs-dt);line-height:1.14;letter-spacing:var(--tr-head);margin:14px 0 14px;color:var(--ink-strong)}
+.ds{color:var(--ink-soft);font-size:clamp(14px,1.3vw,17px);line-height:1.7;max-width:52ch}
+.dm{color:var(--mut);font-size:11.5px;font-family:var(--m);border-bottom:1px solid var(--rule);padding-bottom:26px;margin:16px 0 4px;word-break:break-word;line-height:1.7}
+.chapter{padding:clamp(40px,5vw,60px) 0 12px;border-bottom:1px solid var(--rule-soft)}
+.chapter h2{font-family:var(--f);font-weight:800;font-size:var(--fs-h2);line-height:var(--lh-head);letter-spacing:var(--tr-head);margin:6px 0 20px;scroll-margin-top:70px;color:var(--ink-strong)}
+.chapter h2::after{content:"";display:block;width:34px;height:2px;background:var(--accent);margin-top:14px}
+.chapter p{font-size:var(--fs-body);line-height:var(--lh-body);margin:0 0 16px;max-width:var(--measure)}
+.intro{background:var(--surf-warm);border:1px solid var(--rule);border-radius:4px;padding:clamp(26px,3vw,40px) clamp(24px,3vw,36px) 18px;margin-top:8px}
+.intro h2{margin-top:0}
+.intro h2::after{width:44px}
+.intro .lede{font-family:var(--fs);font-size:2.9em;font-weight:400;line-height:.82;float:left;margin:.06em .12em -.04em 0;color:var(--accent)}
+strong{color:var(--accent);font-weight:700}
+.foot{color:var(--mut);font-size:12px;padding:44px 0 12px;line-height:1.85;max-width:var(--measure);border-top:1px solid var(--rule-soft);margin-top:8px}
+:where(a,button,summary):focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+::selection{background:rgba(204,20,0,.14)}
+@media(max-width:900px){.wrap{grid-template-columns:1fr}.mb{display:inline-flex;align-items:center;justify-content:center}
+ .toc{position:fixed;top:0;left:0;width:82%;max-width:330px;height:100vh;background:var(--paper);z-index:60;transform:translateX(-100%);transition:transform .3s var(--ease);border-right:1px solid var(--rule);box-shadow:2px 0 32px rgba(20,20,20,.14);padding-top:24px}
+ body.o .toc{transform:translateX(0)}body.o .scrim{display:block;position:fixed;inset:0;background:rgba(20,18,16,.44);z-index:55}
+ main{padding:26px 20px 96px}}
+@media print{.bar,.toc,.scrim{display:none}.wrap{grid-template-columns:1fr}main{max-width:none}.chapter{page-break-inside:avoid}body{background:#fff}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important;scroll-behavior:auto}}
 </style></head><body>
 <div class="bar"><button class="ib mb" onclick="tg()" aria-label="目次">☰</button><span class="brand">ミラツク <b>産業創造モデル</b> ｜ 空隙 徹底解析</span><button class="ib" onclick="tt()" aria-label="テーマ">◐</button></div>
 <div class="scrim" onclick="ct()"></div>
-<div class="wrap"><aside class="toc" aria-label="目次"><div class="toc-h">目次</div><ol><li><a href="#c73891" onclick="ct()">序：空隙の正体は「基礎の弱さ」ではなく「統合クラスターの不在」</a></li>
-<li><a href="#c80918" onclick="ct()">1. 空隙の構造解剖——基盤は厚く、統合が薄い</a></li>
-<li><a href="#c77965" onclick="ct()">2. 空隙の類型学——4つの律速と、それがどの産業領域に集積するか</a></li>
-<li><a href="#c23827" onclick="ct()">3. 「誰が埋めるか」——豊かな研究者供給と、薄い越境統合学際</a></li>
-<li><a href="#c33950" onclick="ct()">4. 横断レバレッジ——一点突破は「統合クラスター編成」</a></li>
-<li><a href="#c12845" onclick="ct()">5. 分岐の臨界窓——2028〜2032年に多くの分水嶺が収斂する</a></li>
-<li><a href="#c68397" onclick="ct()">6. 2030/2040/2050——空隙が埋まる日本と、埋まらない日本</a></li>
-<li><a href="#c25682" onclick="ct()">7. 非自明な発見と反証</a></li>
-<li><a href="#c42401" onclick="ct()">8. 戦略的含意——越境結節点を編成する主体</a></li></ol></aside>
+<div class="wrap"><aside class="toc" aria-label="目次"><div class="toc-h">目次</div><ol><li><a href="#c87007" onclick="ct()">序：空隙の正体は「基礎の弱さ」ではなく「統合クラスターの不在」</a></li>
+<li><a href="#c88585" onclick="ct()">1. 空隙の構造解剖——基盤は厚く、統合が薄い</a></li>
+<li><a href="#c61044" onclick="ct()">2. 空隙の類型学——4つの律速と、それがどの産業領域に集積するか</a></li>
+<li><a href="#c23733" onclick="ct()">3. 「誰が埋めるか」——豊かな研究者供給と、薄い越境統合学際</a></li>
+<li><a href="#c65806" onclick="ct()">4. 横断レバレッジ——一点突破は「統合クラスター編成」</a></li>
+<li><a href="#c35438" onclick="ct()">5. 分岐の臨界窓——2028〜2032年に多くの分水嶺が収斂する</a></li>
+<li><a href="#c57711" onclick="ct()">6. 2030/2040/2050——空隙が埋まる日本と、埋まらない日本</a></li>
+<li><a href="#c74160" onclick="ct()">7. 非自明な発見と反証</a></li>
+<li><a href="#c65212" onclick="ct()">8. 戦略的含意——越境結節点を編成する主体</a></li></ol></aside>
 <main>
 <div class="cn">INDUSTRY CREATION MODEL · GAP DEEP ANALYSIS</div>
 <h1 class="dt">産業創造モデルで読む<br>日本の産業空隙——徹底解析</h1>
 <div class="ds">200業種・28産業領域の横断メタ解析｜空隙の正体は「基礎の弱さ」ではなく「統合クラスターの不在」</div>
 <div class="dm">ICFM × IIDB(200業種) × RMP(250ロードマップ) × 研究者供給 × CLA/シグナル/メガトレンド｜AR-DBエコシステム横断｜2026-07-13</div>
-<section class="chapter intro" id="c73891"><div class="cn">序</div><h2>序：空隙の正体は「基礎の弱さ」ではなく「統合クラスターの不在」</h2><p>日本の産業創造の空隙をめぐる通念は、繰り返し「基礎研究の弱さ」に原因を求めてきた。しかし200業種を産業創造モデル（ICFM）で解剖した実測は、その通念を正面から反転させる。<strong>本稿の統べる主張は一つである——日本の産業空隙の本体は基礎の欠如ではなく、厚く堆積した基盤を次世代産業へ翻訳する『越境統合クラスターの不在』にある。</strong></p>
+<section class="chapter intro" id="c87007"><div class="cn">序 · PREFACE</div><h2>序：空隙の正体は「基礎の弱さ」ではなく「統合クラスターの不在」</h2><p><span class="lede">日</span>本の産業創造の空隙をめぐる通念は、繰り返し「基礎研究の弱さ」に原因を求めてきた。しかし200業種を産業創造モデル（ICFM）で解剖した実測は、その通念を正面から反転させる。<strong>本稿の統べる主張は一つである——日本の産業空隙の本体は基礎の欠如ではなく、厚く堆積した基盤を次世代産業へ翻訳する『越境統合クラスターの不在』にある。</strong></p>
 <p>この主張は5つの実測に支えられている。第1に、200業種のうち142業種（71%）が基盤完全性f=1.0、すなわち要素研究・要素技術の土台が完備している。基礎はむしろ厚い。第2に、それにもかかわらず空隙は「統合欠落」50業種、「担い手不在」34業種として現れ、「材料欠落」17業種を大きく上回る。欠けているのは知でも資金でもなく、束ねる位置である。第3に、空隙を記述する語の頻度を数えると、「クラスター」が153回、「統合」が111回で突出し、「材料」40回・「データ」38回を圧倒する。第4に、ICFM相分布では128業種が相5（離陸・自己増殖＝成熟）に達し、産業の大勢は「発火するか」ではなく「成熟した統合機能を次代へ移せるか」を問う局面にある。第5に、律速類型の最頻値は「成熟→次世代」125業種であり、新規発火の失敗ではなく世代転換の失敗こそが支配的なリスクである。</p>
 <p>主要な含意はこうだ。政策資源を追加の基礎研究や単発の要素技術支援に投じても、律速は動かない。効くのは、厚い基盤を横につなぐ越境結節点——分野の層ではなく分野の間——を、支配的設計が固まる前の限られた窓の内に編成することである。以下、この反転命題をデータで徹底的に検証する。</p></section>
-<section class="chapter" id="c80918"><div class="cn">01</div><h2>1. 空隙の構造解剖——基盤は厚く、統合が薄い</h2><p>産業創造モデルは、ある産業が新産業へ離陸できるかを、基盤完全性・統合点の有無・統合担い手の有無・材料供給の4条件で読む。200業種の実測が描くのは、極端に非対称な構造である。基盤完全性f=1.0が142業種（71%）に達し、要素の土台はすでに広く完備している。相分布もこれを裏づけ、相5成熟が128業種と全体の6割超を占め、相2の萌芽はわずか5業種にとどまる。日本の産業は総じて「未成熟」ではなく「成熟済み」なのである。</p>
+<section class="chapter" id="c88585"><div class="cn">01</div><h2>1. 空隙の構造解剖——基盤は厚く、統合が薄い</h2><p>産業創造モデルは、ある産業が新産業へ離陸できるかを、基盤完全性・統合点の有無・統合担い手の有無・材料供給の4条件で読む。200業種の実測が描くのは、極端に非対称な構造である。基盤完全性f=1.0が142業種（71%）に達し、要素の土台はすでに広く完備している。相分布もこれを裏づけ、相5成熟が128業種と全体の6割超を占め、相2の萌芽はわずか5業種にとどまる。日本の産業は総じて「未成熟」ではなく「成熟済み」なのである。</p>
 <p>問題はその成熟の内側にある。空隙が現れる位置を数えると、統合点を欠く業種が50、統合を担う名指しの主体を欠く業種が34、材料供給を欠く業種が17。統合系の欠落（84業種）が材料欠落（17業種）を5倍近く上回る。厚い基盤の上に、それを一つのアーキテクチャへ束ねる層だけが抜け落ちている——これが空隙の解剖学的な実像である。</p>
 <p>この構造は、空隙を語る言葉そのものにも刻まれている。missing_clusterの頻出語は「クラスター」153・「統合」111が二強で、「次世代」44がこれに続く。一方「材料」は40、「循環」14、「標準」12、「担い手」11、「プラットフォーム」8と、いずれも一桁から数十の水準にとどまる。空隙は「何が足りないか」を問うと、ほぼ常に「束ねるクラスターが無い」と答える。</p>
 <p><strong>So-What——</strong> 経営・政策の資源配分は、いま「基盤づくり」に偏重している。だが実測が示す律速は基盤ではなく統合である。追加投資の限界効用が最も高いのは、新しい要素研究ではなく、既存の厚い要素を横断編成する結節点の組成にある。診断を「何が弱いか」から「どこが繋がっていないか」へ切り替えることが、あらゆる後続判断の前提となる。</p></section>
-<section class="chapter" id="c77965"><div class="cn">02</div><h2>2. 空隙の類型学——4つの律速と、それがどの産業領域に集積するか</h2><p>律速の内訳を見ると、産業空隙は均質ではなく、明確に類型化される。最頻値は「成熟→次世代」125業種で全体の6割を占め、次いで「セクター動き」38業種、「両面（成熟転換とセクター動きの複合）」22業種、「知見蓄積」9業種、「セクター＋知見」6業種と続く。この分布は、日本の産業リスクの重心が「新規発火の失敗」ではなく「世代転換の失敗」に置かれていることを明示する。</p>
+<section class="chapter" id="c61044"><div class="cn">02</div><h2>2. 空隙の類型学——4つの律速と、それがどの産業領域に集積するか</h2><p>律速の内訳を見ると、産業空隙は均質ではなく、明確に類型化される。最頻値は「成熟→次世代」125業種で全体の6割を占め、次いで「セクター動き」38業種、「両面（成熟転換とセクター動きの複合）」22業種、「知見蓄積」9業種、「セクター＋知見」6業種と続く。この分布は、日本の産業リスクの重心が「新規発火の失敗」ではなく「世代転換の失敗」に置かれていることを明示する。</p>
 <p>第1類型「成熟→次世代」が支配的な領域は、素材・電機電子・自動車・製造機械・素材化学に典型的に現れる。これらはいずれも相5・全位置充足でありながら、次世代軸の統合クラスターだけを欠く。素材8業種はすべて相5・成熟で28領域中もっとも均質に完成しているが、冶金×水素工学×電気化学を束ねるグリーンスチール・グリーンアルミの越境クラスターが一様に手薄である。自動車7業種はf=1.0で充足度が最も高いにもかかわらず、電気化学×機能安全×系統工学×法/責任工学を束ねる再統合クラスターが不在で、全固体電池・自動運転の支配的設計確定前に担い手が立たない。ここでの律速は技術ではなく編成の時期である。</p>
 <p>第2類型「セクター動き」が効くのは、小売・EC、メディア・エンタメ、飲食・外食のように本体に欠落位置がなく、生成AI・プラットフォーム規制・越境ECが既存の統合位置を外から再構成する領域である。ここでは新産業創出の余地は小さく、課題は権利・測定・配分の規範を学際で編み直し、統合位置に埋め込めるかに絞られる。</p>
 <p>第3類型「知見蓄積」はわずか9業種だが、性質が異なる。量子技術のQEC核（QEC理論×物性材料×極低温工学）や、防衛のC-UAS統合理論（センサーフュージョン×AI-C2×指向性エネルギー物理×RF電子戦）がこれにあたり、中核科学が未確立ゆえ資金投入では埋まらない。ここだけは編成の前に核科学の蓄積そのものが要る。</p>
 <p><strong>So-What——</strong> 空隙対策を一律に語ってはならない。125業種を占める「成熟→次世代」型には越境クラスターの編成が、38業種の「セクター動き」型には規範の学際設計が、9業種の「知見蓄積」型には核科学の先行蓄積が効く。処方箋は類型ごとに異なり、最大多数を占める世代転換型に対しては、資金より「束ね手の先行組成」が唯一の律速解除策となる。</p></section>
-<section class="chapter" id="c23827"><div class="cn">03</div><h2>3. 「誰が埋めるか」——豊かな研究者供給と、薄い越境統合学際</h2><p>空隙を埋める担い手は、供給の総量だけを見れば決して不足していない。分野別の研究者供給は、臨床医学・公衆衛生77,657名、生物学・生化学56,546名、人類学・民族誌22,486名、科学コミュニケーション・STS20,544名、政策担当18,519名、発明家・工学技術者17,641名、物理16,100名、化学14,768名、システム統合技術者13,889名、材料科学12,622名と、主要分野はいずれも「rich」と判定される。分野の内側の層は厚い。</p>
+<section class="chapter" id="c23733"><div class="cn">03</div><h2>3. 「誰が埋めるか」——豊かな研究者供給と、薄い越境統合学際</h2><p>空隙を埋める担い手は、供給の総量だけを見れば決して不足していない。分野別の研究者供給は、臨床医学・公衆衛生77,657名、生物学・生化学56,546名、人類学・民族誌22,486名、科学コミュニケーション・STS20,544名、政策担当18,519名、発明家・工学技術者17,641名、物理16,100名、化学14,768名、システム統合技術者13,889名、材料科学12,622名と、主要分野はいずれも「rich」と判定される。分野の内側の層は厚い。</p>
 <p>ところが空隙が求めているのは分野内の層ではなく、分野の間に立つ越境の結節点である。v2の各領域が名指しするのは、貯留層工学×CCS×炭素会計、医工学×データ科学（デジタルヘルスの医療情報学）、無線通信工学×宇宙工学×暗号理論（6G-NTN）、スケールアップ工学×培地・宿主株×食品安全規制科学×消費者受容（代替タンパク）、分離工学×高分子化学×環境LCA（繊維循環）といった、いずれも複数分野をまたぐ交点である。デジタルヘルスでは上位研究者が全て基礎生命科学に偏り、医療情報学の担い手が上位ゼロという、供給総量ではなく編成の欠落が典型的に現れる。</p>
 <p>そして統合を実際に成立させる職能ほど供給が薄い。標準化専門家・業界団体/コンソーシアム・熟練労働/生産組織・投資家/VC・大学/公的研究機関はいずれも供給0（分散型で捕捉困難）、法務・知財4,653名、デザイナー・様式確立者4,947名、規制・制度設計8,197名、生産技術者・実装者8,545名、ユーザー研究・HCI8,770名と、いずれも「rich」分野の数分の1にとどまる。標準を定め、制度を設計し、実装へ橋渡しする隘路の職能こそが薄い。</p>
 <p><strong>So-What——</strong> 「研究者が足りない」という診断は総量では誤りで、隘路では正しい。政策の照準は、豊富な分野内人材の増員ではなく、標準化・制度設計・実装・様式確立という薄い結節職能の育成と、豊かな分野内層を越境の交点へ組み替えるオーケストレーションに合わせるべきである。豊かな鉱脈は既にある。掘る坑道が繋がっていない。</p></section>
-<section class="chapter" id="c33950"><div class="cn">04</div><h2>4. 横断レバレッジ——一点突破は「統合クラスター編成」</h2><p>限られた資源で最大の産業数を解錠する一点はどこか。実測はこれにも明快に答える。空隙記述語の頻度で「クラスター」153・「統合」111が突出し、律速類型で「成熟→次世代」125が過半を占めるという二つの事実は、同じ結論を指す——単一で最も多くの産業を動かすレバーは、越境統合クラスターの編成である。材料（40）・データ（38）・循環（14）・標準（12）といった個別の欠落を一つずつ埋めるより、それらを束ねる位置を立てるほうが、桁違いに多くの業種に同時に効く。</p>
+<section class="chapter" id="c65806"><div class="cn">04</div><h2>4. 横断レバレッジ——一点突破は「統合クラスター編成」</h2><p>限られた資源で最大の産業数を解錠する一点はどこか。実測はこれにも明快に答える。空隙記述語の頻度で「クラスター」153・「統合」111が突出し、律速類型で「成熟→次世代」125が過半を占めるという二つの事実は、同じ結論を指す——単一で最も多くの産業を動かすレバーは、越境統合クラスターの編成である。材料（40）・データ（38）・循環（14）・標準（12）といった個別の欠落を一つずつ埋めるより、それらを束ねる位置を立てるほうが、桁違いに多くの業種に同時に効く。</p>
 <p>波及の大きさで着手順を序列化すると、第1に「成熟→次世代」型のうち基盤が最も厚い領域——素材・自動車・製造機械・電機電子——が挙がる。これらはf=1.0・相5で要素が完備しているため、統合クラスターが立てば確立済みの要素知が一斉に接続される初期収斂が起きる。製造・機械が「知見が半世紀存在しても統合者不在なら産業は立たないが、逆に2031年の波に統合位置で乗れれば成熟8業種の厚みで長い坂を登れる」と描く構造は、この波及の典型である。第2に、エネルギー・素材・鉱業資源に共通する「グリーン相転換」の越境クラスター（冶金×水素×電気化学、mine-to-magnet一貫統合）は、脱炭素の規制圧が需要を外から確定させるため、編成の見返りが構造的に大きい。</p>
 <p><strong>So-What——</strong> 一点突破の対象は個別技術ではなくクラスター編成である。最も投資効率が高いのは、基盤が厚い成熟領域に越境結節点を立てて既存要素を一斉接続すること。これを分野横断で一度成功させれば、その編成モデル自体が他領域へ移植可能な資産となる。分散した支援を束の位置に集中投下することが、レバレッジの原理である。</p></section>
-<section class="chapter" id="c12845"><div class="cn">05</div><h2>5. 分岐の臨界窓——2028〜2032年に多くの分水嶺が収斂する</h2><p>空隙が埋まるか否かは、時間の問題でもある。v2の28領域を貫いて読むと、分岐の臨界点が2028〜2032年、とりわけ2031年前後の数年に驚くほど集中する。この収斂は偶然ではなく、標準・規制・量産の期日が同時に到来する構造に由来する。</p>
+<section class="chapter" id="c35438"><div class="cn">05</div><h2>5. 分岐の臨界窓——2028〜2032年に多くの分水嶺が収斂する</h2><p>空隙が埋まるか否かは、時間の問題でもある。v2の28領域を貫いて読むと、分岐の臨界点が2028〜2032年、とりわけ2031年前後の数年に驚くほど集中する。この収斂は偶然ではなく、標準・規制・量産の期日が同時に到来する構造に由来する。</p>
 <p>制度側では、EU製品パスポート共通インフラ実装（2027）、CBAM本格運用（2026）、船舶のIGFコード改正発効（2028）とMASS強制コード発効（2032）、自動車のUNECE ADS法規採択（2026）が、いずれも需要動機を外から確定させる装置として同じ窓に並ぶ。技術・量産側でも、Rapidus 2nm量産（2027）、トヨタ全固体電池量産（2027-28）、そして各領域の機関予測群が2031年に束になって到来する——製造AI/機械学習市場610億ドル、AI基盤へのAPI経由支出年1,500億ドル、電炉高級鋼の公開実証（TRL7）、循環経済認証のバリューチェーン55%義務化、水電解量産体制（1〜2GW/年）。この年に、多くの産業で支配的設計と標準が確定に向かう。</p>
 <p>臨界の機序はこうだ。標準・量産・規制が確定する前の「支配的設計未収斂の窓」の内側に統合クラスターが座を占めれば、日本は次世代産業の供給側に立つ。逃せば、標準は外から与えられ、厚い基盤は「接続されるが束ねない」側に固定される。通信領域が「要件は外から与えられ、埋まるか否かは既存キャリアの内側に学際クラスターを先回りで編成できるかだけに懸かる」と記す構造は、ほぼ全領域に共通する。</p>
 <p><strong>So-What——</strong> 分岐は技術でも需要でもなく「編成の時期」が決める。2028〜2032年の窓は一度しか開かない。2030年までに統合の担い手が編成されているか否かが、2040年・2050年の分岐を先決する。この窓を待って観測してから動く戦略は、構造的に敗着である——特に卸売・公益事業・建設のように未来シグナルが観測されない領域では、外部の警報が来ないまま窓が閉じる。</p></section>
-<section class="chapter" id="c68397"><div class="cn">06</div><h2>6. 2030/2040/2050——空隙が埋まる日本と、埋まらない日本</h2><p>28領域の時系列シナリオを貫くと、日本の未来は2つのマクロ軌道に収斂する。両者を分けるのは基盤の厚さではない——基盤はどちらの経路でも厚いままである——統合クラスターが臨界窓の内に編成されるか否か、その一点である。</p>
+<section class="chapter" id="c57711"><div class="cn">06</div><h2>6. 2030/2040/2050——空隙が埋まる日本と、埋まらない日本</h2><p>28領域の時系列シナリオを貫くと、日本の未来は2つのマクロ軌道に収斂する。両者を分けるのは基盤の厚さではない——基盤はどちらの経路でも厚いままである——統合クラスターが臨界窓の内に編成されるか否か、その一点である。</p>
 <p><strong>埋まる軌道。</strong> 2028〜2032年に越境結節点が編成され、厚い成熟基盤が次世代軸へ転位する。素材産業は2031年の電炉高級鋼実証を起点に、プロセス熱電化（2043）→鋼材炭素認証（2046）→製鉄所統合制御（2049）の統合階段を登り、2045-50年のCCUS20億トン・再エネ14,400GWという巨大需要を素材側から受け止める。製造・機械は2030年までに工場知識統合層を築き、核融合5GW・小惑星採掘という極限環境製造の統合位置に立つ。自動車は電池・充電・制動・自動運転の再統合を2030年代に済ませ、車両を「電動×自律×系統統合」の複合装置へ更新する。エネルギーは既存の掘削・冶金の工学的厚みを次世代地熱・SMR前端・浮体式へ転位させる。共通するのは、成熟の厚みがそのまま次世代の供給能力へ転化する複利構造である。</p>
 <p><strong>埋まらない軌道。</strong> 基盤は厚いまま、担い手不在で商用局面の席が海外へ渡り、産業は静かに空洞化する。発火の失敗ではなく「静かな解体」——卸売・商社がこう名づける経路が、多くの領域で反復される。素材は認証を「受ける側」に回り、14,400GW時代の需要を接続の条件ごと域外に握られる。製造は接続される370万拠点の側に固定され、束ねる主体にはならない。自動車は電池普及の低迷で2030-50年に年125億ドルの燃料輸入費増を負い、成熟の厚みが次世代の重荷へ反転する。デジタルヘルスは自国の厚い研究層を海外プラットフォームの下請けとして提供する構図に半世紀固着する。いずれも警報なしに進む劣化である。</p>
 <p><strong>So-What——</strong> 2つの日本を分けるのは能力ではなく時機である。同じ厚い基盤が、2030年までの編成の成否によって「複利で伸びる供給力」にも「座礁する重荷」にもなる。経営・政策が問うべきは「基盤を強くできるか」ではなく「2028〜2032年の窓の内に束ね手を立てられるか」である。</p></section>
-<section class="chapter" id="c25682"><div class="cn">07</div><h2>7. 非自明な発見と反証</h2><p>本解析の最も非自明な発見は、通念の反転そのものにある。「基礎研究を強化せよ」という処方は、142業種（71%）が既に基盤完全である以上、律速に効かない。効くのは「統合層を編成せよ」である。基礎の増強という直感的で心地よい処方が空振りし、越境結節点の組成という地味で編成的な処方が効く——この逆説が、事前分布から最も遠い発見である。加えて、研究者供給の総量は豊かでありながら統合を成立させる隘路職能（標準化・制度設計・実装）だけが薄いという非対称も、「人材不足」という一般論の粗さを暴く。</p>
+<section class="chapter" id="c74160"><div class="cn">07</div><h2>7. 非自明な発見と反証</h2><p>本解析の最も非自明な発見は、通念の反転そのものにある。「基礎研究を強化せよ」という処方は、142業種（71%）が既に基盤完全である以上、律速に効かない。効くのは「統合層を編成せよ」である。基礎の増強という直感的で心地よい処方が空振りし、越境結節点の組成という地味で編成的な処方が効く——この逆説が、事前分布から最も遠い発見である。加えて、研究者供給の総量は豊かでありながら統合を成立させる隘路職能（標準化・制度設計・実装）だけが薄いという非対称も、「人材不足」という一般論の粗さを暴く。</p>
 <p>ただし、この解析が外れる条件も明示せねばならない。第1に、統合クラスターの編成が「新規基礎知」を要する領域——知見蓄積律速の9業種（量子QEC核、C-UAS統合理論）——では、本命題は当てはまらない。ここでは核科学の先行蓄積が編成に先立つ。第2に、f=1.0という基盤完全性の判定が要素の「存在」を測り「質・最先端性」を測らない可能性がある。基盤が量的に完備でも最先端の質で劣れば、統合だけでは供給側に立てない。第3に、越境クラスターを編成しても、標準・支配的設計が既に域外で確定していれば（セクター動き律速の領域で起こりやすい）、編成の見返りは規範適合コストに縮む。第4に、統合クラスターの成立自体が担い手・制度・資本の同時成立を要し、「編成せよ」という処方が実行の困難さを過小評価している危険がある——v2が繰り返す「知見が半世紀存在しても統合者不在なら産業は立たない」という事実は、編成がいかに難しいかの裏返しでもある。</p>
 <p><strong>So-What——</strong> 反転命題は強力だが万能ではない。適用は「成熟→次世代」型125業種と「グリーン相転換」型に絞り、知見蓄積律速には核科学蓄積を、基盤の質的劣位が疑われる領域には要素強化を併走させる。単一の処方を全産業に押しつけることは、通念の反転を新たな通念に固めるだけである。</p></section>
-<section class="chapter" id="c42401"><div class="cn">08</div><h2>8. 戦略的含意——越境結節点を編成する主体</h2><p>以上の解析は、一つの空席を照らし出す。200業種の空隙の本体が越境統合クラスターの不在であり、それを埋める隘路が標準化・制度設計・実装・様式確立という薄い結節職能にあるとすれば、必要なのは特定分野の増強でも単発の技術支援でもなく、<strong>分野をまたいで研究者を束ね、越境結節点を組成する編成主体</strong>である。この役割は、特定産業の当事者にも、単一省庁にも、営利プラットフォームにも担いにくい——なぜなら越境の編成は、いずれの既得の分野・利害からも中立な位置を要するからである。</p>
+<section class="chapter" id="c65212"><div class="cn">08</div><h2>8. 戦略的含意——越境結節点を編成する主体</h2><p>以上の解析は、一つの空席を照らし出す。200業種の空隙の本体が越境統合クラスターの不在であり、それを埋める隘路が標準化・制度設計・実装・様式確立という薄い結節職能にあるとすれば、必要なのは特定分野の増強でも単発の技術支援でもなく、<strong>分野をまたいで研究者を束ね、越境結節点を組成する編成主体</strong>である。この役割は、特定産業の当事者にも、単一省庁にも、営利プラットフォームにも担いにくい——なぜなら越境の編成は、いずれの既得の分野・利害からも中立な位置を要するからである。</p>
 <p>ミラツク/esse-senseがこの空席に対して担いうる役割は明確である。第1に、豊かだが分散した分野内研究者層（臨床77,657名、生物56,546名、材料12,622名等）を、v2が名指しする越境交点（医工×データ科学、冶金×水素×電気化学、スケールアップ工学×食品安全規制科学）へ組み替える研究者オーケストレーション。第2に、2028〜2032年の臨界窓に対する時機の設計——どの領域でいつ結節点を立てるべきかの、標準・規制期日に接地した優先順位づけ。第3に、NPO中立の立場を活かした、特定企業・特定分野の利害から独立した束ね手の提供である。</p>
 <p>実行の段取りは、波及の大きい順に絞る。まず「成熟→次世代」型で基盤が最も厚い素材・自動車・製造機械の1領域を選び、越境クラスターの編成をパイロットとして実証する。次にその編成モデルをグリーン相転換領域（エネルギー・素材・鉱業資源）へ移植する。並行して、薄い結節職能（標準化・制度設計・実装）の育成を長期の基盤づくりとして進める。</p>
 <p>ただし撤退条件も明示する。第1に、選んだ領域の支配的設計が既に域外で確定していれば、編成の見返りは失われるため着手前に標準の確定状況を検証し、確定済みなら撤退する。第2に、知見蓄積律速の領域（量子・C-UAS）では核科学の蓄積が先立つため、編成主体の関与は時期尚早であり手を出さない。第3に、編成の実証が2028〜2032年の窓に間に合わないと判明した時点で、その領域からは撤退し次の窓を持つ領域へ資源を移す。中立の編成主体の価値は、あらゆる領域に手を広げることではなく、波及が大きく窓が開いている結節点に集中し、閉じた窓には固執しないことにある。</p>
