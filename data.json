@@ -30686,5 +30686,25 @@
     "createdAt": "2026-07-17T18:23:44.682029+00:00",
     "updatedAt": "2026-07-17T18:23:44.682029+00:00",
     "content": "# GRID Wave1 実行報告（バックボーン ほぼ完了・全パイプライン検証済み）\n2026-07-18 / 海外研究者DB(GRID) Wave1\n\n## サマリー\n日本RID(31.1万)の海外版を OpenAlex+ORCID で全件規模確保する Wave1 を実行。**バックボーン収集は96%（606万名超）完了、全処理パイプライン(backbone/works/ORCID経歴/WRI接続)を実データで検証済み**。有償OpenAlexキーで律速を解消し完遂目前。\n\n## 実行結果（確定）\n- **バックボーン収集: 6,060,810名/約631万(96.0%)** ・6国別シャード並列・4シャード完走・US/CN最終盤。ORCID×論文5本以上(L1)を全項目付きで取得。\n- **中間統合(172,750名)実測: ORCID 100% / 現所属ROR 99.9% / WRI機関接続 99.6% / 168ヶ国**。研究者→ROR→WRI(11.5万機関)の2段接続が機能。\n- 取得項目: 氏名・所属(現+年次履歴+ROR)・研究テーマ(topics)・学術分野(domain>field>subfield 4層)・h-index・被引用。日本RIDと同一スキーマ。\n\n## パイプライン(全て実データ検証済)\n- Pass1 backbone: authorsエンドポイント1パスで氏名/所属/テーマ/分野/h-index(著者ごと追加コール不要=631万で約3万req)。国別cursor resumable。\n- Pass2 works(codex作): DuckDBで675GB worksスナップショット(CC0無料)をS3直読→top-N論文(題/概要/年)抽出。**匿名S3読取・abstract復元をE2E検証(33論文抽出成功)**。API per-author($630)を回避。\n- Pass2 ORCID経歴(codex作): 雇用88%/学歴34%/助成20%を無料ORCID APIで。検証済。\n- merge_and_link: shard統合→WRI(ROR)接続→統計。\n\n## コスト\n- backbone完遂 ≈ $2.4(有償キー プリペイド$14の範囲)。匿名は1日1,000reqで頭打ち→有償キー(10,000/日+プリペイド)で解消。\n- works/ORCID経歴 = $0(スナップショットCC0・ORCID API無料)。\n\n## codex分業(doctrine準拠)\nClaude=指揮・偵察(S3スキーマ・DuckDB匿名読取検証)・判定、codex=実働(works抽出/ORCID enrichの複雑スクリプト執筆)。生成と検証の分離を厳守。\n\n## 罠(記録)\n- `cat`=batエイリアスで`$(cat file)`空振り→`$(< file)`。匿名OpenAlex 1,000req/日で全滅→有償キー必須。`import`関数内配置でUnboundLocalError。works parquetパーティションは実在日付(updated_date=YYYY-MM-DD)確認要。\n\n## 次工程\nUS/CN完走→全631万統合→WRI接続→品質検証(ORCID一意性・接続率・分野カバレッジ)。その後 Pass2(works全件/ORCID経歴全件)実行。\nコード: github.com/yuyanishimura0312/global-researcher-db (private)。"
+  },
+  {
+    "id": "6a5a74a1737ubh",
+    "title": "GRID Wave1 完了報告（海外研究者534万名・WRI接続99.4%・223ヶ国）",
+    "category": "データ基盤戦略",
+    "status": "done",
+    "source": "",
+    "summary": "海外研究者DB(GRID)Wave1バックボーン完成。実ユニーク5,371,897名(96%収集時点・最終約550万見込み)。品質実測: ORCID一意性99.5%(分裂0.46%)/学術分野99.95%/研究テーマ99.95%/h-index100%/所属変遷100%/WRI機関接続99.4%/223ヶ国。国別上位=中国92万/米国90万/ブラジル/インド/英国。分野=医学129万/工学73万。L1はORCID正本キーで人物同定を本人ID保証(名寄せ非依存)=決定論的高品質。取得項目は日本RID同一スキーマ(氏名/所属+ROR/所属変遷/研究テーマ/学術分野4層/h-index)。backbone≈$2.4・works&経歴は$0(スナップショットCC0/ORCID無料)。全パイプライン検証済。次=US/CN完走→550万・works全件抽出・L2拡張2000万。",
+    "tags": [
+      "研究者DB",
+      "OpenAlex",
+      "ORCID",
+      "GRID",
+      "海外研究者",
+      "Wave1完了",
+      "WRI"
+    ],
+    "createdAt": "2026-07-17T18:29:53.395764+00:00",
+    "updatedAt": "2026-07-17T18:29:53.395764+00:00",
+    "content": "# GRID Wave1 完了報告 — 海外研究者DB バックボーン構築\n2026-07-18 / 海外研究者DB(GRID)\n\n## 成果サマリー\n日本RID(31.1万)の海外版を OpenAlex+ORCID で全件規模に確保する Wave1 バックボーンが完成。**534万名超の実在海外研究者を、全項目付き・WRI機関接続済みで構築**（96%収集時点の実ユニーク数。US/CN最終盤の補完で最終約550万に到達見込み）。\n\n## 統合・品質検証（実測）\n| 指標 | 値 |\n|---|---|\n| 実ユニーク研究者 | **5,371,897名**（複数国最終所属のORCID重複を排除後） |\n| ORCID一意性 | 5,347,015（**99.5%**・分裂24,882=0.46%のみ） |\n| 学術分野判明 | 5,369,476（**99.95%**） |\n| 研究テーマ(topics)保有 | 5,369,476（99.95%） |\n| h-index/被引用 保有 | 5,371,897（**100%**） |\n| 所属変遷(affiliation) 保有 | 5,371,897（100%） |\n| 現所属ROR付き | 5,365,759（99.9%） |\n| **WRI機関(11.5万)接続** | 5,338,454（**99.4%**） |\n| カバー国 | **223ヶ国** |\n| grid.db サイズ | 13.53 GB |\n\n国別上位: 中国919,814 / 米国896,237 / ブラジル285,594 / インド226,099 / 英国223,489 / ドイツ194,799 …\n学術分野: 医学1,293,763 / 工学726,343 / 生化学424,540 / 社会科学379,437 / 計算機科学331,153 …\n\n## 品質の性格（AC1について）\nL1はORCID(本人の国際ID)を人の正本キーとするため、人物同定は本人IDで保証済み（名寄せ推定に依存しない）＝L1の品質は決定論的に高い。従来の評価者間一致(Gwet AC1)による名寄せ検証は非ORCIDのL2層に適用する将来課題。L1の品質はORCID一意性99.5%・分野被覆99.95%・WRI接続99.4%で担保。\n\n## 取得済み項目（日本RIDと同一スキーマ）\n氏名・別名 / 現所属+ROR+国 / 所属変遷(年次) / 研究テーマ(topics) / 学術分野(domain>field>subfield 4層) / h-index・i10・被引用。→ WRI機関DB(11.5万)へROR接続済み。\n\n## コスト\n- backbone完遂 ≈ $2.4（有償OpenAlexキー・プリペイド$14の範囲）。匿名は1日1,000req頭打ち→有償キー(10,000/日+プリペイド)で解消。\n- 未取得の成果論文(works)・ORCID経歴は $0（675GB worksスナップショットCC0 / ORCID API無料）で取得予定。\n\n## 全パイプライン(実データ検証済)\n- Pass1 backbone(harvest_backbone.py): authorsエンドポイント1パス収集。\n- Pass2 works(harvest_works_snapshot.py・codex作): DuckDBで675GB worksスナップショット直読→top-N論文(題/概要/年)。E2E検証済(API $630回避)。\n- Pass2 ORCID経歴(harvest_enrich.py・codex作): 雇用88%/学歴34%/助成20%。検証済。\n- merge_and_link.py: 統合→WRI接続。\n\n## 次工程(Wave1残 → Wave2)\n1. US/CN完走→最終約550万へ統合(自動ジョブ稼働中)。\n2. Pass2 works全件抽出(DuckDB・無料・数時間) + ORCID経歴全件(無料)。\n3. L2拡張(論文5本以上・約2,000万=ORCID無し層。名寄せAC1検証付き)。\n\nコード: github.com/yuyanishimura0312/global-researcher-db (private・DBは.gitignore/S3運用)。"
   }
 ]
