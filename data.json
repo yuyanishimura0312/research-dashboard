@@ -30647,5 +30647,23 @@
     ],
     "createdAt": "2026-07-17T15:23:44.496419+00:00",
     "updatedAt": "2026-07-17T15:23:44.496419+00:00"
+  },
+  {
+    "id": "6a5a4d507y3ibs",
+    "title": "ISF-DB 情報科学の最前線 学術知見DB 12,154概念到達 (10k目標達成)",
+    "category": "実データDB",
+    "status": "done",
+    "source": "https://github.com/yuyanishimura0312/information-science-frontier-db",
+    "summary": "ISF-DB(情報科学の最前線 学術知見DB)を OpenAlex優先枠(有償キー)で 2,662→12,154概念にスケール、10,000件目標を達成。15サブフィールド(AI5・量子2・基礎理論4・システム4)、出典URL100%(捏造ゼロ)、構造的関係5,267、cross_db_refs 100。検証clean(重複0・dangling0・無効subfield0・source liveness 40/40 live)。量子コンピューティング(2,914)が最大サブフィールドとなり最大の空白領域を充填、暗号・セキュリティ(1,969)も厚く。frontier landmarks 126件(Shor/surface code/RLHF/zk-SNARK/NeRF/vector database等)を接地。OpenAlex無料枠のburst 429はkeychain openalex-api有償キーを&api_key=で付け優先枠回避して高速大量収集(数分で1万超)。/isf(haiku)照会・dom-science+dom-enterprise登録・GitHub private公開・nightly grow.sh継続富化。",
+    "tags": [
+      "情報科学",
+      "AI",
+      "量子コンピューティング",
+      "学術DB",
+      "OpenAlex優先枠",
+      "ISF-DB"
+    ],
+    "createdAt": "2026-07-17T15:42:08.411114+00:00",
+    "updatedAt": "2026-07-17T15:42:08.411114+00:00"
   }
 ]
