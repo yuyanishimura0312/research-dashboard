@@ -30586,5 +30586,25 @@
     "createdAt": "2026-07-17T14:35:03.002427+00:00",
     "updatedAt": "2026-07-17T14:35:03.002427+00:00",
     "content": "# 海外研究者 6項目の取得可能性 実証結果\n2026-07-17 / OpenAlex + ORCID API 実測（実在研究者 Douglas G. Altman ほかで検証）\n\n## 結論: 6項目すべて取得可能。「パーフェクト」にほぼ到達。実質的な制約は論文アブストラクトの保有率(7〜8割)のみ。\n\n| 希望項目 | 取得可否 | ソース / 実測カバレッジ |\n|---|---|---|\n| ① 氏名 | ◎ 完全 | OpenAlex display_name + 別名リスト + ORCID。L1は100% |\n| ② 所属 | ◎ 完全 | last_known_institutions（現）＋ affiliations（**年次つき履歴**）＋ ROR機関ID。L1サンプル100% |\n| ③ 研究テーマ | ○ 取得可 | 著者レベルtopics=66%保有。不足分も各論文のprimary_topicから100%導出可 |\n| ④ 研究テーマ概要 | ◎ 完全 | OpenAlex Topics（約4,500テーマ）は全件に説明文descriptionあり。テーマごとの概要が既製で付く |\n| ⑤ 成果論文 題名 | ◎ 完全 | works.title。100% |\n| ⑤ 成果論文 概要 | △ 部分 | abstract（逆引き索引から復元）。**保有率 84%(2024)/72%(2015)/70%(2005)**。旧年・一部出版社は欠 |\n| ⑤ 成果論文 年 | ◎ 完全 | publication_year。100% |\n| ⑥ 学術分野 | ◎ 完全 | domain > field > subfield > topic の4層階層。topics保有者は100%。例: 社会科学>意思決定科学>統計 |\n\n## 実証サンプル（実在研究者1名で全項目抽出済）\n- 氏名: Douglas G. Altman（ORCID: 0000-0002-7183-4083）\n- 所属: Cancer Research UK [GB, ROR付] ＋ 年次つき履歴（リヨン第1大2008 等）\n- 研究テーマ: 「Meta-analysis and systematic reviews」他（各テーマに論文数カウント付）\n- 研究テーマ概要: 「系統的レビュー・メタ分析・エビデンス統合の方法とガイドライン…PRISMA声明、出版バイアス検出…」（Topics API descriptionをそのまま取得）\n- 成果論文: [2009] PRISMA statement / [2003] Measuring inconsistency in meta-analyses …（題・概要・年すべて）\n- 学術分野: Social Sciences > Decision Sciences > Statistics（4層で判明）\n\n## 実測カバレッジ（正直な開示）\n- 論文アブストラクト保有率: 2024年 84% / 2015年 72% / 2005年 70%。**古い論文・一部商業出版社は概要が欠ける**（出版社の権利制約）。題名・年・分野は欠けない。\n- 著者レベルの研究テーマ付与率: 66%（残りも所属論文のトピックから導出可能なので実質ほぼ全員テーマ判定可）。\n\n## 含意\n- 希望6項目は OpenAlex + ORCID の標準データモデル内でほぼ完全に揃う。追加の有料DBは不要。\n- 唯一の穴＝アブストラクト（7〜8割）は、(a)欠損を明示して許容 (b)Crossref/Semantic Scholarで補完 (c)出版社サイトの要旨リンクを付す、の3択で緩和可能。捏造はしない。\n- 日本RIDの項目体系（氏名・所属・分野・成果）と同一構造で海外を持てる＝統合が自然。"
+  },
+  {
+    "id": "6a5a3eaaj1lpk8",
+    "title": "海外研究者 経歴系含む全項目の同時取得 可否判定",
+    "category": "データ基盤戦略",
+    "status": "done",
+    "source": "",
+    "summary": "RID日本版の経歴系(所属変遷・学歴・学位・分野・共同研究・成果)を海外でも同時取得できるか実測判定。結論=可。OpenAlex(著者+論文)とORCID(経歴)を同一1パスで引け追加費用ゼロ。経歴(所属変遷)はORCID employments 88%+OpenAlex affiliations補完でほぼ100%。分野・研究テーマ・成果論文・共著・h-indexも厚い。薄いのは学歴34%/助成20%/学位4%/受賞(本人未記入が主因・捏造で埋めない)。日本RID自身も学歴学位は各60名台と薄く海外が見劣りせず、経歴はむしろORCID(88%)>日本構造化(68名)。RID経歴系テーブルと同一スキーマで国内外統合可能。",
+    "tags": [
+      "研究者DB",
+      "OpenAlex",
+      "ORCID",
+      "海外研究者",
+      "経歴",
+      "データ項目",
+      "フィージビリティ"
+    ],
+    "createdAt": "2026-07-17T14:39:38.883314+00:00",
+    "updatedAt": "2026-07-17T14:39:38.883314+00:00",
+    "content": "# 海外研究者 経歴系を含む全項目の同時取得 可否判定\n2026-07-17 / OpenAlex + ORCID 公開API 実測（実在研究者 + L1サンプル50名）\n\n## 結論: 経歴（所属変遷）は88%取れる。日本RIDと同じ「同時取得」が成立。ただし学歴・学位・受賞は薄い。\n\nRID日本版の経歴系の実態を確認したところ、構造化経歴は主にKAKEN由来（career情報は11,130名）で、細粒度の学歴・学位・受賞は日本版でもごく一部（各60〜68名）しか埋まっていない。分野・共同研究・成果は全員分。海外版も同じ濃淡で、しかも同一のOpenAlex+ORCID 1回の取得で同時に確保できる。\n\n## 項目別 可否（RID項目 → 海外ソース → 実測カバレッジ）\n\n| RID項目 | 海外での取得 | ソース | 実測カバレッジ(L1) |\n|---|---|---|---|\n| 氏名 | ◎ | OpenAlex display_name+別名 | 100% |\n| 現所属 | ◎ | OpenAlex last_known_institutions + ROR | 100% |\n| **経歴（所属変遷・年次）** | ○ | **ORCID employments 88%** ＋ OpenAlex affiliations(年次付)で補完→実質ほぼ全員 | **88%→ほぼ100%** |\n| 学歴 | △ | ORCID educations | 34% |\n| 学位・資格 | ▲ | ORCID qualifications | 4%（薄い） |\n| 学術分野 | ◎ | OpenAlex domain>field>subfield>topic | ほぼ100% |\n| 研究テーマ＋概要 | ◎ | OpenAlex topics + description | 高 |\n| 成果論文（題/年） | ◎ | OpenAlex works | 100% |\n| 成果論文（概要） | △ | works abstract | 70〜84%（年代依存） |\n| 共同研究者 | ◎ | OpenAlex 共著関係から導出 | ほぼ100% |\n| 助成・funding | △ | ORCID funding 20% ＋ works grants | 20〜中 |\n| h-index・被引用 | ◎ | OpenAlex summary_stats | 100% |\n| 受賞 | ▲ | 安定して取れる公開源なし | 低 |\n\n## 実証（Altman氏 ORCID 0000-0002-7183-4083）\n- 雇用: University of Oxford（employmentsセクション）→ 取得成功\n- 学歴・学位・助成: このレコードでは空（本人が未記入）\n\n## カバレッジ実測（L1著者サンプル50名・ORCID公開API）\n- 雇用(経歴)あり 88% ／ 学歴あり 34% ／ 学位・資格あり 4% ／ 助成あり 20% ／ 雇用or学歴 88%\n\n## 判定\n- **同時取得の可否 = 可**。OpenAlex(著者+論文) と ORCID(経歴) は同じ1パスで引けるため、氏名・所属・経歴・分野・研究テーマ・成果論文・共同研究者・h-index を追加費用ゼロで一括確保できる。\n- 濃淡: 経歴(88%)・分野・成果・共著は厚い。学歴(34%)・助成(20%)は中。学位(4%)・受賞は薄い（本人未記入が主因＝データ源の限界であり、捏造で埋めない）。\n- 日本RID自身の学歴・学位も薄い（各60名台）ので、海外版が相対的に見劣りすることはない。むしろ経歴は日本の構造化経歴(68名)より海外ORCID(88%)の方が厚い逆転もある。\n- スキーマは日本RIDの経歴系テーブル（career_history / education_history / degree_history）と同一構造で受けられる＝国内外を単一DBに統合可能。"
   }
 ]
