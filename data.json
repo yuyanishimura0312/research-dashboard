@@ -30665,5 +30665,26 @@
     ],
     "createdAt": "2026-07-17T15:42:08.411114+00:00",
     "updatedAt": "2026-07-17T15:42:08.411114+00:00"
+  },
+  {
+    "id": "6a5a7330uwhk0s",
+    "title": "GRID Wave1 実行報告（海外研究者DB・バックボーン96%・全パイプライン検証済）",
+    "category": "データ基盤戦略",
+    "status": "organized",
+    "source": "",
+    "summary": "日本RID(31.1万)の海外版をOpenAlex+ORCIDで全件規模確保するWave1実行。バックボーン収集606万名(96%)・4シャード完走・US/CN最終盤。中間統合172,750名でORCID100%/WRI機関接続99.6%/168ヶ国を実測。全パイプライン(Pass1 backbone/Pass2 works DuckDB-S3抽出/ORCID経歴/WRI接続)を実データ検証済。works=675GBスナップショットCC0無料でAPI$630回避、匿名S3読取E2E検証。有償キーで律速解消(匿名1000req/日→10000+プリペイド)。backbone完遂≈$2.4・works/ORCID=$0。codex分業(Claude偵察検証/codex実働執筆)。取得項目=氏名/所属+ROR/研究テーマ/学術分野4層/h-index/経歴(ORCID88%)、日本RID同一スキーマ。",
+    "tags": [
+      "研究者DB",
+      "OpenAlex",
+      "ORCID",
+      "GRID",
+      "海外研究者",
+      "Wave1",
+      "DuckDB",
+      "codex"
+    ],
+    "createdAt": "2026-07-17T18:23:44.682029+00:00",
+    "updatedAt": "2026-07-17T18:23:44.682029+00:00",
+    "content": "# GRID Wave1 実行報告（バックボーン ほぼ完了・全パイプライン検証済み）\n2026-07-18 / 海外研究者DB(GRID) Wave1\n\n## サマリー\n日本RID(31.1万)の海外版を OpenAlex+ORCID で全件規模確保する Wave1 を実行。**バックボーン収集は96%（606万名超）完了、全処理パイプライン(backbone/works/ORCID経歴/WRI接続)を実データで検証済み**。有償OpenAlexキーで律速を解消し完遂目前。\n\n## 実行結果（確定）\n- **バックボーン収集: 6,060,810名/約631万(96.0%)** ・6国別シャード並列・4シャード完走・US/CN最終盤。ORCID×論文5本以上(L1)を全項目付きで取得。\n- **中間統合(172,750名)実測: ORCID 100% / 現所属ROR 99.9% / WRI機関接続 99.6% / 168ヶ国**。研究者→ROR→WRI(11.5万機関)の2段接続が機能。\n- 取得項目: 氏名・所属(現+年次履歴+ROR)・研究テーマ(topics)・学術分野(domain>field>subfield 4層)・h-index・被引用。日本RIDと同一スキーマ。\n\n## パイプライン(全て実データ検証済)\n- Pass1 backbone: authorsエンドポイント1パスで氏名/所属/テーマ/分野/h-index(著者ごと追加コール不要=631万で約3万req)。国別cursor resumable。\n- Pass2 works(codex作): DuckDBで675GB worksスナップショット(CC0無料)をS3直読→top-N論文(題/概要/年)抽出。**匿名S3読取・abstract復元をE2E検証(33論文抽出成功)**。API per-author($630)を回避。\n- Pass2 ORCID経歴(codex作): 雇用88%/学歴34%/助成20%を無料ORCID APIで。検証済。\n- merge_and_link: shard統合→WRI(ROR)接続→統計。\n\n## コスト\n- backbone完遂 ≈ $2.4(有償キー プリペイド$14の範囲)。匿名は1日1,000reqで頭打ち→有償キー(10,000/日+プリペイド)で解消。\n- works/ORCID経歴 = $0(スナップショットCC0・ORCID API無料)。\n\n## codex分業(doctrine準拠)\nClaude=指揮・偵察(S3スキーマ・DuckDB匿名読取検証)・判定、codex=実働(works抽出/ORCID enrichの複雑スクリプト執筆)。生成と検証の分離を厳守。\n\n## 罠(記録)\n- `cat`=batエイリアスで`$(cat file)`空振り→`$(< file)`。匿名OpenAlex 1,000req/日で全滅→有償キー必須。`import`関数内配置でUnboundLocalError。works parquetパーティションは実在日付(updated_date=YYYY-MM-DD)確認要。\n\n## 次工程\nUS/CN完走→全631万統合→WRI接続→品質検証(ORCID一意性・接続率・分野カバレッジ)。その後 Pass2(works全件/ORCID経歴全件)実行。\nコード: github.com/yuyanishimura0312/global-researcher-db (private)。"
   }
 ]
