@@ -30840,5 +30840,22 @@
     ],
     "createdAt": "2026-07-18T02:40:50.869195+00:00",
     "updatedAt": "2026-07-18T02:40:50.869195+00:00"
+  },
+  {
+    "id": "6a5af51d20ola6",
+    "title": "DB品質メタ Tier2 第2バッチ — 旗艦6DB(分岐が品質シグナルを露呈)",
+    "category": "DB品質管理",
+    "status": "done",
+    "source": "",
+    "summary": "Tier2 LLM二重採点を旗艦6DBへ拡大(効率化:評価者2体で180件一括採点)。結果=philosophy AC1=1.00/economics 0.97/mathematics 0.89(高品質確認)、chemistry AC1=0.54 prev0.17(主テーブルchemistry_concept_synthetic_archive=合成アーカイブと発覚・評価者Bが20/30を合成判定=本物の品質シグナル)、academic-genealogy -0.66(定義切れatoms分岐)・great-figures -1.00(人物DBで評価者A/B解釈相違=測定アーティファクト)。教訓=旗艦5DB(AC1=1.0)と違い分岐が出た=測定が健全に機能(合成データ検出・測定限界露呈)。全6DB_quality_metadata_irにflag付(high_agreement/synthetic_flagged/low_agreement_needs_review)で信頼度明示。Tier2累計11DB:高一致8+要調査3。人物/系譜DBは専用採点基準要。",
+    "tags": [
+      "品質指標",
+      "AC1",
+      "dual-rater",
+      "synthetic検出",
+      "additive"
+    ],
+    "createdAt": "2026-07-18T03:38:05.784319+00:00",
+    "updatedAt": "2026-07-18T03:38:05.784319+00:00"
   }
 ]
