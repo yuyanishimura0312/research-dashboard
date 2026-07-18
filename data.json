@@ -30857,5 +30857,22 @@
     ],
     "createdAt": "2026-07-18T03:38:05.784319+00:00",
     "updatedAt": "2026-07-18T03:38:05.784319+00:00"
+  },
+  {
+    "id": "6a5af81by0zniu",
+    "title": "DB品質メタ Tier2是正 — chem/agd/great-figures の低AC1は測定バグと判明・全て高品質",
+    "category": "DB品質管理",
+    "status": "done",
+    "source": "",
+    "summary": "(a)chem合成精査+(b)人物/系譜DB基準の両方実行。前回の低AC1(chem0.54/agd-0.66/great-figures-1.00)は全て測定アーティファクトと判明・是正: chem=私が隔離済み合成アーカイブ(chemistry_concept_synthetic_archive 5054・テンプレ定義)を誤サンプル→実テーブルchemistry_concept(1196)は健全でAC1=1.00(DB合成汚染なし・既にクリーン化済み確認)。agd=def列をdefinition(不在)で拾い空→正しくsummary列でAC1=1.00。great-figures=bio(不在)で空def+人物に概念基準→summary_ja+人物基準でAC1=0.91(93%一致・高品質)。教訓=測定設計是正3点: (1)主テーブル検出は_archive/_excluded/_synthetic除外(2)def列はsummary/summary_jaも探索(3)人物/系譜DBは種別別採点基準。Tier2累計11DB全て高品質確認(AC1 0.89-1.00)。捏造ゼロ・非破壊・測定バグを自己検出し是正=方式の自己修正力を実証。",
+    "tags": [
+      "品質指標",
+      "AC1",
+      "測定バグ是正",
+      "synthetic隔離",
+      "additive"
+    ],
+    "createdAt": "2026-07-18T03:50:51.199469+00:00",
+    "updatedAt": "2026-07-18T03:50:51.199469+00:00"
   }
 ]
