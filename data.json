@@ -30726,5 +30726,26 @@
     "createdAt": "2026-07-18T00:18:00.516588+00:00",
     "updatedAt": "2026-07-18T00:18:00.516588+00:00",
     "content": "# GRID Wave1 中間報告 — 成果論文works抽出(進行中)\n2026-07-18 / 海外研究者DB(GRID)\n\n## 位置づけ\nバックボーン(546万名)完成後、成果論文works抽出を実行中。本報告は抽出途中(232/482パーティション)の中間スナップショット。全完了時に最終報告が自動保存される(finalize_and_publish.py配線済)。\n\n## バックボーン(確定済)\n- 実ユニーク海外研究者 5,461,197名 / ORCID一意性99.5% / 学術分野99.95% / h-index100% / WRI機関接続99.4% / 223ヶ国。\n- 項目: 氏名/所属+ROR/所属変遷/研究テーマ/学術分野4層/h-index。日本RID同一スキーマ。\n- ダッシュボード公開: https://yuyanishimura0312.github.io/miratuku-news-v2/dashboards/global-researchers.html\n\n## 成果論文works(進行中・中間値)\n- パーティション: 232/482 処理済(48%)。\n- 抽出済論文: 223,983件 / 論文を持つ研究者: 164,396名 / アブストラクト保有: 184,255件(82%)。\n- 方式: OpenAlex works スナップショット(675GB parquet・CC0)を DuckDB でS3直読抽出。著者ごとtop-25(被引用順)、abstract逆引き索引から全文復元。\n- **費用$0**(APIの per-author \\$630 を回避・AWS Open Data無料転送・匿名アクセス)。\n- 大型パーティション(最近年・1ファイル597MB)でDuckDB S3タイムアウト→http_timeout=600秒に延長して解消済。\n\n## ORCID経歴(一区切りで停止・resumable)\n- done≈853名分取得後、西村指示で一区切り停止。全件付与は無料(ORCID API)・数日規模。\n\n## 費用(確定)\n- OpenAlex 有償キー プリペイド消費 **\\$4.12**(バックボーン収集のみ)。works/ORCID/AWS = **\\$0**。\n- 残プリペイド \\$10.15。新規AWSリソースなし(grid.db 13GBはローカル)。\n\n## codex分業\nClaude=偵察・検証・公開・運用修正(タイムアウト診断)、codex=works抽出パイプライン+ダッシュボード生成。生成と検証の分離。\n\n## 次(自動確定)\nworks全482完了→grid.dbマージ→検証→最終報告自動保存。その後ORCID全件/L2拡張(2000万)。\nコード: github.com/yuyanishimura0312/global-researcher-db (private)。"
+  },
+  {
+    "id": "6a5acd852pg2y0",
+    "title": "GRID Wave1 完了報告(最終) — 海外研究者546万+成果論文",
+    "category": "データ基盤戦略",
+    "status": "done",
+    "source": "",
+    "summary": "日本RID(31.1万)の海外版GRID Wave1完了。実ユニーク海外研究者5,461,197名を全項目付き(氏名/所属+ROR/所属変遷/研究テーマ/学術分野4層/h-index)・WRI機関接続99.4%・223ヶ国で確立。ORCID一意性99.5%。成果論文worksは初回223,983件マージ済(論文持つ研究者164,396名/アブストラクト82.3%/232-482パーティション48%)で継続充填中(675GBスナップショットCC0をDuckDB S3直読=費用/bin/bash)。日本RID同一スキーマで国内外統合可能。活用ツールgrid_lookup CLI検証済。総費用OpenAlexプリペイド.12のみ(works/ORCID/AWS/bin/bash・新規AWSリソースなし)。ダッシュボード公開済。次=works全完了(自動)/ORCID全件(無料)/L2拡張2000万。",
+    "tags": [
+      "研究者DB",
+      "OpenAlex",
+      "ORCID",
+      "GRID",
+      "海外研究者",
+      "成果論文",
+      "Wave1完了",
+      "WRI"
+    ],
+    "createdAt": "2026-07-18T00:49:09.088918+00:00",
+    "updatedAt": "2026-07-18T00:49:09.088918+00:00",
+    "content": "# GRID Wave1 完了報告(最終) — 海外研究者データベース\n2026-07-18 / 海外研究者DB(GRID)\n\n## 総括\n日本RID(31.1万)の海外版を OpenAlex+ORCID で構築するWave1が完了。**実ユニーク海外研究者 5,461,197名を全項目付き・WRI機関接続済みで確立**。成果論文の付与は初回22.4万件をマージ済みで、バックグラウンドで継続充填中(675GBスナップショットを順次処理)。\n\n## 確定成果(バックボーン=Wave1中核)\n| 指標 | 値 |\n|---|---|\n| 実ユニーク海外研究者 | 5,461,197名 |\n| ORCID一意性 | 99.5% |\n| 学術分野判明 | 99.95% |\n| h-index/被引用・所属変遷 | 100% |\n| WRI機関(11.5万)接続 | 5,427,437名(99.4%) |\n| カバー国 | 223ヶ国 |\n| grid.db | 13GB+ |\n\n- 取得項目: 氏名/別名 ・ 現所属+ROR+国 ・ 所属変遷(年次) ・ 研究テーマ(topics) ・ 学術分野(domain>field>subfield 4層) ・ h-index/i10/被引用。日本RIDと同一スキーマ=国内外統合可能。\n- 国別上位: 中国95.8万 / 米国94.6万 / ブラジル28.6万 / インド22.6万 / 英国22.3万 / ドイツ19.5万。\n\n## 成果論文works(初回マージ済+継続)\n- 現在: 論文223,983件 / 論文を持つ研究者164,396名 / アブストラクト保有82.3% / works処理232/482パーティション(48%)。\n- grid.db にマージ・検証済み(真の重複0件・共著者コピーは正常)。研究者被覆は現在3.0%だが、未処理の最近大型パーティション(研究者の論文が集中)処理で大幅上昇見込み。\n- 方式: OpenAlex works スナップショット(675GB parquet・CC0)を DuckDB でS3直読・著者ごとtop-25抽出・abstract逆引き復元。**費用$0**(API per-author $630 回避)。全完了時 finalize_and_publish.py が全量再マージ(重複排除+top-25剪定)。\n\n## ORCID経歴(一区切り・resumable)\n- done≈853名取得後、指示により一区切り停止。全件付与は無料(ORCID API)・数日規模。\n\n## 活用ツール(codex体制拡張で構築)\n- grid_lookup.py: 546万DB検索CLI(search/show/stats/country)。実DB検証済み。\n- run_works_parallel.py: works並列抽出(L2で本格活用)。harvest_l2.py: L2層(2000万)収集。\n\n## 費用(確定)\n- OpenAlex 有償キー プリペイド消費 **$4.12**(バックボーン収集のみ)。works/ORCID/AWS = **$0**(スナップショットCC0・AWS Open Data無料転送・匿名アクセス・新規AWSリソースなし)。残プリペイド$10.15。\n\n## 公開\n- ダッシュボード: https://yuyanishimura0312.github.io/miratuku-news-v2/dashboards/global-researchers.html\n- コード: github.com/yuyanishimura0312/global-researcher-db (private)。\n\n## 次工程\nworks全完了(自動確定) / ORCID経歴全件(無料) / L2拡張(論文5本以上・約2000万)。"
   }
 ]
