@@ -30768,5 +30768,24 @@
     "createdAt": "2026-07-18T00:52:39.254182+00:00",
     "updatedAt": "2026-07-18T00:52:39.254182+00:00",
     "content": "# 知識構造化 診断→3欠落是正→恒久化 セッション記録 (2026-07-17〜18)\n\n## 1. 最先端知見の接地改修\nfable 4軸43本 + codex 12軸約90本 = 約133本/16軸を二系統収束で十分性判定し、三本柱DB(KOS/KAS/DPE)へ非破壊接地(+139レコード・独立検証146/146実在・捏造0・139行verified昇格)。CORPUS.md 参照。\n\n## 2. DB群診断(実測)\n- 規模: 非除外259 project・70.5M行・940 agents/commands・接続554K(後に935K)。\n- 3欠落実測: 意味型σ≈17%(越境層0%)・矛盾H¹ 0.055%(規範10%比1/180)・活性化J=0(合成のみ)。\n- SORA接続完全度 0.259(baseline 0.211)・孤立DB 79/259(171→大幅改善)・Gini 0.88一極集中。\n- 是正の滞留: reinforcement worklist proposed 1,429消化0・CFP weak候補426(目標<50)。\n- 確証度 avg 0.358・reasoning_soundness 0.105が最弱。\n\n## 3. 3欠落是正(実データで前進)\n- **活性化J**: 本番answer-engineに既存J1ロガー(observe→箱observations.db)発見→日次sync cron構築。実データ3,851行/42DB取込=J=0を実データ解消。launchd PATH修正済(aws not found回避)。\n- **接続完全度(SORA)**: worklist 369消化・実接続40本追加・偽ギャップ91却下。alias真衝突16グループ/18別名を正しい実DBへ分離→永続override表+ETL組込で恒久化(再構築で消えない・コピー検証済)。\n- **意味型σ**: overlayインフラ完成+捏造ゼロで95件保守的型付け(applies_to/closeMatch/exactMatch・方向型は発明せず・30件検証で捏造0)。大量LLM型付けは概念→DB構造ゆえ捏造リスクと判断し回避。\n\n## 4. 観測層(AR-DB)の恒久ガード\nセッション中に稼働系が3度劣化(extract.py直叩き/後段wipe)→都度lastgoodから復旧。auto_update.shに恒久ガードを実装:\n- §0.9 extract前lastgood退避 / extract失敗時lastgood復元\n- §1.0.5 skos_normalizeをnetwork_upgradeの前へ移動(rebuild故障の根本修正)\n- §3.9 network_upgrade後の劣化復元 / §3.99 S3プッシュ直前の最終guard\n- §4a S3プッシュを健全時のみ(サイズ≥100MB∧xref>0∧cap>0)にgate\n残: 後段wipeの根本原因(並行run/後段unlink)は要調査。\n\n## 5. インフラ整備\n- ecu.db(260MB)をS3移行(ecu-411788010040・filter-repo履歴クリーン・restore/snapshot)。\n- 全成果物commit/push済。memory記録(frontier/J1/ecu_s3/ardb_s3)。\n\n## 残follow-up(優先度順)\n1. AR-DB後段wipe根本原因の調査(guardで延命中)。\n2. SORA worklist消化statusの揮発(再生成で上書き)→status継承の実装。\n3. apk/dm/dfm等のSORA接続の永続化(normalizeで拾われるがsource DB自体の退避)。\n4. ecu.db snapshot自動化(demand_signal日次書込に対しS3退避が手動)。\n5. J2/J3/J4(帰属/妨害DE/翻訳深度)の実装。"
+  },
+  {
+    "id": "6a5ad2fbxg2xoc",
+    "title": "AR-DB 構造検証(ISF情報科学最前線レンズ)と KG層3弱点の非破壊是正",
+    "category": "DB品質管理",
+    "status": "done",
+    "source": "",
+    "summary": "ISF-DB(情報科学最前線)の6軸学術基準でAR-DB(945エージェント・94.7万KGエッジ・369MB)を検証。関係型DBの骨格(FK整合0違反/エンティティ重複0/エージェント層意味型化100%/メタ完全/来歴100%)は世界水準で優秀。弱点はKG層に3つ集中し、いずれも我々自身のΨΣ・三本柱・CFP自己診断と独立に一致(交差検証)。是正実行(全additive・捏造ゼロ): ①KG意味型=refinerにSKOS mapping property復元ルール追加(broadMatch→broader/relatedMatch保存)でgeneric 62.2%→42.3%、§1.82で夜間durable。②KG名寄せ=canonical正本レジストリdb_name_alias新設(cross-ref名前空間857種は能力行列282projectの3倍で乖離と真因確定)、dangling 22%→12%、auto_update §2.955で夜間durable。③品質メタ疎=5セット指標(Po/AC1/κ)は評価者間測定の実値ゆえ派生不可・機械充填は捏造になるため停止、未採点475DBの優先ワークリスト(great-figures45k/philosophy22k等)を提示し測定campaignとして承認保留。結論=内容は豊かだがKG意味構造は発展途上、①②は恒久是正済み、③は捏造ゼロが測定campaignを要求。",
+    "tags": [
+      "AR-DB",
+      "ISF",
+      "知識グラフ",
+      "SKOS",
+      "名寄せ",
+      "品質指標",
+      "additive"
+    ],
+    "createdAt": "2026-07-18T01:12:27.422195+00:00",
+    "updatedAt": "2026-07-18T01:12:27.422195+00:00"
   }
 ]
