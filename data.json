@@ -30747,5 +30747,26 @@
     "createdAt": "2026-07-18T00:49:09.088918+00:00",
     "updatedAt": "2026-07-18T00:49:09.088918+00:00",
     "content": "# GRID Wave1 完了報告(最終) — 海外研究者データベース\n2026-07-18 / 海外研究者DB(GRID)\n\n## 総括\n日本RID(31.1万)の海外版を OpenAlex+ORCID で構築するWave1が完了。**実ユニーク海外研究者 5,461,197名を全項目付き・WRI機関接続済みで確立**。成果論文の付与は初回22.4万件をマージ済みで、バックグラウンドで継続充填中(675GBスナップショットを順次処理)。\n\n## 確定成果(バックボーン=Wave1中核)\n| 指標 | 値 |\n|---|---|\n| 実ユニーク海外研究者 | 5,461,197名 |\n| ORCID一意性 | 99.5% |\n| 学術分野判明 | 99.95% |\n| h-index/被引用・所属変遷 | 100% |\n| WRI機関(11.5万)接続 | 5,427,437名(99.4%) |\n| カバー国 | 223ヶ国 |\n| grid.db | 13GB+ |\n\n- 取得項目: 氏名/別名 ・ 現所属+ROR+国 ・ 所属変遷(年次) ・ 研究テーマ(topics) ・ 学術分野(domain>field>subfield 4層) ・ h-index/i10/被引用。日本RIDと同一スキーマ=国内外統合可能。\n- 国別上位: 中国95.8万 / 米国94.6万 / ブラジル28.6万 / インド22.6万 / 英国22.3万 / ドイツ19.5万。\n\n## 成果論文works(初回マージ済+継続)\n- 現在: 論文223,983件 / 論文を持つ研究者164,396名 / アブストラクト保有82.3% / works処理232/482パーティション(48%)。\n- grid.db にマージ・検証済み(真の重複0件・共著者コピーは正常)。研究者被覆は現在3.0%だが、未処理の最近大型パーティション(研究者の論文が集中)処理で大幅上昇見込み。\n- 方式: OpenAlex works スナップショット(675GB parquet・CC0)を DuckDB でS3直読・著者ごとtop-25抽出・abstract逆引き復元。**費用$0**(API per-author $630 回避)。全完了時 finalize_and_publish.py が全量再マージ(重複排除+top-25剪定)。\n\n## ORCID経歴(一区切り・resumable)\n- done≈853名取得後、指示により一区切り停止。全件付与は無料(ORCID API)・数日規模。\n\n## 活用ツール(codex体制拡張で構築)\n- grid_lookup.py: 546万DB検索CLI(search/show/stats/country)。実DB検証済み。\n- run_works_parallel.py: works並列抽出(L2で本格活用)。harvest_l2.py: L2層(2000万)収集。\n\n## 費用(確定)\n- OpenAlex 有償キー プリペイド消費 **$4.12**(バックボーン収集のみ)。works/ORCID/AWS = **$0**(スナップショットCC0・AWS Open Data無料転送・匿名アクセス・新規AWSリソースなし)。残プリペイド$10.15。\n\n## 公開\n- ダッシュボード: https://yuyanishimura0312.github.io/miratuku-news-v2/dashboards/global-researchers.html\n- コード: github.com/yuyanishimura0312/global-researcher-db (private)。\n\n## 次工程\nworks全完了(自動確定) / ORCID経歴全件(無料) / L2拡張(論文5本以上・約2000万)。"
+  },
+  {
+    "id": "6a5ace57m7k80v",
+    "title": "知識構造化 診断→3欠落是正→恒久化 (2026-07-18)",
+    "category": "知識構造化/DB品質",
+    "status": "done",
+    "source": "~/work/knowledge-structuring-frontier-2026/",
+    "summary": "3欠落(意味型σ≈17%/矛盾H¹0.055%/活性化J=0)を実測診断し実データで是正: 活性化J=本番observe→日次sync cron(3,851行/42DB・PATH修正済)/SORA=worklist369消化・実接続40本・alias真衝突16分離をETL恒久組込/意味型σ=捏造ゼロで95件保守的型付け。観測層AR-DBは3度の劣化を都度復旧+恒久ガード5点(§0.9/§1.0.5 normalize移動/§3.9/§3.99/§4a S3gate)。ecu.db 260MBをS3移行。残=後段wipe根因調査・worklist status揮発・J2/3/4実装。",
+    "tags": [
+      "3-gaps",
+      "activation-J",
+      "SORA",
+      "semantic-typing",
+      "AR-DB-guard",
+      "alias-split",
+      "ecu-s3",
+      "knowledge-structuring"
+    ],
+    "createdAt": "2026-07-18T00:52:39.254182+00:00",
+    "updatedAt": "2026-07-18T00:52:39.254182+00:00",
+    "content": "# 知識構造化 診断→3欠落是正→恒久化 セッション記録 (2026-07-17〜18)\n\n## 1. 最先端知見の接地改修\nfable 4軸43本 + codex 12軸約90本 = 約133本/16軸を二系統収束で十分性判定し、三本柱DB(KOS/KAS/DPE)へ非破壊接地(+139レコード・独立検証146/146実在・捏造0・139行verified昇格)。CORPUS.md 参照。\n\n## 2. DB群診断(実測)\n- 規模: 非除外259 project・70.5M行・940 agents/commands・接続554K(後に935K)。\n- 3欠落実測: 意味型σ≈17%(越境層0%)・矛盾H¹ 0.055%(規範10%比1/180)・活性化J=0(合成のみ)。\n- SORA接続完全度 0.259(baseline 0.211)・孤立DB 79/259(171→大幅改善)・Gini 0.88一極集中。\n- 是正の滞留: reinforcement worklist proposed 1,429消化0・CFP weak候補426(目標<50)。\n- 確証度 avg 0.358・reasoning_soundness 0.105が最弱。\n\n## 3. 3欠落是正(実データで前進)\n- **活性化J**: 本番answer-engineに既存J1ロガー(observe→箱observations.db)発見→日次sync cron構築。実データ3,851行/42DB取込=J=0を実データ解消。launchd PATH修正済(aws not found回避)。\n- **接続完全度(SORA)**: worklist 369消化・実接続40本追加・偽ギャップ91却下。alias真衝突16グループ/18別名を正しい実DBへ分離→永続override表+ETL組込で恒久化(再構築で消えない・コピー検証済)。\n- **意味型σ**: overlayインフラ完成+捏造ゼロで95件保守的型付け(applies_to/closeMatch/exactMatch・方向型は発明せず・30件検証で捏造0)。大量LLM型付けは概念→DB構造ゆえ捏造リスクと判断し回避。\n\n## 4. 観測層(AR-DB)の恒久ガード\nセッション中に稼働系が3度劣化(extract.py直叩き/後段wipe)→都度lastgoodから復旧。auto_update.shに恒久ガードを実装:\n- §0.9 extract前lastgood退避 / extract失敗時lastgood復元\n- §1.0.5 skos_normalizeをnetwork_upgradeの前へ移動(rebuild故障の根本修正)\n- §3.9 network_upgrade後の劣化復元 / §3.99 S3プッシュ直前の最終guard\n- §4a S3プッシュを健全時のみ(サイズ≥100MB∧xref>0∧cap>0)にgate\n残: 後段wipeの根本原因(並行run/後段unlink)は要調査。\n\n## 5. インフラ整備\n- ecu.db(260MB)をS3移行(ecu-411788010040・filter-repo履歴クリーン・restore/snapshot)。\n- 全成果物commit/push済。memory記録(frontier/J1/ecu_s3/ardb_s3)。\n\n## 残follow-up(優先度順)\n1. AR-DB後段wipe根本原因の調査(guardで延命中)。\n2. SORA worklist消化statusの揮発(再生成で上書き)→status継承の実装。\n3. apk/dm/dfm等のSORA接続の永続化(normalizeで拾われるがsource DB自体の退避)。\n4. ecu.db snapshot自動化(demand_signal日次書込に対しS3退避が手動)。\n5. J2/J3/J4(帰属/妨害DE/翻訳深度)の実装。"
   }
 ]
