@@ -30823,5 +30823,22 @@
     ],
     "createdAt": "2026-07-18T02:22:46.348093+00:00",
     "updatedAt": "2026-07-18T02:22:46.348093+00:00"
+  },
+  {
+    "id": "6a5ae7b2qksac9",
+    "title": "DB品質メタ Tier2 — 旗艦5DBの評価者間一致度AC1実測(全て1.00)",
+    "category": "DB品質管理",
+    "status": "done",
+    "source": "",
+    "summary": "再設計した方法のTier2(LLM depth)を旗艦5DBに適用。固定サンプル30件を1エージェントで抽出しA/B独立2評価者(haiku)が同一サンプルを採点→私がGwet AC1算出→各DBの新規表_quality_metadata_irへ非破壊書込。結果: physics AC1=1.00(29/30妥当・1件placeholder Nuclear Isomer検出)/social-sciences 1.00/knowledge-organization(kos) 1.00/knowledge-activation(kas) 1.00/medical-clinical 1.00。評価者間一致度AC1=1.00(全DB)=概念妥当性は高品質と確認。途中でmedicalが最初name_ja(空列)を拾いprevalence=0の偽結果→name_en再抽出でAC1=1.00に是正(測定アーティファクト検出・修正=方式健全性の証)。5set保有DB 62→76。③全体=Tier1決定論的(全DB・187→473)+Tier2 LLM(旗艦5・62→76)で再設計後に枠を溶かさず捏造ゼロで完了。効率化=評価者2体で複数DB一括採点。",
+    "tags": [
+      "品質指標",
+      "AC1",
+      "dual-rater",
+      "固定サンプル",
+      "additive"
+    ],
+    "createdAt": "2026-07-18T02:40:50.869195+00:00",
+    "updatedAt": "2026-07-18T02:40:50.869195+00:00"
   }
 ]
