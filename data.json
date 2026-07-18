@@ -30806,5 +30806,22 @@
     "createdAt": "2026-07-18T01:48:02.190151+00:00",
     "updatedAt": "2026-07-18T01:48:02.190151+00:00",
     "content": "# GRID Wave1 — 成果論文186万件マージ・検証完了報告\n2026-07-18 / 海外研究者DB(GRID)\n\n## 総括\n海外研究者546万名(バックボーン確定)に、成果論文を4並列抽出で付与中。**現時点で186万論文をgrid.dbへ統合・品質検証済み**。works抽出は継続中(272/482パーティション)で、完了時にfinalizeが全量再統合・最終報告を自律保存する。\n\n## 確定成果(検証済み)\n| 指標 | 値 |\n|---|---|\n| 海外研究者(バックボーン) | 5,461,197名 |\n| ORCID一意性 | 99.5% |\n| WRI機関接続 | 99.4%(223ヶ国) |\n| **成果論文(現時点)** | **1,867,106件** |\n| 論文を持つ研究者 | 1,109,508名(20.3%・上昇中) |\n| アブストラクト保有 | 1,202,082件(64.4%) |\n\n## 品質検証(生成と検証の分離・verify_grid.py)\n- 全項目 PASS / FAIL 0(捏造ゼロ・整合性OK・実在確認済)。\n- バックボーン: ORCID書式/openalex_id書式/source_url全件/国コード/h-index非負 全合格。ORCID重複0.49%(同一人物分裂・許容)。\n- WRI接続: wri_ror全て実在WRI機関(孤立0)。\n- 成果論文: (研究者×論文)重複0・著者あたり≤25・abstractフラグ整合。\n- 実在性: 上位研究者ORCIDをORCID公開APIで実在確認。\n- **並行検証で上流異常を検出・弁別**: 出版年1400年の1件はOpenAlex側の誤登録(現代戯曲集)で、我々は改変せず忠実転記(捏造ゼロ)→上流データ由来と正しく分類。\n\n## 並行体制(進捗×検証)\n- 抽出: 4並列ワーカー(harvest_works_snapshot.py・シャード別)。最近大型パーティション(1つ30-50万論文)を処理中。\n- 検証: verify_grid.py(品質監査) + verify_watch.sh(10分毎の継続監視)。読取専用・抽出と非競合。\n- 完了: finalize_and_publish.py が全482完了で全シャード統合(重複排除+top25)→検証→最終報告自律保存。\n\n## 費用\nOpenAlexプリペイド $4.12のみ(バックボーン収集)。works(スナップショットCC0)/検証/AWS = $0。\n\n## 方式・コード\nOpenAlex works スナップショット(675GB parquet・CC0)を DuckDB でS3直読・著者ごとtop-25抽出。codexが並列化基盤・ダッシュボード・検索CLIを執筆(生成)、Claudeが検証・運用(検証)。\nコード: github.com/yuyanishimura0312/global-researcher-db (private)。\nダッシュボード: https://yuyanishimura0312.github.io/miratuku-news-v2/dashboards/global-researchers.html"
+  },
+  {
+    "id": "6a5ae376yahmxe",
+    "title": "DB品質メタ測定 — 方法再設計(Tier1決定論的プロファイル)で全DB充足",
+    "category": "DB品質管理",
+    "status": "done",
+    "source": "",
+    "summary": "573DB一括LLM二重採点は方法自体が誤りと判明(累計7.8Mトークンで0成果・トークン枠を毎回溶かす・DB異種性・情報価値低)。DB破損は検証しゼロ(additive堅持)。再設計=2層: Tier1決定論的品質プロファイル(全DB・SQLのみ・LLM不使用・数分完走・捏造ゼロ)で定義充足率/source_url網羅率/verified率/重複率/行数を各DBの_quality_metadataへ非破壊書込→profiled=386・品質メタ保有DB 187→473/650でISF軸f(FAIR reusability)の穴を実測で充足。Tier2=固定サンプルLLM二重採点(phys.db実証:評価者A/B完全一致AC1=1.0)は重要少数に温存。教訓=全DB一括の高コストLLM測定でなく、決定論breadth+LLM depthの2層が正解。",
+    "tags": [
+      "品質指標",
+      "ISF",
+      "決定論的",
+      "additive",
+      "方法再設計"
+    ],
+    "createdAt": "2026-07-18T02:22:46.348093+00:00",
+    "updatedAt": "2026-07-18T02:22:46.348093+00:00"
   }
 ]
