@@ -31101,5 +31101,24 @@
     ],
     "createdAt": "2026-07-30T23:32:25.094007+00:00",
     "updatedAt": "2026-07-30T23:32:25.094007+00:00"
+  },
+  {
+    "id": "6a6c91702ruj59",
+    "title": "DTS-DB ディープテックSU 質的深掘り（STORIUM DD）カバレッジ拡大 wave2 確定レポート",
+    "category": "実データDB",
+    "status": "investigating",
+    "source": "",
+    "summary": "",
+    "tags": [
+      "DTS-DB",
+      "ディープテック",
+      "STORIUM",
+      "DD",
+      "投資検証",
+      "自律収集"
+    ],
+    "createdAt": "2026-07-31T12:13:36.091197+00:00",
+    "updatedAt": "2026-07-31T12:13:36.091197+00:00",
+    "content": "# DTS-DB ディープテックSU 質的深掘り（STORIUM DD）カバレッジ拡大 — wave2 確定レポート\n\n## 背景と目的\n\n国内ディープテック・スタートアップDB（DTS-DB / jps.db の dts_* 層、active 3,510社）について、投資先・協業先の検証に用いる質的な深掘り（STORIUM DD＝企業ごとに投資示唆・調達履歴・投資家・競合・海外先行事例・why-now シグナル・創業者発言・リスク行列など約42項目を一次情報から収集）の**保有社数を拡大**する取り組み。西村指示（2026-07-31）「ディープテックスタートアップの質的な深掘りの社数を増やす／未収集2,802社を全部／承認後は自律で完遂」。\n\n## 現状（ライブ実測・2026-07-31時点）\n\nwave1（高価値354社）は完走・finalize済み。wave2 として active 未収集の全社を deeptech_score 降順（高価値優先）で自律収集中。\n\n| 指標 | 値 |\n|---|---|\n| active ディープテックSU | 3,510社 |\n| DD深掘り済（dd_dimensions evidence が DB反映済） | 771社（＝wave1 finalize時点。wave2収集分は次回 finalize で反映） |\n| 投資適格 SUFFICIENT系（SUFFICIENT 100 + SUFFICIENT_THIN 53） | 153社 |\n| wave2 収集対象（active 未収集・高価値順） | 2,802社 |\n| wave2 収集済（一次情報JSONを out/ に取得済・DB未反映） | 47社（進行中・実効 約4社/ラウンド） |\n\nDDカバレッジ（active・DB反映済の実測値）: investment_implication 771 / pioneers_foreign 2,366 / competitors_domestic 592 / why_now_signals 668 / founder_quotes 453 / funding_rounds 336 / investors 282 / dd_risk_matrix 770。readiness: SUFFICIENT 100 / SUFFICIENT_THIN 53 / INSUFFICIENT 3,172 / EXCLUDED（海外6・非ディープテック465）。\n\n**重要な状態の区別**: wave2で収集済みの47社分の一次情報JSONは `out/` に蓄積されているが、DB（dts_company_evidence）への反映は収集ループの finalize 工程（evidence反映→逐語照合QC→verified_strict→readiness再計算）で一括実行される。したがって現時点のDB上のDD保有社数は 771 のまま。全2,802社ベースの確定カバレッジは収集の終端（DONE または SAFESTOP）で確定する。\n\n## 拡大候補プールの質的分解\n\n未収集2,802社の deeptech_score 分布: 0.8+ 0社（高価値層は wave1 で枯渇）/ 0.6–0.8 35社 / 0.4–0.6 1,067社 / <0.4 1,671社。高価値層が尽きているため、wave2 の主戦場は中〜低スコア帯。\n\n## wave1 からの学習\n\n- mid帯354社の収集で 86社（24%）が非ディープテック判定（population_valid=false）で除外され、268社はDD深掘り後も INSUFFICIENT のまま。\n- 早期ディープテックは公開情報が薄く、深掘りしても verified/SUFFICIENT の投資適格バーには届きにくい。質のボトルネックは収集量でなく一次情報の存在そのもの。この構造ゆえ wave2 の中〜低スコア帯では SUFFICIENT 系への昇格率はさらに低い見込みで、成果は「投資適格社の純増」でなく「INSUFFICIENT だが一次情報つきで検証可能な母集団の拡大」として測る。\n\n## 収集方式と制約\n\n- 既存実証済みの resume ループ（`resume_dd_loop_wave2.sh`）+ codex フリート（MAXJOBS=3・メモリゲート200MB）。冪等・skip logic・自動 finalize（evidence反映→逐語照合QC→verified_strict→readiness→S3→git commit）。\n- 8GB機（Jetsam事故機 MacBook-Pro-91）ゆえ MAXJOBS=3 厳守（codex-orchestration §4.6）。codex 週間枠が律速で実効 ~4社/ラウンド。全2,802社は週間枠を跨ぐ数週間規模の自律収集。\n- 週間枠を使い切ると3連続無進捗で SAFESTOP → 収集済み分を finalize・S3・git に保存（崖で失うものはゼロ）。枠回復後にループ再起動で継続（既収集は即skip）。\n\n## ガバナンス\n\n捏造ゼロ・source_url必須・逐語照合QC・生成と検証の分離・population_valid=false は正直に非DT除外（水増し禁止）・additive-only。データは S3（正本配布路 miratuku-db-backup）+ ローカルDB、コードは GitHub（yuyanishimura0312/japan-startup-db）。\n\n## 保存状態\n\n- 中間コミット `05a8549`（wave2 DD深化 中間反映）+ S3スナップショット `20260731-093618` に保存済み。\n- 最終 finalize は収集の終端（DONE または SAFESTOP）で自動実行し、全2,802社ベースのカバレッジ（wave2収集分をDB反映後）を確定して S3・git に保存する。\n- 本レポートは研究ダッシュボードに保存。GitHub Pages への公開反映は research-dashboard リポジトリの中断中 rebase（別作業 siidb-progress-save 由来）を解消後に push（西村さんの判断待ち）。"
   }
 ]
