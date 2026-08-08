@@ -43,7 +43,8 @@ fi
 
 # If --content-file is given, read content from that file
 if [ -n "$CONTENT_FILE" ] && [ -f "$CONTENT_FILE" ]; then
-  CONTENT="$(cat "$CONTENT_FILE")"
+  # cat は bat エイリアスに奪われることがある。$(< file) は組み込みで安全。
+  CONTENT="$(< "$CONTENT_FILE")"
 fi
 
 # Export for Python
