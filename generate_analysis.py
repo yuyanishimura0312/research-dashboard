@@ -24,7 +24,7 @@ DATA_JSON = os.path.join(SCRIPT_DIR, "data.json")
 ANALYSIS_JSON = os.path.join(SCRIPT_DIR, "analysis.json")
 ANALYSIS_JS = os.path.join(SCRIPT_DIR, "analysis.js")
 
-MODEL = "claude-sonnet-4-20250514"
+MODEL = "claude-sonnet-5"
 # Rate limiting: sleep 1s every N calls
 RATE_LIMIT_INTERVAL = 5
 

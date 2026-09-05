@@ -74,7 +74,7 @@ def generate_digest(text, api_key):
     client = anthropic.Anthropic(api_key=api_key)
 
     response = client.messages.create(
-        model="claude-sonnet-4-20250514",
+        model="claude-sonnet-5",
         max_tokens=1500,
         messages=[
             {
