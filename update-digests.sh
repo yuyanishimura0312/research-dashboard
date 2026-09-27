@@ -10,15 +10,25 @@ cd "$SCRIPT_DIR"
 
 echo "$(date): Starting digest update..."
 
+# generate_digests.py and generate_analysis.py call a paid API (ANTHROPIC_API_KEY).
+# Off by default; set ENABLE_PAID_DIGEST=1 only after the paid call has been approved.
+PAID="${ENABLE_PAID_DIGEST:-0}"
+
 # Generate digests for new entries (only entries without digest)
-python3 generate_digests.py 2>&1
+if [ "$PAID" = "1" ]; then
+    python3 generate_digests.py 2>&1
+else
+    echo "$(date): digests をスキップ (有料API・ENABLE_PAID_DIGEST が 1 でない)"
+fi
 
 # Regenerate embeddings (best-effort: sentence_transformers/torch 未導入でも本体は継続)
 python3 generate_embeddings.py 2>&1 || echo "$(date): embeddings をスキップ (sentence_transformers 未導入 / digest 本体は継続)"
 
 # Generate AI analysis (weekly: only on Mondays, or if analysis.json is missing)
 ANALYSIS_JSON="$SCRIPT_DIR/analysis.json"
-if [ ! -f "$ANALYSIS_JSON" ] || [ "$(date +%u)" = "1" ]; then
+if [ "$PAID" != "1" ]; then
+    echo "$(date): AI analysis をスキップ (有料API・ENABLE_PAID_DIGEST が 1 でない)"
+elif [ ! -f "$ANALYSIS_JSON" ] || [ "$(date +%u)" = "1" ]; then
     echo "$(date): Generating AI analysis..."
     python3 generate_analysis.py 2>&1
 fi

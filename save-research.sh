@@ -117,9 +117,13 @@ if [ -f "$EMBED_SCRIPT" ]; then
   python3 "$EMBED_SCRIPT"
 fi
 
-# Generate content digest for new entry
+# Generate content digest for new entry.
+# Off by default: generate_digests.py calls a paid API (ANTHROPIC_API_KEY).
+# Set ENABLE_PAID_DIGEST=1 only after the paid call has been approved.
 DIGEST_SCRIPT="$SCRIPT_DIR/generate_digests.py"
-if [ -f "$DIGEST_SCRIPT" ]; then
+if [ "${ENABLE_PAID_DIGEST:-0}" != "1" ]; then
+  echo "Skipped content digest (paid API; ENABLE_PAID_DIGEST is not 1)"
+elif [ -f "$DIGEST_SCRIPT" ]; then
   echo "Generating content digest for new entry..."
   python3 "$DIGEST_SCRIPT" --limit 5 2>&1 || true
 fi
