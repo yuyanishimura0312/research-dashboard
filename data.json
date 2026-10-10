@@ -34093,5 +34093,22 @@
     "createdAt": "2026-10-10T10:37:44.781164+00:00",
     "updatedAt": "2026-10-10T10:37:44.781164+00:00",
     "content": "# build-record — JAS-DB\n\n## 2026-10-10 学会DBを新設する（トップギア・Opus 決裁 GO-with-guard）\n- 採った: 新しいDBに、学会単位の事実（受賞・名誉会員・大会＝event／役員・機関誌・部会＝state）と観測の履歴を持つ。学会の識別子は学術ランドスケープDB、設立年などは RIS-DB を指す。更新は AI なしの見張り（正規化本文＋リンク集合のハッシュ）で、変化したページだけ codex で読み直す\n- 棄却した: RIS-DB に表を足す（作り直す設計の橋に、消えてはならない追記型の個人名つき事実を置くことになる）／試験の作業台 parts.db をそのまま正本にする（主キーが値の文字列・ヘルスチェックの走査外）／研究者ごとに取りに行く（共有単位の方が桁で安い）\n- 破綻条件: gate-review §9（初回投入から30日の3条件・公開前の削除受付・2026-10-17 の受賞試験）\n- 審査: codex6 `tg-japan-academic-society-db-1`（block 7）／fable-design-reviewer（GO-with-guard）／Opus 5.5 決裁（GO-with-guard・検査器の block B-1）\n- B-1 の対応: 検査器を行単位の照合に改め、負例テストを追加。試験値は 99.9%（旧検査器）→ 96.8%（窓照合）→ 84.3% 確認・15.6% 判定不能（行単位）。★最初に報告した 99.9% は記録の正確さを示していなかった\n- SCK: no matching rule（学会ページの差分監視について判断ルールは引けなかった）\n- 西村さんへの確認: 新設・全項目・差分取得は決裁済み。声明・提言の収集と db_references 不登録は確認待ち"
+  },
+  {
+    "id": "6aca2c93lvww97",
+    "title": "学会DB 全学会収集の体制：codex閲覧方式の費用実測と分業方式",
+    "category": "研究者DB",
+    "status": "investigating",
+    "source": "",
+    "summary": "日本物理学会の試行で1,905件・確認99.6%だが入力327万トークン。全2,334学会は週間枠の数倍。AIなしの取得器だけでは事実のページの20%しか拾えない。codexにページの地図だけ作らせ、取得はAIなし、抜き出しは本文だけを読む分業へ。AR-DB登録済み。実行は10/14のリセット後",
+    "tags": [
+      "学会",
+      "研究者ページ",
+      "codex",
+      "費用"
+    ],
+    "createdAt": "2026-10-10T12:16:19.942003+00:00",
+    "updatedAt": "2026-10-10T12:16:19.942003+00:00",
+    "content": "# 日本の学会DB（JAS-DB）\n\n日本の学会について、公式ページから受賞・役員・年次大会・機関誌などの事実を写し、**更新があったときだけ取りに行く**DB。研究者ページ（ANSWER+R）の「受賞」「所属学会」の部品源。設計と決裁は `gate-review.md`（Opus 決裁 GO-with-guard・2026-10-10）。\n\n## 置き場と境界\n\n- `data/jas.db`（git に入れない）。学会の識別子は学術ランドスケープDB の `academic_societies.id`。設立年・会員数・事務局は RIS-DB にあり、ここでは持たない\n- 個人名を含む。研究者ページには本人の1行と出典URLだけを出す。学会単位の名簿を一括で出す口は作らない。AR-DB `db_references` には登録しない\n- 削除・訂正は `takedown` 表に記録し、`fact.suppressed=1` にして全出口から外す（`v_fact_public` は suppressed を除く）\n\n## 工程\n\n```bash\npython3 etl/migrate_trial.py   # 母集団（2,351学会＋除外の記録）と試験20学会の移入（元の取得時刻を保つ）\npython3 etl/watch.py seed      # 情報源ページ・PDF・一覧ページを見張り対象に登録\npython3 etl/watch.py run       # AI なしで取得し、正規化本文＋リンク集合のハッシュを記録\npython3 etl/watch.py status    # 再抽出待ち・滞留・到達不能\n```\n\n変化したページの再抽出（codex）と検査は `~/tools/rp-parts-kit/`（`check --fetch` は行単位の照合。負例テスト `tests/test_check.py`）。\n\n## 全学会の収集（2026-10-10 構築・実行は 2026-10-14 のリセット後）\n\ncodex が自分でページを読む方式は、日本物理学会1学会で入力 約327万トークン（95%キャッシュ）・7分半かかった。品質は高い（1,905件・確認99.6%）が、2,334学会ぶんは週間枠の数倍になる。そこで工程を分けた。\n\n| 段 | 道具 | AI |\n|---|---|---|\n| 1 ページの地図 | `collect.py run --mode pagemap`（学会ごとに1回・中身は写さない） | codex（collect） |\n| 2 取得 | `discover.py capture`（地図のページだけを取得・本文を保存） | なし |\n| 3 抜き出し | `extract.py prepare` → `extract.py run`（保存した本文だけを読む・ウェブを開かない） | codex（research・read-only） |\n| 4 取り込み・照合 | `collect.py ingest`（行単位の照合・見張り対象の登録） | なし |\n| 5 更新 | `watch.py run`（AI なし。変わったページだけ段3へ） | なし |\n\n★AI を使わない取得器だけでページを探す方式（`discover.py run`）は、試験で codex が見つけた事実のページの20%しか拾えなかった（学会により0%〜100%）。予備として残す。\n★実行前の決まり: 週間枠の使用率が85%以上なら止まる・停止装置が開いていれば止まる・同時実行は5本まで・新しい段は1学会で試してから。\n★リセット後の最初の手順: `collect.py run --mode pagemap --limit 3 --canary` → `discover.py capture` → `extract.py prepare && extract.py run --limit 3` → `collect.py ingest`。3学会の週間枠の消費と、試験の事実に対する再現率を測ってから本番の規模を決める。\n\n## 状態（2026-10-10）\n\n- 着手済み: スキーマ・取得台帳・試験20学会の移入・見張り2周\n- ★止めているもの（決裁）: 2,351学会の本取得・研究者への自動の結び付け・研究者ページ（P10）の読み込み・公開\n- 生存監視: db-stewardship の日次走査が `~/projects/research` 配下の `.db` を自動で拾う\n- 運用: `researcher-page-parts-steward`"
   }
 ]
