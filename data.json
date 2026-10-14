@@ -34924,5 +34924,23 @@
     "createdAt": "2026-10-14T14:43:03.992095+00:00",
     "updatedAt": "2026-10-14T14:43:03.992095+00:00",
     "content": "# 5革命DB 時代背景と長期の系譜 —— 2026-10-15 時点の到達点\n\n未来洞察の要として、産業革命・電力革命・印刷革命・大航海時代・枢軸時代の5つについて、歴史学の知見で時代背景を確保し、30年から100年単位の変化の系譜を結ぶ作業を行った。品質の目標は凍結した採点基準（RUBRIC v1.4）で S、すなわち合計90点以上かつ必須ゲートすべて合格である。結論から述べると、S には届いていない。決裁者（Opus）の判定は、S としての公開は不可、時代背景と地域に限った内部利用は条件つきで可である。\n\n時代背景の層は5革命とも使える状態にある。歴史学の論文・書籍の書誌を集め、2人の判定者がともに支持した言明だけを時代背景に置いた。別の判定者が盲検で確かめた支持率は94〜100%（95%信頼区間の下限84〜91%）である。ただしこの判定者はどちらも Claude 系で、寛く判定する可能性があり、互いに独立な保証ではない。地域の広がりも5革命とも最低線を満たした。\n\n書誌の主題適合は、産業革命・印刷革命・大航海時代で合格した。採用集合に3人目の判定を重ね、新しい無作為標本を別の判定者が測り直した結果、主題外の上限はいずれも10%以下に収まった。電力革命と枢軸時代は不合格のままである。主題外と判定された文献は0件で、落ちたのはすべて「書誌だけでは主題を決められない」文献である。判定者ごとに判定不能になる文献が違うため、同じ絞り込みを繰り返すと集合が判定者の数だけ縮むだけで解消しない。そこで絞り込みはここで止め、不合格として記録した。\n\n長期の系譜は途中段階にある。2つ以上の別々の文献が逐語で裏づけ、2人の判定者が盲検で揃って支持した段は、要旨から本文、さらに OpenAlex 全体へと探す入口を広げた結果、17本から26本に増えた。それでも系譜の点数はほとんど動いていない。足りないのは証拠の量ではない。段の行き先の点に年が無いと30年・100年の区間に入れられないこと、そして時間差の分母になる遷移381件のうち時間差が入っているのが46件しかないことが律速である。この2つは証拠探しを増やしても動かない。\n\n途中で見つけて直した誤りが3つある。第一に、系譜の起点を「開始年が革命の期間に入る点」とした規則は、帰結を起点に入れ、年の無い構成要素を落としていた。決裁者の検査で5革命すべてに誤りが見つかったため、点ごとの役割（構成要素か帰結か）を2人が判定し、揃ったものだけを起点にした。第二に、点の年と年表への接続が一度きりの操作で付いており、系譜を読み直すと消えていた。読み直しで引き継ぐよう改修し、値が戻ることを確かめた。第三に、外部の言語モデル（codex）が混雑で失敗したとき、成功扱いで空の結果を数秒で返したものがあった。これらは採らず、抽出を別のモデルに回した。\n\n次の一手として決裁者が示したのは、大航海時代だけで遷移と新しい点に年と時間差を付ける作業を1回回し、最低線へ向かって動くかを測ることである。届く見込みが立たなければ、時間差の分母と系譜点の数え方を見直すか、S を断念して時代背景と地域だけで公開するかを判断する必要がある。採点の閾値は凍結したまま下げていない。\n\n追記（2026-10-15）: 西村さんの決裁により S を断念し、時代背景（v_era_context_usable）と途中段階の系譜（v_lineage_in_progress・参考表示）を内部利用に出した。採点基準は凍結したまま変えていない。\n"
+  },
+  {
+    "id": "6acf98dcxo98ln",
+    "title": "地域の文化×都市の記憶 主要論文10本（人類学重視）",
+    "category": "人類学",
+    "status": "organized",
+    "source": "",
+    "summary": "Nora/Olick/Connerton/Lewicka/Appadurai/Till/Low/Berliner/Herzfeld/Degnen。被引用数で選定、本文リンクを公開状態で区分",
+    "tags": [
+      "都市の記憶",
+      "人類学",
+      "地域文化",
+      "集合的記憶",
+      "文献リスト"
+    ],
+    "createdAt": "2026-10-14T14:59:40.733279+00:00",
+    "updatedAt": "2026-10-14T14:59:40.733279+00:00",
+    "content": "# 地域の文化 × 都市の記憶 — 読むべき主要論文10本（人類学重視）\n\n調査日 2026-10-14。意義の指標は被引用数（OpenAlex）。著者h指数は同定が粗く過小に出やすいため参考値。本文リンクは 🟢無料で全文確認済 / 🟡著者版の登録あり・未確認 / 🔴購読が必要。\n\n1. Pierre Nora (1989) \"Between Memory and History: Les Lieux de Mémoire\" Representations 26 — 被引用4,864。共同体の記憶の環境が失われたからこそ「記憶の場」が作られる。🔴 https://www.jstor.org/stable/2928520\n2. Olick & Robbins (1998) \"Social Memory Studies\" Annual Review of Sociology 24 — 被引用1,948。社会的記憶研究の総説。🔴 https://doi.org/10.1146/annurev.soc.24.1.105\n3. Paul Connerton (2008) \"Seven types of forgetting\" Memory Studies 1(3) — 被引用814。忘却の7類型。🔴 https://journals.sagepub.com/toc/mss/1/3\n4. Maria Lewicka (2008) \"Place attachment, place identity, and place memory: Restoring the forgotten city past\" J. Environmental Psychology 28 — 被引用781。Lviv（200名）とWrocław（301名）で戦前の都市の集合的記憶に民族的偏り。🔴 https://doi.org/10.1016/j.jenvp.2008.02.001\n5. Arjun Appadurai (2000) \"Spectral Housing and Urban Cleansing: Notes on Millennial Mumbai\" Public Culture 12(3) — 被引用586。人類学。住宅不足と民族主義的な都市の「浄化」。🔴 https://muse.jhu.edu/article/26210\n6. Karen E. Till (2012) \"Wounded cities: Memory-work and a place-based ethics of care\" Political Geography 31 — 被引用400。立ち退きの傷を負った都市の記憶の作業。🟢 https://mural.maynoothuniversity.ie/id/eprint/9005/1/KT_wounded%20cities%202012.pdf\n7. Setha M. Low (1996) \"Spatializing Culture\" American Ethnologist 23(4) — 被引用296。人類学。サンホセの広場で都市空間の民族誌の方法を示す。🔴 https://doi.org/10.1525/ae.1996.23.4.02a00100\n8. David Berliner (2005) \"The Abuses of Memory\" Anthropological Quarterly 78(1) — 被引用288。人類学における記憶概念の膨張を批判。🔴 https://muse.jhu.edu/article/178196\n9. Michael Herzfeld (2010) \"Engagement, Gentrification, and the Neoliberal Hijacking of History\" Current Anthropology 51(S2) — 被引用167。人類学。歴史保存がジェントリフィケーションの口実になる過程。🟢 http://nrs.harvard.edu/urn-3:HUL.InstRepos:34353686\n10. Cathrine Degnen (2015) \"Socialising place attachment\" Ageing & Society 35 — 被引用120。人類学。場所への愛着は社会的記憶と身体の感覚を通じて共同でつくられる（半農村の事例）。🟢 https://doi.org/10.1017/s0144686x15000653\n\n補欠: Crang & Travlou (2001) / Hebbert (2005) / Tolia-Kelly (2004)。書籍: Huyssen『Present Pasts』/ Low & Lawrence-Zúñiga 編 / Boyer『The City of Collective Memory』。\n限界: 無料で全文確認できたのは3本。日本語文献と書籍は検索対象外。"
   }
 ]
