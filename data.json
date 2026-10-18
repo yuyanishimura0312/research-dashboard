@@ -35477,5 +35477,21 @@
     "createdAt": "2026-10-18T22:09:55.691667+00:00",
     "updatedAt": "2026-10-18T22:09:55.691667+00:00",
     "content": "# Wikipedia の記事数（2026-10-19 07:08 JST 取得）\n\nMediaWiki API（action=query&meta=siteinfo&siprop=statistics）で直接取得した値。\n\n| 版 | 記事数 | ページ数 |\n|---|---:|---:|\n| 日本語版 | 1,523,357 | 4,466,106 |\n| 英語版 | 7,254,948 | 66,449,283 |\n\n参考: 日本国語大辞典 第二版 約50万項目・総文字数 約9,180万（JapanKnowledge・照合済み）。ANSWER+ のDB群 292のDB・425.5百万行・容量 約119GB（metrics/claims-and-data.md の実測）。\n資料 R-6 で「DBの行数は日国の約850倍・日本語版 Wikipedia の約280倍・英語版の約59倍」として使用。行・項目・記事は粒度が違い、件数の目安。"
+  },
+  {
+    "id": "6ad5454evqp3ag",
+    "title": "データ容量の比較：Wikipedia ダンプ・国語辞典・ANSWER+ DB群（2026-10-19）",
+    "category": "AI・組織",
+    "status": "organized",
+    "source": "",
+    "summary": "日本語版 Wikipedia 全記事本文 約4.76GB・英語版 約25.8GB（公式ダンプ bz2）、日本国語大辞典 約0.28GB（9,180万字の換算）、ANSWER+ DB群 約119GB",
+    "tags": [
+      "Wikipedia",
+      "規模",
+      "ANSWER+"
+    ],
+    "createdAt": "2026-10-18T22:16:46.222564+00:00",
+    "updatedAt": "2026-10-18T22:16:46.222564+00:00",
+    "content": "# Wikipedia の記事数（2026-10-19 07:08 JST 取得）\n\nMediaWiki API（action=query&meta=siteinfo&siprop=statistics）で直接取得した値。\n\n| 版 | 記事数 | ページ数 |\n|---|---:|---:|\n| 日本語版 | 1,523,357 | 4,466,106 |\n| 英語版 | 7,254,948 | 66,449,283 |\n\n参考: 日本国語大辞典 第二版 約50万項目・総文字数 約9,180万（JapanKnowledge・照合済み）。ANSWER+ のDB群 292のDB・425.5百万行・容量 約119GB（metrics/claims-and-data.md の実測）。\n資料 R-6 で「DBの行数は日国の約850倍・日本語版 Wikipedia の約280倍・英語版の約59倍」として使用。行・項目・記事は粒度が違い、件数の目安。\n\n## 容量での比較（2026-10-19 追加）\n\n| 対象 | 容量 | 出典 |\n|---|---:|---|\n| 日本語版 Wikipedia 全記事本文（pages-articles.xml.bz2） | 4,757,398,424 バイト（約4.76GB・2026-10-01） | https://dumps.wikimedia.org/jawiki/latest/ |\n| 英語版 Wikipedia 全記事本文（同） | 25,800,511,704 バイト（約25.8GB・2026-10-08） | https://dumps.wikimedia.org/enwiki/latest/ |\n| 日本国語大辞典 第二版 | 約9,180万字 × 3バイト（UTF-8）＝ 約0.28GB（換算） | JapanKnowledge |\n| ANSWER+ のDB群 | 約119GB（複製を除いたファイル合計・索引を含む） | metrics/claims-and-data.md |\n\nWikipedia は bz2 圧縮・画像なしで、圧縮前はより大きい。形式が違うので規模の目安。資料 R-6 で「約420倍・約25倍・約4.6倍」として使用。"
   }
 ]
