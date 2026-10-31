@@ -36304,5 +36304,23 @@
     "createdAt": "2026-10-31T02:06:05.238850+00:00",
     "updatedAt": "2026-10-31T02:06:05.238850+00:00",
     "content": "# 図解とビジュアルを加えたスライドの構築エンジン（sle）— 振り返り・検証・構築（2026-10-31）\n\n最近のスライド構築13デッキ（8案件）を振り返ると、作り方はどれも決定論の Python 生成器にそろっていたのに、組み立て器は8種、図の描画器は約10本が案件ごとに作り直されていた。図の文字が投影で小さすぎる失敗は6案件、図解の道具に型が無く手で描いた失敗も6案件で繰り返されていた。最も重い失敗は、図の幾何の検査を7つとも通った図が人に誤読された件で、いまの検査が「読めるか」を測っていないことを示していた。図解DBやスライド設計DBは引かれていても、成果物のどこに効いたかは記録されていなかった。\n\nそこで、判断（各枚の役割・主張・図にする関係）は人格に、版面・座標・文字の大きさ・検査は道具に任せる構築エンジン sle を作った。設計図に座標を書かせず、型（esse-sense 基礎スライドの凍結版）の面を役割から選び、図は figc を先に、無い型だけ自前のグラフで描く。検査は既存の収まり検査に加えて、行の帯の幾何検査、元の素材との対照、見える文字の照合、写真キャプションのコントラストの下限を持つ。主張と留保は同じ面に置き、分割しても読む順を保ち、空いた続きの面は戻す・広げる・文字を一段上げるの順で埋める。統括は slide-meta（16:9 の統括へ作り直し）、実行は新設の slide-engine-worker に任せ、design-meta から渡す通り道を定義した。\n\n機械の盲検の読み手（2系統の言語モデル）は、人がした行の取り違えを再現しなかった。そのため盲検は合否に使わず、行の帯の幾何検査で塞ぎ、要所の枚は人が確かめる工程にした。\n\n検証は3本で行った。近鉄研修の再現は元の8枚の73点から77点、題材の違う2本（世界の送金の流れ・知識の体系の両立しない判断）は84点と79点で、いずれも主張の規律の確認で止める指摘は0件だった。汎化の途中では、材料と食い違う主張と、推計の作り方をなぞる循環した結びを、工程の関門が止めた。\n\n限界: 振り返りは13デッキの範囲で、figc を使う他の7か所は調べていない。採点は言語モデルの採点者による。figc の対比図の強調の向きは、既定を変えない新しいキーで直した（既定の出力は350件で一致）。\n\n記録: ~/work/slide-engine-planning/（DESIGN-v2.md・build-record.md・scores/・generalize/）。エンジン: miratuku-design-system/ds/esse-sense-slide-base/engine/。"
+  },
+  {
+    "id": "6ae5f135nku63b",
+    "title": "Adobe Illustrator/Photoshop を Claude から操作できるか",
+    "category": "ツール調査",
+    "status": "done",
+    "source": "https://github.com/ie3jp/illustrator-mcp-server",
+    "summary": "公式コネクタ・AppleScript経由のスクリプト操作・有志のMCPの3経路。手元のMacにはアプリ本体が無く即時実行は不可",
+    "tags": [
+      "Adobe",
+      "MCP",
+      "Illustrator",
+      "Photoshop",
+      "Claude"
+    ],
+    "createdAt": "2026-10-31T13:46:29.652228+00:00",
+    "updatedAt": "2026-10-31T13:46:29.652228+00:00",
+    "content": "# Adobe Illustrator / Photoshop を Claude から操作できるか（2026-10-31 調査）\n\n## 結論\n接続して実行する手段は3通りある。ただし調査時点の手元の Mac には Illustrator・Photoshop の本体が入っておらず、すぐには実行できない。\n\n## 手元の環境（2026-10-31 実測）\nIllustrator は CC 2015 のフォルダが残っているだけで、アプリ本体は無い。Photoshop は見つからない。Rosetta 2 も入っていないため、古い Intel 版を入れ直しても起動しない見込みである。\n\n## 3つの経路\nA. 公式の Adobe for Creativity コネクタ（2026-04-28 公開。Adobe が運営するクラウド上の MCP サーバー、adobe-creativity.adobe.io/mcp）。手元にアプリが無くても使える。Adobe ID が必要。紹介記事の中には、Express 並みの浅さで本格的な制作作業の代わりにはならないとする評価がある。Firefly の画像生成を使うと生成クレジットを消費する可能性がある。\n\nB. 手元のアプリをスクリプトで操作する。macOS の AppleScript 経由で、動いているアプリに JavaScript を送って実行させる。アプリ本体（Apple Silicon 版）が必要。\n\nC. 有志が作った MCP サーバー（illustrator-mcp-server、adb-mcp 系など）。B を Claude から使いやすくしたもの。保守状況と安全性は確かめていない。\n\n## 出典\n- https://github.com/ie3jp/illustrator-mcp-server\n- https://www.mikechambers.com/blog/post/2025-08-22-mcp-ai-and-adobe-creative-tool-experiments/\n- https://www.usecarly.com/blog/adobe-mcp/\n- https://www.mindstudio.ai/blog/claude-mcp-adobe-vs-photoshop-premiere-what-it-does\n- https://godberrystudios.com/posts/claude-for-creative-work-9-connectors-tested-2026/"
   }
 ]
