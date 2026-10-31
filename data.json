@@ -36322,5 +36322,22 @@
     "createdAt": "2026-10-31T13:46:29.652228+00:00",
     "updatedAt": "2026-10-31T13:46:29.652228+00:00",
     "content": "# Adobe Illustrator / Photoshop を Claude から操作できるか（2026-10-31 調査）\n\n## 結論\n接続して実行する手段は3通りある。ただし調査時点の手元の Mac には Illustrator・Photoshop の本体が入っておらず、すぐには実行できない。\n\n## 手元の環境（2026-10-31 実測）\nIllustrator は CC 2015 のフォルダが残っているだけで、アプリ本体は無い。Photoshop は見つからない。Rosetta 2 も入っていないため、古い Intel 版を入れ直しても起動しない見込みである。\n\n## 3つの経路\nA. 公式の Adobe for Creativity コネクタ（2026-04-28 公開。Adobe が運営するクラウド上の MCP サーバー、adobe-creativity.adobe.io/mcp）。手元にアプリが無くても使える。Adobe ID が必要。紹介記事の中には、Express 並みの浅さで本格的な制作作業の代わりにはならないとする評価がある。Firefly の画像生成を使うと生成クレジットを消費する可能性がある。\n\nB. 手元のアプリをスクリプトで操作する。macOS の AppleScript 経由で、動いているアプリに JavaScript を送って実行させる。アプリ本体（Apple Silicon 版）が必要。\n\nC. 有志が作った MCP サーバー（illustrator-mcp-server、adb-mcp 系など）。B を Claude から使いやすくしたもの。保守状況と安全性は確かめていない。\n\n## 出典\n- https://github.com/ie3jp/illustrator-mcp-server\n- https://www.mikechambers.com/blog/post/2025-08-22-mcp-ai-and-adobe-creative-tool-experiments/\n- https://www.usecarly.com/blog/adobe-mcp/\n- https://www.mindstudio.ai/blog/claude-mcp-adobe-vs-photoshop-premiere-what-it-does\n- https://godberrystudios.com/posts/claude-for-creative-work-9-connectors-tested-2026/"
+  },
+  {
+    "id": "6ae5f250oka0mq",
+    "title": "配色デザインDB群の構築に向けた既存DBの充足確認",
+    "category": "デザイン",
+    "status": "investigating",
+    "source": "",
+    "summary": "既存の配色知見は、部品色（Radix/Tailwind）が中心で、完成したサイトの配色の値・概念と値の結び・事例集との結びを欠く。aag の配色行に名前と値の食い違いがある。計画は S まで周回中。",
+    "tags": [
+      "配色",
+      "デザインDB",
+      "充足確認",
+      "CDD"
+    ],
+    "createdAt": "2026-10-31T13:51:12.772407+00:00",
+    "updatedAt": "2026-10-31T13:51:12.772407+00:00",
+    "content": "# 配色の知見 —— 既存DB群の十分・不十分（2026-10-31）\n\n★配色DB群（CDD・仮称）の計画の前提。測定日 2026-10-31。行数は動くので、計画に焼き込まず実行時に引き直す。\n\n## 1. どこまでが既に測られているか\n\n並行しているウェブデザイン知見DB群の再整備（`~/work/web-design-kdb-rebuild/`）が、入門書の目次（第3章「配色」の節8つと実例7つ）を物差しにして、既存21DBの充足を判定済みである（`coverage/judgments-final.jsonl`・規準 `COVERAGE-RUBRIC.md` v0）。本書はその判定を作り直さず、配色の行だけを読み、「世界トップの仕事を再現する」水準で足りないものを足して書く。\n\n入門書の水準では、第3章の節8つのうち概念層で「十分」が6、実行層で「十分」が7だった。一方、実例7つ（赤・黄・緑・紫・カラフル・和・高級感）は、概念層・実行層とも「部分」か「空白」で、緑の配色は概念層が空白だった。並行セッションの判定は「出典つきの行が3件以上」を十分としており、これは入門書を測るには妥当だが、プロの水準を測るには甘い、と並行セッション自身が書いている。\n\n## 2. 表を開いて分かったこと（本書で確かめた分）\n\n配色に直接効く表は、design-tokens-db の `color_palette_mood`（109行）と `color_role_rule`（192行）、aag-db の `aag_color_palettes`（130行）、design-database の `sites.color_palette`（850行）と `token_measured_v2`、それに picture-craft-db・aag-db・dataviz-design-db の概念の行である。開いて読むと、次の4点が足りない。\n\n第一に、**数値になっているのは、デザインシステムの部品の色であって、完成したサイトの配色ではない。** `color_palette_mood` の109行のうち84行は Radix と Tailwind の12段スケール（ボタンや地色に使う一色の濃淡）であり、ベンチマークから採った配色は20行しかない。日本のサイト850件の配色は `sites.color_palette` に「Teal, white」「Blue, white」のような英語の印象語で書かれているだけで、色の値も、どの色が地・文字・アクセントかの役割も、面積の比率も持っていない。実測のトークンは並行セッションの台帳で17サイト分である。\n\n第二に、**概念と数値が結ばれていない。** 調和の理論（イッテン・オストワルト・ムーン＝スペンサー）やトーン（PCCS）や色彩心理は概念の行として在り、パレットは実行の行として在るが、両者をつなぐ表が無い。「類似色相の調和を使った配色の実例」を引く経路が存在しない。design-tokens-db・aag-db・design-database の3つに横断参照の表はあるが、配色の概念と配色の値を結んだ行は確認できなかった。\n\n第三に、**事例と結ばれていない。** 西村さんが示した事例集サイト（SANKOU!・Muuuuu.org・Web Design Garden・81-web.com）は、Web Design Garden と 81-web.com が色で検索できるが、どのDBにも取り込まれていない。実際のサイトの配色が、どの概念を使い、どの目的で、どの比率で効いているかを引けない。\n\n第四に、**信頼できない行が混ざっている。** `aag_color_palettes` は「Material Design 3 — Baseline Blue」という名の行の主色が `#6750A4`（紫）であり、名前と値が食い違っている。同じ表の文化圏ごとの意味（`cultural_meaning_json`）と心理効果は出典が付いておらず、生成された文に見える。`color_role_rule` には acd の検査で「引用が断片的」50件・「ゲートで支持されず」9件の印がある。\n\n## 3. 世界トップの仕事を再現するために要るもの（不足の一覧）\n\n| 層 | 要るもの | 現状 |\n|---|---|---|\n| 数値 | 実在のサイト・作品の配色を、色の値（OKLCH と sRGB）・役割（地・面・文字・アクセント・罫）・面積比・コントラスト比で持つ | 部品の色が中心。完成した配色の値はほぼ無い |\n| 概念 | 色の体系（マンセル・PCCS・NCS・OKLCH）、調和の理論、トーン、心理と文化、知覚（同時対比・面積効果・ベゾルト効果） | 定義は分散して在る。PCCS のトーンが無い。心理・文化は出典の弱い行が混ざる |\n| 結び | 概念 → 配色の値、配色の値 → 事例、事例 → 目的・業種・印象 | 無い |\n| 事例 | 事例集サイトから採った実例と、世界のトップデザイナー・スタジオの仕事 | 無い（日本のサイトは英語の印象語のみ） |\n| 規範 | 条件つきの判断ルール（いつ使い、いつ使わないか）と、その出典 | `color_role_rule` 192行。主にデザインシステムの規則 |\n\n## 4. 限界\n\n本書は配色の表を開いて読んだが、全行を判定したわけではない。aag の行が生成文であるという読みは、出典欄の不在と名前と値の食い違いから推したもので、全行を照合していない。事例集サイトが取り込みを許すかどうかは、まだ確かめていない。"
   }
 ]
