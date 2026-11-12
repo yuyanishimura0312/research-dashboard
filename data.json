@@ -36914,5 +36914,23 @@
     "createdAt": "2026-11-12T05:48:58.451025+00:00",
     "updatedAt": "2026-11-12T05:48:58.451025+00:00",
     "content": "# Foundation's Future Forum 2026 登壇者交代に伴う肩書の確認（2026-11-12）\n\n登壇者の交代（日本学術会議 若手アカデミーの代表交代、海外要務）に伴い、新しく登壇するお二人の肩書を公開資料で確かめた。\n\n## 武田 秀太郎（Key Session 1）\n\n慶應義塾大学 KMD研究所 フュージョンインダストリー研究センター センター長・准教授。日本学術会議 若手アカデミー 代表。センター長の表記は、センターが出した「Fusion Science School 2026」開催告知（PR TIMES）の原文による。若手アカデミー代表は researchmap の委員歴の記載による。researchmap では研究キーワードの筆頭が「核融合」で、京都フュージョニアリングの共同創業者でもある。\n\n- https://prtimes.jp/main/html/rd/p/000000007.000173645.html\n- https://researchmap.jp/shutakeda\n- https://firc.kmd.keio.ac.jp/news_category/news\n\n## 北 真理子（Key Session 1）\n\n一般社団法人ステラ・サイエンス・ファウンデーション 共同創業者／業務執行理事。財団の公式サイトの組織紹介の表記による。\n\n- https://ss-f.org/about-us/\n- https://ss-f.org/news/mbsj-20221201/\n\n## 限界\n\n肩書は公開資料の時点の表記であり、ご本人や事務局への確認は済んでいない。"
+  },
+  {
+    "id": "6af648a8x6899y",
+    "title": "XPRIZE の歩みと日本チームの実績（公開資料の照合メモ）",
+    "category": "リサーチ",
+    "status": "organized",
+    "source": "https://www.xprize.org/",
+    "summary": "XPRIZE 財団と各社の公開資料だけを材料に、出典のページで記載を確かめられた事実をまとめた。Ansari XPRIZE から Healthspan まで、卒業チームの資金調達（XPRIZE の公表値）、日本のチームの入賞、avatarin の設立と調達。",
+    "tags": [
+      "XPRIZE",
+      "賞金レース",
+      "ANA Avatar",
+      "avatarin",
+      "HAKUTO"
+    ],
+    "createdAt": "2026-11-12T23:15:52.365065+00:00",
+    "updatedAt": "2026-11-12T23:15:52.365065+00:00",
+    "content": "# XPRIZE の歩みと日本チームの実績（公開資料の照合メモ）\n\n調査日: 2026-11-13。このメモは、XPRIZE 財団と各社が公開している資料だけを材料に、出典のページを開いて記載を確かめられた事実をまとめたものである。出典を開けなかった事実、出典と記載が食い違った事実は載せていない。数字は各出典の時点のもので、XPRIZE 自身の集計値は XPRIZE の公表値として読む（独立の検証は行っていない）。\n\n## 1. XPRIZE とは\n\nXPRIZE は、賞金つきの競争で世界の解き手を集める米国の非営利財団である。財団の発表によれば、構想は1994年5月16日に始まった。最初の賞である Ansari XPRIZE は1996年に発表され、賞金は1,000万ドルだった。2004年10月4日、Mojave Aerospace Ventures が民間の有人宇宙船 SpaceShipOne で条件を満たして受賞した。財団は、この賞に参加したチームが研究開発に投じた額を1億ドルとしている。\n\nGoogle Lunar XPRIZE は大賞の受賞者が出ないまま終わったが、財団は、参加チーム全体に4.2億ドルを超える資金が流れ、競争の後に3億ドルを超える NASA の契約があったと公表している。\n\n## 2. 卒業チームの資金調達とネットワーク（XPRIZE の公表値）\n\nXPRIZE Impact Report 2026 は、PitchBook で追跡できた卒業チーム502のうち、取引の記録があった411チームの資金調達を集計している。同じ報告は、測定できる世界的な影響を324億ドルと見積もっている。これらは財団自身の集計であり、賞が無ければ得られなかった額を示すものではない。\n\n卒業チームの会（Alumni Network）には、770チーム・1,780人・63か国が参加していると財団は発表している。XPRIZE Carbon Removal では1,334チームが登録し、その過半は賞の開始後に設立された。同じ賞の参加チームは合計33億ドルを調達したとされる。\n\n卒業チームのその後の例として、ANA Avatar XPRIZE で2位になった Pollen Robotics は2025年に Hugging Face に買収された。Google Lunar XPRIZE に参加した Masten Space Systems は2022年9月に Astrobotic Technology に買収された。\n\n## 3. 日本のチームの実績\n\n月面では、HAKUTO が2015年1月に Google Lunar XPRIZE の中間賞（走行性能・50万ドル）を得た（KDDI の発表）。\n\n海洋では、Shell Ocean Discovery XPRIZE で Team KUROSHIO が32チーム中2位となり、100万ドルを得た。チームは JAMSTEC・東京大学生産技術研究所・九州工業大学・海上・港湾・航空技術研究所・三井E&S造船・日本海洋事業・KDDI総合研究所・ヤマハ発動機の8機関で構成されていた（KDDI総合研究所の発表）。\n\n遠隔ロボットでは、ANA ホールディングスが2016年8月に XPRIZE 財団とパートナー契約を結び、同年の VISIONEERS SUMMIT で ANA のチームの構想が次の賞の題材に選ばれた。ANA Avatar XPRIZE は2018年3月に正式に発表された（ANA ホールディングスの発表）。準決勝には16か国の38チームが進んだ（XPRIZE の発表）。\n\n長寿では、XPRIZE Healthspan（賞金枠1億100万ドル）で中間賞の受賞チームと、各100万ドルを得た決勝の10チームが発表されており、日本に拠点を置くチームが含まれている（XPRIZE の発表）。\n\n## 4. avatarin\n\navatarin株式会社は2020年4月1日に設立された。ANA ホールディングス発の最初のスタートアップで、出資者は ANA ホールディングスと、賞の構想を提案した深堀昂氏・梶谷ケビン氏である（ANA ホールディングスと avatarin の発表）。2023年4月にシリーズAで総額20億円（累計40億円）、2024年7月に総額37億円（累計77億円）の調達を発表した。2026年8月21日からは、関西空港から複数の地方空港の利用者を遠隔で支援するサービスを順次始めると発表している（開始日は変更の可能性がある旨の記載あり）。\n\n## 5. このメモの限界\n\n- 出典のページに記載があることを確かめたもので、記載の中身が正しいことを独立に確かめたものではない。\n- XPRIZE の集計値（資金調達・影響額・登録数）は財団の公表値である。\n- 日本のチームの数や順位の全体像は、ここでは扱っていない（国が分からない入賞記録が多いため）。\n\n## 出典\n\n- xprize.org: Celebrating 30 Years of XPRIZE／Ansari XPRIZE／Google Lunar XPRIZE／Impact Report 2026／Carbon Removal の振り返り／ANA Avatar XPRIZE の準決勝・受賞発表／XPRIZE Healthspan の中間賞・決勝の発表／Masten Space Systems のチームページ\n- KDDI ニュースリリース（2016-03-23）\n- KDDI総合研究所 ニュースリリース（2019-06-03）\n- ANA ホールディングス プレスリリース（2020-04-01・2022-11-06）\n- avatarin 会社概要・ニュースリリース（2023-04-05・2024-07-18・2026年）\n- Polsinelli のニュース（Hugging Face による Pollen Robotics の買収・2025-06-25）"
   }
 ]
