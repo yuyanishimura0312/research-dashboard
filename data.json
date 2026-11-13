@@ -37029,5 +37029,21 @@
     "createdAt": "2026-11-13T13:46:05.424092+00:00",
     "updatedAt": "2026-11-13T13:46:05.424092+00:00",
     "content": "# XPRIZE の主な14賞の賞金枠と開始年（公式ページとの照合メモ・2026-11-13）\n\n注記: 公開されている xprize.org の各賞のページだけを材料にした照合メモである。賞金枠は発表額であり、実際に支払われた額ではない。照合したのは下の14件だけで、XPRIZE の全ての賞を確かめたものではない。\n\n## 何を確かめたか\n\nXPRIZE の主な14賞について、各賞の公式ページ（https://www.xprize.org/competitions/ 以下）を2026年11月13日に取得し、ページ上の「Prize Purse」（賞金枠）と「Launched in」（開始年）の表記を読み取った。手元の一覧の値と突き合わせたところ、14件すべてで賞金枠と開始年が一致した。\n\n## 結果\n\n| 賞 | 領域 | 開始年 | 賞金枠（百万ドル） | ページ |\n|---|---|---|---|---|\n| Ansari XPRIZE | 宇宙 | 1996 | 10 | /competitions/ansari |\n| Google Lunar XPRIZE | 月面 | 2007 | 30 | /competitions/google-lunar |\n| Progressive Automotive XPRIZE | 自動車 | 2008 | 10 | /competitions/auto |\n| Qualcomm Tricorder XPRIZE | 医療診断 | 2012 | 10 | /competitions/tricorder |\n| Global Learning XPRIZE | 学習 | 2014 | 15 | /competitions/global-learning |\n| Shell Ocean Discovery XPRIZE | 海洋 | 2015 | 7 | /competitions/ocean-discovery |\n| NRG COSIA Carbon XPRIZE | CO2 利用 | 2015 | 20 | /competitions/carbon |\n| IBM Watson AI XPRIZE | AI | 2016 | 5 | /competitions/artificial-intelligence |\n| ANA Avatar XPRIZE | 遠隔ロボット | 2018 | 10 | /competitions/avatar |\n| XPRIZE Rainforest | 生物多様性 | 2019 | 10 | /competitions/rainforest |\n| XPRIZE Carbon Removal | 気候 | 2021 | 100 | /competitions/carbonremoval |\n| XPRIZE Healthspan | 長寿 | 2023 | 101 | /competitions/healthspan |\n| XPRIZE Water Scarcity | 水 | 2024 | 119 | /competitions/water |\n| XPRIZE Quantum Applications | 量子 | 2024 | 5 | /competitions/qc-apps |\n\n## 読むときの注意\n\n賞金枠が1億ドル以上の賞は Carbon Removal・Healthspan・Water Scarcity の3つで、いずれも2020年代に始まっている。一方で、2024年に始まった Quantum Applications は500万ドルであり、賞が一律に大型化したとは言えない。\n\n開始の時期は、公式ページの多くが年だけを示している。月まで書かれているのは一部で、Carbon Removal は「Earth Day 2021」、Water Scarcity は「2024年3月1日」、ANA Avatar は「2018年3月」とある。Google Lunar XPRIZE は大賞の受賞者なしで終了しており、賞金枠の3,000万ドルは支払額ではない。\n\nGoogle Lunar XPRIZE のページは期間を「2008 - 2019」と表示する一方、本文は「Launched in 2007」としており、同じページの中で表記が分かれている。ここでは本文の2007年を採った。\n\n進行中の3賞（Healthspan・Water Scarcity・Quantum Applications）は、賞金枠が今後改定されうる。値を使うときは取得日を添え、外へ出す前に取り直すこと。"
+  },
+  {
+    "id": "6af716d7oder7k",
+    "title": "XPRIZE 関連の公開資料：収集した引用の取り直しと照合（2026-11-13）",
+    "category": "XPRIZE",
+    "status": "done",
+    "source": "https://www.xprize.org/",
+    "summary": "公開資料から集めた事実376件の出典136件を取り直し、引用文が本文に在るかを照合した。341件は本文に在り、11件は画像で確認、10件は出典を開けず、14件は引用文なし。開けたのに無かった引用は0件。",
+    "tags": [
+      "XPRIZE",
+      "照合",
+      "出典"
+    ],
+    "createdAt": "2026-11-13T13:55:35.823024+00:00",
+    "updatedAt": "2026-11-13T13:55:35.823024+00:00",
+    "content": "# XPRIZE 関連の公開資料：収集した引用の取り直しと照合（2026-11-13）\n\n注記: これは「収集時に控えた引用文が、いまも出典の本文に在るか」を機械で確かめた記録である。引用文が出典に在ることの確認であって、その事実をもとに書いた文章が事実を正しく言い表しているかの判定ではない。個々の人物・企業に関する記載の当否は、本人・各社の確認を経ていない。\n\n## 何をしたか\n\nXPRIZE の歩み、日本のチームの実績、関係する組織について、公開資料から集めてあった事実376件を対象にした。各事実には出典の URL と、出典から抜き出した短い引用文が付いている。出典は重複を除くと136件で、これを2026年11月13日に取り直し、HTML はタグを外した本文、PDF は抽出したテキストに対して、引用文が文字列として含まれるかを照合した。空白と全角・半角の違いは揃えてから比べた。\n\n## 結果\n\n376件のうち341件は、引用文が出典の本文にそのまま在った。11件は、数字が画像の中に描かれていて文字列としては取り出せなかったため、画像を開いて目で確かめ、いずれも記載どおりだった。出典を開けなかったものが10件、もともと「確認できなかった」ことを記録した事実で引用文を持たないものが14件である。出典を開けたのに引用文が本文に無かったものは0件だった。\n\n| 結果 | 件数 |\n|---|---|\n| 出典の本文に引用文が在った | 341 |\n| 画像の中の数字で、画像を開いて確かめた | 11 |\n| 出典を開けなかった | 10 |\n| 「確認できず」の記録で、引用文がもともと無い | 14 |\n| 出典は開けたが、引用文が本文に無かった | 0 |\n\n## 開けなかった出典について\n\n開けなかった10件は5つの出典に集まっている。名前解決ができなくなった旧サイトが1つ（3件）、接続できなかったサイトが2つ（5件）、自動取得を拒む応答（403）を返したサイトが2つ（2件）である。これらは「出典が無くなった」「記載が誤りだった」ことを意味しない。確かめられなかった、という状態として扱う。このうち1件（ある企業の買収）は、買収した側の公式ブログで同じ事実を確かめた。\n\n## 読むときの注意\n\n文字列の照合は、引用文が短いほど通りやすい。数字だけの引用（「$10 Million」など）は、同じページの別の文脈に同じ文字列があっても「在った」と数える。したがってこの結果は、出典が消えていないこと・控えた文言が改変されていないことの確認としては使えるが、事実の解釈の正しさまでは保証しない。\n\n大きな PDF（公式の年次報告、100MB を超えるもの）は、初回の取得が時間切れになり、時間を延ばして取り直して照合した。時間切れを「出典が無い」と数えないよう、開けなかった件は別に数えている。"
   }
 ]
