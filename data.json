@@ -37433,5 +37433,23 @@
     "createdAt": "2026-11-22T14:06:50.147569+00:00",
     "updatedAt": "2026-11-22T14:06:50.147569+00:00",
     "content": "# イベント案内ページの SEO・AI 検索対策の監査と実装（2026-11-22）\n\n対象: https://event.emerging-future.org/soil-of-leadership/ （『ソイル・オブ・リーダーシップ』出版記念イベント・静的サイト）。公開ページを取得して実測した。効果（検索順位や AI での引用）は約束できない。\n\n## 問題なしとされた点\n- title 61字、description 121字。canonical は自己参照。robots は index,follow。lang は ja。\n- OGP は title・description・image・url・type・locale・site_name がそろう。OG 画像は 1200x630。\n- h1 は1つ。見出しの階層の飛びなし。画像の alt はすべてあり。\n- 本文の先頭300字に、何の催し・いつ・どこ・誰が・いくら が入っている。\n- robots.txt は全許可。GPTBot・ClaudeBot・PerplexityBot・OAI-SearchBot・Google-Extended を名乗った取得はすべて 200。\n- llms.txt の内容は現在のページと一致。本文は JavaScript なしで読める。\n- HTML は圧縮後 約80KB。外部の CSS・JS なし。\n\n## 見つかった問題と対応\n| 優先度 | 問題 | 対応 |\n|---|---|---|\n| 高 | 構造化データの Event の performer がゲスト1名だけで、両日登壇する著者が入っていない | 著者を Person として追加し、両夜の performer を配列に |\n| 高 | 冒頭に年と主催者が見えにくい | 冒頭文に「主催 NPO法人ミラツク」「2026年」を明記 |\n| 高 | 書籍ページからイベントページへのリンクが0件 | 未対応（別の公開ページの変更のため判断待ち） |\n| 中 | BreadcrumbList・WebSite が無い | 追加 |\n| 中 | Book に著者の参照・価格が無い | 著者の参照と価格（2,970円）を追加 |\n| 中 | Event の image が1枚 | 書影を追加 |\n| 中 | 見出し「参加のお申し込み」が2回 | 登録パネル側を「お申し込み」に |\n| 中 | 旧 URL が 301 でなく meta refresh | 未対応（配信の仕組み上、別の設定が要る） |\n| 低 | og:image:alt が無い | 追加 |\n| 低 | favicon.ico が無い | 未対応 |\n\n## 実装後の確認（別のモデルによる独立確認）\n- JSON-LD は JSON として妥当。型は Organization・Event×2・Book・Person・WebSite・BreadcrumbList。\n- 参照している @id の欠け0件。本文の日時・会場・価格・定員と一致。\n\n## 未測定\nGoogle の構造化データテスト、Search Console、実際の AI 検索での引用、Lighthouse。\n\n## 登壇者の写真の出所\n- ブリット・ヤマモト: ワシントン大学グローバルヘルス学科の教員紹介ページ\n- 米倉誠一郎: ソーシャル・イノベーション・スクール（学長 米倉誠一郎）の講師紹介ページ\n- 篠田真貴子: esse-sense Future Forum の登壇者写真\n- いずれのページにもクレジット・利用条件の表記は見当たらず。本人・所属先への利用の確認はしていない。"
+  },
+  {
+    "id": "6b02f9b6cyqenm",
+    "title": "Nature コメント記事（2025）日本の研究資金の見直しと OIST — 書誌と確認できた範囲",
+    "category": "研究政策",
+    "status": "done",
+    "source": "https://www.nature.com/articles/d41586-025-00394-8",
+    "summary": "合田圭介ほか10名による Nature のコメント記事（Nature 638, 318–320, 2025）の書誌、共同署名者の規模、OIST の発表による提言の要約。本文は未読で、確認できた範囲と注意点を分けて記録。",
+    "tags": [
+      "研究資金",
+      "研究政策",
+      "OIST",
+      "Nature",
+      "学際研究"
+    ],
+    "createdAt": "2026-11-22T14:18:30.280725+00:00",
+    "updatedAt": "2026-11-22T14:18:30.280725+00:00",
+    "content": "# Nature コメント記事「Japan can be a science heavyweight once more — if it rethinks funding」（2025）の書誌と確認できた範囲\n\n調べた日: 2026-11-22。公開情報だけを確認した。記事の本文は有料で読んでいない。\n\n## 書誌\n\n- 掲載: Nature のコメント記事。オンライン公開 2025年2月11日。Nature 638, 318–320 (2025)。doi:10.1038/d41586-025-00394-8\n- オンラインの題: \"Japan can be a science heavyweight once more — if it rethinks funding\"。補足資料に記された誌面の題は \"Japan must rethink its priorities in research funding\"。\n- リード文（原文）: \"The nation must lose its tight focus on individual disciplines if it is to keep pace with the evolving requirements of scientific enquiry.\"\n- 著者は10名で、筆頭は合田圭介（東京大学 化学専攻 教授）。著者には沖縄科学技術大学院大学（OIST）の教員2名が含まれる。\n\n## 共同署名者\n\nNature の補足資料「List of co-signatories」に、共同署名者が所属つきでアルファベット順に並ぶ。抽出したテキストを機械的に数えたところ約128名で、所属の番号は139まであった（PDF の抽出に基づく概数）。OIST の発表は「130名を超える研究者が署名」としている。この130名超が著者10名を含む数かどうかは、発表からは分からない。\n\n## OIST の発表（2025年2月12日）による要約\n\n- 記事は OIST を、学際的な科学を先導する（leading the way）例として述べている、と OIST は発表している。\n- 提言の要約は4点: 学際的な研究と協働への支援、ハイリスク・ハイリターンの研究への深い関与、より長い期間の資金、国際水準の質の高い研究室基盤の維持。\n- OIST 側が特徴として挙げるのは、学部を置かない水平な組織、多様性、学際研究を促す仕組み。\n\n## 読むときの注意\n\n- OIST の位置づけは、OIST 自身の発表を経由した情報である。著者に OIST の教員が含まれる点とあわせて読む。\n- 本文中の数値・比較・個別の論点は未確認。引用する場合は本文を開いて確かめる。\n\n## 出典\n\n- https://www.nature.com/articles/d41586-025-00394-8\n- https://media.nature.com/original/magazine-assets/d41586-025-00394-8/50617182 （共同署名者の一覧）\n- https://www.oist.jp/news-center/news/2025/2/12/nature-opinion-oist-leading-way-say-japanese-scientists"
   }
 ]
